@@ -1,0 +1,9 @@
+rootProject.name = 'vkpht main'
+
+include 'boot'
+include 'common'
+
+rootDir.eachDirMatch ~/^mod-.*/, {
+    include it.name
+}
+

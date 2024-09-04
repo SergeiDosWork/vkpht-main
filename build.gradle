@@ -1,0 +1,81 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
+    id 'org.jetbrains.kotlin.plugin.lombok' version '2.0.20'
+    id 'io.freefair.lombok' version '8.10'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/milestone' }
+    maven {
+        url 'https://art.goodt.me/repository/libs-release/'
+        credentials {
+            username 'int-artifact-read'
+            password 'Nm5Evnaxsgix'
+        }
+        metadataSources {
+            artifact()
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.jetbrains.kotlin.jvm'
+    apply plugin: 'org.jetbrains.kotlin.plugin.lombok'
+    apply plugin: 'io.freefair.lombok'
+
+    group = 'me.goodt'
+    version = '1.0.0-SNAPSHOT'
+    sourceCompatibility = '17'
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    ext {
+        springBootVersion = '3.3.3'
+        lombokVersion = '1.18.34'
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url 'https://repo.spring.io/milestone' }
+        maven {
+            url 'https://art.goodt.me/repository/libs-release/'
+            credentials {
+                username 'int-artifact-read'
+                password 'Nm5Evnaxsgix'
+            }
+            metadataSources {
+                artifact()
+            }
+        }
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.3")
+        }
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "17"
+        }
+    }
+
+}
