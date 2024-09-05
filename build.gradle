@@ -32,10 +32,10 @@ subprojects {
 
     group = 'me.goodt'
     version = '1.0.0-SNAPSHOT'
-    sourceCompatibility = '17'
+    sourceCompatibility = '21'
     java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     ext {
@@ -70,12 +70,12 @@ subprojects {
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
     compileTestKotlin {
         kotlinOptions {
-            jvmTarget = "17"
+            jvmTarget = "21"
         }
     }
 
