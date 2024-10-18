@@ -1,0 +1,14 @@
+datasources:
+  common:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=common
+    username: postgres
+    password: postgres
+    hikari:
+      maxLifeTime: 600000
+
+liquibase:
+  common:
+    change-log: classpath:db/changelog/common/changelog.xml
+    default-schema: common
+    liquibase-schema: common

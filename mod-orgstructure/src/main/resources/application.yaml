@@ -1,0 +1,14 @@
+datasources:
+  orgstructure:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=orgstructure
+    username: postgres
+    password: postgres
+    hikari:
+      maxLifeTime: 600000
+
+liquibase:
+  orgstructure:
+    change-log: classpath:db/changelog/orgstructure/changelog.xml
+    default-schema: orgstructure
+    liquibase-schema: orgstructure
