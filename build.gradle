@@ -1,33 +1,28 @@
 plugins {
     id 'java'
     id 'java-library'
-    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
-    id 'org.jetbrains.kotlin.plugin.lombok' version '2.0.20'
     id 'io.freefair.lombok' version '8.10'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
 repositories {
-    mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
     maven {
-        url 'https://art.goodt.me/repository/libs-release/'
+        url 'https://vkpht-nexus.goodt.me/repository/maven-public/'
         credentials {
-            username 'int-artifact-read'
-            password 'Nm5Evnaxsgix'
-        }
-        metadataSources {
-            artifact()
+            username 'maven_read'
+            password '+XDBmyl|dJ|Ku-#]8#'
         }
     }
+}
+
+ext {
+    springBootVersion = '3.3.4'
 }
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'java-library'
     apply plugin: 'io.spring.dependency-management'
-    apply plugin: 'org.jetbrains.kotlin.jvm'
-    apply plugin: 'org.jetbrains.kotlin.plugin.lombok'
     apply plugin: 'io.freefair.lombok'
 
     group = 'me.goodt'
@@ -38,22 +33,14 @@ subprojects {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
-    ext {
-        springBootVersion = '3.3.3'
-        lombokVersion = '1.18.34'
-    }
+
 
     repositories {
-        mavenCentral()
-        maven { url 'https://repo.spring.io/milestone' }
         maven {
-            url 'https://art.goodt.me/repository/libs-release/'
+            url 'https://vkpht-nexus.goodt.me/repository/maven-public/'
             credentials {
-                username 'int-artifact-read'
-                password 'Nm5Evnaxsgix'
-            }
-            metadataSources {
-                artifact()
+                username 'maven_read'
+                password '+XDBmyl|dJ|Ku-#]8#'
             }
         }
     }
@@ -64,18 +51,7 @@ subprojects {
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:3.3.3")
-        }
-    }
-
-    compileKotlin {
-        kotlinOptions {
-            jvmTarget = "21"
-        }
-    }
-    compileTestKotlin {
-        kotlinOptions {
-            jvmTarget = "21"
+            mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootVersion")
         }
     }
 
