@@ -12,11 +12,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
+@Slf4j
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
@@ -24,12 +29,22 @@ import javax.sql.DataSource;
     entityManagerFactoryRef = "exampleEntityManagerFactory",
     transactionManagerRef = "exampleTransactionManager"
 )
-public class DataSourceConfig {
+@Import({ExampleDataSourceConfig.SpringLiquibaseDependsOnPostProcessor.class})
+public class ExampleDataSourceConfig {
+
+    @Bean(name = "exampleDataSourceProperties")
+    @ConfigurationProperties("datasources.example")
+    public DataSourceProperties exampleDataSourceProperties() {
+        return new DataSourceProperties();
+    }
 
     @Bean(name = "exampleDataSource")
-    @ConfigurationProperties(prefix = "datasources.example")
-    public DataSource exampleDataSource() {
-        return new HikariDataSource();
+    public DataSource orgstructureDataSource(@Qualifier("exampleDataSourceProperties") DataSourceProperties exampleDataSourceProperties) {
+        HikariDataSource dataSource = exampleDataSourceProperties.initializeDataSourceBuilder()
+            .type(HikariDataSource.class)
+            .build();
+
+        return dataSource;
     }
 
     @Bean(name = "exampleEntityManagerFactory")
@@ -39,13 +54,42 @@ public class DataSourceConfig {
         em.setDataSource(exampleDataSource);
         em.setPackagesToScan("me.goodt.vkpht.module.example"); // Укажите пакет для сущностей
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-
         return em;
     }
 
     @Bean(name = "exampleTransactionManager")
     public PlatformTransactionManager exampleTransactionManager(@Qualifier("exampleEntityManagerFactory") EntityManagerFactory exampleEntityManagerFactory) {
         return new JpaTransactionManager(exampleEntityManagerFactory);
+    }
+
+    @Component
+    public static class ExampleSchemaInitBean implements InitializingBean {
+
+        private final DataSource dataSource;
+        private final String schemaName = "example";
+
+        public ExampleSchemaInitBean(@Qualifier("exampleDataSource") DataSource dataSource) {
+            this.dataSource = dataSource;
+    }
+
+        @Override
+        public void afterPropertiesSet() {
+            try (Connection conn = dataSource.getConnection();
+                 Statement statement = conn.createStatement()) {
+                log.info("Going to create DB schema '{}' if not exists.", schemaName);
+                statement.execute("create schema if not exists " + schemaName);
+            } catch (SQLException e) {
+                throw new RuntimeException("Failed to create schema '" + schemaName + "'", e);
+            }
+        }
+    }
+
+    @ConditionalOnBean(ExampleSchemaInitBean.class)
+    static class SpringLiquibaseDependsOnPostProcessor extends AbstractDependsOnBeanFactoryPostProcessor {
+        SpringLiquibaseDependsOnPostProcessor() {
+            // Configure the 3rd party SpringLiquibase bean to depend on our SchemaInitBean
+            super(SpringLiquibase.class, ExampleSchemaInitBean.class);
+        }
     }
 
     @Bean(name = "exampleLiquibaseProperties")
@@ -56,7 +100,7 @@ public class DataSourceConfig {
 
     @Bean
     public SpringLiquibase exampleLiquibase(@Qualifier("exampleDataSource") DataSource exampleDataSource,
-                                                 @Qualifier("exampleLiquibaseProperties") LiquibaseProperties exampleLiquibaseProperties) {
+                                           @Qualifier("exampleLiquibaseProperties") LiquibaseProperties exampleLiquibaseProperties) {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setDataSource(exampleDataSource);
         liquibase.setChangeLog(exampleLiquibaseProperties.getChangeLog());

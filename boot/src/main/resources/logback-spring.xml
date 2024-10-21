@@ -19,10 +19,10 @@
     </appender>
 
     <appender name="applicationLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${APP_LOG_ROOT}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log</file>
+        <file>${APP_LOG_ROOT:-log}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${APP_LOG_ROOT}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log.%d{yyyy-MM-dd}.gz
+            <fileNamePattern>${APP_LOG_ROOT:-log}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log.%d{yyyy-MM-dd}.gz
             </fileNamePattern>
             <!-- keep 10 days' worth of history capped at 10MB total size -->
             <maxHistory>10</maxHistory>

@@ -2,7 +2,7 @@
 
 --changeset s_podrezov:orgstructure-database-init
 
-CREATE TABLE rt_core.org_position_assignment
+CREATE TABLE org_position_assignment
 (
     id                   bigint                                                NOT NULL,
     abbreviation         character varying(128)                                NOT NULL,

@@ -41,3 +41,4 @@ bin/
 
 ### Custom
 /src/main/resources/application-local*
+/log

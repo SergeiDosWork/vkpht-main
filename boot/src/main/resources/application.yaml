@@ -26,14 +26,52 @@ spring:
       - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
       - org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
-  profiles:
-    include:
-      - mod-common
-      - mod-orgstructure
-      - mod-tasksetting
 
 logging:
   level:
     ROOT: INFO
     org.hibernate.SQL: INFO
   config: classpath:logback-spring.xml
+
+datasources:
+  common:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=common
+    username: postgres
+    password: postgres
+    schema: classpath:db/create-schema-common.sql
+    hikari:
+      maxLifeTime: 600000
+  orgstructure:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=orgstructure
+    username: postgres
+    password: postgres
+    schema: classpath:db/create-schema-orgstructure.sql
+    hikari:
+      maxLifeTime: 600000
+  tasksetting:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=tasksetting
+    username: postgres
+    password: postgres
+    schema: classpath:db/create-schema-tasksetting.sql
+    hikari:
+      maxLifeTime: 600000
+
+liquibase:
+  common:
+    enabled: true
+    change-log: classpath:db/changelog/common/changelog.xml
+    default-schema: common
+    liquibase-schema: common
+  orgstructure:
+    enabled: true
+    change-log: classpath:db/changelog/orgstructure/changelog.xml
+    default-schema: orgstructure
+    liquibase-schema: orgstructure
+  tasksetting:
+    enabled: true
+    change-log: classpath:db/changelog/tasksetting/changelog.xml
+    default-schema: tasksetting
+    liquibase-schema: tasksetting
