@@ -1,0 +1,16 @@
+datasources:
+  tasksetting:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/vkpht3?currentSchema=tasksetting
+    username: rostalent_user
+    password: rostalent_pww_pg_2
+    schema: classpath:db/create-schema.sql
+    hikari:
+      maxLifeTime: 600000
+
+liquibase:
+  tasksetting:
+    enabled: true
+    change-log: classpath:db/changelog/tasksetting/changelog.xml
+    default-schema: tasksetting
+    liquibase-schema: tasksetting

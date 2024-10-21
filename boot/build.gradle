@@ -4,27 +4,27 @@ plugins {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
-}
-rootProject.childProjects.each {
-    if (it.value.path != this.path) {
-        evaluationDependsOn it.value.path
-    }
+
+    implementation project(':mod-common')
+    implementation project(':mod-orgstructure')
+    implementation project(':mod-tasksetting')
 }
 
+
 springBoot {
-    mainClass = 'me.goodt.Application'
+    mainClass = 'me.goodt.vkpht.Application'
 }
 
 bootJar {
-    mainClass = 'me.goodt.Application'
+    mainClass = 'me.goodt.vkpht.Application'
 }
 
-//task writeBuildInfoToFile doLast {
-//    def file = new File(projectDir, 'src/main/resources/build-info.json')
-//    file.write '{'
-//    file << "\n\t" << "\"version\": \"${projectVersion}\","
-//    file << "\n\t" << "\"created\": \"${new Date().format('dd.MM.yy HH:mm:ss')}\""
-//    file << "\n"   << "}"
-//}
-//
-//compileJava.dependsOn writeBuildInfoToFile
+task writeBuildInfoToFile doLast {
+    def file = new File(projectDir, 'src/main/resources/build-info.json')
+    file.write '{'
+    file << "\n\t" << "\"version\": \"${projectVersion}\","
+    file << "\n\t" << "\"created\": \"${new Date().format('dd.MM.yy HH:mm:ss')}\""
+    file << "\n" << "}"
+}
+
+compileJava.dependsOn writeBuildInfoToFile

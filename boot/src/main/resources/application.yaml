@@ -1,0 +1,39 @@
+server:
+  max-http-request-header-size: 40KB  # Размер header для того, чтобы влезли все роли кейклоак в JWT токен
+  forward-headers-strategy: FRAMEWORK  # Включаем проброс nginx заголовков для правильного определения URL в ответах
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  port: 8099
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
+  cache:
+    cache-names:
+      - rt-core
+    caffeine:
+      spec: maximumSize=1000, expireAfterAccess=180s
+  web:
+    resources:
+      add-mappings: false
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration
+  profiles:
+    include:
+      - mod-common
+      - mod-orgstructure
+      - mod-tasksetting
+
+logging:
+  level:
+    ROOT: INFO
+    org.hibernate.SQL: INFO
+  config: classpath:logback-spring.xml

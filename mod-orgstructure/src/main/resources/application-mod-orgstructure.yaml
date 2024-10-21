@@ -4,11 +4,13 @@ datasources:
     url: jdbc:postgresql://localhost:5432/rtl?currentSchema=orgstructure
     username: postgres
     password: postgres
+    schema: classpath:db/create-schema.sql
     hikari:
       maxLifeTime: 600000
 
 liquibase:
   orgstructure:
+    enabled: true
     change-log: classpath:db/changelog/orgstructure/changelog.xml
     default-schema: orgstructure
     liquibase-schema: orgstructure

@@ -1,9 +1,13 @@
-rootProject.name = 'vkpht main'
+rootProject.name = 'vkpht-main'
 
 include 'boot'
 include 'common'
 
-rootDir.eachDirMatch ~/^mod-.*/, {
-    include it.name
-}
+include 'mod-common'
+include 'mod-orgstructure'
+include 'mod-tasksetting'
+
+//rootDir.eachDirMatch ~/^mod-.*/, {
+//    include it.name
+//}
 

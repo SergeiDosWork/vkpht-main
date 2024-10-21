@@ -5,6 +5,11 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
+group = 'me.goodt'
+version = '3.0.0-SNAPSHOT'
+
+archivesBaseName = 'vkpht-main'
+
 repositories {
     maven {
         url 'https://vkpht-nexus.goodt.me/repository/maven-public/'
@@ -17,6 +22,7 @@ repositories {
 
 ext {
     springBootVersion = '3.3.4'
+    postgreJDBCDriverVersion = '42.7.4'
 }
 
 subprojects {
@@ -25,8 +31,6 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
 
-    group = 'me.goodt'
-    version = '1.0.0-SNAPSHOT'
     sourceCompatibility = '21'
     java {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -49,7 +53,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.liquibase:liquibase-core'
-
+        implementation "org.postgresql:postgresql:$postgreJDBCDriverVersion"
     }
 
     dependencyManagement {

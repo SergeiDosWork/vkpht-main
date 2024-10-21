@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_PATTERN_FOR_CONSOLE"
+              value="%d{yyyy-MM-dd HH:mm:ss} %highlight(%-5level) %logger{36} wid=%X{widget-id} - %msg%n"/>
+    <property name="LOG_PATTERN_FOR_FILE" value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"/>
+    <Property name="LOG_PATTERN_WITH_TREAD"
+              value="%d{yyyy-MM-dd HH:mm:ss} wid=%X{widget-id} hmid=%X{h-method-id} - %msg%n"/>
+    <property name="SERVICE_NAME" value="main"/>
+    <springProperty name="APP_LOG_ROOT" scope="context" source="app.logging.path"/>
+    <springProperty name="APP_LOG_LEVEL" source="app.logging.level"/>
+
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                ${LOG_PATTERN_FOR_CONSOLE}
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="applicationLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_ROOT}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${APP_LOG_ROOT}/${SERVICE_NAME}-service/${SERVICE_NAME}-service.log.%d{yyyy-MM-dd}.gz
+            </fileNamePattern>
+            <!-- keep 10 days' worth of history capped at 10MB total size -->
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${LOG_PATTERN_FOR_FILE}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="${APP_LOG_LEVEL}">
+        <appender-ref ref="applicationLog"/>
+        <appender-ref ref="consoleLog"/>
+    </root>
+
+    <logger name="org.springframework" additivity="false" level="${APP_LOG_LEVEL}">
+        <appender-ref ref="applicationLog"/>
+        <appender-ref ref="consoleLog"/>
+    </logger>
+
+    <logger name="org.hibernate.SQL" additivity="false" level="${APP_LOG_LEVEL}">
+        <appender-ref ref="applicationLog"/>
+    </logger>
+
+    <logger name="org.hibernate.type" additivity="false" level="${APP_LOG_LEVEL}">
+        <appender-ref ref="applicationLog"/>
+        <appender-ref ref="consoleLog"/>
+    </logger>
+
+</configuration>

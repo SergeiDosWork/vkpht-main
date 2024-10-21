@@ -4,11 +4,13 @@ datasources:
     url: jdbc:postgresql://localhost:5432/rtl?currentSchema=tasksetting
     username: postgres
     password: postgres
+    schema: classpath:db/create-schema.sql
     hikari:
       maxLifeTime: 600000
 
 liquibase:
   tasksetting:
+    enabled: true
     change-log: classpath:db/changelog/tasksetting/changelog.xml
     default-schema: tasksetting
     liquibase-schema: tasksetting

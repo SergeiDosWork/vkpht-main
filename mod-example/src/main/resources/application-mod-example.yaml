@@ -1,0 +1,14 @@
+datasources:
+  example:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=example
+    username: postgres
+    password: postgres
+    hikari:
+      maxLifeTime: 600000
+
+liquibase:
+  example:
+    change-log: classpath:db/changelog/example/changelog.xml
+    default-schema: example
+    liquibase-schema: example
