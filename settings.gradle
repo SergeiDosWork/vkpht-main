@@ -1,6 +1,6 @@
 rootProject.name = 'vkpht-main'
 
-include 'boot'
+include 'app'
 include 'common'
 
 include 'mod-common'
