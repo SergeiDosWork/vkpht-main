@@ -1,4 +1,4 @@
-package me.goodt.vkpht.module.example.config;
+package me.goodt.vkpht.module.tasksetting.config;
 
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.persistence.EntityManagerFactory;
@@ -31,7 +31,7 @@ import java.sql.Statement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "me.goodt.vkpht.module.example",
+    basePackages = "me.goodt.vkpht.module.tasksetting",
     entityManagerFactoryRef = "tasksettingEntityManagerFactory",
     transactionManagerRef = "tasksettingTransactionManager"
 )

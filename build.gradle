@@ -10,6 +10,10 @@ version = '3.0.0-SNAPSHOT'
 
 archivesBaseName = 'vkpht-main'
 
+java {
+    modularity.inferModulePath = true
+}
+
 repositories {
     maven {
         url 'https://vkpht-nexus.goodt.me/repository/maven-public/'
