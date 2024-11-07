@@ -144,7 +144,7 @@ CREATE TABLE employee
     is_has_mobile      BOOLEAN   DEFAULT FALSE             NOT NULL, -- TODO update entity
     number             VARCHAR(64)                         NOT NULL,
     phone              VARCHAR(64),
-    person_id          BIGINT,
+    person_id BIGINT NOT NULL,
     external_id        VARCHAR(128) UNIQUE,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     author_employee_id BIGINT                              NOT NULL,

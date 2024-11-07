@@ -153,7 +153,8 @@ CREATE TABLE user_type
     update_employee_id    BIGINT                              NOT NULL,
     update_date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system             BOOLEAN   DEFAULT FALSE             NOT NULL,
-    is_editable_if_system BOOLEAN   DEFAULT FALSE             NOT NULL
+    is_editable_if_system BOOLEAN DEFAULT FALSE NOT NULL,
+    code                  VARCHAR(128)          NOT NULL
 );
 COMMENT ON TABLE user_type IS 'Типы владельцев бизнес-объектов';
 COMMENT ON COLUMN user_type.id IS 'Уникальный идентификационный номер типа владельца таска.';
@@ -166,6 +167,8 @@ COMMENT ON COLUMN user_type.update_employee_id IS 'Идентификатор п
 COMMENT ON COLUMN user_type.update_date IS 'Дата обновления записи';
 COMMENT ON COLUMN user_type.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN user_type.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
+COMMENT ON COLUMN user_type.code IS 'Уникальный код типа владельца таска';
+CREATE UNIQUE INDEX user_type_code_uq ON user_type (code) WHERE date_to IS NULL;
 
 --process_type_status_group
 CREATE TABLE process_type_status_group
@@ -1435,48 +1438,44 @@ CREATE INDEX role_calculation_configuration_type_calculation_id_idx ON role_calc
 --task_type_role
 CREATE TABLE task_type_role
 (
-    id                      BIGINT GENERATED ALWAYS AS IDENTITY     NOT NULL PRIMARY KEY,
-    task_type_id            BIGINT                                  NOT NULL,
-    role_id                 BIGINT                                  NOT NULL,
-    name                    VARCHAR(256)                            NOT NULL,
-    description             VARCHAR(1024) DEFAULT ''::VARCHAR,
-    index                   BIGINT        DEFAULT 0                 NOT NULL,
-    count_min               BIGINT        DEFAULT 0,
-    count_max               BIGINT        DEFAULT 0,
-    count_recommend         BIGINT        DEFAULT 0,
-    is_auto_assign          BOOLEAN       DEFAULT FALSE             NOT NULL,
-    assign_system_status_id BIGINT,
-    assign_task_type_id     BIGINT,
-    external_id             VARCHAR(128) UNIQUE,
-    date_from               TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    date_to                 TIMESTAMP,
-    author_employee_id      BIGINT                                  NOT NULL,
-    update_employee_id      BIGINT                                  NOT NULL,
-    update_date             TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_system               BOOLEAN       DEFAULT FALSE             NOT NULL,
-    is_editable_if_system   BOOLEAN       DEFAULT FALSE             NOT NULL,
+    id                        BIGINT GENERATED ALWAYS AS IDENTITY     NOT NULL PRIMARY KEY,
+    task_type_id              BIGINT                                  NOT NULL,
+    role_id                   BIGINT                                  NOT NULL,
+    name                      VARCHAR(256)                            NOT NULL,
+    description               VARCHAR(1024) DEFAULT ''::VARCHAR,
+    index                     BIGINT        DEFAULT 0                 NOT NULL,
+    count_min_suggested       BIGINT        DEFAULT 0,
+    count_max_suggested       BIGINT        DEFAULT 0,
+    count_recommend_suggested BIGINT        DEFAULT 0,
+    is_auto_assign            BOOLEAN       DEFAULT FALSE             NOT NULL,
+    external_id               VARCHAR(128) UNIQUE,
+    date_from                 TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    date_to                   TIMESTAMP,
+    author_employee_id        BIGINT                                  NOT NULL,
+    update_employee_id        BIGINT                                  NOT NULL,
+    update_date               TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    is_system                 BOOLEAN       DEFAULT FALSE             NOT NULL,
+    is_editable_if_system     BOOLEAN       DEFAULT FALSE             NOT NULL,
     CONSTRAINT task_type_role_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id),
     CONSTRAINT task_type_role_task_type_id_fk FOREIGN KEY (task_type_id) REFERENCES task_type (id)
 );
 COMMENT ON TABLE task_type_role IS 'Типовые роли бизнес-объектов';
-COMMENT ON COLUMN task_type_role.id IS 'Уникальный идентификационный номер.';
-COMMENT ON COLUMN task_type_role.task_type_id IS 'Тип таска.';
-COMMENT ON COLUMN task_type_role.role_id IS 'Идентификатор роли.';
-COMMENT ON COLUMN task_type_role.name IS 'Наименование роли.';
-COMMENT ON COLUMN task_type_role.description IS 'Описание роли.';
-COMMENT ON COLUMN task_type_role.index IS 'Порядок следования ролей.';
-COMMENT ON COLUMN task_type_role.count_min IS '-';
-COMMENT ON COLUMN task_type_role.count_max IS '-';
-COMMENT ON COLUMN task_type_role.count_recommend IS '-';
-COMMENT ON COLUMN task_type_role.is_auto_assign IS '-';
-COMMENT ON COLUMN task_type_role.assign_system_status_id IS '-';
-COMMENT ON COLUMN task_type_role.assign_task_type_id IS 'Тип таска, который должен пройти до определенного статуса (assign_system_status_id) прежде чем добавить назначение на роль в TaskRoleAssingment.';
+COMMENT ON COLUMN task_type_role.id IS 'Уникальный идентификатор записи';
+COMMENT ON COLUMN task_type_role.task_type_id IS 'Уникальный идентификатор типа таска';
+COMMENT ON COLUMN task_type_role.role_id IS 'Уникальный идентификатор роли';
+COMMENT ON COLUMN task_type_role.name IS 'Наименование типовой роли';
+COMMENT ON COLUMN task_type_role.description IS 'Описание типовой роли';
+COMMENT ON COLUMN task_type_role.index IS 'Порядок следования типовых ролей';
+COMMENT ON COLUMN task_type_role.count_min_suggested IS 'Предлагаемое минимальное кол-во пользователей с типовой ролью';
+COMMENT ON COLUMN task_type_role.count_max_suggested IS 'Предлагаемое максимальное кол-во пользователей с типовой ролью';
+COMMENT ON COLUMN task_type_role.count_recommend_suggested IS 'Предлагаемое рекомендованное кол-во пользователей с типовой ролью';
+COMMENT ON COLUMN task_type_role.is_auto_assign IS 'Признак автоматического назначения типовой роли';
 COMMENT ON COLUMN task_type_role.external_id IS 'Уникальный идентификатор внешней системы';
-COMMENT ON COLUMN task_type_role.date_from IS 'Системная дата о появлении записи';
-COMMENT ON COLUMN task_type_role.date_to IS 'Системная дата о закрытии записи';
-COMMENT ON COLUMN task_type_role.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
-COMMENT ON COLUMN task_type_role.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
-COMMENT ON COLUMN task_type_role.update_date IS 'Дата обновления записи';
+COMMENT ON COLUMN task_type_role.date_from IS 'Дата и время создания записи';
+COMMENT ON COLUMN task_type_role.date_to IS 'Дата и время удаления записи';
+COMMENT ON COLUMN task_type_role.author_employee_id IS 'Уникальный идентификатор пользователя, создавшего запись';
+COMMENT ON COLUMN task_type_role.update_employee_id IS 'Уникальный идентификатор пользователя, который последним обновил запись';
+COMMENT ON COLUMN task_type_role.update_date IS 'Дата и время последнего обновления записи';
 COMMENT ON COLUMN task_type_role.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN task_type_role.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 CREATE INDEX task_type_role_role_id_idx ON task_type_role (role_id);
@@ -2190,3 +2189,31 @@ CREATE INDEX task_type_status_dependency_task_type_id_master_idx ON task_type_st
 CREATE INDEX task_type_status_dependency_task_type_id_slave_idx ON task_type_status_dependency (task_type_id_slave);
 CREATE INDEX task_type_status_dependency_status_id_master_idx ON task_type_status_dependency (status_id_master);
 CREATE INDEX task_type_status_dependency_status_id_slave_idx ON task_type_status_dependency (status_id_slave);
+
+-- task_type_link_permission
+CREATE TABLE IF NOT EXISTS task_type_link_permission
+(
+    id                 BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    date_from          TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_to            TIMESTAMP,
+    task_type_id_from  BIGINT    NOT NULL REFERENCES task_type (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    task_type_id_to    BIGINT    NOT NULL REFERENCES task_type (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    external_id        VARCHAR(128) UNIQUE,
+    author_employee_id BIGINT    NOT NULL,
+    update_employee_id BIGINT    NOT NULL,
+    update_date        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+COMMENT ON TABLE task_type_link_permission IS 'Cвязи таск тайпов допустимых связей линков между таск тайпами';
+COMMENT ON COLUMN task_type_link_permission.id IS 'Уникальный идентификатор записи ';
+COMMENT ON COLUMN task_type_link_permission.date_from IS 'Дата и время создания записи';
+COMMENT ON COLUMN task_type_link_permission.date_to IS 'Дата и время удаления записи';
+COMMENT ON COLUMN task_type_link_permission.task_type_id_from IS 'Идентификатор таск тайпа слева';
+COMMENT ON COLUMN task_type_link_permission.task_type_id_to IS 'Идентификатор таск тайпа справа';
+COMMENT ON COLUMN task_type_link_permission.external_id IS 'Внешний уникальный идентификатор записи';
+COMMENT ON COLUMN task_type_link_permission.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
+COMMENT ON COLUMN task_type_link_permission.update_employee_id IS 'Идентификатор пользователя, который последним обновил запись';
+COMMENT ON COLUMN task_type_link_permission.update_date IS 'Дата и время последнего обновления записи';
+
+CREATE INDEX task_type_link_permission_task_type_id_from_idx ON task_type_link_permission (task_type_id_from);
+CREATE INDEX task_type_link_permission_task_type_id_to_idx ON task_type_link_permission (task_type_id_to);

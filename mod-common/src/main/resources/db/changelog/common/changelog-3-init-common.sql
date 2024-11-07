@@ -230,6 +230,7 @@ COMMENT ON COLUMN competence_profile_family.name IS 'Название семей
 COMMENT ON COLUMN competence_profile_family.parent_id IS 'Ссылка на уникальный идентификатор записи из данной таблицы (родительская запись)';
 COMMENT ON COLUMN competence_profile_family.unit_code IS 'Код юнита';
 CREATE INDEX competence_profile_family_parent_id_idx ON competence_profile_family (parent_id);
+CREATE UNIQUE INDEX competence_profile_family_unit_code_name_uq ON competence_profile_family (unit_code, name) WHERE date_to IS NULL;
 
 -- competence_profile
 CREATE TABLE competence_profile
@@ -2186,3 +2187,18 @@ CREATE TABLE worker_project_role
 COMMENT ON TABLE worker_project_role IS 'Роль на проекте для проектного опыта';
 COMMENT ON COLUMN worker_project_role.id IS 'Уникальный идентификатор записи';
 COMMENT ON COLUMN worker_project_role.project_role IS 'Проектная роль';
+
+-- adaptation_source_type
+CREATE TABLE adaptation_source_type
+(
+    code        VARCHAR(128) PRIMARY KEY,
+    name        VARCHAR(256)         NOT NULL,
+    description VARCHAR(2048),
+    is_enabled  BOOLEAN DEFAULT TRUE NOT NULL
+);
+
+COMMENT ON TABLE adaptation_source_type IS 'Справочник типов источников для ТПА (Типовой план адаптации)';
+COMMENT ON COLUMN adaptation_source_type.code IS 'Уникальный код записи';
+COMMENT ON COLUMN adaptation_source_type.name IS 'Наименование типа источника';
+COMMENT ON COLUMN adaptation_source_type.description IS 'Описание записи';
+COMMENT ON COLUMN adaptation_source_type.is_enabled IS 'Признак доступности записи';
