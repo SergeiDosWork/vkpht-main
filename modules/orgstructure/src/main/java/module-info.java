@@ -12,6 +12,15 @@ module vkpht.main.mod.orgstructure {
     requires spring.orm;
     requires spring.tx;
     requires spring.beans;
+    requires spring.data.commons;
     requires spring.data.jpa;
+    requires spring.web;
+    requires spring.hateoas;
+    requires io.swagger.v3.oas.annotations;
+    requires org.springdoc.openapi.common;
+    requires com.querydsl.core;
+    requires com.querydsl.jpa;
+    requires org.apache.commons.collections4;
+    requires com.fasterxml.jackson.annotation;
     //    exports me.goodt.vkpht.module.orgstructure.api;
 }
