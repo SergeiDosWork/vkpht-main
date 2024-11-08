@@ -16,6 +16,7 @@ module vkpht.main.mod.orgstructure {
     requires spring.data.jpa;
     requires spring.web;
     requires spring.hateoas;
+    requires spring.security.core;
     requires io.swagger.v3.oas.annotations;
     requires org.springdoc.openapi.common;
     requires com.querydsl.core;

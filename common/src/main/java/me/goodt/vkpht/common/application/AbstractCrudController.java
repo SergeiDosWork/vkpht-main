@@ -1,6 +1,9 @@
 package me.goodt.vkpht.common.application;
 
 import jakarta.validation.groups.Default;
+
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,7 +28,7 @@ import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 @RequestMapping(
 	produces = {"application/json;charset=UTF-8"}
 )
-public abstract class AbstractCrudController<I extends Serializable, R> extends AbstractController implements CrudController<I, R> {
+public abstract class AbstractCrudController<I extends Serializable, R extends AbstractRes<R>> extends AbstractController implements CrudController<I, R> {
 	protected AbstractCrudController() {
 	}
 

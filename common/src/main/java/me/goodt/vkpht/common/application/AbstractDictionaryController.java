@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import me.goodt.vkpht.common.dictionary.core.dto.DictionaryMetaResponse;
 import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @NoArgsConstructor
-public abstract class AbstractDictionaryController <I extends Serializable, R> extends AbstractCrudController<I, R> {
+public abstract class AbstractDictionaryController <I extends Serializable, R extends AbstractRes<R>> extends AbstractCrudController<I, R> {
     @Autowired
 	private DictionaryMetaGenerator metaGenerator;
 
