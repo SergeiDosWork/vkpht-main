@@ -1,0 +1,11 @@
+plugins {
+
+}
+
+
+dependencies {
+
+    implementation project(":common")
+    implementation 'org.liquibase:liquibase-core'
+
+}
