@@ -1,5 +1,5 @@
-module mod.common.vkpht.main.mod.common.main {
-    requires vkpht.main.common.main;
+module vkpht.main.mod.tasksetting {
+    requires vkpht.main.common;
     requires com.zaxxer.hikari;
     requires jakarta.persistence;
     requires liquibase.core;
@@ -13,6 +13,5 @@ module mod.common.vkpht.main.mod.common.main {
     requires spring.tx;
     requires spring.beans;
     requires spring.data.jpa;
-    //    exports me.goodt.vkpht.module.common.api;
-
+    exports me.goodt.vkpht.module.tasksetting.api;
 }

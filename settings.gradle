@@ -3,11 +3,7 @@ rootProject.name = 'vkpht-main'
 include 'app'
 include 'common'
 
-include 'mod-common'
-include 'mod-orgstructure'
-include 'mod-tasksetting'
-
-//rootDir.eachDirMatch ~/^mod-.*/, {
-//    include it.name
-//}
+include 'platform'
+include 'orgstructure'
+include 'tasksetting'
 

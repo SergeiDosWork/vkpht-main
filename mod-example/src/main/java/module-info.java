@@ -1,4 +1,4 @@
-module mod.orgstructure.vkpht.main.mod.example.main {
+module vkpht.main.mod.example {
     requires vkpht.main.common.main;
     requires com.zaxxer.hikari;
     requires jakarta.persistence;

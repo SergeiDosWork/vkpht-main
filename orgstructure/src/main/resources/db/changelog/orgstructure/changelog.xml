@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="changelog-3-init-common.sql" relativeToChangelogFile="true"/>
+    <include file="changelog-init-orgstructure-schema.sql" relativeToChangelogFile="true"/>
 
 
 </databaseChangeLog>

@@ -1,5 +1,5 @@
-module mod.orgstructure.vkpht.main.mod.orgstructure.main {
-    requires vkpht.main.common.main;
+module vkpht.main.mod.platform {
+    requires vkpht.main.common;
     requires com.zaxxer.hikari;
     requires jakarta.persistence;
     requires liquibase.core;
@@ -13,5 +13,6 @@ module mod.orgstructure.vkpht.main.mod.orgstructure.main {
     requires spring.tx;
     requires spring.beans;
     requires spring.data.jpa;
-    //    exports me.goodt.vkpht.module.orgstructure.api;
+    //    exports me.goodt.vkpht.module.common.api;
+
 }

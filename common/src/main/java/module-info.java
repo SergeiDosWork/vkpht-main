@@ -1,3 +1,3 @@
-module vkpht.main.common.main {
+module vkpht.main.common {
     exports me.goodt.vkpht.common;
 }

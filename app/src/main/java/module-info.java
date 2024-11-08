@@ -1,11 +1,11 @@
-module vkpht.main.app.main {
-    requires vkpht.main.common.main;
+module vkpht.main.app {
+    requires vkpht.main.common;
     requires spring.boot;
     requires spring.boot.autoconfigure;
 
-    requires mod.common.vkpht.main.mod.common.main;
-    requires mod.orgstructure.vkpht.main.mod.orgstructure.main;
-    requires mod.tasksetting.vkpht.main.mod.tasksetting.main;
+    requires vkpht.main.mod.platform;
+    requires vkpht.main.mod.orgstructure;
+    requires vkpht.main.mod.tasksetting;
 
     exports me.goodt.vkpht;
 }
