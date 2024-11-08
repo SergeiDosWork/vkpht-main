@@ -7,9 +7,9 @@ dependencies {
 
     implementation project(":common")
 
-    implementation project(':platform')
-    implementation project(':orgstructure')
-    implementation project(':tasksetting')
+    implementation project(':modules:platform')
+    implementation project(':modules:orgstructure')
+    implementation project(':modules:tasksetting')
 }
 
 

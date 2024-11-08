@@ -3,7 +3,7 @@ rootProject.name = 'vkpht-main'
 include 'app'
 include 'common'
 
-include 'platform'
-include 'orgstructure'
-include 'tasksetting'
+include 'modules:platform'
+include 'modules:orgstructure'
+include 'modules:tasksetting'
 
