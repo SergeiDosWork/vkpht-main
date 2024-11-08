@@ -1,4 +1,5 @@
 package me.goodt.vkpht.common;
 
-public class Dummy {
+public class CommonModule {
+
 }

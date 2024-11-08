@@ -22,11 +22,13 @@ repositories {
             password '+XDBmyl|dJ|Ku-#]8#'
         }
     }
+    mavenLocal()
 }
 
 ext {
     springBootVersion = '3.3.4'
     postgreJDBCDriverVersion = '42.7.4'
+    queryDslVersion = '6.8'
 }
 
 subprojects {
@@ -51,6 +53,7 @@ subprojects {
                 password '+XDBmyl|dJ|Ku-#]8#'
             }
         }
+        mavenLocal()
     }
 
     dependencies {
