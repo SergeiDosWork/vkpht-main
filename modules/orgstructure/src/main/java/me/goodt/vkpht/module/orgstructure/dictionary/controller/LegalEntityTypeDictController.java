@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.LegalEntityTypeAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.LegalEntityTypeAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LegalEntityTypeDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.LegalEntityTypeCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.LegalEntityTypeCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/legal-entity-type")

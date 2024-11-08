@@ -9,6 +9,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -27,10 +27,12 @@ import java.util.stream.Collectors;
 
 import com.goodt.drive.rtcore.constants.ComponentFieldCode;
 import com.goodt.drive.rtcore.dto.rostalent.position.PositionListResponse;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.QComponentFieldEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.QTaskFieldEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.QTaskTypeFieldEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

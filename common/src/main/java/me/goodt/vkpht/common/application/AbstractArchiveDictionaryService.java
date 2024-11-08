@@ -2,6 +2,10 @@ package me.goodt.vkpht.common.application;
 
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 
+import me.goodt.vkpht.common.dictionary.core.service.AbstractDictionaryService;
+
+import me.goodt.vkpht.common.dictionary.core.service.Converter;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;

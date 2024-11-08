@@ -1,7 +1,5 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.controller;
 
-import me.goodt.vkpht.common.application.util.CoreUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -16,8 +14,9 @@ import java.util.List;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.JobTitleCrudService;
-import me.goodt.vkpht.common.controller.UnfilteredDictController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.JobTitleCrudService;
+import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
 import me.goodt.micro.core.util.DictionaryMetaGenerator;
 
 @RestController

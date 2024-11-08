@@ -1,11 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.controller;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.ProjectStatusAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.ProjectStatusAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectStatusDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.ProjectStatusCrudService;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.ProjectStatusCrudService;
 import lombok.Getter;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.RequestMapping;

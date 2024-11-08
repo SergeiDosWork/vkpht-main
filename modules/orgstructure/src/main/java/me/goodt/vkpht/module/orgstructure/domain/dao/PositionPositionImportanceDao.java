@@ -3,14 +3,15 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionPositionImportanceEntity;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

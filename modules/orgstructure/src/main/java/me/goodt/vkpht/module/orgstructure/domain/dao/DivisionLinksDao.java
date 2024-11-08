@@ -1,10 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionLinksEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QDivisionLinksEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.composite.key.DivisionLinksId;

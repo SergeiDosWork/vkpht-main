@@ -15,9 +15,9 @@ import java.util.Collections;
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.WorkFunctionStatusDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.WorkFunctionStatusCrudService;
-import me.goodt.vkpht.common.application.util.CoreUtils;
-import me.goodt.vkpht.common.controller.UnfilteredDictController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.WorkFunctionStatusCrudService;
+import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
 import me.goodt.micro.core.util.DictionaryMetaGenerator;
 
 @RestController

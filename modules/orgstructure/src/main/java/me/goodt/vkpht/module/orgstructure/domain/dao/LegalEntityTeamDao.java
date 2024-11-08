@@ -3,13 +3,14 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamEntity;
 
 @Repository
 public class LegalEntityTeamDao extends AbstractDao<LegalEntityTeamEntity, Long> {

@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportDivisionDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportEmployeeDismissalDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportEmployeeDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportLegalEntityDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportPositionAssignmentDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportPositionDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PersonInfoDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.SecondaryInfoDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportUnitDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportDivisionDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportEmployeeDismissalDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportEmployeeDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportLegalEntityDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportPositionAssignmentDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportPositionDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PassportUnitDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.PersonInfoDto;
+import com.goodt.drive.rtcore.dto.orgstructure.passport.SecondaryInfoDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDismissalEntity;
@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PersonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.UnitEntity;
-import me.goodt.vkpht.common.application.util.PersonUtil;
+import com.goodt.drive.rtcore.utils.PersonUtil;
 
 @Component
 public class PersonInfoMapper {

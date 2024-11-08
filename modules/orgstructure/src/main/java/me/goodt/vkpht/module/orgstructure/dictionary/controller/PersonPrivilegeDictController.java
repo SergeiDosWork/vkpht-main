@@ -20,9 +20,9 @@ import java.util.List;
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.PersonPrivilegeDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.PersonPrivilegeCrudService;
-import me.goodt.vkpht.common.application.util.CoreUtils;
-import me.goodt.vkpht.common.controller.UnfilteredDictController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.PersonPrivilegeCrudService;
+import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
 import me.goodt.micro.core.util.DictionaryMetaGenerator;
 
 @RestController

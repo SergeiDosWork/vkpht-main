@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.LegalEntityStatusAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.LegalEntityStatusAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LegalEntityStatusDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.LegalEntityStatusCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.LegalEntityStatusCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/legal-entity-status")

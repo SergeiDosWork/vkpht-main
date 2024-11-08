@@ -1,13 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import me.goodt.vkpht.common.domain.entity.orgstructure.projection.UnitShortInfo;
-
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,13 +15,14 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.common.domain.entity.orgstructure.projection.UnitShortInfo;
+import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

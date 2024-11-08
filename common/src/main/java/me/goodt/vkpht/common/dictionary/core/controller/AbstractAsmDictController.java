@@ -4,15 +4,20 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.Serializable;
 
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
 import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
 import me.goodt.vkpht.common.dictionary.core.util.Responses;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 /**
  * Реализация DictController как адаптер для справочников на основе CrudController и AbstractAsm.

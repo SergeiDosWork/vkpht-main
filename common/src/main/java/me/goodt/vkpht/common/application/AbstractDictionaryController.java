@@ -1,6 +1,11 @@
 package me.goodt.vkpht.common.application;
 
 import lombok.NoArgsConstructor;
+
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
+
+import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,8 +19,8 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.Objects;
 
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
 import me.goodt.vkpht.common.application.util.DictionaryMetaGenerator;
+import me.goodt.vkpht.common.dictionary.core.dto.DictionaryMetaResponse;
 import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @NoArgsConstructor

@@ -3,6 +3,7 @@ package me.goodt.vkpht.module.orgstructure.dictionary.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +11,7 @@ import jakarta.validation.constraints.Size;
 
 @Getter
 @Setter
-public class ImportanceCriteriaDto {
+public class ImportanceCriteriaDto extends AbstractRes<ImportanceCriteriaDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

@@ -10,13 +10,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
 
-import com.goodt.drive.rtcore.dto.DtoTagConstants;
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonnelDocumentDto {
+public class PersonnelDocumentDto extends AbstractRes<PersonnelDocumentDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

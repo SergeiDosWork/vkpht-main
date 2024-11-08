@@ -6,7 +6,7 @@ import java.util.Date;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.FamilyStatusDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.FamilyStatusEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class FamilyStatusAsm extends AbstractAsm<FamilyStatusEntity, FamilyStatusDto> {

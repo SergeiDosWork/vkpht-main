@@ -1,12 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.mapper;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleClusterDto;
-import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
-import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleClusterEntity;
-
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleClusterDto;
+import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
+import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleClusterEntity;
 
 @Component
 public class JobTitleClusterMapper implements CrudDtoMapper<JobTitleClusterEntity, JobTitleClusterDto> {

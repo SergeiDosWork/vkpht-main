@@ -1,16 +1,22 @@
 package me.goodt.vkpht.common.dictionary.core.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.Serializable;
 
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
 import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
 import me.goodt.vkpht.common.dictionary.core.util.MediaTypes;
 import me.goodt.vkpht.common.dictionary.core.util.Responses;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @RequestMapping(produces = MediaTypes.JSON_UTF8)
 public abstract class AbstractCrudController<I extends Serializable, R extends AbstractRes<R>> extends AbstractController implements CrudController<I, R> {

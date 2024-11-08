@@ -1,11 +1,10 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.mapper;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionKrLevelDto;
+import org.springframework.stereotype.Component;
 
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionKrLevelDto;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionKrLevelEntity;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class PositionKrLevelMapper implements CrudDtoMapper<PositionKrLevelEntity, PositionKrLevelDto> {

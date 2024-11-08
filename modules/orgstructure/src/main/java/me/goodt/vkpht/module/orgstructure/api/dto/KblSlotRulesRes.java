@@ -4,10 +4,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 @Setter
 @Getter
 @Accessors(chain = true)
-public class KblSlotRulesRes {
+public class KblSlotRulesRes extends AbstractRes<KblSlotRulesRes> {
 
     private boolean enabled;
 

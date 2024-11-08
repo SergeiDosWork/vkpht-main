@@ -2,11 +2,12 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionSuccessorFilter;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionSuccessorEntity;

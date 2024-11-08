@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
 import me.goodt.vkpht.common.dictionary.core.error.RTException;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 public abstract class AbstractCrudService<T extends AbstractEntity<I>, I extends Serializable> implements CrudService<T, I> {
 

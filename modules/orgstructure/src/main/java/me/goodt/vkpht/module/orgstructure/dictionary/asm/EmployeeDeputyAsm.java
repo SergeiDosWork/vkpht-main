@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeDeputyDto;
+import com.goodt.drive.rtcore.dto.orgstructure.EmployeeDeputyDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class EmployeeDeputyAsm extends AbstractAsm<EmployeeDeputyEntity, EmployeeDeputyDto> {

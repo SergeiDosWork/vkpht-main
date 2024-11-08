@@ -1,12 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.mapper;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionImportanceDto;
-import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
-import me.goodt.vkpht.module.orgstructure.domain.entity.PositionImportanceEntity;
-
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionImportanceDto;
+import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionImportanceEntity;
 
 @Component
 public class PositionImportanceMapper implements CrudDtoMapper<PositionImportanceEntity, PositionImportanceDto> {

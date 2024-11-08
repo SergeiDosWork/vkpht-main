@@ -1,13 +1,13 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.mapper;
 
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.AssignmentRotationDto;
-import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
-import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentRotationEntity;
-
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.AssignmentRotationDto;
+import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
+import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentRotationEntity;
 
 @Component
 public class AssignmentRotationMapper implements CrudDtoMapper<AssignmentRotationEntity, AssignmentRotationDto> {

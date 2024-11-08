@@ -6,9 +6,11 @@ import lombok.Setter;
 
 import jakarta.validation.constraints.NotNull;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 @Getter
 @Setter
-public class LegalEntityTeamAssignmentConflictRolesDto {
+public class LegalEntityTeamAssignmentConflictRolesDto extends AbstractRes<LegalEntityTeamAssignmentConflictRolesDto> {
 
     private Long legalEntityTeamAssignmentRoleIdAssigned;
     @NotNull

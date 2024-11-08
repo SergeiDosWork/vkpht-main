@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.TeamStatusAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.TeamStatusAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.TeamStatusDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.TeamStatusCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.TeamStatusCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/team-status")

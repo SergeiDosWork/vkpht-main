@@ -11,22 +11,30 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.goodt.drive.rtcore.service.logging.ILoggerService;
 import me.goodt.vkpht.common.api.annotation.ApiPageable;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.EmployeeDeputyAsm;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractCrudController;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeDeputyDto;
+import me.goodt.vkpht.module.orgstructure.application.EmployeeDeputyService;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.EmployeeDeputyAsm;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.EmployeeDeputyService;
-import me.goodt.vkpht.common.controller.AbstractCrudController;
 
 @RestController
 @GeneralAPIResponses

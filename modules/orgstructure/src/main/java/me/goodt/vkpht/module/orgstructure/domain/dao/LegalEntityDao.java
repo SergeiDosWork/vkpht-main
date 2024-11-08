@@ -4,15 +4,16 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.common.domain.dao.filter.LegalEntityFilter;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityEntity;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

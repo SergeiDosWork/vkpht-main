@@ -8,9 +8,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Date;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 @Getter
 @Setter
-public class AssignmentReadinessDto {
+public class AssignmentReadinessDto extends AbstractRes<AssignmentReadinessDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer id;

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 public interface CrudService<T extends AbstractEntity<I>, I> {
 

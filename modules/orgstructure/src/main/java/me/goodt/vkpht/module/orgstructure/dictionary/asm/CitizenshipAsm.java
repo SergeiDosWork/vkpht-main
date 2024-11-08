@@ -1,11 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.asm;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.CitizenshipDto;
-import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.CitizenshipDto;
+import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class CitizenshipAsm extends AbstractAsm<CitizenshipEntity, CitizenshipDto> {

@@ -11,10 +11,10 @@ import java.util.Collection;
 import java.util.List;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.LocationGroupAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.LocationGroupAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LocationGroupDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.LocationGroupCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.LocationGroupCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/location-group")

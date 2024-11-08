@@ -3,14 +3,14 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
 import me.goodt.vkpht.common.domain.dao.AbstractArchivableDao;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
 
 /** @author iGurkin - 24.08.2022 */
 @Repository

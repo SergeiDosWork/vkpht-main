@@ -3,6 +3,7 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupTypeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QImportanceCriteriaGroupTypeEntity;
 import org.springframework.stereotype.Repository;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 
 import jakarta.persistence.EntityManager;
 

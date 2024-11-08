@@ -1,7 +1,5 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.service;
 
-import com.goodt.drive.rtcore.security.AuthService;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +15,7 @@ import me.goodt.vkpht.module.orgstructure.dictionary.dto.WorkFunctionStatusDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.WorkFunctionStatusEntity;
+import com.goodt.drive.rtcore.security.AuthService;
 
 @Service
 @RequiredArgsConstructor

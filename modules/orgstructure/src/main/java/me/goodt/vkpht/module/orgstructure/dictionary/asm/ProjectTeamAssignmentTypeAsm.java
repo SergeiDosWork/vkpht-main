@@ -1,11 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.asm;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamAssignmentTypeDto;
-import me.goodt.vkpht.module.orgstructure.domain.entity.ProjectTeamAssignmentTypeEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamAssignmentTypeDto;
+import me.goodt.vkpht.module.orgstructure.domain.entity.ProjectTeamAssignmentTypeEntity;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class ProjectTeamAssignmentTypeAsm extends AbstractAsm<ProjectTeamAssignmentTypeEntity, ProjectTeamAssignmentTypeDto> {

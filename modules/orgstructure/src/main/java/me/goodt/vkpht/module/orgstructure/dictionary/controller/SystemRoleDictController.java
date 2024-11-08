@@ -1,11 +1,6 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.controller;
 
-import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.SystemRoleCrudService;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.SystemRoleAsm;
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.SystemRoleDto;
 import lombok.Getter;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import com.goodt.drive.auth.sur.service.SurProtected;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.SystemRoleAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.SystemRoleDto;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.SystemRoleCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/system-role")

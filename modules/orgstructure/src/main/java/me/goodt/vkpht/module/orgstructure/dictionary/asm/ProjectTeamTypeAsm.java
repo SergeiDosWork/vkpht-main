@@ -6,7 +6,7 @@ import java.util.Date;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamTypeDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ProjectTeamTypeEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class ProjectTeamTypeAsm extends AbstractAsm<ProjectTeamTypeEntity, ProjectTeamTypeDto> {

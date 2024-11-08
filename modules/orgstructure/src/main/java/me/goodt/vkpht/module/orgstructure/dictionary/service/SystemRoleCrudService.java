@@ -1,15 +1,16 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.service;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.SystemRoleDao;
-import com.goodt.drive.crud.AbstractArchiveDictionaryService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
-import me.goodt.vkpht.module.orgstructure.domain.entity.SystemRoleEntity;
-import com.goodt.drive.rtcore.security.AuthService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import com.goodt.drive.crud.AbstractArchiveDictionaryService;
+import me.goodt.vkpht.module.orgstructure.domain.dao.SystemRoleDao;
+import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.domain.entity.SystemRoleEntity;
+import com.goodt.drive.rtcore.security.AuthService;
 
 @Service
 public class SystemRoleCrudService extends AbstractArchiveDictionaryService<SystemRoleEntity, Integer> {

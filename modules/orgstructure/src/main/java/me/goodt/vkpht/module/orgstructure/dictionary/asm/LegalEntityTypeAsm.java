@@ -6,7 +6,7 @@ import java.util.Date;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LegalEntityTypeDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTypeEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class LegalEntityTypeAsm extends AbstractAsm<LegalEntityTypeEntity, LegalEntityTypeDto> {

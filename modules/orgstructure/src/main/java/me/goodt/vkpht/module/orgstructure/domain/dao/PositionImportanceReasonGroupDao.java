@@ -1,6 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import org.springframework.stereotype.Repository;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 
 import jakarta.persistence.EntityManager;
 

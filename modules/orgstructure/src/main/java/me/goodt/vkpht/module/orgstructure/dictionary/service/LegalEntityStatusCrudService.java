@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityStatusDao;
 import com.goodt.drive.crud.AbstractArchiveDictionaryService;
+import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityStatusDao;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityStatusEntity;
 import com.goodt.drive.rtcore.security.AuthService;

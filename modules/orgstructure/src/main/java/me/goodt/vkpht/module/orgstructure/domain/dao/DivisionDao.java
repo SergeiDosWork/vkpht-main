@@ -5,18 +5,19 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.filter.DivisionFilter;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionLegalDto;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.module.orgstructure.domain.dao.filter.DivisionFilter;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;
 
 @Repository
 public class DivisionDao extends AbstractDao<DivisionEntity, Long> {

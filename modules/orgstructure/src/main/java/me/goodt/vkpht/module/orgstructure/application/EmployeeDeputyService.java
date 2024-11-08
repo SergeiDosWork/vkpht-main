@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.application;
 
 import lombok.Getter;
+
+import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

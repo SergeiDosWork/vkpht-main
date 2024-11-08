@@ -2,16 +2,17 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaEntity;
 
 @Repository
 public class ImportanceCriteriaDao extends AbstractDao<ImportanceCriteriaEntity, Long> {

@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeDeputyDto {
+public class EmployeeDeputyDto extends AbstractRes<EmployeeDeputyDto> {
     private Long id;
     private Long employeeViceId;
     private Long employeeSubstituteId;

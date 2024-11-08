@@ -1,24 +1,23 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.controller;
 
-import com.goodt.drive.auth.sur.service.SurOperation;
-import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.PositionGradeCrudService;
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionGradeDto;
-import me.goodt.vkpht.common.application.util.CoreUtils;
-
-import me.goodt.vkpht.common.controller.UnfilteredDictController;
-
-import me.goodt.micro.core.util.DictionaryMetaGenerator;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+
+import com.goodt.drive.auth.sur.service.SurOperation;
+import com.goodt.drive.auth.sur.service.SurProtected;
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionGradeDto;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.PositionGradeCrudService;
+import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
+import me.goodt.micro.core.util.DictionaryMetaGenerator;
 
 @RestController
 @RequestMapping("/api/dict/position-grade")

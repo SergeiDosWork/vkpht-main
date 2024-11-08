@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import java.io.Serializable;
 import java.util.Objects;
 
+import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
+import me.goodt.vkpht.common.dictionary.core.service.Converter;
+import me.goodt.vkpht.common.dictionary.core.service.Updater;
 import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @NoArgsConstructor

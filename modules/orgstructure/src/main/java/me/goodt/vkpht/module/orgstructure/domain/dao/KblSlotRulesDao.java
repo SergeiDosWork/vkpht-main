@@ -1,12 +1,13 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import org.springframework.stereotype.Repository;
-
 import jakarta.persistence.EntityManager;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QKblSlotRules;
 

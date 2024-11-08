@@ -1,13 +1,14 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.BooleanBuilder;
-import org.apache.commons.collections4..CollectionUtils;
+import jakarta.persistence.EntityManager;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 
 import com.goodt.drive.rtcore.api.orgstructure.filter.UnitFilter;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QUnitEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.UnitEntity;
 

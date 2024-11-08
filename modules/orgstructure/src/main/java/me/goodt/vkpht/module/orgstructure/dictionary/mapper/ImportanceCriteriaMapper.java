@@ -1,16 +1,14 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.mapper;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.CalculationMethodDao;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+import me.goodt.vkpht.module.orgstructure.domain.dao.CalculationMethodDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.ImportanceCriteriaGroupDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ImportanceCriteriaDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaEntity;
-
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component

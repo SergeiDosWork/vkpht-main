@@ -5,16 +5,17 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.List;
 
-import me.goodt.vkpht.common.domain.dao.filter.JobTitleFilter;
 import com.goodt.drive.rtcore.dto.tasksetting2.projection.EmployeeJobTitleProjection;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.common.domain.dao.filter.JobTitleFilter;
 import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QJobTitleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionAssignmentEntity;

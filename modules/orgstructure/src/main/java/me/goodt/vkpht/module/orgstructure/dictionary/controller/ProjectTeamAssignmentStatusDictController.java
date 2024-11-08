@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.ProjectTeamAssignmentStatusAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.ProjectTeamAssignmentStatusAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamAssignmentStatusDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.ProjectTeamAssignmentStatusCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.ProjectTeamAssignmentStatusCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/project-team-assignment-status")

@@ -14,9 +14,9 @@ import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.SubstitutionTypeDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.SubstitutionTypeCrudService;
-import me.goodt.vkpht.common.application.util.CoreUtils;
-import me.goodt.vkpht.common.controller.UnfilteredDictController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.SubstitutionTypeCrudService;
+import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
 import me.goodt.micro.core.util.DictionaryMetaGenerator;
 
 @RestController

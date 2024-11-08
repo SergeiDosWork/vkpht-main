@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ImportanceCriteriaGroupTypeDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupTypeEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class ImportanceCriteriaGroupTypeAsm extends AbstractAsm<ImportanceCriteriaGroupTypeEntity, ImportanceCriteriaGroupTypeDto> {

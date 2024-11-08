@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.dictionary.orgstructure.asm.ImportanceCriteriaGroupTypeAsm;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.ImportanceCriteriaGroupTypeAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ImportanceCriteriaGroupTypeDto;
-import com.goodt.drive.rtcore.dictionary.orgstructure.service.ImportanceCriteriaGroupTypeCrudService;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
+import me.goodt.vkpht.module.orgstructure.dictionary.service.ImportanceCriteriaGroupTypeCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/importance-criteria-group-type")

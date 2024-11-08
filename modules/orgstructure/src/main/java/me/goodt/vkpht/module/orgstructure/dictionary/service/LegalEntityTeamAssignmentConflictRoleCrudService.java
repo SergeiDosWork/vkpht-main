@@ -8,6 +8,7 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityTeamAssignmentCo
 import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentConflictRoleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
+import me.goodt.micro.core.service.AbstractDictionaryService;
 
 @Service
 public class LegalEntityTeamAssignmentConflictRoleCrudService extends

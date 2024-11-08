@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.common.domain.dao.filter.JobTitleFilter;
+import com.goodt.drive.rtcore.dao.filter.JobTitleFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.JobTitleDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;

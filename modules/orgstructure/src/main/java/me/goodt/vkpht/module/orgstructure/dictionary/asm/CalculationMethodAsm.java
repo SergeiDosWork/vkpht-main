@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.CalculationMethodDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CalculationMethodEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class CalculationMethodAsm extends AbstractAsm<CalculationMethodEntity, CalculationMethodDto> {

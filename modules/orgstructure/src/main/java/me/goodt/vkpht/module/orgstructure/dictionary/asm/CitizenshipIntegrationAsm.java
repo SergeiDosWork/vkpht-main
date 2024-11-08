@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.CitizenshipIntegrationDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipIntegrationEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class CitizenshipIntegrationAsm extends AbstractAsm<CitizenshipIntegrationEntity, CitizenshipIntegrationDto> {

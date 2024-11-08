@@ -3,6 +3,7 @@ package me.goodt.vkpht.common.domain.dao;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 import me.goodt.vkpht.common.domain.entity.ArchivableEntity;

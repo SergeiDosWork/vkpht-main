@@ -1,15 +1,16 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.service;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionStatusDao;
-import com.goodt.drive.crud.AbstractArchiveDictionaryService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
-import com.goodt.drive.rtcore.security.AuthService;
-import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionStatusEntity;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import com.goodt.drive.crud.AbstractArchiveDictionaryService;
+import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionStatusDao;
+import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionStatusEntity;
+import com.goodt.drive.rtcore.security.AuthService;
 
 @Service
 public class DivisionStatusCrudService extends AbstractArchiveDictionaryService<DivisionStatusEntity, Integer> {

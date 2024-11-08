@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.data.domain.Page;
@@ -16,7 +17,6 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import jakarta.persistence.EntityManager;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -24,11 +24,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.api.dto.CompactAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionAssignmentRoleDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeTeamInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.projection.DivisionTeamAssignmentCompactProjection;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentShort;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;

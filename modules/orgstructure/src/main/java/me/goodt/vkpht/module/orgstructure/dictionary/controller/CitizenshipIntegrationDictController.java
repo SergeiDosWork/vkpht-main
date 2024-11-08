@@ -10,10 +10,10 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.common.controller.AbstractDictionaryController;
 import me.goodt.vkpht.module.orgstructure.dictionary.asm.CitizenshipIntegrationAsm;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.CitizenshipIntegrationDto;
 import me.goodt.vkpht.module.orgstructure.dictionary.service.CitizenshipIntegrationCrudService;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryController;
 
 @RestController
 @RequestMapping("/api/dict/citizenship-integration")

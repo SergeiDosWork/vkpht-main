@@ -37,4 +37,9 @@ module vkpht.main.common {
     exports me.goodt.vkpht.common.application;
     exports me.goodt.vkpht.common.application.exception;
     exports me.goodt.vkpht.common.application.util;
+    exports me.goodt.vkpht.common.dictionary.core.asm;
+    exports me.goodt.vkpht.common.dictionary.core.dto;
+    exports me.goodt.vkpht.common.dictionary.core.controller;
+    exports me.goodt.vkpht.common.dictionary.core.dao;
+    exports me.goodt.vkpht.common.dictionary.core.service;
 }

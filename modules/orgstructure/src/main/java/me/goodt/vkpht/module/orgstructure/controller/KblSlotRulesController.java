@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
-import com.goodt.drive.rtcore.asm.org.KblSlotRulesAsm;
+import me.goodt.vkpht.common.dictionary.core.controller.AbstractCrudController;
 import me.goodt.vkpht.module.orgstructure.api.dto.KblSlotRulesRes;
+import me.goodt.vkpht.module.orgstructure.application.KblSlotRulesService;
+import me.goodt.vkpht.module.orgstructure.dictionary.asm.KblSlotRulesAsm;
 import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
-import me.goodt.vkpht.module.orgstructure.api.KblSlotRulesService;
-import me.goodt.vkpht.common.controller.AbstractCrudController;
 
 @RestController
 @RequiredArgsConstructor

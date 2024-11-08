@@ -1,17 +1,20 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import com.goodt.drive.rtcore.constants.RoleId;
-import com.goodt.drive.rtcore.GlobalDefs;
-import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.goodt.drive.rtcore.constants.RoleId;
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamEntity;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

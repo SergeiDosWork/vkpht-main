@@ -1,15 +1,16 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.service;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.CitizenshipDao;
-import com.goodt.drive.crud.AbstractArchiveDictionaryService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
-import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
-import com.goodt.drive.rtcore.security.AuthService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+
+import com.goodt.drive.crud.AbstractArchiveDictionaryService;
+import me.goodt.vkpht.module.orgstructure.domain.dao.CitizenshipDao;
+import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
+import com.goodt.drive.rtcore.security.AuthService;
 
 @Service
 @RequiredArgsConstructor

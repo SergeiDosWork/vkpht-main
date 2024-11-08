@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.support.Querydsl;
 import java.io.Serializable;
 import java.util.List;
 
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @SuppressWarnings({"unchecked", "SpringJavaInjectionPointsAutowiringInspection"})
 public abstract class AbstractDao<T extends AbstractEntity<I>, I extends Serializable> extends CustomQueryDslJpaRepositoryImpl<T, I> {

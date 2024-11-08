@@ -1,11 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.asm;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamRoleTypeDto;
-import me.goodt.vkpht.module.orgstructure.domain.entity.ProjectTeamRoleTypeEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.ProjectTeamRoleTypeDto;
+import me.goodt.vkpht.module.orgstructure.domain.entity.ProjectTeamRoleTypeEntity;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class ProjectTeamRoleTypeAsm extends AbstractAsm<ProjectTeamRoleTypeEntity, ProjectTeamRoleTypeDto> {

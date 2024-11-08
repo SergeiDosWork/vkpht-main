@@ -1,18 +1,18 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionGroupFilter;
-import me.goodt.vkpht.module.orgstructure.domain.entity.PositionGroupEntity;
-import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionGroupEntity;
-
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
+
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionGroupFilter;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionGroupEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionGroupEntity;
 
 @Repository
 public class PositionGroupDao extends AbstractDao<PositionGroupEntity, Long> {

@@ -8,7 +8,7 @@ import me.goodt.vkpht.module.orgstructure.dictionary.dto.LegalEntityTeamAssignme
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentConflictRoleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class LegalEntityTeamAssignmentConflictRolesAsm extends

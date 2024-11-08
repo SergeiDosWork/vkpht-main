@@ -7,9 +7,11 @@ import lombok.Setter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 @Getter
 @Setter
-public class CalculationMethodDto {
+public class CalculationMethodDto extends AbstractRes<CalculationMethodDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

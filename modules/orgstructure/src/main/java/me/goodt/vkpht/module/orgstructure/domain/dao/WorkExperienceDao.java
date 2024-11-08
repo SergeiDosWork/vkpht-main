@@ -1,11 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.WorkExperienceEntity;
+import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QWorkExperienceEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.WorkExperienceEntity;
 
 @Repository
 public class WorkExperienceDao extends AbstractDao<WorkExperienceEntity, Long> {

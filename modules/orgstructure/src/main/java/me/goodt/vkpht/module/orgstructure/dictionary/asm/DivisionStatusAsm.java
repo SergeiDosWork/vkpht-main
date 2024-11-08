@@ -1,11 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.asm;
 
-import me.goodt.vkpht.module.orgstructure.dictionary.dto.DivisionStatusDto;
-import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionStatusEntity;
-import me.goodt.vkpht.common.application.asm.AbstractAsm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+
+import me.goodt.vkpht.module.orgstructure.dictionary.dto.DivisionStatusDto;
+import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionStatusEntity;
+import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class DivisionStatusAsm extends AbstractAsm<DivisionStatusEntity, DivisionStatusDto> {

@@ -1,15 +1,14 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import me.goodt.vkpht.module.orgstructure.domain.entity.QImportanceCriteriaGroupEntity;
-
 import com.querydsl.core.types.dsl.BooleanExpression;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.QImportanceCriteriaGroupEntity;
 
 @Repository
 public class ImportanceCriteriaGroupDao extends AbstractDao<ImportanceCriteriaGroupEntity, Long> {

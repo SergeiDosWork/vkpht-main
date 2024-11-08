@@ -1,15 +1,14 @@
 package me.goodt.vkpht.module.orgstructure.domain.dao;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.filter.FunctionStatusFilter;
-
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import jakarta.persistence.EntityManager;
-
+import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.dao.filter.FunctionStatusFilter;
 import me.goodt.vkpht.module.orgstructure.domain.entity.FunctionStatusEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QFunctionStatusEntity;
 

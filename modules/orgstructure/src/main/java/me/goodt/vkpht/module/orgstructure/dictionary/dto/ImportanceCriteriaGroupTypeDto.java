@@ -7,9 +7,11 @@ import lombok.Setter;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
+
 @Getter
 @Setter
-public class ImportanceCriteriaGroupTypeDto {
+public class ImportanceCriteriaGroupTypeDto extends AbstractRes<ImportanceCriteriaGroupTypeDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
