@@ -13,7 +13,7 @@ import me.goodt.vkpht.module.orgstructure.dictionary.dto.StructureStatusDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.StructureStatusEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 
 @Service
 @RequiredArgsConstructor

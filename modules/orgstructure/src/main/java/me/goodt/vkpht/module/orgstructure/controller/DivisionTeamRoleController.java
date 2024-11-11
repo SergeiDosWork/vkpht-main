@@ -33,9 +33,9 @@ import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamRoleEntity;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
-import me.goodt.vkpht.module.orgstructure.api.IDivisionTeamRoleService;
-import me.goodt.vkpht.module.orgstructure.api.IEmployeeService;
+import me.goodt.vkpht.module.orgstructure.api.DivisionService;
+import me.goodt.vkpht.module.orgstructure.api.DivisionTeamRoleService;
+import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
 import me.goodt.vkpht.common.application.util.CoreUtils;
 import me.goodt.vkpht.common.domain.entity.DomainObject;
 
@@ -45,10 +45,10 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @RequiredArgsConstructor
 public class DivisionTeamRoleController {
 
-    private final IDivisionTeamRoleService divisionTeamRoleService;
+    private final DivisionTeamRoleService divisionTeamRoleService;
     private final DivisionTeamRoleDao divisionTeamRoleDao;
-    private final IDivisionService divisionService;
-    private final IEmployeeService findService;
+    private final DivisionService divisionService;
+    private final EmployeeService findService;
     private final ILoggerService loggerService;
 
     @Operation(summary = "Получение информации о роли в команде подразделения", description = "Получение информации о роли в команде подразделения", tags = {"division_team_role"})

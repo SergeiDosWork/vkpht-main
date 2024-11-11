@@ -24,5 +24,11 @@ module vkpht.main.mod.orgstructure {
     requires com.querydsl.jpa;
     requires org.apache.commons.collections4;
     requires com.fasterxml.jackson.annotation;
-    //    exports me.goodt.vkpht.module.orgstructure.api;
+    requires org.mapstruct;
+
+    exports me.goodt.vkpht.module.orgstructure.api;
+    exports me.goodt.vkpht.module.orgstructure.api.dto;
+    exports me.goodt.vkpht.module.orgstructure.api.dto.passport;
+    exports me.goodt.vkpht.module.orgstructure.api.dto.projection;
+    exports me.goodt.vkpht.module.orgstructure.api.dto.request;
 }

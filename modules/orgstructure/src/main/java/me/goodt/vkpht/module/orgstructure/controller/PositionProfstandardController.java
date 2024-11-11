@@ -15,14 +15,14 @@ import me.goodt.vkpht.module.orgstructure.api.dto.PositionProfstandardInputDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionProfstandardFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionProfstandardEntity;
-import me.goodt.vkpht.module.orgstructure.api.IPositionProfstandardService;
+import me.goodt.vkpht.module.orgstructure.api.PositionProfstandardService;
 
 @RestController
 @GeneralAPIResponses
 @RequiredArgsConstructor
 public class PositionProfstandardController {
 
-    private final IPositionProfstandardService positionProfstandardService;
+    private final PositionProfstandardService positionProfstandardService;
 
     @Operation(summary = "Получение информации о всех cвязях должности с профстандартами", description = "Получение информации о всех cвязях должности с профстандартами", tags = {"org_position_profstandard"})
     @GetMapping("/api/position-profstandard/all")

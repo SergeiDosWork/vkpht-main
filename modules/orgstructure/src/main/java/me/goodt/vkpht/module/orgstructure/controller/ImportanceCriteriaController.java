@@ -22,10 +22,10 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.ImportanceCriteriaGroup
 import me.goodt.vkpht.module.orgstructure.domain.factory.ImportanceCriteriaGroupTypeFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionImportanceCriteriaFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IImportanceCriteriaService;
-import me.goodt.vkpht.module.orgstructure.api.ILegalEntityTeamAssignmentService;
+import me.goodt.vkpht.module.orgstructure.api.ImportanceCriteriaService;
+import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
 import me.goodt.vkpht.common.application.util.TextConstants;
 
@@ -34,8 +34,8 @@ import me.goodt.vkpht.common.application.util.TextConstants;
 @RequiredArgsConstructor
 public class ImportanceCriteriaController {
 
-    private final ILegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
-    private final IImportanceCriteriaService importanceCriteriaService;
+    private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
+    private final ImportanceCriteriaService importanceCriteriaService;
     private final ILoggerService loggerService;
     private final AuthService authService;
 

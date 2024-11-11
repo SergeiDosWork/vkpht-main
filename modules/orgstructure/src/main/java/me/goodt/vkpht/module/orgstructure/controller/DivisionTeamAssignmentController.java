@@ -28,8 +28,8 @@ import me.goodt.vkpht.module.orgstructure.api.dto.projection.DivisionTeamAssignm
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IAssignmentService;
-import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
+import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
+import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 
 @Slf4j
 @GeneralAPIResponses
@@ -37,8 +37,8 @@ import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
 @RequiredArgsConstructor
 public class DivisionTeamAssignmentController {
 
-    private final IDivisionService divisionService;
-    private final IAssignmentService assignmentService;
+    private final DivisionService divisionService;
+    private final AssignmentService assignmentService;
     private final ILoggerService loggerService;
 
     @Operation(summary = "Получение списка назначений c пагинацией", description = "Получение списка назначений c пагинацией по переданным параметрам", tags = {"division_team_assignment"})

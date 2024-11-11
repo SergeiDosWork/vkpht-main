@@ -22,14 +22,14 @@ import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.WorkExperienceTypeFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.WorkExperienceTypeEntity;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IWorkExperienceTypeService;
+import me.goodt.vkpht.module.orgstructure.api.WorkExperienceTypeService;
 
 @RestController
 @GeneralAPIResponses
 @RequiredArgsConstructor
 public class WorkExperienceTypeController {
 
-	private final IWorkExperienceTypeService workExperienceTypeService;
+	private final WorkExperienceTypeService workExperienceTypeService;
 	private final ILoggerService loggerService;
 
 	@Operation(summary = "Получение инфорации о всех типах опыта работы", description = "Получение информации о всех типах опыта работы", tags = {"work_experience_type"})

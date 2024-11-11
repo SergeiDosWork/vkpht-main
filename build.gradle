@@ -30,6 +30,7 @@ ext {
     postgreJDBCDriverVersion = '42.7.4'
     queryDslVersion = '6.8'
     springDocVersion = '1.8.0'
+    mapstructVersion = '1.6.3'
     authSurCoreVersion = '1.0.57'
 }
 

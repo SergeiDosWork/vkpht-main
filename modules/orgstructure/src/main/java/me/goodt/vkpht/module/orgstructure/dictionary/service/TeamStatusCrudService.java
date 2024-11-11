@@ -10,7 +10,7 @@ import com.goodt.drive.crud.AbstractArchiveDictionaryService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.TeamStatusDao;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.TeamStatusEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 
 @Service
 public class TeamStatusCrudService extends AbstractArchiveDictionaryService<TeamStatusEntity, Integer> {

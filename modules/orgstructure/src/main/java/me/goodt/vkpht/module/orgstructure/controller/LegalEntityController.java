@@ -15,14 +15,14 @@ import java.util.Map;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.projection.LegalEntityTeamAssignmentCompactProjection;
-import me.goodt.vkpht.module.orgstructure.api.ILegalService;
+import me.goodt.vkpht.module.orgstructure.api.LegalService;
 
 @RestController
 @RequiredArgsConstructor
 @GeneralAPIResponses
 public class LegalEntityController {
 
-    private final ILegalService legalService;
+    private final LegalService legalService;
 
     @Operation(summary = "Получение информации о всех организациях", description = "Получение информации о всех организациях", tags = {"legal_entity"})
     @GetMapping("/api/legalentity/list")

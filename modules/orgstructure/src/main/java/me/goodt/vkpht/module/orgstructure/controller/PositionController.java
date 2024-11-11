@@ -84,12 +84,12 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionRankEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadinessEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.ILoggerService;
 import com.goodt.drive.rtcore.service.notification.NotificationService;
-import me.goodt.vkpht.module.orgstructure.api.ICalculationRiskService;
-import me.goodt.vkpht.module.orgstructure.api.IPositionService;
-import me.goodt.vkpht.module.orgstructure.api.IWorkplaceService;
+import me.goodt.vkpht.module.orgstructure.api.CalculationRiskService;
+import me.goodt.vkpht.module.orgstructure.api.PositionService;
+import me.goodt.vkpht.module.orgstructure.api.WorkplaceService;
 import me.goodt.vkpht.common.application.util.TextConstants;
 
 @RestController
@@ -97,11 +97,11 @@ import me.goodt.vkpht.common.application.util.TextConstants;
 @RequiredArgsConstructor
 public class PositionController {
 
-    private final IPositionService positionService;
+    private final PositionService positionService;
     private final ILoggerService loggerService;
-    private final ICalculationRiskService calculationRiskService;
+    private final CalculationRiskService calculationRiskService;
     private final NotificationService notificationService;
-    private final IWorkplaceService workplaceService;
+    private final WorkplaceService workplaceService;
     private final AuthService authService;
 
     @Operation(summary = "Получение информации о всех актуальных типах позиций",

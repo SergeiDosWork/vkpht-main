@@ -25,14 +25,14 @@ import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.common.application.exception.ForbiddenException;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IRoleService;
+import me.goodt.vkpht.module.orgstructure.api.RoleService;
 
 @RestController
 @GeneralAPIResponses
 @RequiredArgsConstructor
 public class RoleController {
 
-    private final IRoleService roleService;
+    private final RoleService roleService;
     private final ILoggerService loggerService;
 
     @Operation(summary = "Получение информации о всех актуальных ролях", description = "Получение информации о всех актуальных ролях", tags = {"role"})

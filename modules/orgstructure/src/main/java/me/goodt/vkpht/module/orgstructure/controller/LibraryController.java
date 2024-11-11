@@ -28,14 +28,14 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.AssignmentReadinessFact
 import me.goodt.vkpht.module.orgstructure.domain.factory.AssignmentRotationFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentReadinessEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentRotationEntity;
-import me.goodt.vkpht.module.orgstructure.api.ILibraryService;
+import me.goodt.vkpht.module.orgstructure.api.LibraryService;
 
 @RestController
 @RequiredArgsConstructor
 @GeneralAPIResponses
 public class LibraryController {
 
-    private final ILibraryService libraryService;
+    private final LibraryService libraryService;
     private final AssignmentReadinessDao assignmentReadinessDao;
     private final AssignmentRotationDao assignmentRotationDao;
     private final UnitAccessService unitAccessService;

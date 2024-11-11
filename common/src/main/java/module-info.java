@@ -5,6 +5,9 @@ module vkpht.main.common {
     requires transitive lombok;
     requires transitive org.slf4j;
     requires transitive org.apache.commons.lang3;
+    requires transitive org.apache.tomcat.embed.core;
+    requires transitive com.fasterxml.jackson.core;
+    requires transitive com.fasterxml.jackson.databind;
 
     requires spring.data.commons;
     requires spring.web;
@@ -12,7 +15,6 @@ module vkpht.main.common {
     requires spring.hateoas;
     requires spring.tx;
     requires spring.data.jpa;
-    requires com.fasterxml.jackson.databind;
     requires java.compiler;
     requires json.path;
     requires com.github.victools.jsonschema.generator;
@@ -37,7 +39,7 @@ module vkpht.main.common {
     exports me.goodt.vkpht.common.domain.dao.filter;
     exports me.goodt.vkpht.common.domain.entity;
     exports me.goodt.vkpht.common.domain.mapper;
-    exports me.goodt.vkpht.common.application;
+    exports me.goodt.vkpht.common.application.impl;
     exports me.goodt.vkpht.common.application.exception;
     exports me.goodt.vkpht.common.application.util;
     exports me.goodt.vkpht.common.dictionary.core.asm;

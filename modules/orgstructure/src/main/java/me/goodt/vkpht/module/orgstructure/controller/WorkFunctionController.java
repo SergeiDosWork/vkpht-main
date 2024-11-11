@@ -18,14 +18,14 @@ import me.goodt.vkpht.module.orgstructure.api.dto.WorkFunctionDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.WorkFunctionFactory;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IWorkFunctionService;
+import me.goodt.vkpht.module.orgstructure.api.WorkFunctionService;
 
 @RestController
 @GeneralAPIResponses
 @RequiredArgsConstructor
 public class WorkFunctionController {
 
-    private final IWorkFunctionService workFunctionService;
+    private final WorkFunctionService workFunctionService;
     private final ILoggerService loggerService;
 
     @Operation(summary = "Получение информации о рабочей функции", description = "Получение информации о рабочей функции", tags = {"work_function"})

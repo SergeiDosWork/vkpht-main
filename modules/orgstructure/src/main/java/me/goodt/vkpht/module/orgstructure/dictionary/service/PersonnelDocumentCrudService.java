@@ -20,7 +20,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonnelDocumentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonnelDocumentFormEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonnelDocumentTypeEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 
 @Service
 @RequiredArgsConstructor

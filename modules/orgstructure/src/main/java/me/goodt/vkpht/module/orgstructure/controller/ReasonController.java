@@ -22,10 +22,10 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.ReasonTypeFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonTypeEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.ILegalEntityTeamAssignmentService;
-import me.goodt.vkpht.module.orgstructure.api.IReasonService;
+import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
+import me.goodt.vkpht.module.orgstructure.api.ReasonService;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
 
 @RestController
@@ -33,8 +33,8 @@ import me.goodt.vkpht.common.application.util.GlobalDefs;
 @RequiredArgsConstructor
 public class ReasonController {
 
-    private final ILegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
-    private final IReasonService reasonService;
+    private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
+    private final ReasonService reasonService;
     private final ILoggerService loggerService;
     private final AuthService authService;
 

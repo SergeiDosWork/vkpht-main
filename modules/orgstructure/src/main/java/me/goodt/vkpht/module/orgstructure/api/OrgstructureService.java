@@ -3,8 +3,13 @@ package me.goodt.vkpht.module.orgstructure.api;
 import java.util.Collection;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.api.dto.*;
-import com.goodt.drive.rtcore.dto.rostalent.orgstructure.DivisionInfoRequestDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoRequestDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.FunctionDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionDto;
 
 public interface OrgstructureService {
 
@@ -26,8 +31,6 @@ public interface OrgstructureService {
     PositionDto getPosition(Long positionId);
 
     List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds);
-
-    List<IEmployeeMetaLukView> getEmployeeMetaLukView();
 
     List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto dto);
 

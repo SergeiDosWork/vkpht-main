@@ -66,7 +66,7 @@ import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.ProcessEmployee
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.*;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.*;
 import me.goodt.vkpht.common.application.util.CoreUtils;
@@ -78,11 +78,11 @@ import me.goodt.vkpht.common.application.util.CoreUtils;
 @RequiredArgsConstructor
 public class EmployeeController {
 
-    private final IAssignmentService assignmentService;
-    private final ILegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
-    private final IEmployeeService employeeService;
-    private final IDivisionService divisionService;
-    private final IDivisionTeamAssignmentRotationService divisionTeamAssignmentRotationService;
+    private final AssignmentService assignmentService;
+    private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
+    private final EmployeeService employeeService;
+    private final DivisionService divisionService;
+    private final DivisionTeamAssignmentRotationService divisionTeamAssignmentRotationService;
     private final ILoggerService loggerService;
     private final DivisionDao divisionDao;
     private final EmployeeDao employeeDao;

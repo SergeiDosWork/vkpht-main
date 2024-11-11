@@ -7,7 +7,7 @@ import me.goodt.vkpht.common.domain.mapper.PositionTypeMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionTypeDao;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

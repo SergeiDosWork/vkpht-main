@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import com.goodt.drive.rtcore.api.orgstructure.filter.UnitFilter;
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
+import me.goodt.vkpht.module.orgstructure.domain.dao.filter.UnitFilter;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QUnitEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.UnitEntity;
 

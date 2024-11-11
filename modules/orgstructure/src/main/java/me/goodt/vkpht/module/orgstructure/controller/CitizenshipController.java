@@ -15,14 +15,14 @@ import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipInputDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.CitizenshipFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
-import me.goodt.vkpht.module.orgstructure.api.ICitizenshipService;
+import me.goodt.vkpht.module.orgstructure.api.CitizenshipService;
 
 @RestController
 @GeneralAPIResponses
 @RequiredArgsConstructor
 public class CitizenshipController {
 
-    private final ICitizenshipService citizenshipService;
+    private final CitizenshipService citizenshipService;
 
     @Operation(summary = "Получение информации о гражданстве", description = "Получение информации о гражданстве", tags = {"org_citizenship"})
     @GetMapping("/api/citizenship/{id}")

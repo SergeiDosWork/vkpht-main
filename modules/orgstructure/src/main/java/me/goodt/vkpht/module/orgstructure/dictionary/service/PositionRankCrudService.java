@@ -15,7 +15,7 @@ import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionRankDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.orgstructure.PositionRankMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionRankEntity;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
 
 @Service
 @RequiredArgsConstructor

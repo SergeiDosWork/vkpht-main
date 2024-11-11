@@ -13,7 +13,7 @@ import java.util.List;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamDto;
-import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
+import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 
 @RestController
 @RequestMapping("/api/division-team")
@@ -21,7 +21,7 @@ import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
 @GeneralAPIResponses
 public class DivisionTeamController {
 
-    private final IDivisionService divisionService;
+    private final DivisionService divisionService;
 
     @Operation(summary = "Получение информации о команде дивизиона", description = "Получение информации о команде дивизиона", tags = {"division_team"})
     @BadRequestAPIResponses

@@ -20,7 +20,7 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionGroupFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionShortInfoFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamSuccessorFactory;
-import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
+import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 import me.goodt.vkpht.common.application.util.TextConstants;
 
 import static java.util.stream.Collectors.toList;
@@ -31,7 +31,7 @@ import static java.util.stream.Collectors.toList;
 public class DivisionController {
 
     @Autowired
-    private IDivisionService divisionService;
+    private DivisionService divisionService;
 
     @Operation(summary = "Получение инфорации о подразделении", description = "Получение информации о подразделении и его руководителе", tags = {"division"})
     @GetMapping("/api/division/info")

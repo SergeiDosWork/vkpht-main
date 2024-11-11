@@ -18,14 +18,14 @@ import me.goodt.vkpht.module.orgstructure.api.dto.PersonnelDocumentDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PersonnelDocumentFactory;
 import me.goodt.vkpht.common.api.ILoggerService;
-import me.goodt.vkpht.module.orgstructure.api.IPersonnelDocumentService;
+import me.goodt.vkpht.module.orgstructure.api.PersonnelDocumentService;
 
 @RestController
 @RequiredArgsConstructor
 @SurProtected(operation = SurOperation.UNIT)
 public class PersonnelDocumentController {
 
-    private final IPersonnelDocumentService personnelDocumentService;
+    private final PersonnelDocumentService personnelDocumentService;
     private final ILoggerService loggerService;
 
     @Operation(summary = "Получение информации о кадровом документе", description = "Получение информации о кадровом документе", tags = {"personnel_document"})
