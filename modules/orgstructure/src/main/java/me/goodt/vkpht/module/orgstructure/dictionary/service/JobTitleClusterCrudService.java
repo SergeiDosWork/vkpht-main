@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.JobTitleClusterDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleClusterDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleClusterEntity;
 import me.goodt.vkpht.common.api.AuthService;

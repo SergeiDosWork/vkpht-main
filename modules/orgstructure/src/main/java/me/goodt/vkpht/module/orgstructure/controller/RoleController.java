@@ -21,9 +21,9 @@ import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.common.api.dto.RoleInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
-import me.goodt.vkpht.common.application.exception.BadRequestException;
-import me.goodt.vkpht.common.application.exception.ForbiddenException;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.BadRequestException;
+import me.goodt.vkpht.common.api.exception.ForbiddenException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.RoleService;
 

@@ -14,7 +14,7 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.PersonnelDocumentFormDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PersonnelDocumentTypeDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PersonnelDocumentFilter;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.PersonnelDocumentDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonnelDocumentEntity;

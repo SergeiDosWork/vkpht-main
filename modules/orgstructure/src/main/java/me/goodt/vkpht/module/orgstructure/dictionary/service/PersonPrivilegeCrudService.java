@@ -13,7 +13,7 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PersonPrivilegeFilte
 import me.goodt.vkpht.module.orgstructure.domain.dao.PersonPrivilegeDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PrivilegeDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.PersonPrivilegeDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonPrivilegeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PrivilegeEntity;

@@ -15,7 +15,7 @@ import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.module.orgstructure.domain.dao.FunctionDao;
 import me.goodt.vkpht.module.orgstructure.api.dto.FunctionDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.FunctionFactory;
 
 @RestController

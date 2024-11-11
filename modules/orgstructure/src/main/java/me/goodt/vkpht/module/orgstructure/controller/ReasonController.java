@@ -16,7 +16,7 @@ import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonTypeDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.ReasonFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.ReasonTypeFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentEntity;

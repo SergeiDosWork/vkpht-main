@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.PositionProfstandardService;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionProfstandardInputDto;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionDao;

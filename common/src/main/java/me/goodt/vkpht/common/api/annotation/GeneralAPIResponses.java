@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-import me.goodt.vkpht.common.api.error.ErrorResponse;
+import me.goodt.vkpht.common.api.dto.error.ErrorResponse;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.CitizenshipService;
 import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipInputDto;
 import me.goodt.vkpht.module.orgstructure.domain.dao.CitizenshipDao;

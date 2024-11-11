@@ -1,10 +1,14 @@
-package me.goodt.vkpht.common.api.error;
+package me.goodt.vkpht.common.application.error;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 
-import me.goodt.vkpht.common.application.exception.BadRequestException;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.dto.error.ErrorResponse;
+import me.goodt.vkpht.common.api.dto.error.ValidationErrorResponse;
+
+import me.goodt.vkpht.common.api.exception.ForbiddenException;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.TypeMismatchException;
@@ -24,15 +28,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.goodt.drive.auth.sur.service.SurAccessException;
+import me.goodt.vkpht.common.api.exception.BadRequestException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 
 /**
  * Компонент обработки всех ошибок, возникших на стороне API.

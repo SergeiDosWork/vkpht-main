@@ -63,8 +63,8 @@ import com.goodt.drive.rtcore.service.tasksetting2.goalsetting.IndicatorGoalServ
 import com.goodt.drive.rtcore.service.tasksetting2.mapper.EmployeeMapper;
 import com.goodt.drive.rtcore.service.tasksetting2.task.IProcessService;
 import com.goodt.drive.rtcore.service.tasksetting2.task.ProcessEventService;
-import me.goodt.vkpht.common.application.exception.ForbiddenException;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.ForbiddenException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
 import me.goodt.vkpht.common.application.util.PersonUtil;
 import me.goodt.vkpht.common.application.util.UtilClass;

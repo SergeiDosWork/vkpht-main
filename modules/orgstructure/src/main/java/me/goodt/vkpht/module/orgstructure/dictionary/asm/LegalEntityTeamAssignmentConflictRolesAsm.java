@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.RoleDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LegalEntityTeamAssignmentConflictRolesDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentConflictRoleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;

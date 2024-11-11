@@ -1,4 +1,4 @@
-package me.goodt.vkpht.common.application.exception;
+package me.goodt.vkpht.common.api.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

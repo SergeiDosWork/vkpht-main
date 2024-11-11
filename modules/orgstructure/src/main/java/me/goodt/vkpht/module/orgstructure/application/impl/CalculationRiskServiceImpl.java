@@ -13,8 +13,8 @@ import java.util.Optional;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
-import me.goodt.vkpht.common.application.exception.BadRequestException;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.BadRequestException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.CalculationRiskService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.ImportanceCriteriaDao;

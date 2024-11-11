@@ -12,7 +12,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
 import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
 import me.goodt.vkpht.common.api.dto.PositionInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.*;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionGroupEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;

@@ -16,7 +16,7 @@ import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.annotation.Performance;
 import me.goodt.vkpht.module.orgstructure.api.dto.passport.PersonInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.request.PersonInfoRequest;
-import me.goodt.vkpht.common.application.exception.BadRequestException;
+import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeePassportService;
 

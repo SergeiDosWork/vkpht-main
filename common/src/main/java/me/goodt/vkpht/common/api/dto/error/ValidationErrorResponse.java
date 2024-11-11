@@ -1,4 +1,4 @@
-package me.goodt.vkpht.common.api.error;
+package me.goodt.vkpht.common.api.dto.error;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;

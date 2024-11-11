@@ -1,4 +1,4 @@
-package me.goodt.vkpht.common.application.exception;
+package me.goodt.vkpht.common.api.exception;
 
 public class UnavailableServiceException extends RuntimeException {
 

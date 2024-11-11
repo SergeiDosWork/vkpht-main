@@ -7,7 +7,7 @@ import java.util.Date;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.OrgReasonTypeDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ReasonDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonEntity;
 

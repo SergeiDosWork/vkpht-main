@@ -6,7 +6,7 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionTypeFilter;
 import me.goodt.vkpht.common.domain.mapper.PositionTypeMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionTypeDao;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.api.AuthService;
 
 import lombok.RequiredArgsConstructor;

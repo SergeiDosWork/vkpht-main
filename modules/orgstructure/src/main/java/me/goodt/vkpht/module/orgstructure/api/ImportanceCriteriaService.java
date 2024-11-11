@@ -6,7 +6,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.ImportanceCriteriaDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ImportanceCriteriaGroupDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ImportanceCriteriaGroupTypeDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionImportanceCriteriaDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CalculationMethodEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupEntity;

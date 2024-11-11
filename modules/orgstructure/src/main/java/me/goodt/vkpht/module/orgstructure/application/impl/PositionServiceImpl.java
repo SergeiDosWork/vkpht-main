@@ -36,7 +36,7 @@ import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterDtoFactory;
 import me.goodt.vkpht.common.api.AuthService;
 import com.goodt.drive.rtcore.service.tasksetting2.task.SimpleTaskServiceImpl;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.application.util.UtilClass;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.TaskEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.TaskFieldEntity;

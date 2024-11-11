@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-import com.goodt.drive.crud.AbstractArchiveDictionaryService;
+import me.goodt.vkpht.common.application.impl.AbstractArchiveDictionaryService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.TeamTypeDao;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.TeamTypeEntity;
 import me.goodt.vkpht.common.api.AuthService;
 

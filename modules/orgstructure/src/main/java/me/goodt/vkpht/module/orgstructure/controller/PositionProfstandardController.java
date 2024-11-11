@@ -12,7 +12,7 @@ import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionProfstandardDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionProfstandardInputDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionProfstandardFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionProfstandardEntity;
 import me.goodt.vkpht.module.orgstructure.api.PositionProfstandardService;

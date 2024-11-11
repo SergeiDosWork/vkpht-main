@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
-import me.goodt.vkpht.common.application.exception.ForbiddenException;
+import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDeputyDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
 
 @Service
 @Transactional
-public class EmployeeDeputyService extends AbstractCrudService<EmployeeDeputyEntity, Long> {
+public class EmployeeDeputyServiceImpl extends AbstractCrudService<EmployeeDeputyEntity, Long> {
 
     @Getter
     @Autowired

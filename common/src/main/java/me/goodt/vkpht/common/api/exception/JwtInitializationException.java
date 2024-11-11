@@ -1,4 +1,4 @@
-package me.goodt.vkpht.common.application.exception;
+package me.goodt.vkpht.common.api.exception;
 
 public class JwtInitializationException extends RuntimeException {
 

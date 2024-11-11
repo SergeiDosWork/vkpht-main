@@ -11,7 +11,7 @@ import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionCategoryDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionCategoryFilter;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionCategoryDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.PositionCategoryMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionCategoryEntity;
 import me.goodt.vkpht.common.api.AuthService;

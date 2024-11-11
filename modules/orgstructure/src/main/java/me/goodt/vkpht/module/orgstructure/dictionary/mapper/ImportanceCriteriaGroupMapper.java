@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.ImportanceCriteriaGroupTypeDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.ImportanceCriteriaGroupDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupEntity;
 

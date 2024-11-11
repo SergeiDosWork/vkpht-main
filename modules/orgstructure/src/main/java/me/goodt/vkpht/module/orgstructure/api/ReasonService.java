@@ -4,7 +4,7 @@ import java.util.List;
 
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonTypeDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonTypeEntity;
 

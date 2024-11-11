@@ -6,8 +6,8 @@ import java.util.List;
 import com.goodt.drive.rtcore.dto.rostalent.competence.CompetenceDto;
 import com.goodt.drive.rtcore.dto.tasksetting.CatalogsByUserDto;
 import com.goodt.drive.rtcore.dto.tasksetting.CompetenceDataDto;
-import me.goodt.vkpht.common.application.exception.JsonException;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.JsonException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.entity.rostalent.entities.CompetenceEntity;
 import me.goodt.vkpht.common.domain.entity.rostalent.entities.CompetenceProfilePositionEntity;
 

@@ -11,7 +11,7 @@ import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import com.goodt.drive.rtcore.dao.filter.JobTitleFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.JobTitleDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleEntity;
 import me.goodt.vkpht.common.api.AuthService;

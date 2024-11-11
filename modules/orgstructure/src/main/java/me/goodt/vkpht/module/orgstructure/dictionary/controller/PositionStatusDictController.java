@@ -22,7 +22,7 @@ import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.PositionStatusDto;
 import me.goodt.vkpht.module.orgstructure.dictionary.service.PositionStatusCrudService;
 import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
-import me.goodt.micro.core.util.DictionaryMetaGenerator;
+import me.goodt.vkpht.common.dictionary.core.controller.DictionaryMetaGenerator;
 
 @RestController
 @RequestMapping("/api/dict/position-status")

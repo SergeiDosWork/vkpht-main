@@ -1,6 +1,6 @@
 package me.goodt.vkpht.common.application.impl;
 
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 
 import me.goodt.vkpht.common.dictionary.core.service.AbstractDictionaryService;
 

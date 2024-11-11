@@ -1,5 +1,7 @@
 module vkpht.main.mod.orgstructure {
     requires vkpht.main.common;
+    requires auth.sur.core;
+
     requires com.zaxxer.hikari;
     requires jakarta.persistence;
     requires liquibase.core;

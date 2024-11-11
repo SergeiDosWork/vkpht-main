@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.AssignmentReadinessDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.AssignmentRotationDao;
 import me.goodt.vkpht.module.orgstructure.api.dto.AssignmentReadinessDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.AssignmentRotationDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.AssignmentReadinessFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.AssignmentRotationFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentReadinessEntity;

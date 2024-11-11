@@ -11,7 +11,7 @@ import java.util.List;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.WorkExperienceTypeService;
 import me.goodt.vkpht.module.orgstructure.api.dto.WorkExperienceTypeDto;
 import me.goodt.vkpht.module.orgstructure.domain.dao.WorkExperienceTypeDao;

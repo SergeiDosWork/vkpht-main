@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.ReasonService;
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ReasonTypeDto;

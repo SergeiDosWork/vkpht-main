@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityTeamAssignmentConflictRoleDao;
-import me.goodt.vkpht.common.application.exception.BadRequestException;
+import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentConflictRoleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
-import me.goodt.micro.core.service.AbstractDictionaryService;
+import me.goodt.vkpht.common.dictionary.core.service.AbstractDictionaryService;
 
 @Service
 public class LegalEntityTeamAssignmentConflictRoleCrudService extends

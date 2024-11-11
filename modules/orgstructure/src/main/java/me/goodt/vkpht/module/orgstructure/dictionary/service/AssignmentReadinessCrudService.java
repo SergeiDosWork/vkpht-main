@@ -11,7 +11,7 @@ import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.AssignmentReadinessFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.AssignmentReadinessDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.AssignmentReadinessDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentReadinessEntity;
 

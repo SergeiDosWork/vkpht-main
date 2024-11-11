@@ -12,7 +12,7 @@ import java.util.List;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.common.dictionary.core.controller.AbstractCrudController;
 import me.goodt.vkpht.module.orgstructure.api.dto.KblSlotRulesRes;
-import me.goodt.vkpht.module.orgstructure.application.KblSlotRulesService;
+import me.goodt.vkpht.module.orgstructure.application.impl.KblSlotRulesServiceImpl;
 import me.goodt.vkpht.module.orgstructure.dictionary.asm.KblSlotRulesAsm;
 import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
 
@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
 public class KblSlotRulesController extends AbstractCrudController<KblSlotRules, KblSlotRulesRes> {
 
     @Getter
-    private final KblSlotRulesService service;
+    private final KblSlotRulesServiceImpl service;
 
     @Getter
     private final KblSlotRulesAsm asm;

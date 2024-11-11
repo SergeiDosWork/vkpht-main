@@ -13,13 +13,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.List;
 
-import com.goodt.drive.rtcore.dto.tasksetting2.projection.EmployeeJobTitleProjection;
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.common.domain.dao.filter.JobTitleFilter;
 import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QJobTitleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.QPositionEntity;
+import me.goodt.vkpht.module.orgstructure.domain.projection.EmployeeJobTitleProjection;
 
 @Repository
 public class JobTitleDao extends AbstractDao<JobTitleEntity, Long> {

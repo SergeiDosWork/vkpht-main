@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;

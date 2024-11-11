@@ -8,7 +8,7 @@ import java.util.Date;
 import me.goodt.vkpht.module.orgstructure.domain.dao.JobTitleClusterDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.JobTitleDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.JobTitleDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.JobTitleEntity;
 

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import me.goodt.vkpht.module.orgstructure.domain.dao.LocationGroupEntityDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.LocationGroupDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LocationGroupEntity;
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 

@@ -9,7 +9,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.*;
 import com.goodt.drive.rtcore.dto.rostalent.position.PositionListRequest;
 import com.goodt.drive.rtcore.dto.rostalent.position.PositionListResponse;
 import com.goodt.drive.rtcore.dto.tasksetting2.FilterAwarePageResponse;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 
 public interface PositionService {

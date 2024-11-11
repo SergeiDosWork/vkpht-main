@@ -15,7 +15,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
 
 @Service
 @Transactional
-public class KblSlotRulesService extends AbstractCrudService<KblSlotRules, Long> {
+public class KblSlotRulesServiceImpl extends AbstractCrudService<KblSlotRules, Long> {
 
     @Getter
     @Autowired

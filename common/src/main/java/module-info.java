@@ -9,6 +9,7 @@ module vkpht.main.common {
     requires transitive com.fasterxml.jackson.core;
     requires transitive com.fasterxml.jackson.databind;
 
+    requires auth.sur.core;
     requires spring.data.commons;
     requires spring.web;
     requires spring.beans;
@@ -35,12 +36,13 @@ module vkpht.main.common {
     exports me.goodt.vkpht.common.api;
     exports me.goodt.vkpht.common.api.annotation;
     exports me.goodt.vkpht.common.api.dto;
+    exports me.goodt.vkpht.common.api.dto.error;
+    exports me.goodt.vkpht.common.api.exception;
     exports me.goodt.vkpht.common.domain.dao;
     exports me.goodt.vkpht.common.domain.dao.filter;
     exports me.goodt.vkpht.common.domain.entity;
     exports me.goodt.vkpht.common.domain.mapper;
     exports me.goodt.vkpht.common.application.impl;
-    exports me.goodt.vkpht.common.application.exception;
     exports me.goodt.vkpht.common.application.util;
     exports me.goodt.vkpht.common.dictionary.core.asm;
     exports me.goodt.vkpht.common.dictionary.core.dto;

@@ -7,6 +7,9 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
 import jakarta.persistence.EntityManager;
+
+import me.goodt.vkpht.module.orgstructure.domain.projection.UnitShortInfo;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

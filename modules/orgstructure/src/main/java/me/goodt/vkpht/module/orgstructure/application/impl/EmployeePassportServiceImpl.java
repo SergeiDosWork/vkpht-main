@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.RequiredArgsConstructor;
+
+import me.goodt.vkpht.module.orgstructure.domain.dao.filter.UnitFilter;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,14 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.goodt.drive.rtcore.api.orgstructure.filter.UnitFilter;
-import com.goodt.drive.rtcore.dictionary.orgstructure.mapper.PersonInfoMapper;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.entity.DomainObject;
 import me.goodt.vkpht.module.orgstructure.api.EmployeePassportService;
 import me.goodt.vkpht.module.orgstructure.api.dto.passport.PassportEmployeeDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.passport.PersonInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.passport.SecondaryInfoDto;
+import me.goodt.vkpht.module.orgstructure.dictionary.mapper.PersonInfoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.dao.CitizenshipDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDismissalDao;

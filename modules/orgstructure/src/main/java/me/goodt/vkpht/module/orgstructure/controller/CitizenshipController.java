@@ -12,7 +12,7 @@ import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipInputDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.CitizenshipFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
 import me.goodt.vkpht.module.orgstructure.api.CitizenshipService;

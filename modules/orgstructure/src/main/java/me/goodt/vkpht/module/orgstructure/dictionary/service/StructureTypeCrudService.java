@@ -10,7 +10,7 @@ import java.util.Date;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.StructureTypeFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.StructureTypeDao;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.StructureTypeDto;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.domain.mapper.CrudDtoMapper;
 import me.goodt.vkpht.module.orgstructure.domain.entity.StructureTypeEntity;
 import me.goodt.vkpht.common.api.AuthService;

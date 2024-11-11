@@ -20,9 +20,9 @@ import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.module.orgstructure.dictionary.dto.AssignmentStatusDto;
 import me.goodt.vkpht.module.orgstructure.dictionary.service.AssignmentStatusCrudService;
-import com.goodt.drive.rtcore.utils.CoreUtils;
+import me.goodt.vkpht.common.application.util.CoreUtils;
 import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
-import me.goodt.micro.core.util.DictionaryMetaGenerator;
+import me.goodt.vkpht.common.dictionary.core.controller.DictionaryMetaGenerator;
 
 @RestController
 @RequestMapping("/api/dict/assignment-status")

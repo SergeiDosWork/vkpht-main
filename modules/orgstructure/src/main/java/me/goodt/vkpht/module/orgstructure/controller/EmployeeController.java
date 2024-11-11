@@ -63,7 +63,7 @@ import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.EmployeeDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.CycleSubordinatesRequest;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.EmployeeByStatusRequest;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.ProcessEmployeeRequest;
-import me.goodt.vkpht.common.application.exception.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.*;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 import me.goodt.vkpht.common.api.AuthService;

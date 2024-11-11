@@ -32,7 +32,7 @@ import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.dictionary.core.controller.AbstractCrudController;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeDeputyDto;
-import me.goodt.vkpht.module.orgstructure.application.EmployeeDeputyService;
+import me.goodt.vkpht.module.orgstructure.application.impl.EmployeeDeputyServiceImpl;
 import me.goodt.vkpht.module.orgstructure.dictionary.asm.EmployeeDeputyAsm;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
 
@@ -44,7 +44,7 @@ public class EmployeeDeputyController extends AbstractCrudController<Long, Emplo
 
     private final ILoggerService loggerService;
     @Getter
-    private final EmployeeDeputyService service;
+    private final EmployeeDeputyServiceImpl service;
     @Getter
     private final EmployeeDeputyAsm asm;
 
