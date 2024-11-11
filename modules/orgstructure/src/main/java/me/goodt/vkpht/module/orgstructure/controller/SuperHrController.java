@@ -17,7 +17,7 @@ import me.goodt.vkpht.common.api.annotation.Performance;
 import me.goodt.vkpht.module.orgstructure.api.dto.passport.PersonInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.request.PersonInfoRequest;
 import me.goodt.vkpht.common.api.exception.BadRequestException;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeePassportService;
 
 @Performance
@@ -27,7 +27,7 @@ import me.goodt.vkpht.module.orgstructure.api.EmployeePassportService;
 @RequestMapping("api/super-hr")
 public class SuperHrController {
 
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     private final EmployeePassportService employeePassportService;
 
     @Operation(

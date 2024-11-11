@@ -67,7 +67,7 @@ import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.*;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.*;
 import me.goodt.vkpht.common.application.util.CoreUtils;
 
@@ -83,7 +83,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final DivisionService divisionService;
     private final DivisionTeamAssignmentRotationService divisionTeamAssignmentRotationService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     private final DivisionDao divisionDao;
     private final EmployeeDao employeeDao;
     private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;

@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.common.api.annotation.ApiPageable;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
@@ -42,7 +42,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
 @RequestMapping("/api/employee-deputy")
 public class EmployeeDeputyController extends AbstractCrudController<Long, EmployeeDeputyDto> {
 
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     @Getter
     private final EmployeeDeputyServiceImpl service;
     @Getter

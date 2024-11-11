@@ -17,7 +17,7 @@ import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.WorkFunctionDto;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.WorkFunctionFactory;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.WorkFunctionService;
 
 @RestController
@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.orgstructure.api.WorkFunctionService;
 public class WorkFunctionController {
 
     private final WorkFunctionService workFunctionService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
 
     @Operation(summary = "Получение информации о рабочей функции", description = "Получение информации о рабочей функции", tags = {"work_function"})
     @BadRequestAPIResponses

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -24,7 +24,7 @@ import com.goodt.drive.rtcore.security.AuthService;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoggerServiceImpl implements ILoggerService {
+public class LoggerServiceImpl implements LoggerService {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private static final Marker METHOD_LOG = MarkerFactory.getMarker("METHOD_LOG");

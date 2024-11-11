@@ -27,7 +27,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentWithDivi
 import me.goodt.vkpht.module.orgstructure.api.dto.projection.DivisionTeamAssignmentCompactProjection;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 
@@ -39,7 +39,7 @@ public class DivisionTeamAssignmentController {
 
     private final DivisionService divisionService;
     private final AssignmentService assignmentService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
 
     @Operation(summary = "Получение списка назначений c пагинацией", description = "Получение списка назначений c пагинацией по переданным параметрам", tags = {"division_team_assignment"})
     @PostMapping("/api/divisionteamassignment/find")

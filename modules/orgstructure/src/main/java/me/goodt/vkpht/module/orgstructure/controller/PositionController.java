@@ -85,7 +85,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadinessEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import com.goodt.drive.rtcore.service.notification.NotificationService;
 import me.goodt.vkpht.module.orgstructure.api.CalculationRiskService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
@@ -98,7 +98,7 @@ import me.goodt.vkpht.common.application.util.TextConstants;
 public class PositionController {
 
     private final PositionService positionService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     private final CalculationRiskService calculationRiskService;
     private final NotificationService notificationService;
     private final WorkplaceService workplaceService;

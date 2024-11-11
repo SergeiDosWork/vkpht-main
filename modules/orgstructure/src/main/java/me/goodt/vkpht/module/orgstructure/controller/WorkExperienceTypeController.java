@@ -21,7 +21,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.WorkExperienceTypeDto;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.WorkExperienceTypeFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.WorkExperienceTypeEntity;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.WorkExperienceTypeService;
 
 @RestController
@@ -30,7 +30,7 @@ import me.goodt.vkpht.module.orgstructure.api.WorkExperienceTypeService;
 public class WorkExperienceTypeController {
 
 	private final WorkExperienceTypeService workExperienceTypeService;
-	private final ILoggerService loggerService;
+	private final LoggerService loggerService;
 
 	@Operation(summary = "Получение инфорации о всех типах опыта работы", description = "Получение информации о всех типах опыта работы", tags = {"work_experience_type"})
     @SurProtected(operation = SurOperation.UNIT)

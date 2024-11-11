@@ -17,7 +17,7 @@ import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.PersonnelDocumentDto;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PersonnelDocumentFactory;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.PersonnelDocumentService;
 
 @RestController
@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.orgstructure.api.PersonnelDocumentService;
 public class PersonnelDocumentController {
 
     private final PersonnelDocumentService personnelDocumentService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
 
     @Operation(summary = "Получение информации о кадровом документе", description = "Получение информации о кадровом документе", tags = {"personnel_document"})
     @BadRequestAPIResponses

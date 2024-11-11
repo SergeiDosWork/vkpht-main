@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmen
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonTypeEntity;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.ReasonService;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
@@ -35,7 +35,7 @@ public class ReasonController {
 
     private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
     private final ReasonService reasonService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     private final AuthService authService;
 
     @Operation(summary = "Получение информации о всех типах причин", description = "Получение информации о всех типах причин", tags = {"reason"})

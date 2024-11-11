@@ -24,7 +24,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
 import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.RoleService;
 
 @RestController
@@ -33,7 +33,7 @@ import me.goodt.vkpht.module.orgstructure.api.RoleService;
 public class RoleController {
 
     private final RoleService roleService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
 
     @Operation(summary = "Получение информации о всех актуальных ролях", description = "Получение информации о всех актуальных ролях", tags = {"role"})
     @GetMapping("/api/role/list")

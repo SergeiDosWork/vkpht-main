@@ -32,7 +32,7 @@ import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamRoleEntity;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionTeamRoleService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
@@ -49,7 +49,7 @@ public class DivisionTeamRoleController {
     private final DivisionTeamRoleDao divisionTeamRoleDao;
     private final DivisionService divisionService;
     private final EmployeeService findService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
 
     @Operation(summary = "Получение информации о роли в команде подразделения", description = "Получение информации о роли в команде подразделения", tags = {"division_team_role"})
     @BadRequestAPIResponses

@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.ImportanceCriteriaGroup
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionImportanceCriteriaFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.api.ILoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 import me.goodt.vkpht.module.orgstructure.api.ImportanceCriteriaService;
 import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
@@ -36,7 +36,7 @@ public class ImportanceCriteriaController {
 
     private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
     private final ImportanceCriteriaService importanceCriteriaService;
-    private final ILoggerService loggerService;
+    private final LoggerService loggerService;
     private final AuthService authService;
 
     @Operation(summary = "Получение информации о всех типах групп критериев важности", description = "Получение информации о всех типах групп критериев важности", tags = {"importancecriteria"})
