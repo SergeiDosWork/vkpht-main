@@ -10,8 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import com.goodt.drive.rtcore.data.EmployeeInfo;
-import com.goodt.drive.rtcore.data.EmployeeSearchResult;
+import me.goodt.vkpht.common.api.dto.EmployeeInfo;
+import me.goodt.vkpht.common.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeFlatInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import com.goodt.drive.rtcore.dto.rostalent.ResponseNumberDto;

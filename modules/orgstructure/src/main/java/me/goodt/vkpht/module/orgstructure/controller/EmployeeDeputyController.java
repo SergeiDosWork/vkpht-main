@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.common.api.annotation.ApiPageable;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;

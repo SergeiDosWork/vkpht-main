@@ -1,10 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.dictionary.asm;
 
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeDeputyDto;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import com.goodt.drive.rtcore.dto.orgstructure.EmployeeDeputyDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
 import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 

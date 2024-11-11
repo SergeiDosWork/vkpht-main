@@ -27,7 +27,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentWithDivi
 import me.goodt.vkpht.module.orgstructure.api.dto.projection.DivisionTeamAssignmentCompactProjection;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.IAssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
 

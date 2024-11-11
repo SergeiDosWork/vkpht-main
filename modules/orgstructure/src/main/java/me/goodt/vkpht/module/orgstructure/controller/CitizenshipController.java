@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
-import com.goodt.drive.rtcore.data.OperationResult;
+import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipInputDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;

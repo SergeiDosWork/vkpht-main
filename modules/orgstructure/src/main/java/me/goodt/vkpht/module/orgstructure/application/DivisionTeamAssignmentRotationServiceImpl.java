@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.application;
 
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.IDivisionTeamAssignmentRotationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

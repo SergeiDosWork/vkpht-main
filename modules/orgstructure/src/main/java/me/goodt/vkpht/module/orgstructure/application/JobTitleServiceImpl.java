@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.application;
 
 import lombok.RequiredArgsConstructor;
+
+import me.goodt.vkpht.module.orgstructure.api.JobTitleService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 

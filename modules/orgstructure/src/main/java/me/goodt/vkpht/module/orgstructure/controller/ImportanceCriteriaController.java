@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
-import com.goodt.drive.rtcore.data.OperationResult;
+import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.*;
 import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.ImportanceCriteriaGroup
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionImportanceCriteriaFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.*;
 import com.goodt.drive.rtcore.security.AuthService;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.IImportanceCriteriaService;
 import me.goodt.vkpht.module.orgstructure.api.ILegalEntityTeamAssignmentService;
 import me.goodt.vkpht.common.application.util.GlobalDefs;

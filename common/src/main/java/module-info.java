@@ -1,6 +1,7 @@
 module vkpht.main.common {
     requires transitive jakarta.persistence;
     requires transitive jakarta.validation;
+    requires transitive jakarta.annotation;
     requires transitive lombok;
     requires transitive org.slf4j;
     requires transitive org.apache.commons.lang3;
@@ -29,9 +30,11 @@ module vkpht.main.common {
     requires io.swagger.v3.oas.annotations;
 
     exports me.goodt.vkpht.common;
+    exports me.goodt.vkpht.common.api;
     exports me.goodt.vkpht.common.api.annotation;
     exports me.goodt.vkpht.common.api.dto;
     exports me.goodt.vkpht.common.domain.dao;
+    exports me.goodt.vkpht.common.domain.dao.filter;
     exports me.goodt.vkpht.common.domain.entity;
     exports me.goodt.vkpht.common.domain.mapper;
     exports me.goodt.vkpht.common.application;

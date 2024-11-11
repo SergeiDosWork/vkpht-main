@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
-import com.goodt.drive.rtcore.data.DivisionInfo;
-import com.goodt.drive.rtcore.data.DivisionPathData;
-import com.goodt.drive.rtcore.data.DivisionShortInfo;
-import com.goodt.drive.rtcore.data.PositionInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
+import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.common.api.dto.PositionInfo;
 import com.goodt.drive.rtcore.dto.rostalent.DataForKafkaMessageInputDto;
 import com.goodt.drive.rtcore.dto.rostalent.SuccessorNotificateByCodeInputData;
 import com.goodt.drive.rtcore.security.AuthService;

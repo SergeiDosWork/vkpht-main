@@ -7,10 +7,10 @@ import org.springframework.security.access.AccessDeniedException;
 import java.util.Date;
 import java.util.List;
 
-import com.goodt.drive.rtcore.data.DivisionInfo;
-import com.goodt.drive.rtcore.data.DivisionPathData;
-import com.goodt.drive.rtcore.data.DivisionShortInfo;
-import com.goodt.drive.rtcore.data.PositionInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
+import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.common.api.dto.PositionInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.*;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;

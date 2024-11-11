@@ -32,7 +32,7 @@ import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamRoleEntity;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.IDivisionService;
 import me.goodt.vkpht.module.orgstructure.api.IDivisionTeamRoleService;
 import me.goodt.vkpht.module.orgstructure.api.IEmployeeService;

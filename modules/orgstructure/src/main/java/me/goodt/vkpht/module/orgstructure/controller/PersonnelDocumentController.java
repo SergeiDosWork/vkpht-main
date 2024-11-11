@@ -13,11 +13,11 @@ import java.util.stream.Collectors;
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
-import com.goodt.drive.rtcore.data.OperationResult;
+import me.goodt.vkpht.common.api.dto.OperationResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.PersonnelDocumentDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PersonnelDocumentFactory;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.IPersonnelDocumentService;
 
 @RestController

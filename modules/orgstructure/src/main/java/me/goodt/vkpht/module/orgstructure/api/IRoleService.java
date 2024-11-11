@@ -2,7 +2,7 @@ package me.goodt.vkpht.module.orgstructure.api;
 
 import java.util.List;
 
-import com.goodt.drive.rtcore.data.RoleInfo;
+import me.goodt.vkpht.common.api.dto.RoleInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentEntity;

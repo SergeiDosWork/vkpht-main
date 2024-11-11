@@ -5,6 +5,7 @@ module vkpht.main.mod.orgstructure {
     requires liquibase.core;
     requires lombok;
     requires org.slf4j;
+    requires org.hibernate.orm.core;
     requires spring.core;
     requires spring.boot;
     requires spring.boot.autoconfigure;

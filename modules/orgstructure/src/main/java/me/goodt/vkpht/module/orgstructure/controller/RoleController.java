@@ -18,13 +18,13 @@ import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
 import com.goodt.drive.auth.sur.service.SurProtectedAttr;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
-import com.goodt.drive.rtcore.data.OperationResult;
-import com.goodt.drive.rtcore.data.RoleInfo;
+import me.goodt.vkpht.common.api.dto.OperationResult;
+import me.goodt.vkpht.common.api.dto.RoleInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
 import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.common.application.exception.ForbiddenException;
 import me.goodt.vkpht.common.application.exception.NotFoundException;
-import com.goodt.drive.rtcore.service.logging.ILoggerService;
+import me.goodt.vkpht.common.api.ILoggerService;
 import me.goodt.vkpht.module.orgstructure.api.IRoleService;
 
 @RestController

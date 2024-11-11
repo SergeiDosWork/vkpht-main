@@ -1,6 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.application;
 
 import lombok.Getter;
+
+import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
+
+import me.goodt.vkpht.common.dictionary.core.service.Converter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

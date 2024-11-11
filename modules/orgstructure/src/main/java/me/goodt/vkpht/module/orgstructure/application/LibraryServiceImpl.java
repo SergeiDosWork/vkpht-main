@@ -1,5 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.application;
 
+import me.goodt.vkpht.module.orgstructure.api.ILibraryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

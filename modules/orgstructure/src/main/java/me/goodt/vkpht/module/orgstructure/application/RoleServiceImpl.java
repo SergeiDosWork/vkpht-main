@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import com.goodt.drive.rtcore.data.RoleInfo;
+import me.goodt.vkpht.common.api.dto.RoleInfo;
 import com.goodt.drive.rtcore.security.AuthService;
 import me.goodt.vkpht.common.application.exception.BadRequestException;
 import me.goodt.vkpht.common.application.exception.ForbiddenException;
