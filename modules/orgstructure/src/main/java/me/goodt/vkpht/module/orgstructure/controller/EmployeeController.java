@@ -48,8 +48,8 @@ import me.goodt.vkpht.common.api.annotation.Performance;
 import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.DivisionFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.*;
-import me.goodt.vkpht.common.api.dto.EmployeeInfo;
-import me.goodt.vkpht.common.api.dto.EmployeeSearchResult;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import com.goodt.drive.rtcore.dto.DtoTagConstants;
 import me.goodt.vkpht.module.orgstructure.api.dto.*;
@@ -101,22 +101,7 @@ public class EmployeeController {
         @RequestParam(name = "id", required = false) Long id,
         @Parameter(name = "external_employee", description = "Внешний идентификатор сотрудника (таблица employee).", example = "112")
         @RequestParam(name = "external_employee", required = false) String externalId) throws NotFoundException {
-        if (id == null && externalId == null) {
-            id = authService.getUserEmployeeId();
-        }
-
-        List<EmployeeEntity> employee = employeeDao.findByIdAndExternalId(id, externalId);
-        if (employee.isEmpty()) {
-            throw new NotFoundException(String.format("Employee with id=%d and external_employee=%s is not found", id, externalId));
-        } else if (employee.size() > 1) {
-            throw new NotFoundException(String.format("Found several employees with id=%d and external_employee=%s. " +
-                                                          "Perhaps there is no record in the employee table. ", id, externalId));
-        }
-
-        EmployeeEntity uniqueEmployee = employee.get(0);
-        EmployeeInfo info = employeeService.getEmployeeInfo(uniqueEmployee.getId());
-
-        return EmployeeExtendedInfoFactory.create(uniqueEmployee, info.getAssignments());
+        return employeeService.getEmployeExtendedInfo(id, externalId);
     }
 
     @Operation(summary = "Получение информации о сотруднике", description = "Получение информации о сотруднике без вложенных объектов. " +
@@ -208,7 +193,8 @@ public class EmployeeController {
             divisionIds = data.getDivisionIds();
         }
 
-        Page<EmployeeEntity> employees = employeeService.findEmployeeNew(employeeIds, divisionIds, functionIds, jobTitleId, positionShortName, legalEntityId, searchingValue, withPatronymic, withClosed, employeeNumber, emails, pageable);
+        Page<EmployeeEntity> employees = employeeService.findEmployeeNew(employeeIds, divisionIds, functionIds, jobTitleId,
+            positionShortName, legalEntityId, searchingValue, withPatronymic, withClosed, employeeNumber, emails, pageable);
         List<EmployeeInfoDto> employeeInfoDtoList = employeeService.getEmployeeInfoList(employees.getContent(), hasPositionAssignment);
 
         EmployeeInfoResponse response = new EmployeeInfoResponse();
@@ -339,31 +325,7 @@ public class EmployeeController {
             @RequestParam(name = "external_employee", required = false) String externalId,
             @Parameter(name = "team", description = "Идентификатор команды подразделения (таблица division_team_assignment).", example = "1")
             @RequestParam(name = "team", required = false) Long divisionTeamId) {
-        Long id = getEmployeeId(employeeId, externalId);
-        EmployeeSearchResult headSearchResult = employeeService.getDivisionTeamHead(id, divisionTeamId);
-        if (!headSearchResult.getSearchStatus()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "search result is empty, therefore we could't not return info");
-        }
-        if (headSearchResult.getEmployee() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "employee head not found, therefore we could't not return info");
-        }
-        EmployeeSearchResult headHeadSearchResult = employeeService.getDivisionTeamHead(headSearchResult.getEmployee().getId(), headSearchResult.getDivisionTeamId());
-        if (headHeadSearchResult.getEmployee() == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "head employee head not found, therefore we could't not return info");
-        }
-        DivisionTeamAssignmentEntity assignment = divisionTeamAssignmentDao.findById(headHeadSearchResult.getDivisionTeamAssignmentId()).get();
-        List<DivisionTeamAssignmentRotationShortDto> rotations = divisionTeamAssignmentRotationDao
-                .findByAssignmentId(assignment.getId())
-                .stream()
-                .map(DivisionTeamAssignmentRotationFactory::createShort)
-                .collect(Collectors.toList());
-        List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
-            PositionAssignmentFilter.builder()
-                .unitCode(unitAccessService.getCurrentUnit())
-                .employeeId(assignment.getEmployeeId())
-                .build()
-        );
-        return DivisionTeamAssignmentFactory.createWithJobInfo(assignment, positionAssignments, rotations);
+        return divisionService.getTeamDivisionHeadHead(employeeId, externalId, divisionTeamId);
     }
 
     @Operation(summary = "Получение информации о подчиненных в команде подразделения", description = "Получение информации о подчиненных в команде подразделения", tags = {"employee"})
@@ -421,8 +383,11 @@ public class EmployeeController {
         }
         List<EmployeeExtendedInfoDto> employees = new ArrayList<>();
         for (EmployeeEntity entity : employeeEntities) {
-            EmployeeInfo info = employeeService.getEmployeeInfo(entity.getId());
-            employees.add(EmployeeExtendedInfoFactory.create(entity, info.getAssignments()));
+            PositionAssignmentInfo info = employeeService.getPositionAssignmentInfo(entity.getId());
+            employees.add(EmployeeExtendedInfoFactory.create(
+                EmployeeInfoFactory.create(entity),
+                PersonFactory.create(entity.getPerson()),
+                info.getAssignments()));
         }
         return employees;
     }
@@ -701,19 +666,7 @@ public class EmployeeController {
     public EmployeeInfoDto getEmployeeInfoByAssignment(
             @Parameter(name = "division_team_assignment_id", description = "Идентификатор назначения (таблица division_team_assignment).", example = "1")
             @RequestParam(name = "division_team_assignment_id", required = false) Long divisionTeamAssignmentId) throws NotFoundException {
-        Optional<DivisionTeamAssignmentEntity> entityOptional = divisionTeamAssignmentDao.findById(divisionTeamAssignmentId);
-        if (entityOptional.isEmpty()) {
-            log.error("division team assignment not found, assignment id={}", divisionTeamAssignmentId);
-            throw new NotFoundException(String.format("division team assignment not found, assignment id=%s", divisionTeamAssignmentId));
-        }
-        EmployeeEntity employee = entityOptional.get().getEmployee();
-        List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
-            PositionAssignmentFilter.builder()
-                .unitCode(unitAccessService.getCurrentUnit())
-                .employeeId(employee.getId())
-                .build()
-        );
-        return EmployeeInfoFactory.createWithJobInfo(employee, positionAssignments);
+        return employeeService.getEmployeeInfoByAssignment(divisionTeamAssignmentId);
     }
 
     @Operation(summary = "Обновление комментариев", description = "Обновление комментариев", tags = {"employee"})

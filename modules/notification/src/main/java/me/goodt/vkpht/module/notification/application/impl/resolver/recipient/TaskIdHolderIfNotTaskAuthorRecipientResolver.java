@@ -44,7 +44,7 @@ public class TaskIdHolderIfNotTaskAuthorRecipientResolver implements RecipientRe
         }
 
         List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.ASSIGNMENTS, () ->
-            context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(Collections.singletonList(taskDto.getUserId()), null));
+            context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(taskDto.getUserId()), null));
         if (CollectionUtils.isEmpty(assignments)) {
             return;
         }

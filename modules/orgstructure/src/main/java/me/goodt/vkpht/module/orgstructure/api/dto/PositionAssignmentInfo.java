@@ -11,7 +11,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DivisionPathData {
-    private DivisionInfo current;
-    private List<DivisionShortInfo> parents;
+public class PositionAssignmentInfo {
+    private List<PositionAssignmentDto> assignments;
 }

@@ -34,7 +34,7 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentRes
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentShortResponse;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentSubstituteInfo;
 import me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceClient;
+import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.application.impl.resolver.strategy.NotificationTemplateContentRequestGetRecipientsStrategy;
 import me.goodt.vkpht.module.notification.application.impl.resolver.strategy.NotificationTemplateContentRequestGetRecipientsStrategyCopy;
 import me.goodt.vkpht.module.notification.application.impl.resolver.strategy.NotificationTemplateContentRequestGetRecipientsStrategyOriginal;
@@ -80,7 +80,7 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
 
 	private final NotificationTemplateContentAttachmentDao attachmentDao;
 
-	private final OrgstructureServiceClient orgstructureClient;
+	private final OrgstructureServiceAdapter orgstructureClient;
 
 	private final NotificationTemplateDao notificationTemplateDao;
 

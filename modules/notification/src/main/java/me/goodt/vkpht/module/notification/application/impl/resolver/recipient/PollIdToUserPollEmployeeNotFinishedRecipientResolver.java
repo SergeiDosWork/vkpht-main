@@ -31,7 +31,7 @@ public class PollIdToUserPollEmployeeNotFinishedRecipientResolver implements Rec
             log.info("poll_id = {}", pollId);
             if (pollId != null) {
                 List<UserPollDto> userPollList = context.getResolverServiceContainer().getQuizServiceClient().findUserPoll(pollId.longValue(), null, FALSE);
-                EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceClient().findEmployee(
+                EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceAdapter().findEmployee(
                     userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList()));
                 recipientList.addAll(employeeInfoResponse.getData());
             }

@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
-import me.goodt.vkpht.common.api.dto.EmployeeSearchResult;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.application.util.ExpiredConcurrentHashMap;

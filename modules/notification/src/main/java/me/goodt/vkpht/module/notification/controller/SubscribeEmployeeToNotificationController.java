@@ -17,7 +17,7 @@ import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceClient;
+import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 
 @RestController
@@ -26,7 +26,7 @@ public class SubscribeEmployeeToNotificationController {
 
 	private final SubscribeEmployeeToNotificationService subscribeEmployeeToNotificationService;
 
-	private final OrgstructureServiceClient orgstructureServiceClient;
+	private final OrgstructureServiceAdapter orgstructureServiceAdapter;
 
 	@Operation(summary = "Загрузка Управление подписками", description = "Получение данных по управлению подписками пользователя", tags = {"subscribe"})
 	@GetMapping("/api/subscribe-employee-to-notification")
@@ -47,7 +47,7 @@ public class SubscribeEmployeeToNotificationController {
 	}
 
 	private void checkExistsEmployee(Long employeeId) {
-		EmployeeInfoResponse employee = orgstructureServiceClient.findEmployee(Collections.singletonList(employeeId));
+		EmployeeInfoResponse employee = orgstructureServiceAdapter.findEmployee(Collections.singletonList(employeeId));
 		if (Objects.isNull(employee) || CollectionUtils.isEmpty(employee.getData())) {
 			throw new NotFoundException(TextConstants.ORGSTRUCTURE_CANNOT_FIND_EMPLOYEE);
 		}

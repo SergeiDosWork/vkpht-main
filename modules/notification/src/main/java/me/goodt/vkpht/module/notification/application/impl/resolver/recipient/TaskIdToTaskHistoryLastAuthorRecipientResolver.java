@@ -43,7 +43,7 @@ public class TaskIdToTaskHistoryLastAuthorRecipientResolver implements Recipient
                 .filter(th -> th.getDate() != null)
                 .max(Comparator.comparing(TaskHistoryDto::getDate))
                 .ifPresent(th -> {
-                    EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeInfo(th.getEmployeeId());
+                    EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(th.getEmployeeId());
                     if (employee != null) {
                         recipientList.add(employee);
                     }

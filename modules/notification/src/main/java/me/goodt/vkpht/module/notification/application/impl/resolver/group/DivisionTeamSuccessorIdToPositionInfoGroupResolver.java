@@ -31,12 +31,12 @@ public class DivisionTeamSuccessorIdToPositionInfoGroupResolver implements Token
 					if (token.getBasicValue().equals(FULL_NAME)) {
 						log.info(LOG_MESSAGE_TOKEN, DIVISION_TEAM_SUCCESSOR_ID_TO_POSITION_INFO, FULL_NAME);
 						DivisionTeamSuccessorDto divisionTeamSuccessor = (DivisionTeamSuccessorDto) context.getOrResolveObject(SavedObjectNames.DIVISION_TEAM_SUCCESSOR, () ->
-							context.getResolverServiceContainer().getOrgstructureServiceClient().getDivisionTeamSuccessor(divisionTeamSuccessorId.longValue()));
+							context.getResolverServiceContainer().getOrgstructureServiceAdapter().getDivisionTeamSuccessor(divisionTeamSuccessorId.longValue()));
 						List<DivisionTeamRoleContainerDto> roleContainer =
-							context.getResolverServiceContainer().getOrgstructureServiceClient().findDivisionTeamRoles(null, null, null, null, null, divisionTeamSuccessor.getDivisionTeamRole().getId());
+							context.getResolverServiceContainer().getOrgstructureServiceAdapter().findDivisionTeamRoles(null, null, null, null, null, divisionTeamSuccessor.getDivisionTeamRole().getId());
 						if (roleContainer != null && !roleContainer.isEmpty()) {
 							Long employeeId = roleContainer.getFirst().getDivisionTeamAssignmentDtos().get(0).getEmployee().getId();
-							List<PositionDto> positions = context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionByEmployeeIdAndDivisionId(employeeId, null);
+							List<PositionDto> positions = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionByEmployeeIdAndDivisionId(employeeId, null);
 							if (!positions.isEmpty()) {
 								resolvedTokenValues.put(DIVISION_TEAM_SUCCESSOR_ID_TO_POSITION_INFO_FULL_NAME, positions.getFirst().getFullName());
 							}

@@ -10,6 +10,9 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
 import jakarta.persistence.EntityManager;
+
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -48,6 +51,11 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
 
     private BooleanExpression checkUnit(String unitCode) {
         return legalEntity.unitCode.eq(unitCode);
+    }
+
+    public PositionEntity getById(Long positionId) {
+        return findById(positionId)
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id: %d is not found", positionId)));
     }
 
     public List<PositionEntity> getPositionByDivisionId(Long divisionId, String unitCode) {

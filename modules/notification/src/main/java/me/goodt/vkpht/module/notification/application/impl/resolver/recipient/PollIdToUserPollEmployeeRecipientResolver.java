@@ -38,7 +38,7 @@ public class PollIdToUserPollEmployeeRecipientResolver implements RecipientResol
             );
 
             if (userPollList != null) {
-                EmployeeInfoResponse employeeInfo = context.getResolverServiceContainer().getOrgstructureServiceClient().findEmployee(
+                EmployeeInfoResponse employeeInfo = context.getResolverServiceContainer().getOrgstructureServiceAdapter().findEmployee(
                     userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList()));
                 recipientList.addAll(employeeInfo.getData());
             }

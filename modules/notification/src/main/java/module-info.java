@@ -32,6 +32,7 @@ module vkpht.main.mod.notification {
     requires spring.webmvc;
     requires spring.kafka;
     requires kafka.clients;
+    requires org.json;
 
     exports me.goodt.vkpht.module.notification.api;
     exports me.goodt.vkpht.module.notification.api.dto;

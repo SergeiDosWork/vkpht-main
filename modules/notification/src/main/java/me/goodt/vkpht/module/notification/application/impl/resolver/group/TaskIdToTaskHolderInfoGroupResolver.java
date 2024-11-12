@@ -46,7 +46,7 @@ public class TaskIdToTaskHolderInfoGroupResolver implements TokenGroupResolver, 
 		}
 
 		List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.ASSIGNMENTS,
-																												   () -> context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null));
+																												   () -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null));
 
 		if (CollectionUtils.isEmpty(assignments)) {
 			log.debug(DIVISION_TEAM_ASSIGNMENT_IS_NOT_FOUND, taskDto.get().getUserId());

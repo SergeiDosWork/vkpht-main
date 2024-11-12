@@ -2,7 +2,7 @@ package me.goodt.vkpht.module.orgstructure.domain.factory;
 
 import lombok.experimental.UtilityClass;
 
-import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfoDto;
 
 @UtilityClass

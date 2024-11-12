@@ -25,7 +25,7 @@ public class StaticDivisionRecipientResolver implements RecipientResolver {
         }
         List<Long> divisionIds = recipient.getIds();
         try {
-            EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceClient().findEmployeeByDivision(divisionIds);
+            EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceAdapter().findEmployeeByDivision(divisionIds);
             recipientList.addAll(employeeInfoResponse.getData());
         } catch (Exception ex) {
             log.error(LOG_ERROR, ex.getMessage());

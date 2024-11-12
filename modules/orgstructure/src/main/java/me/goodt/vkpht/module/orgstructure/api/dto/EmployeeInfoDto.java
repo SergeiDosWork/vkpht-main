@@ -13,7 +13,7 @@ import java.util.List;
 @Accessors(chain = true)
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class EmployeeInfoDto {
+public class EmployeeInfoDto implements RecipientInfoDto {
 
     public EmployeeInfoDto(Long id, String externalId, String firstName, String lastName, String middleName,
                            String photo, String number, String email) {

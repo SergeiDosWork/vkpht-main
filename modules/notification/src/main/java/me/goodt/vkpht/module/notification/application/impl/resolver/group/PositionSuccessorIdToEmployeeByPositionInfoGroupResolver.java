@@ -37,19 +37,19 @@ public class PositionSuccessorIdToEmployeeByPositionInfoGroupResolver implements
 
 		try {
 			PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR,
-																									   () -> context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessor(positionSuccessorId.longValue()));
+																									   () -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()));
 			if (positionSuccessor == null) {
 				log.error("Position successor with id = {} not found", positionSuccessorId);
 				return;
 			}
 
-			PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
+			PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
 			if (positionAssignment == null) {
 				log.error("Position assignment not found by position_id = {}", positionSuccessor.getPosition().getId());
 				return;
 			}
 
-			EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeInfo(positionAssignment.getEmployeeId());
+			EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(positionAssignment.getEmployeeId());
 			if (employee == null) {
 				log.error("Employee with id = {} not found for position with id = {}", positionAssignment.getEmployeeId(), positionSuccessor.getPosition().getId());
 				return;

@@ -123,7 +123,7 @@ public class DivisionController {
     public DivisionTeamSuccessorDto getDivisionTeamSuccessor(
             @Parameter(name = "id", description = "Идентификатор преемника (таблица division_team_successor).", example = "3")
             @PathVariable("id") Long id) throws NotFoundException {
-        return DivisionTeamSuccessorFactory.create(divisionService.getDivisionTeamSuccessor(id));
+        return divisionService.getDivisionTeamSuccessor(id);
     }
 
     @Operation(summary = "Получение подразделения по типу", description = "Получение подразделения по типу", tags = {"division"})

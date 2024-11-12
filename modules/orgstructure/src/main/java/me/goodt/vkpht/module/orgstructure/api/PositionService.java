@@ -87,7 +87,7 @@ public interface PositionService {
 
     List<PositionSuccessorEntity> findPositionSuccessorAll();
 
-    PositionSuccessorEntity getPositionSuccessorById(Long id) throws NotFoundException;
+    PositionSuccessorDto getPositionSuccessorById(Long id) throws NotFoundException;
 
     PositionSuccessorEntity createPositionSuccessor(PositionSuccessorRawDto dto) throws NotFoundException;
 
@@ -99,7 +99,7 @@ public interface PositionService {
 
     List<PositionSuccessorReadinessEntity> findPositionSuccessorReadinessAll();
 
-    PositionSuccessorReadinessEntity getPositionSuccessorReadinessById(Long id) throws NotFoundException;
+    PositionSuccessorReadinessDto getPositionSuccessorReadinessById(Long id) throws NotFoundException;
 
     PositionSuccessorReadinessEntity createPositionSuccessorReadiness(PositionSuccessorReadinessRawDto dto) throws NotFoundException;
 
@@ -111,15 +111,15 @@ public interface PositionService {
 
     List<PositionRankEntity> findPositionRankAll();
 
-    PositionEntity getPosition(Long positionId) throws NotFoundException;
+    PositionDto getPosition(Long positionId) throws NotFoundException;
 
     PositionEntity updatePosition(Long positionId, PositionInputDto dto) throws NotFoundException;
 
-    List<PositionEntity> getPositionByEmployeeIdAndDivisionIds(Long employeeId, List<Long> divisionIds);
+    List<PositionDto> getPositionByEmployeeIdAndDivisionIds(Long employeeId, List<Long> divisionIds);
 
     List<PositionAssignmentSmp> getAllByDivision(Long divisionTeamId, boolean withChildren);
 
-    PositionAssignmentEntity getPositionAssignmentByPositionId(Long positionId);
+    PositionAssignmentDto getPositionAssignmentByPositionId(Long positionId);
 
     Map<Long, List<PositionAssignmentEntity>> findActualPositionAssignmentByEmployeeIds(Collection<Long> employeeIds);
 

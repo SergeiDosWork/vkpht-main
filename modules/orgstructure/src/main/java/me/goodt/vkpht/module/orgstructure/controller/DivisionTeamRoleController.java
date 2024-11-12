@@ -269,39 +269,10 @@ public class DivisionTeamRoleController {
         getParams.put("employee_successor", employeeSuccessorId);
         getParams.put("legal_entity_id", legalEntityId);
         loggerService.createLog(hash, "POST /api/divisionteamrole/find", getParams, null);
-
-        boolean isFindBySearchingValue = searchingValue != null && !searchingValue.isEmpty();
-        boolean withPositionSuccessors = isFindBySearchingValue && (legalEntityId != null || divisionTeamId != null || divisionTeamRoleId != null || divisionId != null);
         boolean isDivisionTeamRoleIdOnlyParam = getParams.values().stream().mapToInt(item -> item != null ? 1 : 0).sum() == 1;
-        validate(searchingValue, legalEntityId);
-        Set<Long> employeeIds = isFindBySearchingValue ? findService.findEmployee(null, null, null, searchingValue, legalEntityId, true, null, Pageable.unpaged())
-            .stream()
-            .map(DomainObject::getId)
-            .collect(Collectors.toSet()) : null;
-        List<DivisionTeamRoleDto> divisionTeamRoleDtos = new ArrayList<>();
-        if (!isFindBySearchingValue || !employeeIds.isEmpty()) {
-            divisionTeamRoleDtos = divisionTeamRoleDao.find(DivisionTeamRoleDao.FindQueryBuilder.newInstance(page, size)
-                                                                .employeeIds(employeeIds)
-                                                                .divisionTeamRoleId(divisionTeamRoleId)
-                                                                .divisionTeamId(divisionTeamId)
-                                                                .successorReadinessDateFromStart(successorReadinessDateFromStart)
-                                                                .successorReadinessDateFromEnd(successorReadinessDateFromEnd)
-                                                                .assignmentRotationDateFromStart(assignmentRotationDateFromStart)
-                                                                .assignmentRotationDateFromEnd(assignmentRotationDateFromEnd)
-                                                                .successorDateFrom(successorDateFrom)
-                                                                .successorReadinessDateFromPlusYear(successorReadinessDateFromPlusYear)
-                                                                .divisionId(divisionId)
-                                                                .employeeSuccessorId(employeeSuccessorId))
-                .stream()
-                .map(DivisionTeamRoleFactory::create)
-                .collect(Collectors.toList());
-        }
-        return divisionService.createRoleContainers(divisionTeamRoleDtos, withPositionSuccessors || isDivisionTeamRoleIdOnlyParam);
-    }
+        return divisionTeamRoleService.findDivisionTeamRoles(page, size, successorReadinessDateFromPlusYear, successorReadinessDateFromStart,
+            successorReadinessDateFromEnd, assignmentRotationDateFromStart, assignmentRotationDateFromEnd, successorDateFrom,
+            divisionTeamRoleId, divisionTeamId, divisionId, searchingValue, employeeSuccessorId, legalEntityId, isDivisionTeamRoleIdOnlyParam);
 
-    private void validate(String searchingValue, List<Long> legalEntityId) throws BadRequestException {
-        if (CollectionUtils.isNotEmpty(legalEntityId) && (StringUtils.isBlank(searchingValue))) {
-            throw new BadRequestException("Request with \"legal_entity_id\" can be contain \"search\" parameter");
-        }
     }
 }

@@ -29,7 +29,7 @@ public class EmployeeToEmployeeInfoGroupResolver implements TokenGroupResolver {
 			return;
 		}
 		EmployeeInfoDto employeeInfo = (EmployeeInfoDto) context.getOrResolveObject(SavedObjectNames.EMPLOYEE_INFO, () ->
-			context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeInfo(employeeId.longValue()));
+			context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(employeeId.longValue()));
 		if (Objects.isNull(employeeInfo)) {
 			return;
 		}

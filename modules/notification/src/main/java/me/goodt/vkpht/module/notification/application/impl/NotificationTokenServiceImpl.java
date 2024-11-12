@@ -1,6 +1,5 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.module.notification.domain.dao.NotificationTokenDao;
-import me.goodt.vkpht.module.notification.api.dto.NotificationTokenDto;
-import me.goodt.vkpht.module.notification.domain.factory.NotificationTokenFactory;
-import me.goodt.vkpht.module.notification.domain.entity.NotificationTokenEntity;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.NotificationTokenService;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTokenDto;
+import me.goodt.vkpht.module.notification.domain.dao.NotificationTokenDao;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationTokenEntity;
+import me.goodt.vkpht.module.notification.domain.factory.NotificationTokenFactory;
 
 @Service
 @RequiredArgsConstructor

@@ -35,7 +35,7 @@ public class DivisionTeamSuccessorIdToEmployeeRecipientResolver implements Recip
         try {
             DivisionTeamSuccessorDto divisionTeamSuccessor = (DivisionTeamSuccessorDto) context.getOrResolveObject(SavedObjectNames.DIVISION_TEAM_SUCCESSOR, () ->
                 Optional.ofNullable((Integer) context.getParameters().get(DIVISION_TEAM_SUCCESSOR_ID_TO_POSITION_INFO))
-                    .map(divisionTeamSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceClient().getDivisionTeamSuccessor(divisionTeamSuccessorId.longValue()))
+                    .map(divisionTeamSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getDivisionTeamSuccessor(divisionTeamSuccessorId.longValue()))
                     .orElse(null));
 
             if (divisionTeamSuccessor != null) {

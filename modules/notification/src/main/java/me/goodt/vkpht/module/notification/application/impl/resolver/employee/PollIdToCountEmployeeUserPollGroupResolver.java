@@ -58,7 +58,7 @@ public class PollIdToCountEmployeeUserPollGroupResolver implements TokenEmployee
 			}
 			List<Long> employeeIds = userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList());
 			List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.POLL_ASSIGNMENTS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(null, employeeIds));
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(null, employeeIds));
 			if (CollectionUtils.isEmpty(assignments)) {
 				return;
 			}
@@ -81,7 +81,7 @@ public class PollIdToCountEmployeeUserPollGroupResolver implements TokenEmployee
 							if (dtInfo.getHeadAssignment() != null) {
 								headTeam = dtInfo.getHeadAssignment();
 							} else {
-								headTeam = context.getResolverServiceContainer().getOrgstructureServiceClient()
+								headTeam = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
 									.getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtInfo.getDivisionTeamId());
 							}
 							dtInfo.setHeadAssignment(headTeam);

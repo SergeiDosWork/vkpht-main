@@ -31,7 +31,7 @@ public class PositionSuccessorIdToEmployeeInfoGroupResolver implements TokenGrou
 		}
 		try {
 			PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessor(positionSuccessorId.longValue()));
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()));
 			for (TokenWithValues token : context.getParsedTokens().get(POSITION_SUCCESSOR_ID_TO_EMPLOYEE_INFO)) {
 				if (token.getBasicValue().equals(FIO_FULL)) {
 					log.info(LOG_MESSAGE_TOKEN, POSITION_SUCCESSOR_ID_TO_EMPLOYEE_INFO, FIO_FULL);

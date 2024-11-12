@@ -39,7 +39,7 @@ public class DearUserEmployeeResolver implements TokenEmployeeResolver {
 
         if (employeeInfoDto instanceof EmployeeInfoDto) {
             extendedEmployeeInfoDto = (EmployeeExtendedInfoDto) context.getResolverServiceContainer()
-                .getOrgstructureServiceClient().getEmployeeInfo(employeeInfoDto.getId());
+                .getOrgstructureServiceAdapter().getEmployeeInfo(employeeInfoDto.getId());
         } else {
             extendedEmployeeInfoDto = null;
         }

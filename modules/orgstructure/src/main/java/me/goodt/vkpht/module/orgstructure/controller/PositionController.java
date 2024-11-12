@@ -505,7 +505,7 @@ public class PositionController {
     public PositionSuccessorDto getPositionSuccessor(
             @Parameter(name = "id", description = "Идентификатор position successor (см. таблицу position_successor)", example = "4")
             @PathVariable("id") Long id) throws NotFoundException {
-        return PositionSuccessorFactory.create(positionService.getPositionSuccessorById(id));
+        return positionService.getPositionSuccessorById(id);
     }
 
     @Operation(summary = "Создание position successor", description = "Создание position successor", tags = {"position"})
@@ -599,7 +599,7 @@ public class PositionController {
     public PositionSuccessorReadinessDto getPositionSuccessorReadiness(
             @Parameter(name = "id", description = "Идентификатор position successor readiness (см. таблицу position_successor_readiness)", example = "4")
             @PathVariable("id") Long id) throws NotFoundException {
-        return PositionSuccessorReadinessFactory.create(positionService.getPositionSuccessorReadinessById(id));
+        return positionService.getPositionSuccessorReadinessById(id);
     }
 
     @Operation(summary = "Создание position successor readiness", description = "Создание position successor readiness", tags = {"position"})
@@ -688,10 +688,7 @@ public class PositionController {
             @RequestParam(name = "employee_id", required = false) Long employeeId,
             @Parameter(name = "division_id", description = "Массив идентификаторов подразделения (таблица division).", example = "[1,2,3]")
             @RequestParam(name = "division_id", required = false) List<Long> divisionIds) {
-        return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, divisionIds)
-                .stream()
-                .map(PositionFactory::create)
-                .collect(Collectors.toList());
+        return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, divisionIds);
     }
 
     @Operation(summary = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", description = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", tags = {"position"})
@@ -701,10 +698,7 @@ public class PositionController {
             @RequestParam(name = "employee_id", required = false) Long employeeId,
             @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект, содержащий массив идентификаторов подразделения (таблица division).")
             @RequestBody DivisionIdsDto dto) {
-        return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, dto.getDivisionIds())
-                .stream()
-                .map(PositionFactory::create)
-                .collect(Collectors.toList());
+        return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, dto.getDivisionIds());
     }
 
     @Operation(summary = "Метод расчета рисков", description = "Метод расчета рисков", tags = {"position"})
@@ -722,7 +716,7 @@ public class PositionController {
     public PositionDto getPosition(
             @Parameter(name = "id", description = "Идентификатор Position (см. таблицу position)", example = "7")
             @PathVariable("id") Long positionId) throws NotFoundException {
-        return PositionFactory.create(positionService.getPosition(positionId));
+        return positionService.getPosition(positionId);
     }
 
     @Operation(summary = "Получение PositionAssignment по идентификатору Position", description = "Получение PositionAssignment по идентификатору Position", tags = {"position"})
@@ -730,7 +724,7 @@ public class PositionController {
     public PositionAssignmentDto getPositionAssignmentByPositionId(
             @Parameter(name = "position_id", description = "Идентификатор объекта Position (см. таблицу position_assignment)", example = "3")
             @RequestParam(name = "position_id") Long positionId) {
-        return PositionAssignmentFactory.create(positionService.getPositionAssignmentByPositionId(positionId));
+        return positionService.getPositionAssignmentByPositionId(positionId);
     }
 
     @Operation(summary = "Получение PositionAssignment для менеджера по division_team", description = "Получение PositionAssignment для менеджера по division_team", tags = {"position"})

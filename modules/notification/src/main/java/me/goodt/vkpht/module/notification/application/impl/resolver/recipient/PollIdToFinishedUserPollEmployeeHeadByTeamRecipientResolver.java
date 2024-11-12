@@ -57,7 +57,7 @@ public class PollIdToFinishedUserPollEmployeeHeadByTeamRecipientResolver impleme
 			}
 
 			List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.ASSIGNMENTS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient()
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter()
 					.getAssignments(userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList()), null));
 			if (CollectionUtils.isEmpty(assignments)) {
 				return;
@@ -76,7 +76,7 @@ public class PollIdToFinishedUserPollEmployeeHeadByTeamRecipientResolver impleme
 					if (entry.getValue().getHeadAssignment() != null) {
 						headTeam = entry.getValue().getHeadAssignment();
 					} else {
-						headTeam = context.getResolverServiceContainer().getOrgstructureServiceClient()
+						headTeam = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
 							.getEmployeeHead(entry.getValue().getEmployees().get(0).getId(), entry.getKey());
 					}
 					if (headTeam != null) {

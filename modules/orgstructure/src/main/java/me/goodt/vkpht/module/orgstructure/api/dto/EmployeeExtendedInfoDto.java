@@ -14,10 +14,10 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PersonEntity;
 @NoArgsConstructor
 public class EmployeeExtendedInfoDto extends EmployeeInfoDto {
 
-    public EmployeeExtendedInfoDto(EmployeeInfoDto employee, List<PositionAssignmentDto> positionAssignments, PersonEntity person) {
+    public EmployeeExtendedInfoDto(EmployeeInfoDto employee, List<PositionAssignmentDto> positionAssignments, PersonDto person) {
         super(employee.getId(), employee.getExternalId(), employee.getFirstName(), employee.getLastName(), employee.getMiddleName(), employee.getPhoto(),
               employee.getNumber(), employee.getEmail(), positionAssignments);
-        this.person = PersonFactory.create(person);
+        this.person = person;
     }
 
     private PersonDto person;

@@ -25,7 +25,7 @@ public class StaticEmployeeRecipientResolver implements RecipientResolver {
         }
         List<Long> employeeIds = recipient.getIds();
         try {
-            EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceClient().findEmployee(employeeIds);
+            EmployeeInfoResponse employeeInfoResponse = context.getResolverServiceContainer().getOrgstructureServiceAdapter().findEmployee(employeeIds);
             recipientList.addAll(employeeInfoResponse.getData());
         } catch (Exception ex) {
             log.error(LOG_ERROR, ex.getMessage());

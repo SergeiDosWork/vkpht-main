@@ -31,14 +31,14 @@ public class RecipientResolverHelper {
 	}
 
 	public static List<DivisionTeamAssignmentDto> getAssignmentsByUserId(ResolverContext context, Long userId) {
-		return context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(Collections.singletonList(userId), null);
+		return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(userId), null);
 	}
 
 	public static DivisionTeamAssignmentDto getHeadByAssignments(ResolverContext context, List<DivisionTeamAssignmentDto> assignmentResult) {
 		DivisionTeamAssignmentDto headAssignment = null;
 		if (!CollectionUtils.isEmpty(assignmentResult)) {
 			DivisionTeamAssignmentDto assignment = assignmentResult.getFirst();
-			headAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(assignment.getEmployee().getId(), assignment.getDivisionTeam().getId());
+			headAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(assignment.getEmployee().getId(), assignment.getDivisionTeam().getId());
 		}
 		return headAssignment;
 	}

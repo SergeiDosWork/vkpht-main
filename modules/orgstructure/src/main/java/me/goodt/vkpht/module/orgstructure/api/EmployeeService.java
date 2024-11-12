@@ -1,7 +1,12 @@
 package me.goodt.vkpht.module.orgstructure.api;
 
+import io.swagger.v3.oas.annotations.Parameter;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeExtendedInfoDto;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -10,10 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import me.goodt.vkpht.common.api.dto.EmployeeInfo;
-import me.goodt.vkpht.common.api.dto.EmployeeSearchResult;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeFlatInfoDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import com.goodt.drive.rtcore.dto.rostalent.ResponseNumberDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.EmployeesByStatusDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.FilterAwarePageResponse;
@@ -23,13 +24,17 @@ import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.EmployeeDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.EmployeeByStatusRequest;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.ProcessEmployeeRequest;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeFlatInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 
 public interface EmployeeService {
 
     EmployeeSearchResult getDivisionTeamHead(Long employeeId, Long divisionTeamId);
 
-    EmployeeInfo getEmployeeInfo(Long employeeId);
+    PositionAssignmentInfo getPositionAssignmentInfo(Long employeeId);
 
     EmployeeSearchResult getDivisionTeamHeadByDivisionTeam(Long divisionTeamId, Long headLevel);
 
@@ -38,6 +43,7 @@ public interface EmployeeService {
     EmployeeSearchResult getDivisionTeamHeadDivisionTeamAndEmployee(Long divisionTeamId, Long employeeId, Long headLevel);
 
     List<EmployeeEntity> findByIds(Collection<Long> ids);
+
     EmployeeEntity findById(Long id);
 
     Long getEmployeeIdByExternalId(String externalId);
@@ -67,4 +73,12 @@ public interface EmployeeService {
     String getUnitCode(Long employeeId);
 
     Long findIdByExternalId(String externalId);
+
+    EmployeeInfoDto getEmployeInfo(Long employeeId);
+
+    EmployeeInfoDto getEmployeInfo(Long employeeId, String externalId);
+
+    EmployeeExtendedInfoDto getEmployeExtendedInfo(Long employeeId, String externalId);
+
+    EmployeeInfoDto getEmployeeInfoByAssignment(Long divisionTeamAssignmentId);
 }

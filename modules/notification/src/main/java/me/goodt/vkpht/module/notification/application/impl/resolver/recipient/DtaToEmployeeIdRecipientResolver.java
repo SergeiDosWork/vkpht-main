@@ -33,7 +33,7 @@ public class DtaToEmployeeIdRecipientResolver implements RecipientResolver {
         Integer dtaId = (Integer) context.getParameters().get(DTA_TO_EMPLOYEE_ID);
         log.info("dta_id = {}", dtaId);
         if (dtaId != null) {
-            List<DivisionTeamAssignmentDto> assignments = context.getResolverServiceContainer().getOrgstructureServiceClient()
+            List<DivisionTeamAssignmentDto> assignments = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
                 .getAssignments(Collections.singletonList(dtaId.longValue()), null);
             if (assignments != null && !assignments.isEmpty()) {
                 recipientList.add(assignments.getFirst().getEmployee());

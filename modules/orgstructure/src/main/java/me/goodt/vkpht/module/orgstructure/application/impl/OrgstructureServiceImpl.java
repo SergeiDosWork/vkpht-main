@@ -79,7 +79,7 @@ public class OrgstructureServiceImpl implements OrgstructureService {
 	@Override
 	public PositionDto getPosition(Long positionId) {
 		try {
-			return PositionFactory.create(positionService.getPosition(positionId));
+			return positionService.getPosition(positionId);
 		} catch (NotFoundException e) {
 			throw new RuntimeException(e);
 		}

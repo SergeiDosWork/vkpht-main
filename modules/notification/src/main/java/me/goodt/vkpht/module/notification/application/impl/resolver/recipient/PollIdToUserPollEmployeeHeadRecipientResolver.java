@@ -44,7 +44,7 @@ public class PollIdToUserPollEmployeeHeadRecipientResolver implements RecipientR
 			}
 
 			List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.POLL_ASSIGNMENTS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient()
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter()
 					.getAssignments(null, userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList())));
 			if (CollectionUtils.isEmpty(assignments)) {
 				return;
@@ -56,7 +56,7 @@ public class PollIdToUserPollEmployeeHeadRecipientResolver implements RecipientR
                 if (dtInfo.getHeadAssignment() != null) {
                     headTeam = dtInfo.getHeadAssignment();
                 } else {
-                    headTeam = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
+                    headTeam = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
                 }
                 if (headTeam != null) {
                     recipientList.add(headTeam.getEmployee());

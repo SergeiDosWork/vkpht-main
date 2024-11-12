@@ -34,7 +34,7 @@ public class PositionSuccessorIdToPositionSuccessorInfoGroupResolver implements 
 		}
 		try {
 			PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessor(positionSuccessorId.longValue()));
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()));
 			for (TokenWithValues token : context.getParsedTokens().get(POSITION_SUCCESSOR_ID_TO_POSITION_SUCCESSOR_INFO)) {
 				if (token.getBasicValue().equals(DATE_FROM)) {
 					log.info(LOG_MESSAGE_TOKEN, POSITION_SUCCESSOR_ID_TO_POSITION_SUCCESSOR_INFO, DATE_FROM);

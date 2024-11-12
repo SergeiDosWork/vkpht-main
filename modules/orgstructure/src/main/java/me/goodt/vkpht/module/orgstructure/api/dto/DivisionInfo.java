@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import me.goodt.vkpht.common.api.dto.EmployeeInfo;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 
@@ -16,5 +15,5 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 public class DivisionInfo {
     private DivisionEntity division;
     private EmployeeEntity divisionHead;
-    private EmployeeInfo divisionHeadInfo;
+    private PositionAssignmentInfo divisionHeadInfo;
 }

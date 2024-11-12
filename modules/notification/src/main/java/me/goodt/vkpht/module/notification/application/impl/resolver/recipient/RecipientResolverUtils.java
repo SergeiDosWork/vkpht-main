@@ -170,14 +170,14 @@ public class RecipientResolverUtils {
 		Map<Long, DivisionTeamInfo> divisionTeamInfoMap = getDivisionTeamInfoMap(assignments);
 		divisionTeamInfoMap.forEach((dtId, dtInfo) -> {
 			if (dtInfo.getHeadAssignment() != null) {
-				DivisionTeamAssignmentDto headHeadAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(dtInfo.getHeadAssignment().getEmployee().getId(), dtId);
+				DivisionTeamAssignmentDto headHeadAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getHeadAssignment().getEmployee().getId(), dtId);
 				employeeList.add(headHeadAssignment.getEmployee());
 				dtInfo.getEmployeeIds().remove(dtInfo.getHeadAssignment().getEmployee().getId());
 				if (!dtInfo.getEmployeeIds().isEmpty()) {
 					employeeList.add(dtInfo.getHeadAssignment().getEmployee());
 				}
 			} else {
-				DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
+				DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
 				employeeList.add(headAssignment.getEmployee());
 			}
 		});
@@ -328,7 +328,7 @@ public class RecipientResolverUtils {
 						.setTaskFieldValue(tfValue)
 				);
 				if (taskList != null && !taskList.isEmpty()) {
-					return context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(taskList.stream().map(TaskDto::getUserId).filter(Objects::nonNull).collect(Collectors.toList()), null);
+					return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(taskList.stream().map(TaskDto::getUserId).filter(Objects::nonNull).collect(Collectors.toList()), null);
 				}
 			}
 		}

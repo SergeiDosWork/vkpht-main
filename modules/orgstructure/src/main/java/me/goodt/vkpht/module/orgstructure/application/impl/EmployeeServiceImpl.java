@@ -37,10 +37,6 @@ import java.util.stream.Stream;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import com.goodt.drive.rtcore.constants.ComponentCode;
-import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
-import me.goodt.vkpht.common.domain.dao.tasksetting2.ProcessTaskDao;
-import me.goodt.vkpht.common.api.dto.EmployeeInfo;
-import me.goodt.vkpht.common.api.dto.EmployeeSearchResult;
 import com.goodt.drive.rtcore.dto.rostalent.ResponseNumberDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.EmployeesByStatusDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.FilterAwarePageResponse;
@@ -56,18 +52,20 @@ import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterOption;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.EmployeeDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.EmployeeByStatusRequest;
 import com.goodt.drive.rtcore.dto.tasksetting2.goalsetting.input.ProcessEmployeeRequest;
-import me.goodt.vkpht.common.api.AuthService;
 import com.goodt.drive.rtcore.service.tasksetting2.CycleService;
 import com.goodt.drive.rtcore.service.tasksetting2.StatusService;
 import com.goodt.drive.rtcore.service.tasksetting2.goalsetting.IndicatorGoalService;
 import com.goodt.drive.rtcore.service.tasksetting2.mapper.EmployeeMapper;
 import com.goodt.drive.rtcore.service.tasksetting2.task.IProcessService;
 import com.goodt.drive.rtcore.service.tasksetting2.task.ProcessEventService;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
 import me.goodt.vkpht.common.application.util.PersonUtil;
 import me.goodt.vkpht.common.application.util.UtilClass;
+import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
+import me.goodt.vkpht.common.domain.dao.tasksetting2.ProcessTaskDao;
 import me.goodt.vkpht.common.domain.entity.orgstructure.specification.EmployeeSpecification;
 import me.goodt.vkpht.common.domain.entity.orgstructure.specification.SearchCriteria;
 import me.goodt.vkpht.common.domain.entity.orgstructure.specification.SearchOperation;
@@ -83,8 +81,12 @@ import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeExtendedInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeFlatInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDao;
@@ -99,7 +101,10 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PersonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
+import me.goodt.vkpht.module.orgstructure.domain.factory.EmployeeExtendedInfoFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.EmployeeInfoFactory;
+import me.goodt.vkpht.module.orgstructure.domain.factory.PersonFactory;
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionAssignmentFactory;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
@@ -232,14 +237,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeInfo getEmployeeInfo(Long employeeId) {
-        List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
+    public PositionAssignmentInfo getPositionAssignmentInfo(Long employeeId) {
+        List<PositionAssignmentDto> positionAssignments = positionAssignmentDao.findAll(
             PositionAssignmentFilter.builder()
                 .employeeId(employeeId)
                 .unitCode(unitAccessService.getCurrentUnit())
                 .build()
-        );
-        return new EmployeeInfo(positionAssignments);
+        ).stream()
+            .map(PositionAssignmentFactory::create)
+            .toList();
+        return new PositionAssignmentInfo(positionAssignments);
     }
 
     @Override
@@ -753,5 +760,59 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Long findIdByExternalId(String externalId) {
         return employeeDao.findIdByExternalId(externalId);
+    }
+
+    @Override
+    public EmployeeInfoDto getEmployeInfo(Long employeeId) {
+        return getEmployeInfo(employeeId, null);
+    }
+
+    @Override
+    public EmployeeInfoDto getEmployeInfo(Long employeeId, String externalId) {
+        EmployeeEntity employee = findEmployee(employeeId, externalId);
+        return EmployeeInfoFactory.create(employee);
+    }
+
+    @Override
+    public EmployeeExtendedInfoDto getEmployeExtendedInfo(Long employeeId, String externalId) {
+        EmployeeEntity employee = findEmployee(employeeId, externalId);
+        PositionAssignmentInfo info = getPositionAssignmentInfo(employee.getId());
+        return EmployeeExtendedInfoFactory.create(
+            EmployeeInfoFactory.create(employee),
+            PersonFactory.create(employee.getPerson()),
+            info.getAssignments());
+    }
+
+    @Override
+    public EmployeeInfoDto getEmployeeInfoByAssignment(Long divisionTeamAssignmentId) {
+        Optional<DivisionTeamAssignmentEntity> entityOptional = divisionTeamAssignmentDao.findById(divisionTeamAssignmentId);
+        if (entityOptional.isEmpty()) {
+            log.error("division team assignment not found, assignment id={}", divisionTeamAssignmentId);
+            throw new NotFoundException(String.format("division team assignment not found, assignment id=%s", divisionTeamAssignmentId));
+        }
+        EmployeeEntity employee = entityOptional.get().getEmployee();
+        List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
+            PositionAssignmentFilter.builder()
+                .unitCode(unitAccessService.getCurrentUnit())
+                .employeeId(employee.getId())
+                .build()
+        );
+        return EmployeeInfoFactory.createWithJobInfo(employee, positionAssignments);
+    }
+
+    private EmployeeEntity findEmployee(Long employeeId, String externalId) {
+        Long id = employeeId;
+        if (id == null && StringUtils.isBlank(externalId)) {
+            id = authService.getUserEmployeeId();
+        }
+
+        List<EmployeeEntity> employees = employeeDao.findByIdAndExternalId(id, externalId);
+        if (employees.isEmpty()) {
+            throw new NotFoundException(String.format("Employee with id=%d and external_employee=%s is not found", id, externalId));
+        } else if (employees.size() > 1) {
+            throw new NotFoundException(String.format("Found several employees with id=%d and external_employee=%s. " +
+                "Perhaps there is no record in the employee table. ", id, externalId));
+        }
+        return employees.getFirst();
     }
 }

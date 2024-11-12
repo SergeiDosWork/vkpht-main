@@ -4,6 +4,17 @@ import com.querydsl.core.Tuple;
 import com.querydsl.jpa.JPQLQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorReadinessDto;
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionAssignmentFactory;
+
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorFactory;
+
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorReadinessFactory;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -26,24 +37,25 @@ import java.util.stream.StreamSupport;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import com.goodt.drive.rtcore.constants.ComponentFieldCode;
-import me.goodt.vkpht.common.domain.dao.NativeDao;
-import me.goodt.vkpht.common.domain.dao.tasksetting2.TaskFieldDao;
 import com.goodt.drive.rtcore.dto.DivisionTeamTree;
 import com.goodt.drive.rtcore.dto.rostalent.position.PositionListRequest;
 import com.goodt.drive.rtcore.dto.rostalent.position.PositionListResponse;
 import com.goodt.drive.rtcore.dto.tasksetting2.FilterAwarePageResponse;
 import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterDtoFactory;
-import me.goodt.vkpht.common.api.AuthService;
 import com.goodt.drive.rtcore.service.tasksetting2.task.SimpleTaskServiceImpl;
+import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.common.application.util.UtilClass;
+import me.goodt.vkpht.common.domain.dao.NativeDao;
+import me.goodt.vkpht.common.domain.dao.tasksetting2.TaskFieldDao;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.TaskEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.TaskFieldEntity;
 import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
 import me.goodt.vkpht.module.orgstructure.api.WorkFunctionService;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionGradeDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionGroupDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionGroupPositionDto;
@@ -114,6 +126,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadine
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.composite.key.PositionPositionGradeId;
 import me.goodt.vkpht.module.orgstructure.domain.entity.composite.key.PositionPositionKrLevelId;
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionFactory;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
@@ -548,7 +561,7 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional(readOnly = true)
-    public PositionSuccessorEntity getPositionSuccessorById(Long id) throws NotFoundException {
+    public PositionSuccessorDto getPositionSuccessorById(Long id) throws NotFoundException {
         PositionSuccessorEntity entity = positionSuccessorDao.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("position_successor with id=%d is not found", id)));
         if (entity.getReasonInclusion() != null) {
@@ -557,7 +570,7 @@ public class PositionServiceImpl implements PositionService {
         if (entity.getReasonExclusion() != null) {
             unitAccessService.checkUnitAccess(entity.getReasonExclusion().getUnitCode());
         }
-        return entity;
+        return PositionSuccessorFactory.create(entity);
     }
 
     @Override
@@ -677,13 +690,13 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional(readOnly = true)
-    public PositionSuccessorReadinessEntity getPositionSuccessorReadinessById(Long id) throws NotFoundException {
+    public PositionSuccessorReadinessDto getPositionSuccessorReadinessById(Long id) throws NotFoundException {
         PositionSuccessorReadinessEntity entity = positionSuccessorReadinessDao.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("position_successor_readiness with id=%d is not found", id)));
         if (entity.getReadiness() != null) {
             unitAccessService.checkUnitAccess(entity.getReadiness().getUnitCode());
         }
-        return entity;
+        return PositionSuccessorReadinessFactory.create(entity);
     }
 
     @Override
@@ -763,17 +776,18 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional(readOnly = true)
-    public PositionEntity getPosition(Long positionId) throws NotFoundException {
+    public PositionDto getPosition(Long positionId) throws NotFoundException {
         PositionEntity entity = positionDao.findById(positionId)
             .orElseThrow(() -> new NotFoundException(String.format("Position with id: %d is not found", positionId)));
         checkUnit(entity);
-        return entity;
+        return PositionFactory.create(entity);
     }
 
     @Override
     @Transactional(rollbackFor = NotFoundException.class)
     public PositionEntity updatePosition(Long positionId, PositionInputDto dto) throws NotFoundException {
-        PositionEntity position = getPosition(positionId);
+        PositionEntity position = positionDao.getById(positionId);
+        checkUnit(position);
         position.setWorkFunction(dto.getWorkFunctionId() != null ? workFunctionService.get(dto.getWorkFunctionId()) : null);
         position.setPositionType(dto.getPositionTypeId() != null ? findPositionType(dto.getPositionTypeId()) : null);
         position.setUpdateDate(new Date());
@@ -783,8 +797,11 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PositionEntity> getPositionByEmployeeIdAndDivisionIds(Long employeeId, List<Long> divisionIds) {
-        return positionDao.getPositionByEmployeeIdAndDivisionIds(employeeId, divisionIds, unitAccessService.getCurrentUnit());
+    public List<PositionDto> getPositionByEmployeeIdAndDivisionIds(Long employeeId, List<Long> divisionIds) {
+        return positionDao.getPositionByEmployeeIdAndDivisionIds(employeeId, divisionIds, unitAccessService.getCurrentUnit())
+            .stream()
+            .map(PositionFactory::create)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -837,12 +854,12 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     @Transactional(readOnly = true)
-    public PositionAssignmentEntity getPositionAssignmentByPositionId(Long positionId) {
+    public PositionAssignmentDto getPositionAssignmentByPositionId(Long positionId) {
         PositionAssignmentEntity entity = positionAssignmentDao.getPositionAssignmentByPositionId(positionId);
         if (entity.getSubstitutionType() != null) {
             unitAccessService.checkUnitAccess(entity.getSubstitutionType().getUnitCode());
         }
-        return entity;
+        return PositionAssignmentFactory.create(entity);
     }
 
     @Override
@@ -905,7 +922,9 @@ public class PositionServiceImpl implements PositionService {
 
         PositionPositionImportanceEntity entity = new PositionPositionImportanceEntity();
         entity.setDateFrom(new Date());
-        entity.setPosition(this.getPosition(dto.getPosition()));
+        PositionEntity position = positionDao.getById(dto.getPosition());
+        checkUnit(position);
+        entity.setPosition(position);
         entity.setSystemRoleId(systemRoleDao.findById(dto.getSystemRoleId())
                                        .orElseThrow(() -> new NotFoundException(String.format("System role with id=%d is not found", dto.getSystemRoleId()))));
 

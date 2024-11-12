@@ -46,7 +46,7 @@ public class TaskAuthorEmployeeIdRecipientResolver implements RecipientResolver 
             return;
         }
 
-        EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeInfo(task.getAuthorEmployeeId());
+        EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(task.getAuthorEmployeeId());
         if (employee != null) {
             recipientList.add(employee);
         }

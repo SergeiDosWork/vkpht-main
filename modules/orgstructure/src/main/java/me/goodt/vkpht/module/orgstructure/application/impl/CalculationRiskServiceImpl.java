@@ -1,5 +1,8 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import me.goodt.vkpht.module.orgstructure.domain.dao.PositionDao;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +49,8 @@ public class CalculationRiskServiceImpl implements CalculationRiskService {
     private PositionSuccessorReadinessDao positionSuccessorReadinessDao;
     @Autowired
     private PositionAssignmentDao positionAssignmentDao;
+    @Autowired
+    private PositionDao positionDao;
     @Autowired
     private PositionImportanceCriteriaDao positionImportanceCriteriaDao;
     @Autowired
@@ -127,7 +132,9 @@ public class CalculationRiskServiceImpl implements CalculationRiskService {
         } else if (optionalPositionImportanceCriteria.isEmpty() && checkResult) {
             PositionImportanceCriteriaEntity entity = new PositionImportanceCriteriaEntity();
             entity.setDateFrom(new Date());
-            entity.setPosition(positionService.getPosition(positionId));
+            PositionEntity position = positionDao.getById(positionId);
+            checkUnit(position);
+            entity.setPosition(position);
             entity.setImportanceCriteria(item);
             entity.setValue(value);
             entity.setWeight(item.getWeight());
@@ -331,5 +338,11 @@ public class CalculationRiskServiceImpl implements CalculationRiskService {
 
     public LocalDateTime convertToLocalDateTime(Date dateToConvert) {
         return LocalDateTime.ofInstant(dateToConvert.toInstant(), ZoneId.systemDefault());
+    }
+
+    private void checkUnit(PositionEntity entity) {
+        if (!entity.getDivision().getLegalEntityEntity().getUnitCode().equals(unitAccessService.getCurrentUnit())) {
+            throw new NotFoundException(String.format("Сущность Position c id = %d не была найдена", entity.getId()));
+        }
     }
 }

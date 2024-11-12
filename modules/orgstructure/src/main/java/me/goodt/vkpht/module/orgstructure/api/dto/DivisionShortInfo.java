@@ -1,4 +1,4 @@
-package me.goodt.vkpht.common.api.dto;
+package me.goodt.vkpht.module.orgstructure.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

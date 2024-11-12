@@ -1,10 +1,10 @@
-package me.goodt.vkpht.common.api.dto;
+package me.goodt.vkpht.module.orgstructure.api.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-import com.goodt.drive.rtcore.model.orgstructure.entities.EmployeeEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 
 @Getter
 @Setter

@@ -31,7 +31,7 @@ public class PositionSuccessorReadinesIdToPositionSuccessorReadinesInfoGroupReso
 		}
 		try {
 			PositionSuccessorReadinessDto positionSuccessorReadiness = (PositionSuccessorReadinessDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR_READINESS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessorReadiness(positionSuccessorReadinessId.longValue()));
+				context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessorReadiness(positionSuccessorReadinessId.longValue()));
 			for (TokenWithValues token : context.getParsedTokens().get(POSITION_SUCCESSOR_READINESS_ID_TO_POSITION_SUCCESSOR_READINESS_INFO)) {
 				if (token.getBasicValue().equals(DATE_FROM)) {
 					log.info(LOG_MESSAGE_TOKEN, POSITION_SUCCESSOR_READINESS_ID_TO_POSITION_SUCCESSOR_READINESS_INFO, DATE_FROM);

@@ -1,5 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.api;
 
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -7,12 +9,24 @@ import org.springframework.security.access.AccessDeniedException;
 import java.util.Date;
 import java.util.List;
 
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfo;
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
-import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
 import me.goodt.vkpht.common.api.dto.PositionInfo;
-import me.goodt.vkpht.module.orgstructure.api.dto.*;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionFindDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentFindRequestDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentRotationDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleContainerDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamSuccessorDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamSuccessorReadinessDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionWithDivisionTeamsStatDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionWithDivisionTeamsWithDivisionTeamRolesAndDivisionTeamSuccessorsDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionExtendedDto;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionGroupEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentEntity;
@@ -54,7 +68,7 @@ public interface DivisionService {
 
     void divisionTeamSuccessorUpdateHr(Long divisionTeamSuccessorId, Date dateCommitHr) throws NotFoundException;
 
-    DivisionTeamSuccessorEntity getDivisionTeamSuccessor(Long id) throws NotFoundException;
+    DivisionTeamSuccessorDto getDivisionTeamSuccessor(Long id) throws NotFoundException;
 
     Page<DivisionTeamAssignmentEntity> findAllDivisionTeamAssignment(DivisionTeamAssignmentFindRequestDto request, Pageable pageable);
 
@@ -95,4 +109,6 @@ public interface DivisionService {
     List<DivisionTeamDto> findActual();
 
     List<DivisionDto> findPost(DivisionFindDto dto);
+
+    DivisionTeamAssignmentDto getTeamDivisionHeadHead(Long employeeId, String externalId, Long divisionTeamId);
 }

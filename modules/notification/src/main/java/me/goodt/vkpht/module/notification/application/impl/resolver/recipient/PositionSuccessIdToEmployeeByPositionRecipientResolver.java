@@ -31,20 +31,20 @@ public class PositionSuccessIdToEmployeeByPositionRecipientResolver implements R
 		log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
 		try {
             PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR, () -> Optional.ofNullable(RecipientResolverUtils.findPositionSuccessorId(context))
-                .map(positionSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessor(positionSuccessorId.longValue()))
+                .map(positionSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()))
                 .orElse(null));
             if (Objects.isNull(positionSuccessor)) {
                 log.error("Position assignment not found for recipient {}", TextConstants.POSITION_SUCCESSOR_ID_TO_EMPLOYEE_BY_POSITION);
                 return;
             }
 
-            PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
+            PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
             if (positionAssignment == null) {
                 log.error("Position assignment not found by position_id = {}", positionSuccessor.getPosition().getId());
                 return;
             }
 
-            EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeInfo(positionAssignment.getEmployeeId());
+            EmployeeInfoDto employee = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(positionAssignment.getEmployeeId());
             if (employee == null) {
                 log.error("Employee with id = {} not found for position with id = {}", positionAssignment.getEmployeeId(), positionSuccessor.getPosition().getId());
                 return;

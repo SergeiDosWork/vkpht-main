@@ -1,6 +1,5 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.NonUniqueObjectException;
 import org.springframework.data.domain.Page;
@@ -15,17 +14,22 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.notification.api.NotificationTemplateService;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateFilter;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientEmailDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientParametersDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateDao;
-import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
-import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
-import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateFilter;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEmailEntity;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEntity;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientParameterEntity;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentEntity;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateEntity;
 import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateContentFactory;
-import me.goodt.vkpht.module.notification.domain.entity.*;
-import com.goodt.drive.notify.application.model.repositories.NotificationTemplateRepository;
-import me.goodt.vkpht.module.notification.api.NotificationTemplateService;
+import me.goodt.vkpht.module.notification.domain.repository.NotificationTemplateRepository;
 
 @Service
 @Transactional

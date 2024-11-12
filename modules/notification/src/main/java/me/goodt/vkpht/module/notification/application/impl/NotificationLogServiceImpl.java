@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.notification.api.dto.data.NotificationLogStatusEnum
 import me.goodt.vkpht.module.notification.api.dto.kafka.NotificationLogResponseKafkaDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.notification.application.NotificationLogEmailService;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceClient;
+import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationLogDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentDao;
@@ -47,7 +47,7 @@ public class NotificationLogServiceImpl implements NotificationLogService {
 
     private final NotificationLogEmployeeService notificationLogEmployeeService;
 
-    private final OrgstructureServiceClient orgstructureServiceClient;
+    private final OrgstructureServiceAdapter orgstructureServiceAdapter;
 
     private final NotificationTemplateContentAttachmentService notificationTemplateContentAttachmentService;
 
@@ -116,10 +116,10 @@ public class NotificationLogServiceImpl implements NotificationLogService {
         List<EmployeeInfoDto> employeeRecipientList = null;
         List<EmployeeInfoDto> employeerecipientCopyList = null;
         if (CollectionUtils.isNotEmpty(employeeRecipientIdList)) {
-            employeeRecipientList = orgstructureServiceClient.findEmployee(employeeRecipientIdList).getData();
+            employeeRecipientList = orgstructureServiceAdapter.findEmployee(employeeRecipientIdList).getData();
         }
         if (CollectionUtils.isNotEmpty(employeeRecipientIdCopyList)) {
-            employeerecipientCopyList = orgstructureServiceClient.findEmployee(employeeRecipientIdCopyList).getData();
+            employeerecipientCopyList = orgstructureServiceAdapter.findEmployee(employeeRecipientIdCopyList).getData();
         }
 
         List<String> emailRecipientList = notificationLogEmailService.findEmailByNotificationLogId(notificationLog.getId(), !IS_COPY);

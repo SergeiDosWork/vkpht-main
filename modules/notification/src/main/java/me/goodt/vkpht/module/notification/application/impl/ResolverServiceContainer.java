@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import me.goodt.vkpht.module.notification.api.*;
 import me.goodt.vkpht.module.notification.api.learning.LearningServiceClient;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceClient;
+import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.api.quiz.QuizServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
 
@@ -15,7 +15,7 @@ import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceCli
 public class ResolverServiceContainer {
 
     private final TasksettingServiceClient tasksettingServiceClient;
-    private final OrgstructureServiceClient orgstructureServiceClient;
+    private final OrgstructureServiceAdapter orgstructureServiceAdapter;
     private final CompetenceService competenceService;
     private final AppraisalService appraisalService;
     private final EvaluationService evaluationService;
@@ -28,7 +28,7 @@ public class ResolverServiceContainer {
     private final NotificationTemplateService notificationTemplateService;
 
     public ResolverServiceContainer(TasksettingServiceClient tasksettingServiceClient,
-                                    OrgstructureServiceClient orgstructureServiceClient,
+                                    OrgstructureServiceAdapter orgstructureServiceAdapter,
                                     CompetenceService competenceService,
                                     AppraisalService appraisalService,
                                     EvaluationService evaluationService,
@@ -40,7 +40,7 @@ public class ResolverServiceContainer {
                                     KeycloakDataService keycloakDataService,
                                     NotificationTemplateService notificationTemplateService) {
         this.tasksettingServiceClient = tasksettingServiceClient;
-        this.orgstructureServiceClient = orgstructureServiceClient;
+        this.orgstructureServiceAdapter = orgstructureServiceAdapter;
         this.competenceService = competenceService;
         this.appraisalService = appraisalService;
         this.evaluationService = evaluationService;

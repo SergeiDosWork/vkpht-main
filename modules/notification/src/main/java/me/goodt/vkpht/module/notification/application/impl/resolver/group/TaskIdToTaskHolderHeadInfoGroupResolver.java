@@ -40,9 +40,9 @@ public class TaskIdToTaskHolderHeadInfoGroupResolver implements TokenGroupResolv
 			return;
 		}
 
-		List<DivisionTeamAssignmentDto> assignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null);
+		List<DivisionTeamAssignmentDto> assignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null);
 		if (assignment != null && !assignment.isEmpty()) {
-			DivisionTeamAssignmentDto head = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(assignment.getFirst().getEmployee().getId(), assignment.getFirst().getDivisionTeam().getId());
+			DivisionTeamAssignmentDto head = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(assignment.getFirst().getEmployee().getId(), assignment.getFirst().getDivisionTeam().getId());
 			if (head != null) {
 				for (TokenWithValues token : context.getParsedTokens().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO)) {
 					if (token.getBasicValue().equals(FIO_FULL)) {

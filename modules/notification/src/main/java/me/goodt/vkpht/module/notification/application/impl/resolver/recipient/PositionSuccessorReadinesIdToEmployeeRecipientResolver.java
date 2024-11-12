@@ -33,7 +33,7 @@ public class PositionSuccessorReadinesIdToEmployeeRecipientResolver implements R
         try {
 
             PositionSuccessorReadinessDto positionSuccessorReadiness = (PositionSuccessorReadinessDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR_READINESS, () -> Optional.ofNullable(RecipientResolverUtils.findPositionSuccessorReadinessId(context))
-                .map(positionSuccessorReadinessId -> context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessorReadiness(positionSuccessorReadinessId.longValue()))
+                .map(positionSuccessorReadinessId -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessorReadiness(positionSuccessorReadinessId.longValue()))
                 .orElse(null));
             if (Objects.isNull(positionSuccessorReadiness)) {
                 return;
@@ -42,11 +42,11 @@ public class PositionSuccessorReadinesIdToEmployeeRecipientResolver implements R
             if (recipient.getBasicValue().equals(POSITION_SUCCESSOR_READINESS_ID_TO_EMPLOYEE)) {
                 recipientList.add(positionSuccessorReadiness.getPositionSuccessor().getEmployee());
             } else {
-                List<DivisionTeamAssignmentDto> assignmentsByEmployeeId = context.getResolverServiceContainer().getOrgstructureServiceClient()
+                List<DivisionTeamAssignmentDto> assignmentsByEmployeeId = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
                     .getAssignments(null, Collections.singletonList(positionSuccessorReadiness.getPositionSuccessor().getEmployee().getId()));
                 if (assignmentsByEmployeeId != null && !assignmentsByEmployeeId.isEmpty()) {
                     DivisionTeamAssignmentDto assignment = assignmentsByEmployeeId.getFirst();
-                    DivisionTeamAssignmentDto employeeHead = context.getResolverServiceContainer().getOrgstructureServiceClient()
+                    DivisionTeamAssignmentDto employeeHead = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
                         .getEmployeeHead(assignment.getEmployee().getId(), assignment.getDivisionTeam().getId());
                     recipientList.add(employeeHead.getEmployee());
                 }

@@ -1,10 +1,20 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.common.api.exception.BadRequestException;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentRotationShortDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
+import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
+import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory;
+
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +36,7 @@ import com.goodt.drive.rtcore.dto.rostalent.DataForKafkaMessageInputDto;
 import com.goodt.drive.rtcore.dto.rostalent.SuccessorNotificateByCodeInputData;
 import com.goodt.drive.rtcore.service.notification.NotificationService;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.common.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfo;
 import me.goodt.vkpht.common.api.dto.PositionInfo;
 import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
@@ -113,6 +123,8 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamSuccessorRe
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorReadinessFactory;
+
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -677,9 +689,10 @@ public class DivisionServiceImpl implements DivisionService {
 
     @Override
     @Transactional(readOnly = true)
-    public DivisionTeamSuccessorEntity getDivisionTeamSuccessor(Long id) throws NotFoundException {
-        return divisionTeamSuccessorDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Division team successor with id=%d is not found", id)));
+    public DivisionTeamSuccessorDto getDivisionTeamSuccessor(Long id) throws NotFoundException {
+        DivisionTeamSuccessorEntity entity = divisionTeamSuccessorDao.findById(id)
+            .orElseThrow(() -> new NotFoundException(String.format("Division team successor with id=%d is not found", id)));
+        return DivisionTeamSuccessorFactory.create(entity);
     }
 
     @Override
@@ -753,7 +766,7 @@ public class DivisionServiceImpl implements DivisionService {
         }
         return new DivisionInfo(division.get(),
                                 divisionTeamAssignments.get(0).getEmployee(),
-                                employeeService.getEmployeeInfo(divisionTeamAssignments.get(0).getEmployee().getId()));
+                                employeeService.getPositionAssignmentInfo(divisionTeamAssignments.get(0).getEmployee().getId()));
     }
 
     @Override
@@ -993,6 +1006,45 @@ public class DivisionServiceImpl implements DivisionService {
             ).stream()
             .map(DivisionFactory::create)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public DivisionTeamAssignmentDto getTeamDivisionHeadHead(Long employeeId, String externalId, Long divisionTeamId) {
+        Long id = getEmployeeId(employeeId, externalId);
+        EmployeeSearchResult headSearchResult = employeeService.getDivisionTeamHead(id, divisionTeamId);
+        if (!headSearchResult.getSearchStatus()) {
+            throw new NotFoundException("search result is empty, therefore we could't not return info");
+        }
+        if (headSearchResult.getEmployee() == null) {
+            throw new NotFoundException("employee head not found, therefore we could't not return info");
+        }
+        EmployeeSearchResult headHeadSearchResult = employeeService.getDivisionTeamHead(headSearchResult.getEmployee().getId(), headSearchResult.getDivisionTeamId());
+        if (headHeadSearchResult.getEmployee() == null) {
+            throw new NotFoundException("head employee head not found, therefore we could't not return info");
+        }
+        DivisionTeamAssignmentEntity assignment = divisionTeamAssignmentDao.findById(headHeadSearchResult.getDivisionTeamAssignmentId()).get();
+        List<DivisionTeamAssignmentRotationShortDto> rotations = divisionTeamAssignmentRotationDao
+            .findByAssignmentId(assignment.getId())
+            .stream()
+            .map(DivisionTeamAssignmentRotationFactory::createShort)
+            .collect(Collectors.toList());
+        List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
+            PositionAssignmentFilter.builder()
+                .unitCode(unitAccessService.getCurrentUnit())
+                .employeeId(assignment.getEmployeeId())
+                .build()
+        );
+        return DivisionTeamAssignmentFactory.createWithJobInfo(assignment, positionAssignments, rotations);
+    }
+
+    private Long getEmployeeId(Long id, String externalId) {
+        if (id != null) {
+            return id;
+        }
+        if (externalId != null) {
+            return employeeService.getEmployeeIdByExternalId(externalId);
+        }
+        return authService.getUserEmployeeId();
     }
 
     private DivisionTeamEntity findDivisionTeamEntityById(Long id) {

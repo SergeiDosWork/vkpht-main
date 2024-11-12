@@ -30,20 +30,20 @@ public class PositionSuccessIdToEmployeeHeadByPositionRecipientResolver implemen
 		log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
 		try {
             PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR, () -> Optional.ofNullable(RecipientResolverUtils.findPositionSuccessorId(context))
-                .map(positionSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionSuccessor(positionSuccessorId.longValue()))
+                .map(positionSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()))
                 .orElse(null));
             if (positionSuccessor == null) {
                 log.error("Position assignment not found for recipient {}", TextConstants.POSITION_SUCCESSOR_ID_TO_EMPLOYEE_HEAD_BY_POSITION);
                 return;
             }
 
-            PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
+            PositionAssignmentDto positionAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionAssignmentByPositionId(positionSuccessor.getPosition().getId());
             if (positionAssignment == null) {
                 log.error("Position assignment not found by position_id = {}", positionSuccessor.getPosition().getId());
                 return;
             }
 
-            List<DivisionTeamAssignmentDto> assignments = context.getResolverServiceContainer().getOrgstructureServiceClient().getAssigmentByEmployeeIds(List.of(positionAssignment.getEmployeeId()));
+            List<DivisionTeamAssignmentDto> assignments = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssigmentByEmployeeIds(List.of(positionAssignment.getEmployeeId()));
             DivisionTeamAssignmentDto headAssignment = RecipientResolverHelper.getHeadByAssignments(context, assignments);
             if (headAssignment == null) {
                 log.error("Head employee not found for employee with id = {}", positionAssignment.getEmployeeId());

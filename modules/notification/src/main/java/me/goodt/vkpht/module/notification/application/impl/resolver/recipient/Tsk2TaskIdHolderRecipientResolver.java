@@ -48,9 +48,9 @@ public class Tsk2TaskIdHolderRecipientResolver implements RecipientResolver {
             }
             String type = tsk2taskDto.getType().getUserType().getName();
             if (StringUtils.equals(EMPLOYEE, type)) {
-                return context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(null, Collections.singletonList(tsk2taskDto.getUserId()));
+                return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(null, Collections.singletonList(tsk2taskDto.getUserId()));
             } else if (StringUtils.equals(TEAM_DIVISION_ASSIGNMENT, type)) {
-                return context.getResolverServiceContainer().getOrgstructureServiceClient().getAssignments(Collections.singletonList(tsk2taskDto.getUserId()), null);
+                return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(tsk2taskDto.getUserId()), null);
             } else {
                 return Collections.emptyList();
             }
@@ -87,7 +87,7 @@ public class Tsk2TaskIdHolderRecipientResolver implements RecipientResolver {
                 log.info(LOG_MESSAGE_RECIPIENT, TASK_ID_HOLDER_HEAD);
                 Long employeeId = assignments.getFirst().getEmployee().getId();
                 Long divisionTeamId = assignments.getFirst().getDivisionTeam().getId();
-                DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceClient().getEmployeeHead(employeeId, divisionTeamId);
+                DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(employeeId, divisionTeamId);
                 employeeList.add(headAssignment.getEmployee());
                 break;
             }
