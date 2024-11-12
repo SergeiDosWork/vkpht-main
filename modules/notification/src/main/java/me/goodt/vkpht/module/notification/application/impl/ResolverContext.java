@@ -15,8 +15,8 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.goodt.drive.notify.application.dto.BaseNotificationInputData;
-import com.goodt.drive.notify.application.dto.NotificationTemplateContentDto;
+import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
 
 @Getter
 @Setter

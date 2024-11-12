@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.notification.application.Resolver;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,10 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import me.goodt.vkpht.module.notification.api.dto.NotificationToken;
-import me.goodt.vkpht.module.notification.application.Resolver;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTokenDao;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTokenEntity;
+import me.goodt.vkpht.module.notification.application.impl.resolver.group.NotificationToken;
 
 @Service
 @Slf4j

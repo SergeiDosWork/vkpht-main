@@ -1,5 +1,7 @@
 module vkpht.main.mod.notification {
     requires vkpht.main.common;
+    requires vkpht.main.mod.orgstructure;
+    requires vkpht.main.mod.tasksetting;
     requires auth.sur.core;
 
     requires com.zaxxer.hikari;
@@ -30,4 +32,7 @@ module vkpht.main.mod.notification {
     requires spring.webmvc;
     requires spring.kafka;
     requires kafka.clients;
+
+    exports me.goodt.vkpht.module.notification.api;
+    exports me.goodt.vkpht.module.notification.api.dto;
 }

@@ -6,6 +6,8 @@ plugins {
 dependencies {
 
     implementation project(":common")
+    implementation project(":modules:orgstructure")
+    implementation project(":modules:tasksetting")
     implementation 'org.liquibase:liquibase-core'
     implementation 'com.goodt.drive:auth-sur-core:1.0.57'
     implementation 'org.springframework.kafka:spring-kafka'

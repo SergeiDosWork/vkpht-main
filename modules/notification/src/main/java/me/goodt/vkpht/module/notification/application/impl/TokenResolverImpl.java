@@ -3,8 +3,7 @@ package me.goodt.vkpht.module.notification.application.impl;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import me.goodt.vkpht.module.notification.application.RecipientResolver;
-import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateContentFactory;
+import me.goodt.vkpht.module.notification.application.TokenResolver;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -16,20 +15,19 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.goodt.drive.notify.application.dto.orgstructure.RecipientInfoDto;
+import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientEmailDao;
+import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientParametersDao;
 import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
 import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
-import me.goodt.vkpht.module.notification.api.dto.Recipient;
-import me.goodt.vkpht.module.notification.api.notification.employees.TokenEmployeeResolver;
-import me.goodt.vkpht.module.notification.api.notification.groups.TokenGroupResolver;
-import me.goodt.vkpht.module.notification.api.notification.recipients.RecipientResolver;
-import me.goodt.vkpht.module.notification.application.TokenResolver;
-import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientEmailDao;
-import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientParametersDao;
+import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
+import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateContentFactory;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEmailEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientParameterEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentEntity;
+import me.goodt.vkpht.module.notification.application.impl.resolver.employee.TokenEmployeeResolver;
+import me.goodt.vkpht.module.notification.application.impl.resolver.group.TokenGroupResolver;
+import me.goodt.vkpht.module.notification.application.impl.resolver.recipient.RecipientResolver;
 
 @Service
 @Slf4j

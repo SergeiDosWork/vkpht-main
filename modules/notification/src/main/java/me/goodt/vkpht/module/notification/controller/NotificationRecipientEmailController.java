@@ -20,7 +20,7 @@ public class NotificationRecipientEmailController {
 
     @GetMapping
     public List<String> find(
-        @Parameter(name = "ids", description = "Массив идентификаторов email (таблица notifications.notification_recipient_email).", example = "[1, 2, 3]")
+        @Parameter(name = "ids", title = "Массив идентификаторов email (таблица notifications.notification_recipient_email).", example = "[1, 2, 3]")
         @RequestParam List<Long> ids
     ) {
         return service.findEmailByEmailIds(ids);

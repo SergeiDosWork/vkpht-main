@@ -3,7 +3,7 @@ package me.goodt.vkpht.module.notification.api.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.RecipientInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 
 @Getter
 @Setter

@@ -12,10 +12,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.goodt.drive.notify.application.dto.orgstructure.DivisionDto;
-import com.goodt.drive.notify.application.dto.orgstructure.EmployeeInfoDto;
+import me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType;
 import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientEmailDto;
-import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientType;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientParameterEntity;
 

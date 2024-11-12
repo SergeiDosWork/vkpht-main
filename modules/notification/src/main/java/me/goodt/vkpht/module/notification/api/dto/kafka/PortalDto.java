@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.USE_SYSTEM_TEMPLATES_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USE_SYSTEM_TEMPLATES_TAG;
 
 @Getter
 @Setter

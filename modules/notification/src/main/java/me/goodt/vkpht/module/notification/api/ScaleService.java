@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.notification.api;
 
-import com.goodt.drive.notify.application.dto.rtcore.ScaleLevelNotificationDto;
+import me.goodt.vkpht.module.notification.api.dto.rtcore.ScaleLevelNotificationDto;
 
 public interface ScaleService {
 

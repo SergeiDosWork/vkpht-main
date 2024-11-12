@@ -2,8 +2,8 @@ package me.goodt.vkpht.module.notification.domain.factory;
 
 import lombok.experimental.UtilityClass;
 
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.EmployeeInfoDto;
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.EmployeePersonDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeePersonDto;
 
 @UtilityClass
 public class EmployeeFactory {

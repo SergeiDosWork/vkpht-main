@@ -1,9 +1,9 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
+import kotlin.Pair;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +14,14 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import me.goodt.vkpht.common.domain.entity.DomainObject;
-import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientType;
-import me.goodt.vkpht.module.notification.api.dto.Recipient;
-import me.goodt.vkpht.module.notification.api.dto.RecipientToken;
-import me.goodt.vkpht.module.notification.application.RecipientResolver;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationRecipientDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentRecipientDao;
-import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEntity;
+import me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType;
 import me.goodt.vkpht.module.notification.domain.factory.NotificationRecipientFactory;
+import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEntity;
+import me.goodt.vkpht.module.notification.application.impl.resolver.recipient.RecipientResolver;
+import me.goodt.vkpht.module.notification.application.impl.resolver.recipient.RecipientToken;
+import me.goodt.vkpht.common.domain.entity.DomainObject;
 
 @Service
 @Slf4j
@@ -51,7 +50,7 @@ public class NotificationResolverTableUpdater {
 
         // Преобразованные в Recipient существующие в БД токены, с целью отделения name от параметров. Параметры из БД нас не интересуют
         Map<String, List<Pair<NotificationRecipientEntity, Recipient>>> existingTokensAndConvertedToRecipientsMap = existingTokens.stream()
-            .map(r -> Pair.of(r, new Recipient(NotificationRecipientFactory.create(r, new ArrayList<>(), new ArrayList<>()))))
+            .map(r -> new Pair<>(r, new Recipient(NotificationRecipientFactory.create(r, new ArrayList<>(), new ArrayList<>()))))
             .collect(Collectors.groupingBy(pair -> pair.getSecond().getBasicValue(), Collectors.toCollection(ArrayList::new)));
 
         // Составление списка токенов, которых больше нет в списке обрабатываемых приложением

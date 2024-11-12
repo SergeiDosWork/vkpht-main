@@ -3,7 +3,7 @@ package me.goodt.vkpht.module.notification.api.dto;
 import lombok.Builder;
 import lombok.Getter;
 
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
 
 @Getter
 @Builder

@@ -1,8 +1,9 @@
 package me.goodt.vkpht.module.notification.api;
 
+import javassist.NotFoundException;
+
 import java.util.List;
 
-import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTokenDto;
 
 public interface NotificationTokenService {

@@ -1,12 +1,12 @@
 package me.goodt.vkpht.module.notification.api;
 
+import javassist.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
 
-import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateFilter;

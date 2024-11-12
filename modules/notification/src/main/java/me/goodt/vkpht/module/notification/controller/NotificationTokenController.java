@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +26,11 @@ import java.util.UUID;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.common.api.LoggerService;
-import me.goodt.vkpht.common.api.exception.NotFoundException;
-import me.goodt.vkpht.module.notification.api.NotificationTokenService;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTokenDto;
-import me.goodt.vkpht.module.notification.api.dto.OperationResult;
+import me.goodt.vkpht.module.notification.api.NotificationTokenService;
+import me.goodt.vkpht.module.notification.api.logging.LoggerService;
 
 @Tag(name = "notification_token", description = "API для работы с токенами уведомлений о событиях")
 @RestController
@@ -58,7 +58,7 @@ public class NotificationTokenController {
 	@GetMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationTokenDto getById(
-		@Parameter(name = "id", description = "Уникальный идентификатор токена", example = "1")
+		@Parameter(name = "id", title = "Уникальный идентификатор токена", example = "1")
 		@PathVariable Long id) throws NotFoundException {
 		UUID hash = UUID.randomUUID();
 		loggerService.createLog(hash, "GET /api/notification-tokens", Map.of("id", id), null);
@@ -123,7 +123,7 @@ public class NotificationTokenController {
 	@PutMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationTokenDto update(
-		@Parameter(name = "id", description = "Уникальный идентификатор токена", example = "1")
+		@Parameter(name = "id", title = "Уникальный идентификатор токена", example = "1")
 		@PathVariable Long id,
 		@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление с информацией о токене")
 		@RequestBody NotificationTokenDto tokenDto) throws NotFoundException {
@@ -149,7 +149,7 @@ public class NotificationTokenController {
 	})
 	@DeleteMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
-	public OperationResult delete(@Parameter(name = "id", description = "Уникальный идентификатор токена",
+	public OperationResult delete(@Parameter(name = "id", title = "Уникальный идентификатор токена",
 		example = "1") @PathVariable Long id) throws NotFoundException {
 		UUID hash = UUID.randomUUID();
 		loggerService.createLog(hash, "DELETE /api/notification-tokens/%d".formatted(id),

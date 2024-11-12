@@ -2,12 +2,12 @@ package me.goodt.vkpht.module.notification.application;
 
 import java.util.Map;
 
-import com.goodt.drive.notify.application.dto.BaseNotificationInputData;
-import com.goodt.drive.notify.application.dto.NotificationTemplateContentDto;
-import com.goodt.drive.notify.application.dto.orgstructure.RecipientInfoDto;
+import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.ResolverServiceContainer;
 import me.goodt.vkpht.module.notification.application.impl.TokenResolverImpl;
+import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 
 public interface TokenResolver {
 	Map<String, String> resolveTokens(ResolverContext context);

@@ -2,8 +2,9 @@ package me.goodt.vkpht.module.notification.domain.dao;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
+
+import jakarta.persistence.EntityManager;
 
 import me.goodt.vkpht.module.notification.domain.entity.NotificationReceiverSystemEmployeeDisabledEntity;
 import me.goodt.vkpht.module.notification.domain.entity.QNotificationReceiverSystemEmployeeDisabledEntity;

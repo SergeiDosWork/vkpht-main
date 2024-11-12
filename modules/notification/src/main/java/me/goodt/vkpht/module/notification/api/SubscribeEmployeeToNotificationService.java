@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.notification.api;
 
-import com.goodt.drive.notify.application.dto.NotificationTemplateContentEmployeeSubscribeDto;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
 
 public interface SubscribeEmployeeToNotificationService {
 

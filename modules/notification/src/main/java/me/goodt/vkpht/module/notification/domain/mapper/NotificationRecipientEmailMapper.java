@@ -7,7 +7,7 @@ import org.mapstruct.MappingConstants;
 import java.util.Objects;
 
 import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientEmailDto;
-import com.goodt.drive.notify.application.factories.NotificationRecipientFactory;
+import me.goodt.vkpht.module.notification.domain.factory.NotificationRecipientFactory;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEmailEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)

@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 import java.util.Objects;
 
-import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.EmployeeInfoResponse;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
 import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceClient;
-import com.goodt.drive.notify.application.utils.TextConstants;
+import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 
 @RestController
 @RequiredArgsConstructor

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientType;
+import me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType;
 
 @AllArgsConstructor
 @NoArgsConstructor

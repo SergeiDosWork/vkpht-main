@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import me.goodt.vkpht.module.notification.api.dto.NotificationLogDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentAttachmentDto;
 import me.goodt.vkpht.module.notification.api.dto.configuration.ModuleDto;
-import me.goodt.vkpht.module.notification.api.dto.orgstructure.EmployeeInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentAttachmentEntity;
 import com.goodt.drive.notify.application.utils.DataUtils;

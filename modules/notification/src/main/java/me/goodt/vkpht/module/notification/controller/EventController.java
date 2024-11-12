@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.module.notification.api.dto.DataFromStatusChangeToRostalentStatusChange;
-import me.goodt.vkpht.module.notification.api.dto.OperationResult;
+import me.goodt.vkpht.module.notification.api.dto.data.DataFromStatusChangeToRostalentStatusChange;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 import me.goodt.vkpht.module.notification.api.dto.*;
 import me.goodt.vkpht.module.notification.api.dto.monitor.EventDto;
 import me.goodt.vkpht.module.notification.api.dto.monitor.EventExtendedDto;
@@ -46,14 +46,14 @@ import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFieldDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFindRequest;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.UserTaskTreeDto;
-import me.goodt.vkpht.common.dictionary.core.exception.CustomException;
+import me.goodt.vkpht.common.api.exception.CustomException;
 import me.goodt.vkpht.module.notification.api.CompetenceService;
 import me.goodt.vkpht.module.notification.api.EventService;
 import me.goodt.vkpht.module.notification.api.logging.LoggerService;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
 import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
-import com.goodt.drive.notify.application.utils.TextConstants;
+import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 
 import static com.goodt.drive.notify.GlobalDefs.TASK_TYPE_ID_5;
 import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.*;

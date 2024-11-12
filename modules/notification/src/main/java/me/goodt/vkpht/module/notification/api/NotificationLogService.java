@@ -1,11 +1,11 @@
 package me.goodt.vkpht.module.notification.api;
 
-import me.goodt.vkpht.module.notification.api.dto.NotificationLogStatusEnum;
+import java.util.Map;
+
 import me.goodt.vkpht.module.notification.api.dto.NotificationLogDto;
+import me.goodt.vkpht.module.notification.api.dto.data.NotificationLogStatusEnum;
 import me.goodt.vkpht.module.notification.api.dto.kafka.NotificationLogResponseKafkaDto;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEntity;
-
-import java.util.Map;
 
 public interface NotificationLogService {
 	NotificationLogEntity create(Long ntcId, Map<String, Object> content);

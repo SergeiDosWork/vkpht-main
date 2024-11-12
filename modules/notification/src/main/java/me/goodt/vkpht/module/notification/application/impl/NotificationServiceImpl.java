@@ -1,5 +1,7 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
+import me.goodt.vkpht.module.notification.application.NotificationService;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.concurrent.DelegatingSecurityContextRunnable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,9 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import me.goodt.vkpht.module.notification.api.EventService;
 import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
-import me.goodt.vkpht.module.notification.application.NotificationService;
+import me.goodt.vkpht.module.notification.api.EventService;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {

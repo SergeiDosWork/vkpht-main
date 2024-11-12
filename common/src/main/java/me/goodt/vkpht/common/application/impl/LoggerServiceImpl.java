@@ -2,24 +2,22 @@ package me.goodt.vkpht.common.application.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.common.api.LoggerService;
-
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.springframework.stereotype.Service;
 
-import jakarta.annotation.PostConstruct;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-import com.goodt.drive.rtcore.data.LogInfoAboutMethod;
-import com.goodt.drive.rtcore.security.AuthService;
+import me.goodt.vkpht.common.api.AuthService;
+import me.goodt.vkpht.common.api.LoggerService;
+import me.goodt.vkpht.common.api.dto.LogInfoAboutMethod;
 
 @Slf4j
 @Service

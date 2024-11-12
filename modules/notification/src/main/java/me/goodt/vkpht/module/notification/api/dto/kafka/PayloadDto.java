@@ -10,14 +10,14 @@ import java.util.Collection;
 import java.util.Map;
 
 import static com.goodt.drive.auth.util.TextConstants.UNIT_CODE;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.EMAIL_COPY_IDS_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.EMAIL_IDS_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.EMPLOYEE_COPY_IDS_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.EMPLOYEE_IDS_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.EVENT_SUBTYPE_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.INITIATOR_KEYCLOAK_ID_TAG;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.NOTIFICATION_LOG_IDS;
-import static com.goodt.drive.notify.application.dto.DtoTagConstants.USERS_KEYCLOAK_IDS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EMAIL_COPY_IDS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EMAIL_IDS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EMPLOYEE_COPY_IDS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EMPLOYEE_IDS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EVENT_SUBTYPE_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.INITIATOR_KEYCLOAK_ID_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.NOTIFICATION_LOG_IDS;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USERS_KEYCLOAK_IDS_TAG;
 
 @Getter
 @Setter

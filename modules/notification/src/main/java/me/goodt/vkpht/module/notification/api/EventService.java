@@ -4,17 +4,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
 
-import me.goodt.vkpht.common.api.dto.OperationResult;
+import me.goodt.vkpht.module.notification.api.dto.data.DataFromStatusChangeToRostalentStatusChange;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
 import me.goodt.vkpht.module.notification.api.dto.CustomEmailEventCodeInputDto;
 import me.goodt.vkpht.module.notification.api.dto.CustomEmailEventInputDto;
 import me.goodt.vkpht.module.notification.api.dto.DataForKafkaMessageInputDto;
-import me.goodt.vkpht.module.notification.api.dto.DataFromStatusChangeToRostalentStatusChange;
 import me.goodt.vkpht.module.notification.api.dto.EventInputDto;
 import me.goodt.vkpht.module.notification.api.dto.QuizFinishInputDto;
 import me.goodt.vkpht.module.notification.api.dto.QuizStartInputDto;
 import me.goodt.vkpht.module.notification.api.dto.RemindByHeadInputDto;
 import me.goodt.vkpht.module.notification.api.dto.SuccessorNotificateByCodeInputData;
+import me.goodt.vkpht.module.notification.api.dto.monitor.EventDto;
 
 public interface EventService {
 	EventDto expertTaskCreate(EventInputDto input) throws JsonProcessingException;

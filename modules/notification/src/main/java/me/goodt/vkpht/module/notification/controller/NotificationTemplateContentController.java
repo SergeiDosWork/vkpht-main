@@ -8,10 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
-
-import me.goodt.vkpht.common.api.exception.NotFoundException;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,15 +27,15 @@ import java.util.UUID;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.common.api.LoggerService;
-import me.goodt.vkpht.module.notification.api.NotificationTemplateContentService;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentFilter;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentRequest;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentResponse;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentShortResponse;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentSubstituteInfo;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
-import me.goodt.vkpht.module.notification.api.dto.OperationResult;
+import me.goodt.vkpht.module.notification.api.NotificationTemplateContentService;
+import me.goodt.vkpht.module.notification.api.logging.LoggerService;
 
 @Tag(name = "notification_template_content", description = "API для работы с шаблонами уведомлений о событиях")
 @RestController
@@ -66,7 +64,7 @@ public class NotificationTemplateContentController {
 	@GetMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationTemplateContentResponse getById(
-		@Parameter(name = "id", description = "Уникальный идентификатор шаблона уведомления", example = "1")
+		@Parameter(name = "id", title = "Уникальный идентификатор шаблона уведомления", example = "1")
 		@PathVariable Long id) throws NotFoundException {
 		UUID hash = UUID.randomUUID();
 		loggerService.createLog(hash, "GET /api/notification-template-content", Map.of("id", id), null);
@@ -138,7 +136,7 @@ public class NotificationTemplateContentController {
 	@PutMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationTemplateContentResponse update(
-		@Parameter(name = "id", description = "Уникальный идентификатор шаблона уведомления", example = "1")
+		@Parameter(name = "id", title = "Уникальный идентификатор шаблона уведомления", example = "1")
 		@PathVariable Long id,
 		@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Информация о шаблоне уведомления")
 		@RequestBody NotificationTemplateContentRequest dto) throws NotFoundException {
@@ -169,7 +167,7 @@ public class NotificationTemplateContentController {
 	@DeleteMapping("/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public OperationResult delete(
-		@Parameter(name = "id", description = "Уникальный идентификатор шаблона уведомления", example = "1")
+		@Parameter(name = "id", title = "Уникальный идентификатор шаблона уведомления", example = "1")
 		@PathVariable Long id) throws NotFoundException {
 		UUID hash = UUID.randomUUID();
 		loggerService.createLog(hash, "DELETE /api/notification-template-content/%d".formatted(id),
@@ -196,9 +194,9 @@ public class NotificationTemplateContentController {
 	@GetMapping("/substitute")
     @SurProtected(operation = SurOperation.UNIT)
 	public List<NotificationTemplateContentSubstituteInfo> findSubstitutes(
-		@Parameter(name = "notificationTemplateId", description = "Уникальный идентификатор события", example = "1", required = true)
+		@Parameter(name = "notificationTemplateId", title = "Уникальный идентификатор события", example = "1", required = true)
 		@RequestParam(value = "notificationTemplateId") Long templateId,
-		@Parameter(name = "notificationTemplateContentId", description = "Уникальный идентификатор шаблона", example = "1")
+		@Parameter(name = "notificationTemplateContentId", title = "Уникальный идентификатор шаблона", example = "1")
 		@RequestParam(value = "notificationTemplateContentId", required = false) Long contentId
 	) {
 		UUID hash = UUID.randomUUID();

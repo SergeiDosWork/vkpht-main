@@ -14,7 +14,7 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEnt
 import me.goodt.vkpht.module.notification.domain.entity.QNotificationRecipientEntity;
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 
-import static me.goodt.vkpht.module.notification.api.dto.NotificationRecipientType.*;
+import static me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType.*;
 
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")

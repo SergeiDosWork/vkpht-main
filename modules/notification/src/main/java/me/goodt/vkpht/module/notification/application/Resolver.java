@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import me.goodt.vkpht.module.notification.api.dto.NotificationToken;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
+import me.goodt.vkpht.module.notification.application.impl.resolver.group.NotificationToken;
 
 public interface Resolver {
 
