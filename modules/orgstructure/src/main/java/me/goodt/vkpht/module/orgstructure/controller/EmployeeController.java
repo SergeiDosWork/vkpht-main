@@ -45,11 +45,9 @@ import me.goodt.vkpht.common.api.annotation.ApiPageable;
 import me.goodt.vkpht.common.api.annotation.BadRequestAPIResponses;
 import me.goodt.vkpht.common.api.annotation.GeneralAPIResponses;
 import me.goodt.vkpht.common.api.annotation.Performance;
-import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.filter.DivisionFilter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.*;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.common.api.dto.OperationResult;
 import com.goodt.drive.rtcore.dto.DtoTagConstants;
 import me.goodt.vkpht.module.orgstructure.api.dto.*;
@@ -101,7 +99,7 @@ public class EmployeeController {
         @RequestParam(name = "id", required = false) Long id,
         @Parameter(name = "external_employee", description = "Внешний идентификатор сотрудника (таблица employee).", example = "112")
         @RequestParam(name = "external_employee", required = false) String externalId) throws NotFoundException {
-        return employeeService.getEmployeExtendedInfo(id, externalId);
+        return employeeService.getEmployeeExtendedInfo(id, externalId);
     }
 
     @Operation(summary = "Получение информации о сотруднике", description = "Получение информации о сотруднике без вложенных объектов. " +

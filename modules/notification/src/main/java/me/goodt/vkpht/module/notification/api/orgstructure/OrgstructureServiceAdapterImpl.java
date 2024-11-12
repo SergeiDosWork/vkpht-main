@@ -16,16 +16,13 @@ import me.goodt.vkpht.module.orgstructure.api.RoleService;
 
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.AbstractMap;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.goodt.drive.notify.application.dto.ResponseNumberDto;
@@ -69,7 +66,7 @@ public class OrgstructureServiceAdapterImpl implements OrgstructureServiceAdapte
 
     @Override
     public EmployeeInfoDto getEmployeeInfo(Long employeeId) {
-        return employeeService.getEmployeInfo(employeeId);
+        return employeeService.getEmployeeInfo(employeeId);
     }
 
     public EmployeeInfoDto getEmployeeInfoByAssignment(Long assignmentId) {

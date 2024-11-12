@@ -1,12 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.api;
 
-import io.swagger.v3.oas.annotations.Parameter;
-
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeExtendedInfoDto;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayOutputStream;
@@ -74,11 +71,11 @@ public interface EmployeeService {
 
     Long findIdByExternalId(String externalId);
 
-    EmployeeInfoDto getEmployeInfo(Long employeeId);
+    EmployeeInfoDto getEmployeeInfo(Long employeeId);
 
-    EmployeeInfoDto getEmployeInfo(Long employeeId, String externalId);
+    EmployeeInfoDto getEmployeeInfo(Long employeeId, String externalId);
 
-    EmployeeExtendedInfoDto getEmployeExtendedInfo(Long employeeId, String externalId);
+    EmployeeExtendedInfoDto getEmployeeExtendedInfo(Long employeeId, String externalId);
 
     EmployeeInfoDto getEmployeeInfoByAssignment(Long divisionTeamAssignmentId);
 }

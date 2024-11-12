@@ -763,18 +763,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeInfoDto getEmployeInfo(Long employeeId) {
-        return getEmployeInfo(employeeId, null);
+    public EmployeeInfoDto getEmployeeInfo(Long employeeId) {
+        return getEmployeeInfo(employeeId, null);
     }
 
     @Override
-    public EmployeeInfoDto getEmployeInfo(Long employeeId, String externalId) {
+    public EmployeeInfoDto getEmployeeInfo(Long employeeId, String externalId) {
         EmployeeEntity employee = findEmployee(employeeId, externalId);
         return EmployeeInfoFactory.create(employee);
     }
 
     @Override
-    public EmployeeExtendedInfoDto getEmployeExtendedInfo(Long employeeId, String externalId) {
+    public EmployeeExtendedInfoDto getEmployeeExtendedInfo(Long employeeId, String externalId) {
         EmployeeEntity employee = findEmployee(employeeId, externalId);
         PositionAssignmentInfo info = getPositionAssignmentInfo(employee.getId());
         return EmployeeExtendedInfoFactory.create(
