@@ -36,7 +36,7 @@ public class ProjectTypeCrudService extends AbstractArchiveDictionaryService<Pro
     @Override
     public void delete(Integer id) {
         ProjectTypeEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("ProjectType with id = %s not found", id)));
+            new NotFoundException(String.format("ProjectType with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

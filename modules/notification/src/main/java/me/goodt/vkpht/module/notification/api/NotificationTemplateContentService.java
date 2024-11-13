@@ -12,15 +12,15 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentSub
 
 public interface NotificationTemplateContentService {
 
-	List<NotificationTemplateContentShortResponse> findAll(NotificationTemplateContentFilter filter);
+    List<NotificationTemplateContentShortResponse> findAll(NotificationTemplateContentFilter filter);
 
-	NotificationTemplateContentResponse getById(Long id) throws NotFoundException;
+    NotificationTemplateContentResponse getById(Long id) throws NotFoundException;
 
-	NotificationTemplateContentResponse create(NotificationTemplateContentRequest request) throws NotFoundException;
+    NotificationTemplateContentResponse create(NotificationTemplateContentRequest request) throws NotFoundException;
 
-	NotificationTemplateContentResponse update(Long id, NotificationTemplateContentRequest request) throws NotFoundException;
+    NotificationTemplateContentResponse update(Long id, NotificationTemplateContentRequest request) throws NotFoundException;
 
-	void delete(Long id) throws NotFoundException;
+    void delete(Long id) throws NotFoundException;
 
-	List<NotificationTemplateContentSubstituteInfo> findSubstitutes(Long templateId, Long contentId);
+    List<NotificationTemplateContentSubstituteInfo> findSubstitutes(Long templateId, Long contentId);
 }

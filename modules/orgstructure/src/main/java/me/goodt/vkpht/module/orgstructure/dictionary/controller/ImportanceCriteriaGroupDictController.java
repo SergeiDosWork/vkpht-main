@@ -35,8 +35,8 @@ public class ImportanceCriteriaGroupDictController extends UnfilteredDictControl
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(ImportanceCriteriaGroupTypeDictController.class)
-                        .withRel("typeId").withName("id").withTitle("name")
+            WebMvcLinkBuilder.linkTo(ImportanceCriteriaGroupTypeDictController.class)
+                .withRel("typeId").withName("id").withTitle("name")
         );
     }
 

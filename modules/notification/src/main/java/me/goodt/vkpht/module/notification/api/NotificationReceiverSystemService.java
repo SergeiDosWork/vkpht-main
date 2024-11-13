@@ -9,13 +9,13 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationReceiverSystemRequ
 
 public interface NotificationReceiverSystemService {
 
-	List<NotificationReceiverSystemDto> getAllNotificationReceiverSystem();
+    List<NotificationReceiverSystemDto> getAllNotificationReceiverSystem();
 
-	NotificationReceiverSystemDto getNotificationReceiverSystemById(Long id) throws NotFoundException;
+    NotificationReceiverSystemDto getNotificationReceiverSystemById(Long id) throws NotFoundException;
 
-	NotificationReceiverSystemDto createNotificationReceiverSystem(NotificationReceiverSystemRequestDto dto);
+    NotificationReceiverSystemDto createNotificationReceiverSystem(NotificationReceiverSystemRequestDto dto);
 
-	NotificationReceiverSystemDto updateNotificationReceiverSystem(NotificationReceiverSystemRequestDto dto) throws NotFoundException;
+    NotificationReceiverSystemDto updateNotificationReceiverSystem(NotificationReceiverSystemRequestDto dto) throws NotFoundException;
 
-	boolean deleteNotificationReceiverSystem(Long id);
+    boolean deleteNotificationReceiverSystem(Long id);
 }

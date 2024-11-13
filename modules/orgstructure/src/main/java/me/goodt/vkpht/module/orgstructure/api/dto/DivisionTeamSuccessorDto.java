@@ -18,8 +18,9 @@ public class DivisionTeamSuccessorDto extends DivisionTeamSuccessorShortDto {
                                     List<DivisionTeamSuccessorReadinessDto> divisionTeamSuccessorReadiness,
                                     DivisionTeamDto divisionTeam, DivisionTeamRoleDto divisionTeamRole) {
         super(id, dateFrom, dateTo, dateCommitHr, employee, datePriority, reasonIdInclusion, reasonIdExclusion, commentInclusion, commentExclusion,
-              documentUrlInclusion, documentUrlExclusion, divisionTeamSuccessorReadiness, divisionTeam);
+            documentUrlInclusion, documentUrlExclusion, divisionTeamSuccessorReadiness, divisionTeam);
         this.divisionTeamRole = divisionTeamRole;
     }
+
     private DivisionTeamRoleDto divisionTeamRole;
 }

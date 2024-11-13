@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Configuration
 public class NotificationConfig {
-	@Value("${appConfig.notification.rootUrl}")
-	private String rootUrl;
-	@Value("${appConfig.notification.substituteLevel}")
-	private int substituteLevel;
+    @Value("${appConfig.notification.rootUrl}")
+    private String rootUrl;
+    @Value("${appConfig.notification.substituteLevel}")
+    private int substituteLevel;
 }

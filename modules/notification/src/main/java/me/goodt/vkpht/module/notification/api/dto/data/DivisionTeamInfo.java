@@ -18,18 +18,18 @@ import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DivisionTeamInfo {
-	@EqualsAndHashCode.Include
-	private Long divisionTeamId;
-	private DivisionTeamAssignmentDto headAssignment;
-	private List<EmployeeInfoDto> employees;
-	private Set<Long> employeeIds;
+    @EqualsAndHashCode.Include
+    private Long divisionTeamId;
+    private DivisionTeamAssignmentDto headAssignment;
+    private List<EmployeeInfoDto> employees;
+    private Set<Long> employeeIds;
 
-	@Override
-	public String toString() {
-		if (headAssignment != null) {
-			return String.format("DivisionTeamInfo{divisionTeamId=%d, headAssignmentId=%d, employeeIds=%s}", divisionTeamId, headAssignment.getId(), employeeIds);
-		} else {
-			return "DivisionTeamInfo{divisionTeamId=%d, headAssignmentId=null, employeeIds=%s}".formatted(divisionTeamId, employeeIds);
-		}
-	}
+    @Override
+    public String toString() {
+        if (headAssignment != null) {
+            return String.format("DivisionTeamInfo{divisionTeamId=%d, headAssignmentId=%d, employeeIds=%s}", divisionTeamId, headAssignment.getId(), employeeIds);
+        } else {
+            return "DivisionTeamInfo{divisionTeamId=%d, headAssignmentId=null, employeeIds=%s}".formatted(divisionTeamId, employeeIds);
+        }
+    }
 }

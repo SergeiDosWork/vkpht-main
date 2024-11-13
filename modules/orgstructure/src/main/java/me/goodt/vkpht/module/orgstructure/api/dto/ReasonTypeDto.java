@@ -11,5 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReasonTypeDto {
     private Long id;
-	private String name;
+    private String name;
 }

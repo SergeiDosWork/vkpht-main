@@ -39,8 +39,8 @@ public class OrgReasonDao extends AbstractDao<OrgReasonEntity, Long> {
     public Optional<OrgReasonEntity> findOne(Long id, ReasonFilter filter) {
         Predicate exp = toPredicate(filter);
         return Optional.ofNullable(query().selectFrom(meta)
-                .where(meta.id.eq(id).and(exp))
-                .fetchFirst());
+            .where(meta.id.eq(id).and(exp))
+            .fetchFirst());
     }
 
     private Predicate toPredicate(ReasonFilter filter) {

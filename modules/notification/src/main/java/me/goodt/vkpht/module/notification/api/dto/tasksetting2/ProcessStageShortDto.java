@@ -11,10 +11,10 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @Getter
 @Setter
 public class ProcessStageShortDto {
-	private Long id;
-	private String params;
+    private Long id;
+    private String params;
     @JsonProperty(DtoTagConstants.STAGE_TYPE_TAG)
-	private StageTypeDto stageType;
+    private StageTypeDto stageType;
     @JsonProperty(DtoTagConstants.DATE_FROM_TAG)
     private Date dateFrom;
     @JsonProperty(DtoTagConstants.DATE_START_CONFIRM_TAG)

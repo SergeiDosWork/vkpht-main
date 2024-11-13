@@ -11,7 +11,7 @@ import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 
 @Getter
 @Setter
-public class WorkAwardTypeDto extends AbstractRes<WorkAwardTypeDto>  {
+public class WorkAwardTypeDto extends AbstractRes<WorkAwardTypeDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;

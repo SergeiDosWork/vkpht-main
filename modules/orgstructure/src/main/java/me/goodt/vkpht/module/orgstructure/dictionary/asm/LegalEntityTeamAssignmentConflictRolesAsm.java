@@ -12,7 +12,7 @@ import me.goodt.vkpht.common.dictionary.core.asm.AbstractAsm;
 
 @Component
 public class LegalEntityTeamAssignmentConflictRolesAsm extends
-        AbstractAsm<LegalEntityTeamAssignmentConflictRoleEntity, LegalEntityTeamAssignmentConflictRolesDto> {
+    AbstractAsm<LegalEntityTeamAssignmentConflictRoleEntity, LegalEntityTeamAssignmentConflictRolesDto> {
 
     @Autowired
     private RoleDao roleDao;
@@ -26,7 +26,7 @@ public class LegalEntityTeamAssignmentConflictRolesAsm extends
         }
         if (entity.getLegalEntityTeamAssignmentRoleIdConflicted() != null) {
             dto.setLegalEntityTeamAssignmentRoleIdConflicted(
-                    entity.getLegalEntityTeamAssignmentRoleIdConflicted().getId()
+                entity.getLegalEntityTeamAssignmentRoleIdConflicted().getId()
             );
         }
         dto.setId(entity.getId());
@@ -42,21 +42,21 @@ public class LegalEntityTeamAssignmentConflictRolesAsm extends
         if (dto.getLegalEntityTeamAssignmentRoleIdConflicted() != null) {
             RoleEntity dbRole = roleDao.findActualById(dto.getLegalEntityTeamAssignmentRoleIdConflicted())
                 .orElseThrow(() -> new NotFoundException(String.format("Actual LegalEntityTeamAssignmentRoleIdConflicted = %d not found",
-                                                                       dto.getLegalEntityTeamAssignmentRoleIdConflicted())));
+                    dto.getLegalEntityTeamAssignmentRoleIdConflicted())));
 
             entity.setLegalEntityTeamAssignmentRoleIdConflicted(dbRole);
         }
         if (dto.getLegalEntityTeamAssignmentRoleIdAssigned() != null) {
             RoleEntity dbRole = roleDao.findActualById(dto.getLegalEntityTeamAssignmentRoleIdAssigned())
                 .orElseThrow(() -> new NotFoundException(String.format("Actual LegalEntityTeamAssignmentRoleIdAssigned = %d not found",
-                                                                       dto.getLegalEntityTeamAssignmentRoleIdAssigned())));
+                    dto.getLegalEntityTeamAssignmentRoleIdAssigned())));
 
             entity.setLegalEntityTeamAssignmentRoleIdAssigned(dbRole);
         }
         if (dto.getDivisionTeamAssignmentRoleIdAssigned() != null) {
             RoleEntity dbRole = roleDao.findActualById(dto.getDivisionTeamAssignmentRoleIdAssigned())
                 .orElseThrow(() -> new NotFoundException(String.format("Actual DivisionTeamAssignmentRoleIdAssigned = %d not found",
-                                                                       dto.getDivisionTeamAssignmentRoleIdAssigned())));
+                    dto.getDivisionTeamAssignmentRoleIdAssigned())));
 
             entity.setDivisionTeamAssignmentRoleIdAssigned(dbRole);
         }
@@ -69,7 +69,7 @@ public class LegalEntityTeamAssignmentConflictRolesAsm extends
         if (dto.getLegalEntityTeamAssignmentRoleIdConflicted() != null) {
             RoleEntity dbRole = roleDao.findActualById(dto.getLegalEntityTeamAssignmentRoleIdConflicted())
                 .orElseThrow(() -> new NotFoundException(String.format("Actual LegalEntityTeamAssignmentRoleIdConflicted = %d not found",
-                                                                       dto.getLegalEntityTeamAssignmentRoleIdConflicted())));
+                    dto.getLegalEntityTeamAssignmentRoleIdConflicted())));
 
             entity.setLegalEntityTeamAssignmentRoleIdConflicted(dbRole);
         }
@@ -78,16 +78,16 @@ public class LegalEntityTeamAssignmentConflictRolesAsm extends
         Long legalEntityAssignedRole = dto.getLegalEntityTeamAssignmentRoleIdAssigned();
         if (legalEntityAssignedRole != null) {
             entity.setLegalEntityTeamAssignmentRoleIdAssigned(roleDao.findById(legalEntityAssignedRole)
-                    .orElseThrow(() -> new NotFoundException(String.format(
-                            "LegalEntityTeamAssignmentRoleIdAssigned = %d not found", legalEntityAssignedRole))));
+                .orElseThrow(() -> new NotFoundException(String.format(
+                    "LegalEntityTeamAssignmentRoleIdAssigned = %d not found", legalEntityAssignedRole))));
         } else {
             entity.setLegalEntityTeamAssignmentRoleIdAssigned(null);
         }
         Long divisionTeamAssignedRole = dto.getDivisionTeamAssignmentRoleIdAssigned();
         if (divisionTeamAssignedRole != null) {
             entity.setDivisionTeamAssignmentRoleIdAssigned(roleDao.findById(divisionTeamAssignedRole)
-                    .orElseThrow(() -> new NotFoundException(String.format(
-                            "DivisionTeamAssignmentRoleIdAssigned = %d not found", divisionTeamAssignedRole))));
+                .orElseThrow(() -> new NotFoundException(String.format(
+                    "DivisionTeamAssignmentRoleIdAssigned = %d not found", divisionTeamAssignedRole))));
         } else {
             entity.setDivisionTeamAssignmentRoleIdAssigned(null);
         }

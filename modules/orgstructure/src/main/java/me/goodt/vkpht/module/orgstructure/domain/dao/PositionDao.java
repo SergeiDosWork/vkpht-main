@@ -60,11 +60,11 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
 
     public List<PositionEntity> getPositionByDivisionId(Long divisionId, String unitCode) {
         return query().selectFrom(meta)
-                .where(meta.division.id.eq(divisionId)
-                    .and(checkUnit(unitCode)))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .fetch();
+            .where(meta.division.id.eq(divisionId)
+                .and(checkUnit(unitCode)))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .fetch();
     }
 
     public Set<PositionEntity> getActualByIdsOrDivisionIdsOrLegalEntityId(List<Long> ids, List<Long> divisionIds, boolean hasPositionAssignment, Long legalEntityId, String unitCode) {
@@ -106,17 +106,17 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
     public List<PositionEntity> getPositionByEmployeeIdAndDivisionIds(Long employeeId, List<Long> divisionIds, String unitCode) {
         final QPositionAssignmentEntity pa = QPositionAssignmentEntity.positionAssignmentEntity;
         final BooleanExpression exp = Expressions.allOf(
-                employeeId == null ? null : pa.employee.id.eq(employeeId),
-                CollectionUtils.isEmpty(divisionIds) ? null : meta.division.id.in(divisionIds),
-                checkUnit(unitCode)
+            employeeId == null ? null : pa.employee.id.eq(employeeId),
+            CollectionUtils.isEmpty(divisionIds) ? null : meta.division.id.in(divisionIds),
+            checkUnit(unitCode)
         );
 
         return query().selectFrom(meta)
-                .innerJoin(pa).on(meta.id.eq(pa.position.id))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(pa).on(meta.id.eq(pa.position.id))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<PositionSuccessorEntity> getPositionByDivisionTeamAssignments(List<Long> dtaIds, String unitCode) {
@@ -127,20 +127,20 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
         final QPositionSuccessorEntity ps = QPositionSuccessorEntity.positionSuccessorEntity;
 
         BooleanExpression exp = Expressions.allOf(
-                dta.id.in(dtaIds),
-                ps.dateTo.isNull(),
-                checkUnit(unitCode));
+            dta.id.in(dtaIds),
+            ps.dateTo.isNull(),
+            checkUnit(unitCode));
 
         return query().select(ps).from(dta)
-                .innerJoin(dtr).on(dta.divisionTeamRoleId.eq(dtr.id))
-                .innerJoin(dt).on(dtr.divisionTeam.id.eq(dt.id))
-                .innerJoin(pa).on(dta.employeeId.eq(pa.employeeId))
-                .innerJoin(meta).on(pa.position.id.eq(meta.id).and(meta.division.id.eq(dt.divisionId)))
-                .innerJoin(ps).on(meta.id.eq(ps.position.id))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dta.divisionTeamRoleId.eq(dtr.id))
+            .innerJoin(dt).on(dtr.divisionTeam.id.eq(dt.id))
+            .innerJoin(pa).on(dta.employeeId.eq(pa.employeeId))
+            .innerJoin(meta).on(pa.position.id.eq(meta.id).and(meta.division.id.eq(dt.divisionId)))
+            .innerJoin(ps).on(meta.id.eq(ps.position.id))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .where(exp)
+            .fetch();
 
     }
 
@@ -151,9 +151,9 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
             QDivisionTeamAssignmentEntity qdta = QDivisionTeamAssignmentEntity.divisionTeamAssignmentEntity;
             BooleanExpression exp = qdtr.divisionTeamId.in(divisionTeams);
             employees = query().from(qdtr)
-                    .join(qdta).on(qdta.divisionTeamRole.eq(qdtr))
-                    .where(exp)
-                    .select(qdta.employeeId);
+                .join(qdta).on(qdta.divisionTeamRole.eq(qdtr))
+                .where(exp)
+                .select(qdta.employeeId);
         }
         QPositionAssignmentEntity qpa = QPositionAssignmentEntity.positionAssignmentEntity;
         QDivisionEntity qd = QDivisionEntity.divisionEntity;
@@ -161,18 +161,18 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
         QJobTitleEntity qjt = QJobTitleEntity.jobTitleEntity;
         QPositionEntity qp = QPositionEntity.positionEntity;
         BooleanExpression in = qpa.employeeId.in(employees)
-                .and(qpa.dateTo.isNull())
-                .and(qdt.id.in(divisionTeams))
-                .and(checkUnit(unitCode));
+            .and(qpa.dateTo.isNull())
+            .and(qdt.id.in(divisionTeams))
+            .and(checkUnit(unitCode));
 
         return query().from(qpa)
-                .join(qpa.position, qp)
-                .join(qp.division, qd)
-                .join(qp.jobTitle, qjt)
-                .join(qdt).on(qdt.divisionId.eq(qd.id))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .where(in);
+            .join(qpa.position, qp)
+            .join(qp.division, qd)
+            .join(qp.jobTitle, qjt)
+            .join(qdt).on(qdt.divisionId.eq(qd.id))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .where(in);
     }
 
     public JPQLQuery<?> findAllByDivisionTeamAndEmployee(Collection<Long> employee, Collection<Long> divisionTeams, String unitCode) {
@@ -182,42 +182,42 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
         QJobTitleEntity qjt = QJobTitleEntity.jobTitleEntity;
         QPositionEntity qp = QPositionEntity.positionEntity;
         BooleanExpression in = qpa.employeeId.in(employee)
-                .and(qpa.dateTo.isNull())
-                .and(qdt.id.in(divisionTeams))
-                .and(checkUnit(unitCode));
+            .and(qpa.dateTo.isNull())
+            .and(qdt.id.in(divisionTeams))
+            .and(checkUnit(unitCode));
 
         return query().from(qpa)
-                .join(qpa.position, qp)
-                .join(qp.division, qd)
-                .join(qp.jobTitle, qjt)
-                .join(qdt).on(qdt.divisionId.eq(qd.id))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .where(in);
+            .join(qpa.position, qp)
+            .join(qp.division, qd)
+            .join(qp.jobTitle, qjt)
+            .join(qdt).on(qdt.divisionId.eq(qd.id))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .where(in);
     }
 
     public List<Long> findActualIdsByEmployeeIds(Collection<Long> employeeIds, String unitCode) {
         QPositionAssignmentEntity pa = QPositionAssignmentEntity.positionAssignmentEntity;
         BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                pa.dateTo.isNull(),
-                pa.employeeId.in(employeeIds),
-                checkUnit(unitCode)
+            meta.dateTo.isNull(),
+            pa.dateTo.isNull(),
+            pa.employeeId.in(employeeIds),
+            checkUnit(unitCode)
         );
         return query().select(meta.id)
-                .from(meta)
-                .join(pa).on(pa.positionId.eq(meta.id))
-                .innerJoin(division).on(division.id.eq(meta.divisionId))
-                .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .join(pa).on(pa.positionId.eq(meta.id))
+            .innerJoin(division).on(division.id.eq(meta.divisionId))
+            .innerJoin(legalEntity).on(division.legalEntityId.eq(legalEntity.id))
+            .where(exp)
+            .fetch();
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public Map<Long, PositionEntity> findByEmployeeIds(Collection<Long> employeeIds,
@@ -256,7 +256,7 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
     }
 
     public Page<PositionListResponse> positionList(Long divisionId, String positionName,
-        Pageable pageable) {
+                                                   Pageable pageable) {
         QDivisionEntity division = QDivisionEntity.divisionEntity;
         QPositionAssignmentEntity positionAssignment = QPositionAssignmentEntity.positionAssignmentEntity;
         QEmployeeEntity employee = QEmployeeEntity.employeeEntity;
@@ -267,11 +267,11 @@ public class PositionDao extends AbstractDao<PositionEntity, Long> {
         BooleanBuilder where = new BooleanBuilder();
 
         where.and(Expressions.allOf(
-                meta.dateTo.isNull(),
-                division.dateTo.isNull(),
-                positionAssignment.dateTo.isNull().or(positionAssignment.isNull()),
-                employee.dateTo.isNull().or(employee.isNull()),
-                person.dateTo.isNull().or(person.isNull())
+            meta.dateTo.isNull(),
+            division.dateTo.isNull(),
+            positionAssignment.dateTo.isNull().or(positionAssignment.isNull()),
+            employee.dateTo.isNull().or(employee.isNull()),
+            person.dateTo.isNull().or(person.isNull())
         ));
 
         if (divisionId != null) {

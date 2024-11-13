@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 public class RelatedPostionSortDto {
     private String property;
     private Sort.Direction direction;
+
     public void setDirection(String direction) {
         this.direction = Sort.Direction.fromString(direction);
     }

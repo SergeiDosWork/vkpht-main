@@ -10,12 +10,12 @@ public class PersonnelDocumentFactory {
 
     public static PersonnelDocumentDto create(PersonnelDocumentEntity entity) {
         return new PersonnelDocumentDto(
-                entity.getId(), entity.getEmployee() != null ? entity.getEmployee().getId() : null,
-                entity.getPrecursor() != null ? entity.getPrecursor().getId() : null,
-                entity.getType() != null ? entity.getType().getId() : null,
-                entity.getForm() != null ? entity.getForm().getId() : null,
-                entity.getName(), entity.getDateFrom(), entity.getDateTo(), entity.getData(),
-                entity.getExternalId()
+            entity.getId(), entity.getEmployee() != null ? entity.getEmployee().getId() : null,
+            entity.getPrecursor() != null ? entity.getPrecursor().getId() : null,
+            entity.getType() != null ? entity.getType().getId() : null,
+            entity.getForm() != null ? entity.getForm().getId() : null,
+            entity.getName(), entity.getDateFrom(), entity.getDateTo(), entity.getData(),
+            entity.getExternalId()
         );
     }
 }

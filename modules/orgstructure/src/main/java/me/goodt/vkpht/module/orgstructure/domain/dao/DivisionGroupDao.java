@@ -21,20 +21,20 @@ public class DivisionGroupDao extends AbstractArchivableDao<DivisionGroupEntity,
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public List<DivisionGroupEntity> findActualByIds(List<Long> ids) {
         return query().selectFrom(meta)
-                .where(meta.id.in(ids).and(meta.dateTo.isNull()))
-                .fetch();
+            .where(meta.id.in(ids).and(meta.dateTo.isNull()))
+            .fetch();
     }
 
     @Override
     protected JPQLQuery<DivisionGroupEntity> createActualQuery() {
         return query().selectFrom(meta)
-                .where(meta.dateTo.isNull());
+            .where(meta.dateTo.isNull());
     }
 }

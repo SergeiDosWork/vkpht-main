@@ -33,9 +33,9 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.UnitEntity;
 public class PersonInfoMapper {
 
     public PersonInfoDto toPersonInfoDto(
-            PersonEntity person,
-            SecondaryInfoDto secondaryInfo,
-            List<PassportEmployeeDto> employees
+        PersonEntity person,
+        SecondaryInfoDto secondaryInfo,
+        List<PassportEmployeeDto> employees
     ) {
         PersonInfoDto personInfo = new PersonInfoDto();
         personInfo.setId(person.getId());
@@ -74,13 +74,13 @@ public class PersonInfoMapper {
     }
 
     public PassportEmployeeDto toPassportEmployeeDto(
-            EmployeeEntity employee,
-            Collection<UnitEntity> units,
-            Collection<LegalEntityEntity> legalEntities,
-            Collection<DivisionEntity> divisions,
-            Collection<PositionEntity> positions,
-            Collection<PositionAssignmentEntity> posAssignments,
-            Collection<EmployeeDismissalEntity> employeeDismissals
+        EmployeeEntity employee,
+        Collection<UnitEntity> units,
+        Collection<LegalEntityEntity> legalEntities,
+        Collection<DivisionEntity> divisions,
+        Collection<PositionEntity> positions,
+        Collection<PositionAssignmentEntity> posAssignments,
+        Collection<EmployeeDismissalEntity> employeeDismissals
     ) {
         PassportEmployeeDto passportEmployee = new PassportEmployeeDto();
         passportEmployee.setId(employee.getId());
@@ -188,7 +188,7 @@ public class PersonInfoMapper {
     }
 
     private List<PassportPositionAssignmentDto> toPassportPositionAssignmentDtos(
-            Collection<PositionAssignmentEntity> entities) {
+        Collection<PositionAssignmentEntity> entities) {
         List<PassportPositionAssignmentDto> dtos = new ArrayList<>(entities.size());
         for (PositionAssignmentEntity entity : entities) {
             dtos.add(toPassportPositionAssignmentDto(entity));
@@ -207,7 +207,7 @@ public class PersonInfoMapper {
     }
 
     private List<PassportEmployeeDismissalDto> toPassportEmployeeDismissalDtos(
-            Collection<EmployeeDismissalEntity> entities) {
+        Collection<EmployeeDismissalEntity> entities) {
         List<PassportEmployeeDismissalDto> dtos = new ArrayList<>(entities.size());
         for (EmployeeDismissalEntity entity : entities) {
             dtos.add(toPassportEmployeeDismissalDto(entity));

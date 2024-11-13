@@ -17,11 +17,11 @@ import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class NotificationTemplateDao extends AbstractDao<NotificationTemplateEntity, Long> {
 
-	private static final QNotificationTemplateEntity meta = QNotificationTemplateEntity.notificationTemplateEntity;
+    private static final QNotificationTemplateEntity meta = QNotificationTemplateEntity.notificationTemplateEntity;
 
-	public NotificationTemplateDao(EntityManager em) {
-		super(NotificationTemplateEntity.class, em);
-	}
+    public NotificationTemplateDao(EntityManager em) {
+        super(NotificationTemplateEntity.class, em);
+    }
 
     public Page<NotificationTemplateEntity> find(NotificationTemplateFilter filter, Pageable pageable) {
         Predicate where = toPredicate(filter);
@@ -45,13 +45,13 @@ public class NotificationTemplateDao extends AbstractDao<NotificationTemplateEnt
         return where;
     }
 
-	public NotificationTemplateEntity findByCode(String code, String unitCode) {
-		return query().selectFrom(meta)
-			.where(
-				meta.code.eq(code)
-					.and(meta.isEnabled.eq(1))
+    public NotificationTemplateEntity findByCode(String code, String unitCode) {
+        return query().selectFrom(meta)
+            .where(
+                meta.code.eq(code)
+                    .and(meta.isEnabled.eq(1))
                     .and(meta.unitCode.eq(unitCode))
-					.and(meta.dateTo.isNull().or(Expressions.currentTimestamp().between(meta.dateFrom, meta.dateTo))))
-			.fetchOne();
-	}
+                    .and(meta.dateTo.isNull().or(Expressions.currentTimestamp().between(meta.dateFrom, meta.dateTo))))
+            .fetchOne();
+    }
 }

@@ -25,88 +25,88 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.WorkFunctionStatusEntity
 @RequiredArgsConstructor
 public class WorkFunctionServiceImpl implements WorkFunctionService {
 
-	private final FunctionDao functionDao;
-	private final WorkFunctionDao workFunctionDao;
-	private final WorkFunctionStatusDao workFunctionStatusDao;
-	private final AuthService authService;
+    private final FunctionDao functionDao;
+    private final WorkFunctionDao workFunctionDao;
+    private final WorkFunctionStatusDao workFunctionStatusDao;
+    private final AuthService authService;
     private final UnitAccessService unitAccessService;
 
     @Override
     @Transactional(readOnly = true)
-	public WorkFunctionEntity get(Long id) throws NotFoundException {
+    public WorkFunctionEntity get(Long id) throws NotFoundException {
         WorkFunctionEntity dbEntity = workFunctionDao.findById(id).orElseThrow(() ->
             new NotFoundException(String.format("WorkFunctionEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(dbEntity.getUnitCode());
         return dbEntity;
-	}
+    }
 
-	@Override
+    @Override
     @Transactional(readOnly = true)
-	public List<WorkFunctionEntity> get() {
+    public List<WorkFunctionEntity> get() {
         var filter = WorkFunctionFilter.builder()
             .unitCode(unitAccessService.getCurrentUnit())
             .build();
 
         return workFunctionDao.find(filter, Pageable.unpaged()).getContent();
-	}
+    }
 
-	@Override
-	public WorkFunctionEntity create(WorkFunctionDto dto) throws NotFoundException {
-		WorkFunctionEntity entity = new WorkFunctionEntity();
+    @Override
+    public WorkFunctionEntity create(WorkFunctionDto dto) throws NotFoundException {
+        WorkFunctionEntity entity = new WorkFunctionEntity();
         commonActions(entity, dto);
         entity.setUnitCode(unitAccessService.getCurrentUnit());
         return workFunctionDao.save(entity);
-	}
+    }
 
-	@Override
+    @Override
     @Transactional
-	public WorkFunctionEntity update(Long id, WorkFunctionDto dto) throws NotFoundException {
-		WorkFunctionEntity entity = get(id);
-		commonActions(entity, dto);
-		return workFunctionDao.save(entity);
-	}
+    public WorkFunctionEntity update(Long id, WorkFunctionDto dto) throws NotFoundException {
+        WorkFunctionEntity entity = get(id);
+        commonActions(entity, dto);
+        return workFunctionDao.save(entity);
+    }
 
-	@Override
+    @Override
     @Transactional
-	public void delete(Long id) throws NotFoundException, IllegalArgumentException {
-		WorkFunctionEntity entity = get(id);
-		if (entity.getDateTo() != null) {
-			throw new IllegalArgumentException(String.format("WorkFunction with id=%d is already deleted", id));
-		}
-		entity.setDateTo(new Date());
+    public void delete(Long id) throws NotFoundException, IllegalArgumentException {
+        WorkFunctionEntity entity = get(id);
+        if (entity.getDateTo() != null) {
+            throw new IllegalArgumentException(String.format("WorkFunction with id=%d is already deleted", id));
+        }
+        entity.setDateTo(new Date());
         entity.setUpdateDate(new Date());
         entity.setUpdateEmployeeId(authService.getUserEmployeeId());
-		workFunctionDao.save(entity);
-	}
+        workFunctionDao.save(entity);
+    }
 
-	private void commonActions(WorkFunctionEntity entity, WorkFunctionDto dto) throws NotFoundException {
-		Date currentDate = new Date();
-		Long sessionEmployeeId = authService.getUserEmployeeId();
-		if (entity.getId() == null) {
-			entity.setDateFrom(currentDate);
-			entity.setAuthorEmployeeId(sessionEmployeeId);
-		}
-		entity.setUpdateDate(currentDate);
-		entity.setUpdateEmployeeId(sessionEmployeeId);
-		if (dto.getPrecursorId() != null) {
-			WorkFunctionEntity precursor = workFunctionDao.findById(dto.getPrecursorId())
-				.orElseThrow(() -> new NotFoundException(String.format("WorkFunction with id=%d is not found", dto.getPrecursorId())));
-			entity.setPrecursor(precursor);
-		}
-		if (dto.getFunctionId() != null) {
-			FunctionEntity function = functionDao.findById(dto.getFunctionId())
-				.orElseThrow(() -> new NotFoundException(String.format("Function with id=%d is not found", dto.getFunctionId())));
-			entity.setFunction(function);
-		}
-		if (dto.getStatusId() != null) {
-			WorkFunctionStatusEntity status = workFunctionStatusDao.findById(dto.getStatusId())
-				.orElseThrow(() -> new NotFoundException(String.format("WorkFunctionStatus with id=%d is not found", dto.getStatusId())));
+    private void commonActions(WorkFunctionEntity entity, WorkFunctionDto dto) throws NotFoundException {
+        Date currentDate = new Date();
+        Long sessionEmployeeId = authService.getUserEmployeeId();
+        if (entity.getId() == null) {
+            entity.setDateFrom(currentDate);
+            entity.setAuthorEmployeeId(sessionEmployeeId);
+        }
+        entity.setUpdateDate(currentDate);
+        entity.setUpdateEmployeeId(sessionEmployeeId);
+        if (dto.getPrecursorId() != null) {
+            WorkFunctionEntity precursor = workFunctionDao.findById(dto.getPrecursorId())
+                .orElseThrow(() -> new NotFoundException(String.format("WorkFunction with id=%d is not found", dto.getPrecursorId())));
+            entity.setPrecursor(precursor);
+        }
+        if (dto.getFunctionId() != null) {
+            FunctionEntity function = functionDao.findById(dto.getFunctionId())
+                .orElseThrow(() -> new NotFoundException(String.format("Function with id=%d is not found", dto.getFunctionId())));
+            entity.setFunction(function);
+        }
+        if (dto.getStatusId() != null) {
+            WorkFunctionStatusEntity status = workFunctionStatusDao.findById(dto.getStatusId())
+                .orElseThrow(() -> new NotFoundException(String.format("WorkFunctionStatus with id=%d is not found", dto.getStatusId())));
             unitAccessService.checkUnitAccess(status.getUnitCode());
-			entity.setStatus(status);
-		}
-		entity.setFullName(dto.getFullName());
-		entity.setShortName(dto.getShortName());
-		entity.setAbbreviation(dto.getAbbreviation());
-		entity.setIsRequiredCertificate(dto.getIsRequiredCertificate());
-	}
+            entity.setStatus(status);
+        }
+        entity.setFullName(dto.getFullName());
+        entity.setShortName(dto.getShortName());
+        entity.setAbbreviation(dto.getAbbreviation());
+        entity.setIsRequiredCertificate(dto.getIsRequiredCertificate());
+    }
 }

@@ -36,7 +36,7 @@ public class RoleCrudService extends AbstractArchiveDictionaryService<RoleEntity
     @Override
     public void delete(Long id) {
         RoleEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("Role with id = %s not found", id)));
+            new NotFoundException(String.format("Role with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

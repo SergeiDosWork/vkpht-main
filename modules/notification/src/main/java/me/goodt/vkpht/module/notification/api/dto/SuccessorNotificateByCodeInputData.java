@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SuccessorNotificateByCodeInputData {
-	private String code;
-	@JsonSetter(DtoTagConstants.DIVISION_TEAM_SUCCESSOR_ID_TAG)
-	private Long divisionTeamSuccessorId;
+    private String code;
+    @JsonSetter(DtoTagConstants.DIVISION_TEAM_SUCCESSOR_ID_TAG)
+    private Long divisionTeamSuccessorId;
 }

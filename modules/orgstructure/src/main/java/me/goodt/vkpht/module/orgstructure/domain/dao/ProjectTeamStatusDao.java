@@ -20,13 +20,13 @@ public class ProjectTeamStatusDao extends AbstractArchivableDao<ProjectTeamStatu
     @Override
     protected JPQLQuery<ProjectTeamStatusEntity> createActualQuery() {
         return query().selectFrom(meta)
-                .where(meta.dateTo.isNull());
+            .where(meta.dateTo.isNull());
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

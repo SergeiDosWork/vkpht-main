@@ -16,29 +16,29 @@ import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 @RequiredArgsConstructor
 public class AppraisalServiceImpl implements AppraisalService {
 
-	private final RtCoreServiceClient rtCoreServiceClient;
+    private final RtCoreServiceClient rtCoreServiceClient;
 
-	@Override
-	public AppraisalEventNotificationDto findAppraisalEventById(Long id) {
-		return rtCoreServiceClient.findAppraisalEventById(id);
-	}
+    @Override
+    public AppraisalEventNotificationDto findAppraisalEventById(Long id) {
+        return rtCoreServiceClient.findAppraisalEventById(id);
+    }
 
-	@Override
-	public List<AppraisalEventCommissionMemberNotificationDto> findActualAppraisalEventCommissionMemberByAppraisalEventId(Long appraisalEventId) {
-		return rtCoreServiceClient.findActualAppraisalEventCommissionMemberByAppraisalEventId(appraisalEventId);
-	}
+    @Override
+    public List<AppraisalEventCommissionMemberNotificationDto> findActualAppraisalEventCommissionMemberByAppraisalEventId(Long appraisalEventId) {
+        return rtCoreServiceClient.findActualAppraisalEventCommissionMemberByAppraisalEventId(appraisalEventId);
+    }
 
-	@Override
-	public List<AppraisalCommissionMemberDto> findAppraisalCommissionMemberByParams(Long appraisalEventId,
-																					Long appraisalCommissionRoleId) {
-		return rtCoreServiceClient.findAppraisalCommissionMemberByParams(
-			appraisalEventId,
-			appraisalCommissionRoleId
-		);
-	}
+    @Override
+    public List<AppraisalCommissionMemberDto> findAppraisalCommissionMemberByParams(Long appraisalEventId,
+                                                                                    Long appraisalCommissionRoleId) {
+        return rtCoreServiceClient.findAppraisalCommissionMemberByParams(
+            appraisalEventId,
+            appraisalCommissionRoleId
+        );
+    }
 
-	@Override
-	public List<AppraisalRecommendationDto> getAppraisalRecommendations(List<Long> appraisalRecommendationIds) {
-		return rtCoreServiceClient.getAppraisalRecommendations(appraisalRecommendationIds);
-	}
+    @Override
+    public List<AppraisalRecommendationDto> getAppraisalRecommendations(List<Long> appraisalRecommendationIds) {
+        return rtCoreServiceClient.getAppraisalRecommendations(appraisalRecommendationIds);
+    }
 }

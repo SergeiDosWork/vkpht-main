@@ -28,23 +28,23 @@ public class LegalEntityTeamDao extends AbstractDao<LegalEntityTeamEntity, Long>
         final QDivisionTeamRoleEntity divTeamRole = QDivisionTeamRoleEntity.divisionTeamRoleEntity;
         final QDivisionTeamAssignmentEntity dta = QDivisionTeamAssignmentEntity.divisionTeamAssignmentEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                le.dateTo.isNull(),
-                div.dateTo.isNull(),
-                divTeam.dateTo.isNull(),
-                dta.dateTo.isNull(),
-                dta.id.in(divisionTeamAssignmentIds)
+            meta.dateTo.isNull(),
+            le.dateTo.isNull(),
+            div.dateTo.isNull(),
+            divTeam.dateTo.isNull(),
+            dta.dateTo.isNull(),
+            dta.id.in(divisionTeamAssignmentIds)
         );
 
         return query().select(dta.id, meta.id)
-                .from(meta)
-                .join(le).on(le.id.eq(meta.legalEntityId))
-                .join(div).on(div.legalEntityId.eq(le.id))
-                .join(divTeam).on(divTeam.divisionId.eq(div.id))
-                .join(divTeamRole).on(divTeamRole.divisionTeamId.eq(divTeam.id))
-                .join(dta).on(dta.divisionTeamRoleId.eq(divTeamRole.id))
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .join(le).on(le.id.eq(meta.legalEntityId))
+            .join(div).on(div.legalEntityId.eq(le.id))
+            .join(divTeam).on(divTeam.divisionId.eq(div.id))
+            .join(divTeamRole).on(divTeamRole.divisionTeamId.eq(divTeam.id))
+            .join(dta).on(dta.divisionTeamRoleId.eq(divTeamRole.id))
+            .where(exp)
+            .fetch();
     }
 
     public LegalEntityTeamEntity findByLegalEntityIdAndTypeId(Long legalEntityId, Integer typeId) {
@@ -57,8 +57,8 @@ public class LegalEntityTeamDao extends AbstractDao<LegalEntityTeamEntity, Long>
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

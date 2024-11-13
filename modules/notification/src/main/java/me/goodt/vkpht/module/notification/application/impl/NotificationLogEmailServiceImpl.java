@@ -1,8 +1,6 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
-import me.goodt.vkpht.module.notification.application.NotificationLogEmailService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,15 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.goodt.vkpht.module.notification.application.NotificationLogEmailService;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationLogEmailDao;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEmailEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEntity;
 
+@RequiredArgsConstructor
 @Service
 public class NotificationLogEmailServiceImpl implements NotificationLogEmailService {
 
-    @Autowired
-    private NotificationLogEmailDao notificationLogEmailDao;
+    private final NotificationLogEmailDao notificationLogEmailDao;
 
     @Override
     @Transactional

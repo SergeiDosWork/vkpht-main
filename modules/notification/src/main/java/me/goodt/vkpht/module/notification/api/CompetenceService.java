@@ -9,15 +9,15 @@ import me.goodt.vkpht.module.notification.api.dto.rtcore.CompetenceProfileNotifi
 import me.goodt.vkpht.module.notification.api.dto.rtcore.CompetenceProfilePositionNotificationDto;
 
 public interface CompetenceService {
-	CompetenceNotificationDto findCompetenceById(Long id);
+    CompetenceNotificationDto findCompetenceById(Long id);
 
-	List<CompetenceNotificationDto> findCompetenceListByIds(Collection<Long> ids);
+    List<CompetenceNotificationDto> findCompetenceListByIds(Collection<Long> ids);
 
-	CompetenceProfilePositionNotificationDto findCompetenceProfilePositionById(Long id);
+    CompetenceProfilePositionNotificationDto findCompetenceProfilePositionById(Long id);
 
-	CompetenceProfilePositionNotificationDto findOneCompetenceProfilePositionByCompetenceProfileId(Long competenceProfileId);
+    CompetenceProfilePositionNotificationDto findOneCompetenceProfilePositionByCompetenceProfileId(Long competenceProfileId);
 
-	CompetenceProfileNotificationDto findCompetenceProfileById(Long id);
+    CompetenceProfileNotificationDto findCompetenceProfileById(Long id);
 
-	List<AssignmentsAccordanceDto> assignmentAccordance(Long[] assignmentsFrom, String[] assignmentsTo);
+    List<AssignmentsAccordanceDto> assignmentAccordance(Long[] assignmentsFrom, String[] assignmentsTo);
 }

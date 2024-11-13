@@ -20,9 +20,9 @@ public class WorkplaceDao extends AbstractDao<WorkplaceEntity, Long> {
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public List<WorkplaceEntity> findActualByIds(List<Long> ids, String unitCode) {

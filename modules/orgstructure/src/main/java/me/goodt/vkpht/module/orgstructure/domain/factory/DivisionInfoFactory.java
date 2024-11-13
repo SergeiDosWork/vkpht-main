@@ -20,7 +20,7 @@ public class DivisionInfoFactory {
 
         List<DivisionTeamDto> divisionTeamDtoList = divisionTeams.stream().map(DivisionTeamFactory::create).collect(Collectors.toList());
         return new DivisionInfoDto(division != null ? DivisionFactory.create(division) : null,
-                                   headEmployee != null ? EmployeeExtendedInfoFactory.create(EmployeeInfoFactory.create(headEmployee),
-                                       PersonFactory.create(headEmployee.getPerson()), assignments) : null, divisionTeamDtoList);
+            headEmployee != null ? EmployeeExtendedInfoFactory.create(EmployeeInfoFactory.create(headEmployee),
+                PersonFactory.create(headEmployee.getPerson()), assignments) : null, divisionTeamDtoList);
     }
 }

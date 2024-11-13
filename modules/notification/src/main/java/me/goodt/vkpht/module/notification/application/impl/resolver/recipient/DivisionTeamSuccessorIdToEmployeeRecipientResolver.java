@@ -21,8 +21,8 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class DivisionTeamSuccessorIdToEmployeeRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(DIVISION_TEAM_SUCCESSOR_ID_TO_EMPLOYEE, recipient.getBasicValue())) {
             return;
         }

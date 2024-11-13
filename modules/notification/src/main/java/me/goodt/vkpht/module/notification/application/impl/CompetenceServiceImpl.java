@@ -18,45 +18,45 @@ import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 @RequiredArgsConstructor
 public class CompetenceServiceImpl implements CompetenceService {
 
-	private final RtCoreServiceClient rtCoreServiceClient;
+    private final RtCoreServiceClient rtCoreServiceClient;
 
-	@Override
-	public CompetenceNotificationDto findCompetenceById(Long id) {
-		return rtCoreServiceClient.findCompetenceById(id);
-	}
+    @Override
+    public CompetenceNotificationDto findCompetenceById(Long id) {
+        return rtCoreServiceClient.findCompetenceById(id);
+    }
 
-	@Override
-	public List<CompetenceNotificationDto> findCompetenceListByIds(Collection<Long> ids) {
-		return rtCoreServiceClient.findCompetenceListByIds(ids);
-	}
+    @Override
+    public List<CompetenceNotificationDto> findCompetenceListByIds(Collection<Long> ids) {
+        return rtCoreServiceClient.findCompetenceListByIds(ids);
+    }
 
-	@Override
-	public CompetenceProfilePositionNotificationDto findCompetenceProfilePositionById(Long id) {
-		return rtCoreServiceClient.findCompetenceProfilePositionById(id);
-	}
+    @Override
+    public CompetenceProfilePositionNotificationDto findCompetenceProfilePositionById(Long id) {
+        return rtCoreServiceClient.findCompetenceProfilePositionById(id);
+    }
 
-	@Override
-	public CompetenceProfilePositionNotificationDto findOneCompetenceProfilePositionByCompetenceProfileId(Long competenceProfileId) {
-		return rtCoreServiceClient.findOneCompetenceProfilePositionByCompetenceProfileId(competenceProfileId);
-	}
+    @Override
+    public CompetenceProfilePositionNotificationDto findOneCompetenceProfilePositionByCompetenceProfileId(Long competenceProfileId) {
+        return rtCoreServiceClient.findOneCompetenceProfilePositionByCompetenceProfileId(competenceProfileId);
+    }
 
-	@Override
-	public CompetenceProfileNotificationDto findCompetenceProfileById(Long id) {
-		return rtCoreServiceClient.findCompetenceProfileById(id);
-	}
+    @Override
+    public CompetenceProfileNotificationDto findCompetenceProfileById(Long id) {
+        return rtCoreServiceClient.findCompetenceProfileById(id);
+    }
 
-	@Override
-	public List<AssignmentsAccordanceDto> assignmentAccordance(Long[] assignmentsFrom, String[] assignmentsTo) {
-		List<AssignmentsAccordanceDto> assignmentsAccordance = new ArrayList<>();
-		for (Long assignmentFrom : assignmentsFrom) {
-			for (String assignmentTo : assignmentsTo) {
-				if (assignmentTo.equals("null")) {
-					assignmentsAccordance.add(new AssignmentsAccordanceDto(new Long[]{assignmentFrom, null}, null));
-				} else {
-					assignmentsAccordance.add(new AssignmentsAccordanceDto(new Long[]{assignmentFrom, Long.valueOf(assignmentTo)}, 0f));
-				}
-			}
-		}
-		return assignmentsAccordance;
-	}
+    @Override
+    public List<AssignmentsAccordanceDto> assignmentAccordance(Long[] assignmentsFrom, String[] assignmentsTo) {
+        List<AssignmentsAccordanceDto> assignmentsAccordance = new ArrayList<>();
+        for (Long assignmentFrom : assignmentsFrom) {
+            for (String assignmentTo : assignmentsTo) {
+                if (assignmentTo.equals("null")) {
+                    assignmentsAccordance.add(new AssignmentsAccordanceDto(new Long[]{assignmentFrom, null}, null));
+                } else {
+                    assignmentsAccordance.add(new AssignmentsAccordanceDto(new Long[]{assignmentFrom, Long.valueOf(assignmentTo)}, 0f));
+                }
+            }
+        }
+        return assignmentsAccordance;
+    }
 }

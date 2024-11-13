@@ -15,12 +15,12 @@ import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class NotificationTemplateContentRecipientDao extends
-	AbstractDao<NotificationTemplateContentRecipientLinkEntity, Long> {
+    AbstractDao<NotificationTemplateContentRecipientLinkEntity, Long> {
 
-	public static final QNotificationTemplateContentRecipientLinkEntity meta =
-		QNotificationTemplateContentRecipientLinkEntity.notificationTemplateContentRecipientLinkEntity;
-	public static final QNotificationTemplateContentEntity notificationTemplateContent =
-		QNotificationTemplateContentEntity.notificationTemplateContentEntity;
+    public static final QNotificationTemplateContentRecipientLinkEntity meta =
+        QNotificationTemplateContentRecipientLinkEntity.notificationTemplateContentRecipientLinkEntity;
+    public static final QNotificationTemplateContentEntity notificationTemplateContent =
+        QNotificationTemplateContentEntity.notificationTemplateContentEntity;
 
     public NotificationTemplateContentRecipientDao(EntityManager em) {
         super(NotificationTemplateContentRecipientLinkEntity.class, em);
@@ -47,10 +47,10 @@ public class NotificationTemplateContentRecipientDao extends
     public List<NotificationTemplateContentRecipientLinkEntity> findByNotificationTemplateContentId(Long notificationTemplateContentId) {
         BooleanExpression expression = meta.notificationTemplateContent.id.eq(notificationTemplateContentId);
 
-		return query().selectFrom(meta)
-			.where(expression)
-			.fetch();
-	}
+        return query().selectFrom(meta)
+            .where(expression)
+            .fetch();
+    }
 
     public List<NotificationTemplateContentRecipientLinkEntity> findByRecipient(NotificationRecipientEntity parent) {
         return query().selectFrom(meta)

@@ -18,8 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class EventThreadDto {
 
-	private EventDto event;
-	private List<EventReactionDto> reactions;
-	// TODO В оригинальном EventThreadDto из Monitor-service есть еще поле eventMarks
+    private EventDto event;
+    private List<EventReactionDto> reactions;
+    // TODO В оригинальном EventThreadDto из Monitor-service есть еще поле eventMarks
 
 }

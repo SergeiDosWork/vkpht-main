@@ -34,9 +34,9 @@ public class LegalServiceImpl implements LegalService {
     @Transactional(readOnly = true)
     public List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds) {
         return legalEntityDao.findByDivisionIdsAndDivisionGroupIds(divisionIds, divisionGroupIds, unitAccessService.getCurrentUnit())
-                .stream()
-                .map(LegalEntityFactory::create)
-                .collect(Collectors.toList());
+            .stream()
+            .map(LegalEntityFactory::create)
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -49,8 +49,8 @@ public class LegalServiceImpl implements LegalService {
     @Transactional(readOnly = true)
     public Map<Long, List<Long>> getLegalEntityTeamIdList(Collection<Long> divisionTeamAssignmentIds) {
         return legalEntityTeamDao.findIdsByDtaId(divisionTeamAssignmentIds)
-                .stream()
-                .collect(Collectors.groupingBy(t -> t.get(0, Long.class), Collectors.mapping(t -> t.get(1, Long.class), Collectors.toList())));
+            .stream()
+            .collect(Collectors.groupingBy(t -> t.get(0, Long.class), Collectors.mapping(t -> t.get(1, Long.class), Collectors.toList())));
     }
 
     @Override

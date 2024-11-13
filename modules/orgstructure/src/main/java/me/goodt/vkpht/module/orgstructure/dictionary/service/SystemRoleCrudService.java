@@ -15,32 +15,32 @@ import me.goodt.vkpht.common.api.AuthService;
 @Service
 public class SystemRoleCrudService extends AbstractArchiveDictionaryService<SystemRoleEntity, Integer> {
 
-	@Getter
-	@Autowired
-	private SystemRoleDao archivableDao;
-	@Autowired
-	private AuthService authService;
+    @Getter
+    @Autowired
+    private SystemRoleDao archivableDao;
+    @Autowired
+    private AuthService authService;
 
-	@Override
-	protected void afterCreate(SystemRoleEntity entity) {
-		Long sessionEmployeeId = authService.getUserEmployeeId();
-		entity.setAuthorEmployeeId(sessionEmployeeId);
-		entity.setUpdateEmployeeId(sessionEmployeeId);
-	}
+    @Override
+    protected void afterCreate(SystemRoleEntity entity) {
+        Long sessionEmployeeId = authService.getUserEmployeeId();
+        entity.setAuthorEmployeeId(sessionEmployeeId);
+        entity.setUpdateEmployeeId(sessionEmployeeId);
+    }
 
-	@Override
-	protected void afterUpdate(SystemRoleEntity entity) {
-		entity.setUpdateEmployeeId(authService.getUserEmployeeId());
-	}
+    @Override
+    protected void afterUpdate(SystemRoleEntity entity) {
+        entity.setUpdateEmployeeId(authService.getUserEmployeeId());
+    }
 
-	@Override
-	public void delete(Integer id) {
-		SystemRoleEntity entity = archivableDao.findById(id).orElseThrow(
-				() -> new NotFoundException(String.format("AssignmentCategoryEntity with id = %s not found", id)));
-		Date currentDate = new Date();
-		entity.setDateTo(currentDate);
-		entity.setUpdateDate(currentDate);
-		entity.setUpdateEmployeeId(authService.getUserEmployeeId());
-		archivableDao.save(entity);
-	}
+    @Override
+    public void delete(Integer id) {
+        SystemRoleEntity entity = archivableDao.findById(id).orElseThrow(
+            () -> new NotFoundException(String.format("AssignmentCategoryEntity with id = %s not found", id)));
+        Date currentDate = new Date();
+        entity.setDateTo(currentDate);
+        entity.setUpdateDate(currentDate);
+        entity.setUpdateEmployeeId(authService.getUserEmployeeId());
+        archivableDao.save(entity);
+    }
 }

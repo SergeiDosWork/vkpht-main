@@ -22,14 +22,14 @@ import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 @Component
 public class PositionSuccessIdToEmployeeByPositionRecipientResolver implements RecipientResolver {
 
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
-		if (!StringUtils.equals(TextConstants.POSITION_SUCCESSOR_ID_TO_EMPLOYEE_BY_POSITION, recipient.getBasicValue())) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+        if (!StringUtils.equals(TextConstants.POSITION_SUCCESSOR_ID_TO_EMPLOYEE_BY_POSITION, recipient.getBasicValue())) {
             return;
         }
 
-		log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
-		try {
+        log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
+        try {
             PositionSuccessorDto positionSuccessor = (PositionSuccessorDto) context.getOrResolveObject(SavedObjectNames.POSITION_SUCCESSOR, () -> Optional.ofNullable(RecipientResolverUtils.findPositionSuccessorId(context))
                 .map(positionSuccessorId -> context.getResolverServiceContainer().getOrgstructureServiceAdapter().getPositionSuccessor(positionSuccessorId.longValue()))
                 .orElse(null));

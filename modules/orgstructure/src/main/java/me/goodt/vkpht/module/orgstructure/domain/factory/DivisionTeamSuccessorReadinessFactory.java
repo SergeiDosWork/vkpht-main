@@ -10,11 +10,11 @@ public class DivisionTeamSuccessorReadinessFactory {
 
     public static DivisionTeamSuccessorReadinessDto create(DivisionTeamSuccessorReadinessEntity entity) {
         return new DivisionTeamSuccessorReadinessDto(
-                entity.getId(),
-                entity.getDateFrom(),
-                entity.getDateTo(),
-                entity.getDivisionTeamSuccessor() != null ? DivisionTeamSuccessorFactory.create(entity.getDivisionTeamSuccessor()) : null,
-                entity.getReadiness() != null ? AssignmentReadinessFactory.create(entity.getReadiness()) : null
+            entity.getId(),
+            entity.getDateFrom(),
+            entity.getDateTo(),
+            entity.getDivisionTeamSuccessor() != null ? DivisionTeamSuccessorFactory.create(entity.getDivisionTeamSuccessor()) : null,
+            entity.getReadiness() != null ? AssignmentReadinessFactory.create(entity.getReadiness()) : null
         );
     }
 }

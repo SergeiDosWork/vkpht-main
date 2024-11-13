@@ -50,7 +50,9 @@ public interface AssignmentService {
     Boolean checkSubstitute(Long divisionTeamId, Long sessionEmployee);
 
     List<Long> getDivisionTeamSubordinatesByIds(List<Long> employeeIds);
+
     List<Integer> getDivisionTeamSubordinatesEmployeeShort(Long employeeId, Boolean withChilds);
-     List<EmployeeInfoShortDto> getDivisionTeamSubordinatesEmployeeFull(Long employeeId, Boolean withChilds);
+
+    List<EmployeeInfoShortDto> getDivisionTeamSubordinatesEmployeeFull(Long employeeId, Boolean withChilds);
 
 }

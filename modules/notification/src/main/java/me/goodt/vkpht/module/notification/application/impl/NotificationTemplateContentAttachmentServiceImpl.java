@@ -15,20 +15,20 @@ import me.goodt.vkpht.module.notification.api.NotificationTemplateContentAttachm
 @Transactional
 public class NotificationTemplateContentAttachmentServiceImpl implements NotificationTemplateContentAttachmentService {
 
-	private final NotificationTemplateContentAttachmentDao notificationTemplateContentAttachmentDao;
+    private final NotificationTemplateContentAttachmentDao notificationTemplateContentAttachmentDao;
 
-	public NotificationTemplateContentAttachmentServiceImpl(NotificationTemplateContentAttachmentDao notificationTemplateContentAttachmentDao) {
-		this.notificationTemplateContentAttachmentDao = notificationTemplateContentAttachmentDao;
-	}
+    public NotificationTemplateContentAttachmentServiceImpl(NotificationTemplateContentAttachmentDao notificationTemplateContentAttachmentDao) {
+        this.notificationTemplateContentAttachmentDao = notificationTemplateContentAttachmentDao;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentEntity ntc) {
-		return notificationTemplateContentAttachmentDao.getAttachments(ntc);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentEntity ntc) {
+        return notificationTemplateContentAttachmentDao.getAttachments(ntc);
+    }
 
-	@Override
-	public List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentDto ntc) {
-		return notificationTemplateContentAttachmentDao.getAttachmentsByNotificationTemplateContentEntityId(ntc.getId());
-	}
+    @Override
+    public List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentDto ntc) {
+        return notificationTemplateContentAttachmentDao.getAttachmentsByNotificationTemplateContentEntityId(ntc.getId());
+    }
 }

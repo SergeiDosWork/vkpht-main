@@ -18,7 +18,7 @@ public class DivisionFunctionDao extends AbstractDao<DivisionFunctionEntity, Lon
 
     public DivisionFunctionEntity findByDivisionIdAndFunctionId(Long divisionId, Long functionId) {
         return query().selectFrom(meta)
-                .where(meta.divisionId.eq(divisionId).and(meta.functionId.eq(functionId)))
-                .fetchFirst();
+            .where(meta.divisionId.eq(divisionId).and(meta.functionId.eq(functionId)))
+            .fetchFirst();
     }
 }

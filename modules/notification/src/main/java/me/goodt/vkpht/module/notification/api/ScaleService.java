@@ -4,6 +4,6 @@ import me.goodt.vkpht.module.notification.api.dto.rtcore.ScaleLevelNotificationD
 
 public interface ScaleService {
 
-	ScaleLevelNotificationDto findScaleLevelById(Long id);
+    ScaleLevelNotificationDto findScaleLevelById(Long id);
 
 }

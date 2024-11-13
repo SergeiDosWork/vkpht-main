@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum EventFormat {
 
-	@JsonProperty("full-time")
-	FULL_TIME,
+    @JsonProperty("full-time")
+    FULL_TIME,
 
-	@JsonProperty("distance")
-	DISTANCE
+    @JsonProperty("distance")
+    DISTANCE
 }

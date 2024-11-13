@@ -23,8 +23,8 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class TaskIdHolderIfNotTaskAuthorRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(TASK_ID_HOLDER_IF_NOT_TASK_AUTHOR, recipient.getBasicValue())) {
             return;
         }

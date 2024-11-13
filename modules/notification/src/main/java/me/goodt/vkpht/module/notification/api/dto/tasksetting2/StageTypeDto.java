@@ -9,9 +9,9 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @Getter
 @Setter
 public class StageTypeDto {
-	private Long id;
-	private String name;
-	private String code;
+    private Long id;
+    private String name;
+    private String code;
     @JsonProperty(DtoTagConstants.TASK_TYPE_TAG)
     private TaskTypeDto taskType;
 }

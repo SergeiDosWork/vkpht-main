@@ -13,8 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class ReasonDto {
     private Long id;
-	private Long typeId;
-	private String name;
+    private Long typeId;
+    private String name;
     private String description;
     private Date dateFrom;
     private Date dateTo;

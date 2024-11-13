@@ -29,16 +29,16 @@ public class NotificationRecipientDao extends AbstractDao<NotificationRecipientE
     public List<NotificationRecipientEntity> getDynamicRecipients(String unitCode) {
         return query().selectFrom(meta)
             .where(meta.name.notIn(STATIC_EMPLOYEE.getName(),
-                                   STATIC_DIVISION.getName(),
-                                   STATIC_EMAIL.getName()).and(meta.unitCode.eq(unitCode)))
+                STATIC_DIVISION.getName(),
+                STATIC_EMAIL.getName()).and(meta.unitCode.eq(unitCode)))
             .fetch();
     }
 
     public Page<NotificationRecipientEntity> getDynamicRecipients(Pageable paging) {
         JPQLQuery<NotificationRecipientEntity> dynamicQuery = query().selectFrom(meta)
             .where(meta.name.notIn(STATIC_EMPLOYEE.getName(),
-                                   STATIC_DIVISION.getName(),
-                                   STATIC_EMAIL.getName()));
+                STATIC_DIVISION.getName(),
+                STATIC_EMAIL.getName()));
         QueryResults<NotificationRecipientEntity> fetchResults = dynamicQuery
             .offset(paging.getOffset())
             .limit(paging.getPageSize())

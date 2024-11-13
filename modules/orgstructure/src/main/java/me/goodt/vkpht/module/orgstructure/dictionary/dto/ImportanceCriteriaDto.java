@@ -3,6 +3,7 @@ package me.goodt.vkpht.module.orgstructure.dictionary.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+
 import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 
 import jakarta.validation.constraints.DecimalMax;

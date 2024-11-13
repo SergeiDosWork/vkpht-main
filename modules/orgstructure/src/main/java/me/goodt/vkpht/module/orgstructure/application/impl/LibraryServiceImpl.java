@@ -1,12 +1,11 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
-import me.goodt.vkpht.module.orgstructure.api.LibraryService;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.api.LibraryService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.AssignmentReadinessDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.AssignmentRotationDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentReadinessEntity;
@@ -15,15 +14,13 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.AssignmentRotationEntity
 /**
  * @author Pavel Khovaylo
  */
+@RequiredArgsConstructor
 @Service
 public class LibraryServiceImpl implements LibraryService {
 
-    @Autowired
-    private AssignmentReadinessDao assignmentReadinessDao;
-    @Autowired
-    private AssignmentRotationDao assignmentRotationDao;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final AssignmentReadinessDao assignmentReadinessDao;
+    private final AssignmentRotationDao assignmentRotationDao;
+    private final UnitAccessService unitAccessService;
 
     @Override
     public AssignmentRotationEntity getAssignmentRotation(Integer id) throws NotFoundException {

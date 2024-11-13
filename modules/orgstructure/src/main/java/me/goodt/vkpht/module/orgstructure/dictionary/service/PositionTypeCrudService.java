@@ -68,7 +68,7 @@ public class PositionTypeCrudService {
     @Transactional
     public void delete(Long id) {
         PositionTypeEntity entity = dao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("PositionType with id = %s not found", id)));
+            new NotFoundException(String.format("PositionType with id = %s not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         entity.setDateTo(new Date());
         entity.setUpdateDate(new Date());

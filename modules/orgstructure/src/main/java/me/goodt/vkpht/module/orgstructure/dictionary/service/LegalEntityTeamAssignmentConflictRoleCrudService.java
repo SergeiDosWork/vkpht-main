@@ -12,37 +12,37 @@ import me.goodt.vkpht.common.dictionary.core.service.AbstractDictionaryService;
 
 @Service
 public class LegalEntityTeamAssignmentConflictRoleCrudService extends
-		AbstractDictionaryService<LegalEntityTeamAssignmentConflictRoleEntity, Long> {
+    AbstractDictionaryService<LegalEntityTeamAssignmentConflictRoleEntity, Long> {
 
-	@Getter
-	@Autowired
-	private LegalEntityTeamAssignmentConflictRoleDao dao;
+    @Getter
+    @Autowired
+    private LegalEntityTeamAssignmentConflictRoleDao dao;
 
-	@Override
-	protected void afterCreate(LegalEntityTeamAssignmentConflictRoleEntity entity) {
-		RoleEntity legalEntityAssignedRole = entity.getLegalEntityTeamAssignmentRoleIdAssigned();
-		RoleEntity divisionTeamAssignedRole = entity.getDivisionTeamAssignmentRoleIdAssigned();
+    @Override
+    protected void afterCreate(LegalEntityTeamAssignmentConflictRoleEntity entity) {
+        RoleEntity legalEntityAssignedRole = entity.getLegalEntityTeamAssignmentRoleIdAssigned();
+        RoleEntity divisionTeamAssignedRole = entity.getDivisionTeamAssignmentRoleIdAssigned();
 
-		if (legalEntityAssignedRole == null && divisionTeamAssignedRole == null) {
-			throw new BadRequestException("Необходимо заполнить назначаемую и/или системную роль.");
-		}
-	}
+        if (legalEntityAssignedRole == null && divisionTeamAssignedRole == null) {
+            throw new BadRequestException("Необходимо заполнить назначаемую и/или системную роль.");
+        }
+    }
 
-	@Override
-	protected void afterUpdate(LegalEntityTeamAssignmentConflictRoleEntity entity) {
-		RoleEntity legalEntityAssignedRole = entity.getLegalEntityTeamAssignmentRoleIdAssigned();
-		RoleEntity divisionTeamAssignedRole = entity.getDivisionTeamAssignmentRoleIdAssigned();
+    @Override
+    protected void afterUpdate(LegalEntityTeamAssignmentConflictRoleEntity entity) {
+        RoleEntity legalEntityAssignedRole = entity.getLegalEntityTeamAssignmentRoleIdAssigned();
+        RoleEntity divisionTeamAssignedRole = entity.getDivisionTeamAssignmentRoleIdAssigned();
 
-		if (legalEntityAssignedRole == null && divisionTeamAssignedRole == null) {
-			throw new BadRequestException("Необходимо заполнить назначаемую и/или системную роль.");
-		}
+        if (legalEntityAssignedRole == null && divisionTeamAssignedRole == null) {
+            throw new BadRequestException("Необходимо заполнить назначаемую и/или системную роль.");
+        }
 
-		if (!isActualRole(legalEntityAssignedRole) && !isActualRole(divisionTeamAssignedRole)) {
-			throw new BadRequestException("Назначаемая и/или системная роль должна быть актуальной.");
-		}
-	}
+        if (!isActualRole(legalEntityAssignedRole) && !isActualRole(divisionTeamAssignedRole)) {
+            throw new BadRequestException("Назначаемая и/или системная роль должна быть актуальной.");
+        }
+    }
 
-	private boolean isActualRole(RoleEntity role) {
-		return role != null && role.getDateTo() == null;
-	}
+    private boolean isActualRole(RoleEntity role) {
+        return role != null && role.getDateTo() == null;
+    }
 }

@@ -20,13 +20,13 @@ public class EducationTypeDao extends AbstractArchivableDao<EducationTypeEntity,
     @Override
     protected JPQLQuery<EducationTypeEntity> createActualQuery() {
         return query().selectFrom(meta)
-                .where(meta.dateTo.isNull());
+            .where(meta.dateTo.isNull());
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().select(meta.id)
-                .from(meta)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .from(meta)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

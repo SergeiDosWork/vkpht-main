@@ -16,17 +16,17 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.STUDY_P
 @Getter
 @Setter
 public class StudyStudentEducationEntity {
-	private Long id;
-	@JsonSetter(DATE_FROM_TAG)
-	private Date dateFrom;
-	@JsonSetter(DATE_TO_TAG)
-	private Date dateTo;
-	@JsonSetter(EXTERNAL_ID_TAG)
-	private String externalId;
-	@JsonSetter(STUDY_PROVIDER_TAG)
-	private StudyProviderEntity studyProvider;
-	@JsonSetter(DATE_START_TAG)
-	private Date dateStart;
-	@JsonSetter(DATE_END_TAG)
-	private Date dateEnd;
+    private Long id;
+    @JsonSetter(DATE_FROM_TAG)
+    private Date dateFrom;
+    @JsonSetter(DATE_TO_TAG)
+    private Date dateTo;
+    @JsonSetter(EXTERNAL_ID_TAG)
+    private String externalId;
+    @JsonSetter(STUDY_PROVIDER_TAG)
+    private StudyProviderEntity studyProvider;
+    @JsonSetter(DATE_START_TAG)
+    private Date dateStart;
+    @JsonSetter(DATE_END_TAG)
+    private Date dateEnd;
 }

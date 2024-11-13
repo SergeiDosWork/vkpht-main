@@ -22,8 +22,8 @@ import static java.lang.Boolean.TRUE;
 @Component
 @Slf4j
 public class PollIdToUserPollEmployeeRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(POLL_ID_TO_USER_POLL_EMPLOYEE, recipient.getBasicValue())) {
             return;
         }

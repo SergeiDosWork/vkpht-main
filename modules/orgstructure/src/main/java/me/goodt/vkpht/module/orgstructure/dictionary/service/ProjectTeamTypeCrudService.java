@@ -36,7 +36,7 @@ public class ProjectTeamTypeCrudService extends AbstractArchiveDictionaryService
     @Override
     public void delete(Long id) {
         ProjectTeamTypeEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("ProjectTeamType with id = %s not found", id)));
+            new NotFoundException(String.format("ProjectTeamType with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

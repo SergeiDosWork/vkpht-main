@@ -10,5 +10,5 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcessStageDto extends ProcessStageShortDto {
-	private ProcessDto process;
+    private ProcessDto process;
 }

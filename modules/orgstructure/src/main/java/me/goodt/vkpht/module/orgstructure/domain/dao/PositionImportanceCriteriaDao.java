@@ -21,10 +21,10 @@ public class PositionImportanceCriteriaDao extends AbstractDao<PositionImportanc
 
     public List<PositionImportanceCriteriaEntity> findAllByPositionIdAndImportanceCriteriaId(Long positionId, Long importanceCriteriaId) {
         BooleanExpression exp = meta.position.id.eq(positionId)
-                .and(meta.importanceCriteria.id.eq(importanceCriteriaId))
-                .and(meta.dateTo.isNull());
+            .and(meta.importanceCriteria.id.eq(importanceCriteriaId))
+            .and(meta.dateTo.isNull());
         return query().selectFrom(meta)
-                .where(exp)
-                .fetch();
+            .where(exp)
+            .fetch();
     }
 }

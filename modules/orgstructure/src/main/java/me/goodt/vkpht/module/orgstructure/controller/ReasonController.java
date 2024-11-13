@@ -53,8 +53,8 @@ public class ReasonController {
     @BadRequestAPIResponses
     @PostMapping("/api/reasontype/create")
     public ReasonTypeDto createReasonType(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason_type)")
-            @RequestBody ReasonTypeDto dto) throws NotFoundException, JsonProcessingException, AccessDeniedException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason_type)")
+        @RequestBody ReasonTypeDto dto) throws NotFoundException, JsonProcessingException, AccessDeniedException {
         Long employeeId = authService.getUserEmployeeId();
         if (!checkEmployeeHr(employeeId)) {
             throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
@@ -69,19 +69,19 @@ public class ReasonController {
     @BadRequestAPIResponses
     @PutMapping("/api/reasontype/update/{id}")
     public ReasonTypeDto updateReasonType(
-		@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason_type)")
-		@RequestBody ReasonTypeDto dto,
-		@PathVariable(name = "id") Long id) throws NotFoundException, JsonProcessingException, AccessDeniedException {
-		Long employeeId = authService.getUserEmployeeId();
-		if (!checkEmployeeHr(employeeId)) {
-			throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
-		}
-		UUID hash = UUID.randomUUID();
-		loggerService.createLog(hash, String.format("PUT /api/reasontype/update/%d", id), null, dto);
-		if (id == null) {
-			throw new RuntimeException("Id cannot be null");
-		}
-		dto.setId(id);
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason_type)")
+        @RequestBody ReasonTypeDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException, JsonProcessingException, AccessDeniedException {
+        Long employeeId = authService.getUserEmployeeId();
+        if (!checkEmployeeHr(employeeId)) {
+            throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
+        }
+        UUID hash = UUID.randomUUID();
+        loggerService.createLog(hash, String.format("PUT /api/reasontype/update/%d", id), null, dto);
+        if (id == null) {
+            throw new RuntimeException("Id cannot be null");
+        }
+        dto.setId(id);
         OrgReasonTypeEntity entity = reasonService.updateReasonType(dto);
         return ReasonTypeFactory.create(entity);
     }
@@ -91,16 +91,16 @@ public class ReasonController {
     @DeleteMapping("/api/reasontype/delete/{id}")
     @Transactional(rollbackFor = Exception.class)
     public OperationResult deleteReasonType(@PathVariable(name = "id") Long id) throws JsonProcessingException, AccessDeniedException {
-		Long employeeId = authService.getUserEmployeeId();
-		if (!checkEmployeeHr(employeeId)) {
-			throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
-		}
-		UUID hash = UUID.randomUUID();
-		loggerService.createLog(hash, String.format("DELETE /api/reasontype/delete/%d", id), null, null);
-		try {
-			reasonService.deleteReasonType(id);
-			return new OperationResult(true, "");
-		} catch (NotFoundException e) {
+        Long employeeId = authService.getUserEmployeeId();
+        if (!checkEmployeeHr(employeeId)) {
+            throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
+        }
+        UUID hash = UUID.randomUUID();
+        loggerService.createLog(hash, String.format("DELETE /api/reasontype/delete/%d", id), null, null);
+        try {
+            reasonService.deleteReasonType(id);
+            return new OperationResult(true, "");
+        } catch (NotFoundException e) {
             return new OperationResult(false, "cannot find any reason_type with id = " + id);
         }
     }
@@ -132,8 +132,8 @@ public class ReasonController {
     @BadRequestAPIResponses
     @PostMapping("/api/reason/create")
     public ReasonDto createReason(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason)")
-            @RequestBody ReasonDto dto) throws NotFoundException, JsonProcessingException, AccessDeniedException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason)")
+        @RequestBody ReasonDto dto) throws NotFoundException, JsonProcessingException, AccessDeniedException {
         Long employeeId = authService.getUserEmployeeId();
         if (!checkEmployeeHr(employeeId)) {
             throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
@@ -148,9 +148,9 @@ public class ReasonController {
     @BadRequestAPIResponses
     @PutMapping("/api/reason/update/{id}")
     public ReasonDto updateReason(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason)")
-            @RequestBody ReasonDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException, JsonProcessingException, AccessDeniedException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица reason)")
+        @RequestBody ReasonDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException, JsonProcessingException, AccessDeniedException {
         Long employeeId = authService.getUserEmployeeId();
         if (!checkEmployeeHr(employeeId)) {
             throw new AccessDeniedException(String.format("Employee %d is not assigned as HR", employeeId));
@@ -185,12 +185,12 @@ public class ReasonController {
     }
 
     protected boolean checkEmployeeHr(Long employeeId) {
-		List<LegalEntityTeamAssignmentEntity> legalEntityTeamAssignmentEntities = legalEntityTeamAssignmentService.getLegalEntityTeamAssignments(employeeId);
-		for (LegalEntityTeamAssignmentEntity item : legalEntityTeamAssignmentEntities) {
-			if (GlobalDefs.HR_ROLE_SET.contains(item.getRole().getSystemRole().getId())) {
-				return true;
-			}
-		}
-		return false;
-	}
+        List<LegalEntityTeamAssignmentEntity> legalEntityTeamAssignmentEntities = legalEntityTeamAssignmentService.getLegalEntityTeamAssignments(employeeId);
+        for (LegalEntityTeamAssignmentEntity item : legalEntityTeamAssignmentEntities) {
+            if (GlobalDefs.HR_ROLE_SET.contains(item.getRole().getSystemRole().getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

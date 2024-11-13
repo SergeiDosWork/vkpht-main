@@ -34,10 +34,10 @@ public class JobTitleDictController extends UnfilteredDictController<Long, JobTi
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(JobTitleClusterDictController.class)
-                        .withRel("clusterId").withName("id").withTitle("name"),
-                WebMvcLinkBuilder.linkTo(JobTitleDictController.class)
-                        .withRel("precursorId").withName("id").withTitle("code")
+            WebMvcLinkBuilder.linkTo(JobTitleClusterDictController.class)
+                .withRel("clusterId").withName("id").withTitle("name"),
+            WebMvcLinkBuilder.linkTo(JobTitleDictController.class)
+                .withRel("precursorId").withName("id").withTitle("code")
         );
     }
 

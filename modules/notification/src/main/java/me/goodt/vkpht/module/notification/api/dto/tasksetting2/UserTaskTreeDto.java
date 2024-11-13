@@ -15,7 +15,7 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserTaskTreeDto {
-	private Long userId;
+    private Long userId;
     @JsonSetter(DtoTagConstants.TASK_TREE_TAG)
-	private List<TaskDto> taskTree;
+    private List<TaskDto> taskTree;
 }

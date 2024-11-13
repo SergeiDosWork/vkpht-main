@@ -19,20 +19,20 @@ public class TeamStatusDao extends AbstractArchivableDao<TeamStatusEntity, Integ
 
     public boolean existsByName(String name) {
         return query().selectFrom(meta)
-                .where(meta.name.eq(name))
-                .fetchCount() > 0;
+            .where(meta.name.eq(name))
+            .fetchCount() > 0;
     }
 
     public Integer findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     @Override
     protected JPQLQuery<TeamStatusEntity> createActualQuery() {
         return query().selectFrom(meta)
-                .where(meta.dateTo.isNull());
+            .where(meta.dateTo.isNull());
     }
 }

@@ -17,7 +17,7 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TASK_ID
 @AllArgsConstructor
 public class BulkTaskHistoryDto {
     @JsonSetter(TASK_ID_TAG)
-	private Long taskId;
+    private Long taskId;
     @JsonSetter(TASK_HISTORY_TAG)
-	private List<TaskHistoryDto> taskHistory;
+    private List<TaskHistoryDto> taskHistory;
 }

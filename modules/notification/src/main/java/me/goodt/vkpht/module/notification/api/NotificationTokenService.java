@@ -8,14 +8,14 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationTokenDto;
 
 public interface NotificationTokenService {
 
-	List<NotificationTokenDto> getAll();
+    List<NotificationTokenDto> getAll();
 
-	NotificationTokenDto getById(Long id) throws NotFoundException;
+    NotificationTokenDto getById(Long id) throws NotFoundException;
 
-	NotificationTokenDto create(NotificationTokenDto tokenDto);
+    NotificationTokenDto create(NotificationTokenDto tokenDto);
 
-	NotificationTokenDto update(Long id, NotificationTokenDto tokenDto) throws NotFoundException;
+    NotificationTokenDto update(Long id, NotificationTokenDto tokenDto) throws NotFoundException;
 
-	void delete(Long id) throws NotFoundException;
+    void delete(Long id) throws NotFoundException;
 
 }

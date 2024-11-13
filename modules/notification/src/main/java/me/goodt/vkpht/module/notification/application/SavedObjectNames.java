@@ -21,5 +21,5 @@ public interface SavedObjectNames {
     String USER_POLL_LIST = "userPollList";
     String TASK_FROM = "taskFrom";
     String TASK_TO = "taskTo";
-	String POLL_DIVISION_MAP = "pollDivisionMap";
+    String POLL_DIVISION_MAP = "pollDivisionMap";
 }

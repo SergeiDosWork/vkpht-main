@@ -10,14 +10,14 @@ public class RoleFactory {
 
     public static RoleDto create(RoleEntity entity) {
         return new RoleDto(
-                entity.getId(),
-                entity.getFullName(),
-                entity.getShortName(),
-                entity.getAbbreviation(),
-                entity.getSystemRole() != null ? SystemRoleFactory.create(entity.getSystemRole()) : null,
-                entity.getCode(),
-                entity.getDateFrom(),
-                entity.getDateTo()
+            entity.getId(),
+            entity.getFullName(),
+            entity.getShortName(),
+            entity.getAbbreviation(),
+            entity.getSystemRole() != null ? SystemRoleFactory.create(entity.getSystemRole()) : null,
+            entity.getCode(),
+            entity.getDateFrom(),
+            entity.getDateTo()
         );
     }
 }

@@ -10,34 +10,34 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateCont
 
 @UtilityClass
 public class NotificationTemplateContentEmployeeSubscribeFactory {
-	public static NotificationTemplateContentEmployeeSubscribeDto create(
-		Long employeeId,
-		List<NotificationTemplateContentEmployeeSubscribeEntity> subscribesEmployee,
-		boolean isDisabledReceiverSystem,
-		String receiverSystemName) {
+    public static NotificationTemplateContentEmployeeSubscribeDto create(
+        Long employeeId,
+        List<NotificationTemplateContentEmployeeSubscribeEntity> subscribesEmployee,
+        boolean isDisabledReceiverSystem,
+        String receiverSystemName) {
 
-		NotificationTemplateContentEmployeeSubscribeDto subscribeDetails = new NotificationTemplateContentEmployeeSubscribeDto();
+        NotificationTemplateContentEmployeeSubscribeDto subscribeDetails = new NotificationTemplateContentEmployeeSubscribeDto();
 
-		subscribeDetails.setEmployeeId(employeeId);
-		subscribeDetails.setReceiverSystemName(receiverSystemName);
+        subscribeDetails.setEmployeeId(employeeId);
+        subscribeDetails.setReceiverSystemName(receiverSystemName);
 
-		List<NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto> subscribes = new ArrayList<>();
+        List<NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto> subscribes = new ArrayList<>();
 
-		subscribesEmployee.forEach(subscribe -> {
-			NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto notificationStateDto =
-				new NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto();
+        subscribesEmployee.forEach(subscribe -> {
+            NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto notificationStateDto =
+                new NotificationTemplateContentEmployeeSubscribeDto.NotificationStateDto();
 
-			notificationStateDto.setId(subscribe.getId());
-			notificationStateDto.setIsEnabled(subscribe.getIsEnabled());
-			notificationStateDto.setDescription(subscribe.getNotificationTemplateContent().getDescription());
+            notificationStateDto.setId(subscribe.getId());
+            notificationStateDto.setIsEnabled(subscribe.getIsEnabled());
+            notificationStateDto.setDescription(subscribe.getNotificationTemplateContent().getDescription());
 
-			subscribes.add(notificationStateDto);
-		});
+            subscribes.add(notificationStateDto);
+        });
 
-		subscribeDetails.setSubscribes(subscribes);
+        subscribeDetails.setSubscribes(subscribes);
 
-		subscribeDetails.setIsEnabledAllNotifications(!isDisabledReceiverSystem);
+        subscribeDetails.setIsEnabledAllNotifications(!isDisabledReceiverSystem);
 
-		return subscribeDetails;
-	}
+        return subscribeDetails;
+    }
 }

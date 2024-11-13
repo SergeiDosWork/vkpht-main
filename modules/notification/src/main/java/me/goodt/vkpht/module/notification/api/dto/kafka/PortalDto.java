@@ -13,7 +13,7 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USE_SYS
 @NoArgsConstructor
 @AllArgsConstructor
 public class PortalDto {
-	@JsonSetter(USE_SYSTEM_TEMPLATES_TAG)
-	private Boolean useSystemTemplates;
-	private String text;
+    @JsonSetter(USE_SYSTEM_TEMPLATES_TAG)
+    private Boolean useSystemTemplates;
+    private String text;
 }

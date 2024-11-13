@@ -8,7 +8,7 @@ import lombok.Setter;
 public class CompactAssignmentDto {
 
     private Long id;
-    
+
     private Long employeeId;
 
     private Long divisionId;

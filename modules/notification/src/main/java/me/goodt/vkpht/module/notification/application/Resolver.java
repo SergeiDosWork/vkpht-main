@@ -9,21 +9,21 @@ import me.goodt.vkpht.module.notification.application.impl.resolver.group.Notifi
 
 public interface Resolver {
 
-	List<NotificationToken> getResolvedTokens();
+    List<NotificationToken> getResolvedTokens();
 
-	default List<String> getResolvedGroups() {
-		return getResolvedTokens().stream()
-			.map(NotificationToken::getGroupName)
-			.distinct()
-			.collect(Collectors.toList());
-	}
+    default List<String> getResolvedGroups() {
+        return getResolvedTokens().stream()
+            .map(NotificationToken::getGroupName)
+            .distinct()
+            .collect(Collectors.toList());
+    }
 
-	default boolean tokenMustBeResolved(Map<String, List<TokenWithValues>> parsedTokens) {
-		for (String resolvedGroup : getResolvedGroups()) {
-			if (parsedTokens.containsKey(resolvedGroup)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    default boolean tokenMustBeResolved(Map<String, List<TokenWithValues>> parsedTokens) {
+        for (String resolvedGroup : getResolvedGroups()) {
+            if (parsedTokens.containsKey(resolvedGroup)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

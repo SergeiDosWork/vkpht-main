@@ -34,7 +34,7 @@ public class FunctionStatusCrudService {
     public FunctionStatusDto get(Integer id) {
         return mapper.toDto(getSecured(id));
     }
-    
+
     public FunctionStatusDto create(FunctionStatusDto request) {
         FunctionStatusEntity entity = mapper.toNewEntity(request);
         entity.setAuthorEmployeeId(authService.getUserEmployeeId());

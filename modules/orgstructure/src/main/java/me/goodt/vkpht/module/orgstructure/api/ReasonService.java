@@ -17,7 +17,7 @@ public interface ReasonService {
 
     OrgReasonTypeEntity updateReasonType(ReasonTypeDto dto) throws NotFoundException;
 
-	Integer deleteReasonType(Long id) throws NotFoundException;
+    Integer deleteReasonType(Long id) throws NotFoundException;
 
     OrgReasonEntity findReason(Long id) throws NotFoundException;
 

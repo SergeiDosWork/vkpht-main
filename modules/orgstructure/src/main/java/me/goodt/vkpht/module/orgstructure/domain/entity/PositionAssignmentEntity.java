@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -33,7 +34,9 @@ public class PositionAssignmentEntity extends DomainObject implements Serializab
     private AssignmentTypeEntity type;
     @Column(name = "type_id", insertable = false, updatable = false)
     private Integer typeId;
-    /** join PositionAssignmentEntity */
+    /**
+     * join PositionAssignmentEntity
+     */
     @Column(name = "precursor_id")
     private Long precursorId;
     @Column(name = "date_from", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

@@ -25,9 +25,9 @@ public class PositionCategoryDao extends AbstractDao<PositionCategoryEntity, Lon
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public Page<PositionCategoryEntity> find(PositionCategoryFilter filter, Pageable pageable) {
@@ -35,6 +35,7 @@ public class PositionCategoryDao extends AbstractDao<PositionCategoryEntity, Lon
 
         return findAll(where, pageable);
     }
+
     public List<PositionCategoryEntity> find(PositionCategoryFilter filter) {
         Predicate where = toPredicate(filter);
 

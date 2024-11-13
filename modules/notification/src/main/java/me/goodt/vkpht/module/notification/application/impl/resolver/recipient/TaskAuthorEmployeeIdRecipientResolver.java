@@ -22,8 +22,8 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Slf4j
 public class TaskAuthorEmployeeIdRecipientResolver implements RecipientResolver {
 
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
 
         if (!StringUtils.equals(TASK_AUTHOR_EMPLOYEE_ID, recipient.getBasicValue())) {
             return;

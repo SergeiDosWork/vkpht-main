@@ -16,7 +16,7 @@ import me.goodt.vkpht.module.notification.api.RegistrationService;
 @RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 
-	private final NativeDao nativeDao;
+    private final NativeDao nativeDao;
     private final SurRegistrationService surRegistrationService;
 
     @Value("${appConfig.schemas-for-views}")
@@ -27,6 +27,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         var allView = nativeDao.getAllView(schemas);
         return surRegistrationService.getAllView(allView, filter);
     }
+
     @Override
     public List<SurMethodEntityDto> getAllRestMethods(String filter) {
         return surRegistrationService.getAllRestMethods(filter);

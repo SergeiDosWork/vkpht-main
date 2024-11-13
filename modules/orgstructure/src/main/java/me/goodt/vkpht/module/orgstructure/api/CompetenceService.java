@@ -13,23 +13,23 @@ import me.goodt.vkpht.common.domain.entity.rostalent.entities.CompetenceProfileP
 
 public interface CompetenceService {
     List<CompetenceDataDto> getCompetencesData(Long employeeId, Long evaluationEventId)
-            throws JsonException, NotFoundException;
+        throws JsonException, NotFoundException;
 
     CatalogsByUserDto getCatalogsByUser(Long employeeId, Long selectedEmployeeId, Long evaluationEventId)
-            throws JsonException;
+        throws JsonException;
 
     List<CompetenceDto> getCompetencesByCompetenceProfile(Long competenceProfileId);
 
-	CompetenceEntity getCompetenceEntity(Long competenceId) throws NotFoundException;
+    CompetenceEntity getCompetenceEntity(Long competenceId) throws NotFoundException;
 
-	List<CompetenceDto> getCompetences(List<Long> competencesIds) throws NotFoundException;
+    List<CompetenceDto> getCompetences(List<Long> competencesIds) throws NotFoundException;
 
     List<CompetenceDto> getCompetencesByIds(Collection<Long> competencesIds) throws NotFoundException;
 
-	CompetenceDto getCompetence(Long id) throws NotFoundException;
+    CompetenceDto getCompetence(Long id) throws NotFoundException;
 
-	List<CompetenceProfilePositionEntity> getAllCompetenceProfilePosition(Long positionId);
+    List<CompetenceProfilePositionEntity> getAllCompetenceProfilePosition(Long positionId);
 
-	CompetenceProfilePositionEntity getCompetenceProfilePosition(Long id) throws NotFoundException;
+    CompetenceProfilePositionEntity getCompetenceProfilePosition(Long id) throws NotFoundException;
 
 }

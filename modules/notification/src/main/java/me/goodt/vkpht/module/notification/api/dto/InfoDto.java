@@ -11,17 +11,17 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InfoDto {
 
-	private String apiVersion;
+    private String apiVersion;
 
-	private String environment;
+    private String environment;
 
-	private String databaseDriver;
+    private String databaseDriver;
 
-	private String databaseUrl;
+    private String databaseUrl;
 
-	private String baseKeyCloakUrl;
+    private String baseKeyCloakUrl;
 
-	private String buildVersion;
+    private String buildVersion;
 
-	private String serverTime;
+    private String serverTime;
 }

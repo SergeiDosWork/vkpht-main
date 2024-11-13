@@ -13,13 +13,13 @@ public class PersonFactory {
             return null;
         }
         return new PersonDto(
-                entity.getId(), entity.getSurname(), entity.getName(),
-                entity.getPatronymic(), entity.getBirthDate(),
-                entity.getFamilyStatus() == null ? null : entity.getFamilyStatus().getId().longValue(), entity.getSex(),
-                entity.getParent() == null ? null : entity.getParent().getId(),
-                entity.getSpouse() == null ? null : entity.getSpouse().getId(), entity.getPhoto(),
-                entity.getSnils(), entity.getInn(), entity.getAddress(), entity.getPhone(), entity.getEmail(),
-                entity.getExternalId(), entity.getCitizenshipId()
+            entity.getId(), entity.getSurname(), entity.getName(),
+            entity.getPatronymic(), entity.getBirthDate(),
+            entity.getFamilyStatus() == null ? null : entity.getFamilyStatus().getId().longValue(), entity.getSex(),
+            entity.getParent() == null ? null : entity.getParent().getId(),
+            entity.getSpouse() == null ? null : entity.getSpouse().getId(), entity.getPhoto(),
+            entity.getSnils(), entity.getInn(), entity.getAddress(), entity.getPhone(), entity.getEmail(),
+            entity.getExternalId(), entity.getCitizenshipId()
         );
     }
 }

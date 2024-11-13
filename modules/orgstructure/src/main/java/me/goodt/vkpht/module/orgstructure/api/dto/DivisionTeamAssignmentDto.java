@@ -27,10 +27,10 @@ public class DivisionTeamAssignmentDto {
     private DivisionTeamDto divisionTeam;
 
     public DivisionTeamAssignmentDto(Long id, EmployeeInfoDto employee, DivisionTeamRoleDto divisionTeamRole, String fullName,
-            String shortName, String abbreviation, Date dateFrom, Date dateTo,
-            AssignmentTypeDto type, AssignmentStatusDto status,
-            List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId,
-            DivisionTeamDto divisionTeam) {
+                                     String shortName, String abbreviation, Date dateFrom, Date dateTo,
+                                     AssignmentTypeDto type, AssignmentStatusDto status,
+                                     List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId,
+                                     DivisionTeamDto divisionTeam) {
         this.id = id;
         this.employee = employee;
         this.fullName = fullName;

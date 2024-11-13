@@ -11,8 +11,8 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonTypeEntity;
 @Service
 public class OrgReasonTypeCrudService extends AbstractDictionaryService<OrgReasonTypeEntity, Long> {
 
-	@Getter
-	@Autowired
-	private OrgReasonTypeDao dao;
+    @Getter
+    @Autowired
+    private OrgReasonTypeDao dao;
 
 }

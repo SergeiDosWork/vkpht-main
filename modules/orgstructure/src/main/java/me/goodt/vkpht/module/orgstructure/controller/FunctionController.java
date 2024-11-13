@@ -32,7 +32,7 @@ public class FunctionController {
         @Parameter(name = "id", description = "Идентификатор функции (таблица function)", example = "1")
         @PathVariable(name = "id") Long id) throws NotFoundException {
         return FunctionFactory.create(functionDao.findById(id)
-                                          .orElseThrow(() -> new NotFoundException(String.format("Function with id=%d is not found", id))));
+            .orElseThrow(() -> new NotFoundException(String.format("Function with id=%d is not found", id))));
     }
 
     @Operation(summary = "Получение информации о всех актуальных функциях",

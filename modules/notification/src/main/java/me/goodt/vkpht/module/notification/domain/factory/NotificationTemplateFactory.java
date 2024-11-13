@@ -8,18 +8,18 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateEnti
 @UtilityClass
 public final class NotificationTemplateFactory {
 
-	public static NotificationTemplateDto create(NotificationTemplateEntity entity) {
-		return new NotificationTemplateDto(
-			entity.getId(),
-			entity.getDateFrom(),
-			entity.getDateTo(),
-			entity.getAuthorEmployeeId(),
-			entity.getAuthorUpdateEmployeeId(),
-			entity.getDateUpdate(),
-			entity.getName(),
-			entity.getCode(),
-			entity.getDescription(),
-			entity.getIsEnabled()
-		);
-	}
+    public static NotificationTemplateDto create(NotificationTemplateEntity entity) {
+        return new NotificationTemplateDto(
+            entity.getId(),
+            entity.getDateFrom(),
+            entity.getDateTo(),
+            entity.getAuthorEmployeeId(),
+            entity.getAuthorUpdateEmployeeId(),
+            entity.getDateUpdate(),
+            entity.getName(),
+            entity.getCode(),
+            entity.getDescription(),
+            entity.getIsEnabled()
+        );
+    }
 }

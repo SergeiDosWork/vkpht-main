@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,25 +21,23 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.OrgReasonTypeEntity;
 
 @Service
+@RequiredArgsConstructor
 public class OrgReasonServiceImpl implements ReasonService {
 
-    @Autowired
-    private OrgReasonDao orgReasonDao;
-    @Autowired
-    private OrgReasonTypeDao orgReasonTypeDao;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final OrgReasonDao orgReasonDao;
+    private final OrgReasonTypeDao orgReasonTypeDao;
+    private final UnitAccessService unitAccessService;
 
     @Override
-	public OrgReasonTypeEntity findReasonType(Long id) throws NotFoundException {
-		return orgReasonTypeDao.findById(id)
-			.orElseThrow(() -> new NotFoundException(String.format("ReasonTypeEntity with id %d not found", id)));
-	}
+    public OrgReasonTypeEntity findReasonType(Long id) throws NotFoundException {
+        return orgReasonTypeDao.findById(id)
+            .orElseThrow(() -> new NotFoundException(String.format("ReasonTypeEntity with id %d not found", id)));
+    }
 
     @Override
     public List<OrgReasonTypeEntity> findReasonTypeAll() {
         return StreamSupport.stream(orgReasonTypeDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -55,16 +53,16 @@ public class OrgReasonServiceImpl implements ReasonService {
         return orgReasonTypeDao.save(entity);
     }
 
-	@Override
-	public Integer deleteReasonType(Long id) throws NotFoundException {
-		OrgReasonTypeEntity entity = findReasonType(id);
-		orgReasonTypeDao.delete(entity);
-		return 1;
-	}
+    @Override
+    public Integer deleteReasonType(Long id) throws NotFoundException {
+        OrgReasonTypeEntity entity = findReasonType(id);
+        orgReasonTypeDao.delete(entity);
+        return 1;
+    }
 
     @Override
     public OrgReasonEntity findReason(Long id) throws NotFoundException {
-        OrgReasonEntity entity =  orgReasonDao.findById(id).orElseThrow(() ->
+        OrgReasonEntity entity = orgReasonDao.findById(id).orElseThrow(() ->
             new NotFoundException(String.format("ReasonEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         return entity;
@@ -76,7 +74,7 @@ public class OrgReasonServiceImpl implements ReasonService {
             .unitCode(unitAccessService.getCurrentUnit())
             .build();
         return StreamSupport.stream(orgReasonDao.findAll(filter).spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override

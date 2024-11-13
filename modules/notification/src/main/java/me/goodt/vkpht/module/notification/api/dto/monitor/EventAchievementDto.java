@@ -10,55 +10,55 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 
 public class EventAchievementDto {
-	private Long kpId;
-	private Long assignmentId;
-	private String authorName;
-	private String authorImage;
+    private Long kpId;
+    private Long assignmentId;
+    private String authorName;
+    private String authorImage;
 
-	public EventAchievementDto() {
+    public EventAchievementDto() {
 
-	}
+    }
 
-	public EventAchievementDto(Long kpId, Long assignmentId, String authorName, String authorImage) {
-		this.kpId = kpId;
-		this.assignmentId = assignmentId;
-		this.authorName = authorName;
-		this.authorImage = authorImage;
-	}
+    public EventAchievementDto(Long kpId, Long assignmentId, String authorName, String authorImage) {
+        this.kpId = kpId;
+        this.assignmentId = assignmentId;
+        this.authorName = authorName;
+        this.authorImage = authorImage;
+    }
 
-	public Long getKpId() {
-		return kpId;
-	}
+    public Long getKpId() {
+        return kpId;
+    }
 
-	@JsonSetter(DtoTagConstants.KR_ID_TAG)
-	public void setKpId(Long kpId) {
-		this.kpId = kpId;
-	}
+    @JsonSetter(DtoTagConstants.KR_ID_TAG)
+    public void setKpId(Long kpId) {
+        this.kpId = kpId;
+    }
 
-	public Long getAssignmentId() {
-		return assignmentId;
-	}
+    public Long getAssignmentId() {
+        return assignmentId;
+    }
 
-	@JsonSetter(DtoTagConstants.ASSIGNMENT_ID_TAG)
-	public void setAssignmentId(Long assignmentId) {
-		this.assignmentId = assignmentId;
-	}
+    @JsonSetter(DtoTagConstants.ASSIGNMENT_ID_TAG)
+    public void setAssignmentId(Long assignmentId) {
+        this.assignmentId = assignmentId;
+    }
 
-	public String getAuthorName() {
-		return authorName;
-	}
+    public String getAuthorName() {
+        return authorName;
+    }
 
-	@JsonSetter(DtoTagConstants.AUTHOR_NAME_TAG)
-	public void setAuthorName(String authorName) {
-		this.authorName = authorName;
-	}
+    @JsonSetter(DtoTagConstants.AUTHOR_NAME_TAG)
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
-	public String getAuthorImage() {
-		return authorImage;
-	}
+    public String getAuthorImage() {
+        return authorImage;
+    }
 
-	@JsonSetter(DtoTagConstants.AUTHOR_IMAGE_TAG)
-	public void setAuthorImage(String authorImage) {
-		this.authorImage = authorImage;
-	}
+    @JsonSetter(DtoTagConstants.AUTHOR_IMAGE_TAG)
+    public void setAuthorImage(String authorImage) {
+        this.authorImage = authorImage;
+    }
 }

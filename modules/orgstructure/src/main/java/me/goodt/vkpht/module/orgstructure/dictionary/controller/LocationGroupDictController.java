@@ -31,8 +31,8 @@ public class LocationGroupDictController extends AbstractDictionaryController<Lo
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(LocationGroupDictController.class)
-                        .withRel("parentId").withName("id").withTitle("name")
+            WebMvcLinkBuilder.linkTo(LocationGroupDictController.class)
+                .withRel("parentId").withName("id").withTitle("name")
         );
     }
 }

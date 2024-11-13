@@ -35,70 +35,70 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.PositionFactory;
 @RequiredArgsConstructor
 public class OrgstructureServiceImpl implements OrgstructureService {
 
-	private final AssignmentService assignmentService;
-	private final DivisionService divisionService;
-	private final FunctionDao functionDao;
-	private final RoleService roleService;
-	private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
-	private final PositionService positionService;
-	private final LegalService legalService;
+    private final AssignmentService assignmentService;
+    private final DivisionService divisionService;
+    private final FunctionDao functionDao;
+    private final RoleService roleService;
+    private final LegalEntityTeamAssignmentService legalEntityTeamAssignmentService;
+    private final PositionService positionService;
+    private final LegalService legalService;
     private final AuthService authService;
 
-	public List<DivisionTeamAssignmentDto> getAssignments() {
-		return assignmentService.getDivisionTeamAssignmentsFull(null,
-																null, null, null, false);
-	}
+    public List<DivisionTeamAssignmentDto> getAssignments() {
+        return assignmentService.getDivisionTeamAssignmentsFull(null,
+            null, null, null, false);
+    }
 
-	@Override
-	public List<DivisionTeamAssignmentDto> getAssignments(Collection<Long> userIds, Collection<Long> employeeIds) {
-		return assignmentService.getDivisionTeamAssignmentsFull(new ArrayList<>(userIds),
-																new ArrayList<>(employeeIds), null, null, false);
-	}
+    @Override
+    public List<DivisionTeamAssignmentDto> getAssignments(Collection<Long> userIds, Collection<Long> employeeIds) {
+        return assignmentService.getDivisionTeamAssignmentsFull(new ArrayList<>(userIds),
+            new ArrayList<>(employeeIds), null, null, false);
+    }
 
-	@Override
-	public List<LegalEntityTeamAssignmentDto> getLegalEntityAssignments(List<Long> legalEntityIds, List<Long> roleIds, List<Long> employeeIds) {
-		return roleService.getLegalTeamAssignmentInfo(legalEntityIds, roleIds, employeeIds);
-	}
+    @Override
+    public List<LegalEntityTeamAssignmentDto> getLegalEntityAssignments(List<Long> legalEntityIds, List<Long> roleIds, List<Long> employeeIds) {
+        return roleService.getLegalTeamAssignmentInfo(legalEntityIds, roleIds, employeeIds);
+    }
 
-	@Override
-	public List<LegalEntityTeamAssignmentDto> getTeamLegalEntityAssignments(Long legalEntityTeamAssignmentId, Long employeeId,
-																			String externalEmployeeId, Long legalEntityTeamId) {
-		return legalEntityTeamAssignmentService.getLegalEntityTeamAssignments(legalEntityTeamAssignmentId, employeeId, externalEmployeeId, legalEntityTeamId);
-	}
+    @Override
+    public List<LegalEntityTeamAssignmentDto> getTeamLegalEntityAssignments(Long legalEntityTeamAssignmentId, Long employeeId,
+                                                                            String externalEmployeeId, Long legalEntityTeamId) {
+        return legalEntityTeamAssignmentService.getLegalEntityTeamAssignments(legalEntityTeamAssignmentId, employeeId, externalEmployeeId, legalEntityTeamId);
+    }
 
-	@Override
-	public Boolean checkEmployeeHeadTeamByAssignment(Long divisionTeamAssignmentId) {
-		return divisionService.checkEmployeeHeadTeamByAssignment(divisionTeamAssignmentId);
-	}
+    @Override
+    public Boolean checkEmployeeHeadTeamByAssignment(Long divisionTeamAssignmentId) {
+        return divisionService.checkEmployeeHeadTeamByAssignment(divisionTeamAssignmentId);
+    }
 
-	@Override
-	public List<Long> getDivisionTeamAssignmentIdsInLegalEntityIdsExceptAssignmentId(Long assignmentId, List<Long> legalEntityIds) {
-		return divisionService.findAllInLegalEntityIdsExceptAssignmentId(assignmentId, legalEntityIds, authService.getUserEmployeeId());
-	}
+    @Override
+    public List<Long> getDivisionTeamAssignmentIdsInLegalEntityIdsExceptAssignmentId(Long assignmentId, List<Long> legalEntityIds) {
+        return divisionService.findAllInLegalEntityIdsExceptAssignmentId(assignmentId, legalEntityIds, authService.getUserEmployeeId());
+    }
 
-	@Override
-	public PositionDto getPosition(Long positionId) {
-		try {
-			return positionService.getPosition(positionId);
-		} catch (NotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public PositionDto getPosition(Long positionId) {
+        try {
+            return positionService.getPosition(positionId);
+        } catch (NotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds) {
-		return legalService.getLegalEntityList(divisionIds, divisionGroupIds);
-	}
+    @Override
+    public List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds) {
+        return legalService.getLegalEntityList(divisionIds, divisionGroupIds);
+    }
 
-	@Override
-	public List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto dto) {
-		return divisionService.getDivisionInfoByParams(dto.getDivisionIds(), dto.getParentId(), dto.getLegalEntityId(), dto.getGroupIds(), dto.isWithChilds());
-	}
+    @Override
+    public List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto dto) {
+        return divisionService.getDivisionInfoByParams(dto.getDivisionIds(), dto.getParentId(), dto.getLegalEntityId(), dto.getGroupIds(), dto.isWithChilds());
+    }
 
-	@Override
-	public List<FunctionDto> getFunctionList() {
-		return StreamSupport.stream(functionDao.findAll().spliterator(), false)
-			.map(FunctionFactory::create)
-			.collect(Collectors.toList());
-	}
+    @Override
+    public List<FunctionDto> getFunctionList() {
+        return StreamSupport.stream(functionDao.findAll().spliterator(), false)
+            .map(FunctionFactory::create)
+            .collect(Collectors.toList());
+    }
 }

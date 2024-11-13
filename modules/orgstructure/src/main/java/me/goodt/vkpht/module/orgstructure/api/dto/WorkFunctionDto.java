@@ -21,6 +21,7 @@ public class WorkFunctionDto extends FullShortNameAbbreviationDto {
         this.isRequiredCertificate = isRequiredCertificate;
         this.statusId = statusId;
     }
+
     private Long precursorId;
     private Date dateFrom;
     private Date dateTo;

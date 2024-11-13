@@ -35,7 +35,7 @@ public class PositionImportanceCrudService {
     public PositionImportanceDto getById(Integer id) {
         return mapper.toDto(getSecured(id));
     }
-    
+
     public PositionImportanceDto create(PositionImportanceDto request) {
         PositionImportanceEntity entity = mapper.toNewEntity(request);
         entity.setAuthorEmployeeId(authService.getUserEmployeeId());
@@ -44,7 +44,7 @@ public class PositionImportanceCrudService {
         entity = dao.save(entity);
         return mapper.toDto(entity);
     }
-    
+
     public PositionImportanceDto update(Integer id, PositionImportanceDto request) {
         PositionImportanceEntity entity = getSecured(id);
         entity = mapper.toUpdatedEntity(request, entity);
@@ -52,7 +52,7 @@ public class PositionImportanceCrudService {
         entity = dao.save(entity);
         return mapper.toDto(entity);
     }
-    
+
     public void delete(Integer id) {
         PositionImportanceEntity entity = getSecured(id);
         entity.setDateTo(new Date());

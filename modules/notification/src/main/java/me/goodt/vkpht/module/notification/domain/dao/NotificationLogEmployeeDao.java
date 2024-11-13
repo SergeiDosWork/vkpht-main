@@ -14,22 +14,22 @@ import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 @Repository
 public class NotificationLogEmployeeDao extends AbstractDao<NotificationLogEmployeeEntity, Long> {
 
-	private static final QNotificationLogEmployeeEntity meta = QNotificationLogEmployeeEntity.notificationLogEmployeeEntity;
+    private static final QNotificationLogEmployeeEntity meta = QNotificationLogEmployeeEntity.notificationLogEmployeeEntity;
 
-	public NotificationLogEmployeeDao(EntityManager em) {
-		super(NotificationLogEmployeeEntity.class, em);
-	}
+    public NotificationLogEmployeeDao(EntityManager em) {
+        super(NotificationLogEmployeeEntity.class, em);
+    }
 
-	public List<Long> loadEmployeesByNotificationLogId(Long notificationLogId, boolean isCopy) {
-		BooleanExpression expression = Expressions.allOf(
-			meta.isCopy.eq(isCopy),
-			meta.notificationLogId.eq(notificationLogId)
-		);
+    public List<Long> loadEmployeesByNotificationLogId(Long notificationLogId, boolean isCopy) {
+        BooleanExpression expression = Expressions.allOf(
+            meta.isCopy.eq(isCopy),
+            meta.notificationLogId.eq(notificationLogId)
+        );
 
-		return query().select(meta.employeeId)
-			.from(meta)
-			.where(expression)
-			.fetch();
-	}
+        return query().select(meta.employeeId)
+            .from(meta)
+            .where(expression)
+            .fetch();
+    }
 
 }

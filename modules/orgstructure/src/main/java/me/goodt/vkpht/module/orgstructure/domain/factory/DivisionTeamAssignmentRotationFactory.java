@@ -17,22 +17,22 @@ public class DivisionTeamAssignmentRotationFactory {
 
     public static DivisionTeamAssignmentRotationDto create(DivisionTeamAssignmentRotationEntity entity) {
         return new DivisionTeamAssignmentRotationDto(entity.getId(), entity.getDateFrom(), entity.getDateTo(), entity.getDateCommitHr(),
-                                                     entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
-                                                     entity.getCommentHr(), entity.getCommentEmployee(),
-                                                     entity.getAssignment() != null ? DivisionTeamAssignmentFactory.createShort(entity.getAssignment(), null) : null);
+            entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
+            entity.getCommentHr(), entity.getCommentEmployee(),
+            entity.getAssignment() != null ? DivisionTeamAssignmentFactory.createShort(entity.getAssignment(), null) : null);
     }
 
     public static DivisionTeamAssignmentRotationDto createWithJobInfo(DivisionTeamAssignmentRotationEntity entity,
                                                                       List<PositionAssignmentEntity> positionAssignments) {
         return new DivisionTeamAssignmentRotationDto(entity.getId(), entity.getDateFrom(), entity.getDateTo(), entity.getDateCommitHr(),
-                                                     entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
-                                                     entity.getCommentHr(), entity.getCommentEmployee(),
-                                                     entity.getAssignment() != null ? DivisionTeamAssignmentFactory.createShortWithJobInfo(entity.getAssignment(), positionAssignments, null) : null);
+            entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
+            entity.getCommentHr(), entity.getCommentEmployee(),
+            entity.getAssignment() != null ? DivisionTeamAssignmentFactory.createShortWithJobInfo(entity.getAssignment(), positionAssignments, null) : null);
     }
 
     public static DivisionTeamAssignmentRotationShortDto createShort(DivisionTeamAssignmentRotationEntity entity) {
         return new DivisionTeamAssignmentRotationShortDto(entity.getId(), entity.getDateFrom(), entity.getDateTo(), entity.getDateCommitHr(),
-                                                          entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
-                                                          entity.getCommentHr(), entity.getCommentEmployee());
+            entity.getRotation() != null ? AssignmentRotationFactory.create(entity.getRotation()) : null,
+            entity.getCommentHr(), entity.getCommentEmployee());
     }
 }

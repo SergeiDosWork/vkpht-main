@@ -17,30 +17,30 @@ import me.goodt.vkpht.module.notification.api.NotificationLogEmployeeService;
 @RequiredArgsConstructor
 public class NotificationLogEmployeeServiceImpl implements NotificationLogEmployeeService {
 
-	private final NotificationLogEmployeeDao notificationLogEmployeeDao;
+    private final NotificationLogEmployeeDao notificationLogEmployeeDao;
 
-	@Override
-	@Transactional
-	public void create(NotificationLogEntity notificationLog, Map<Long, Boolean> employeeIdIsCopy) {
-		if (!employeeIdIsCopy.isEmpty()) {
-			List<NotificationLogEmployeeEntity> entityList = new ArrayList<>();
+    @Override
+    @Transactional
+    public void create(NotificationLogEntity notificationLog, Map<Long, Boolean> employeeIdIsCopy) {
+        if (!employeeIdIsCopy.isEmpty()) {
+            List<NotificationLogEmployeeEntity> entityList = new ArrayList<>();
 
-			employeeIdIsCopy.forEach((employeeId, isCopy) -> {
-				NotificationLogEmployeeEntity entity = new NotificationLogEmployeeEntity();
+            employeeIdIsCopy.forEach((employeeId, isCopy) -> {
+                NotificationLogEmployeeEntity entity = new NotificationLogEmployeeEntity();
 
-				entity.setNotificationLog(notificationLog);
-				entity.setEmployeeId(employeeId);
-				entity.setIsCopy(isCopy);
+                entity.setNotificationLog(notificationLog);
+                entity.setEmployeeId(employeeId);
+                entity.setIsCopy(isCopy);
 
-				entityList.add(entity);
-			});
+                entityList.add(entity);
+            });
 
-			notificationLogEmployeeDao.saveAll(entityList);
-		}
-	}
+            notificationLogEmployeeDao.saveAll(entityList);
+        }
+    }
 
-	@Override
-	public List<Long> findEmployeeIdByNotificationLogId(Long notificationLogId, boolean isCopy) {
-		return notificationLogEmployeeDao.loadEmployeesByNotificationLogId(notificationLogId, isCopy);
-	}
+    @Override
+    public List<Long> findEmployeeIdByNotificationLogId(Long notificationLogId, boolean isCopy) {
+        return notificationLogEmployeeDao.loadEmployeesByNotificationLogId(notificationLogId, isCopy);
+    }
 }

@@ -18,8 +18,8 @@ public class ProjectTeamAssignmentDao extends AbstractDao<ProjectTeamAssignmentE
 
     public Long findIdByExternalId(String extId) {
         return query().select(meta.id)
-                .from(meta)
-                .where(meta.externalId.eq(extId))
-                .fetchFirst();
+            .from(meta)
+            .where(meta.externalId.eq(extId))
+            .fetchFirst();
     }
 }

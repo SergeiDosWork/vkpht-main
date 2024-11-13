@@ -28,39 +28,39 @@ public class DivisionTeamDao extends AbstractDao<DivisionTeamEntity, Long> {
 
     public List<DivisionTeamEntity> findByDivisionId(@Param("divisionId") Long divisionId) {
         BooleanExpression eq = meta.divisionId.eq(divisionId)
-                .and(actual());
+            .and(actual());
         return query().selectFrom(meta)
-                .where(eq)
-                .fetch();
+            .where(eq)
+            .fetch();
     }
 
     public List<Long> findIdsByParentId(Long parentId) {
         return query().from(meta)
-                .where(meta.parentId.eq(parentId))
-                .select(meta.id)
-                .fetch();
+            .where(meta.parentId.eq(parentId))
+            .select(meta.id)
+            .fetch();
     }
 
     public List<Long> findActualIdsByParentId(Long parentId) {
         return query().from(meta)
-                .where(actual().and(meta.parentId.eq(parentId)))
-                .select(meta.id)
-                .fetch();
+            .where(actual().and(meta.parentId.eq(parentId)))
+            .select(meta.id)
+            .fetch();
     }
 
     public List<DivisionTeamEntity> findNearestChildren(Long divisionTeamId) {
         return query().selectFrom(meta)
-                .where(meta.parentId.eq(divisionTeamId))
-                .fetch();
+            .where(meta.parentId.eq(divisionTeamId))
+            .fetch();
     }
 
     public Long countNearestChildren(@Param("divisionTeamId") Long divisionTeamId) {
         BooleanExpression exp = meta.parentId.eq(divisionTeamId)
-                .and(actual());
+            .and(actual());
         return query().from(meta)
-                .where(exp)
-                .select(Expressions.ONE)
-                .fetchCount();
+            .where(exp)
+            .select(Expressions.ONE)
+            .fetchCount();
     }
 
     private BooleanExpression actual() {
@@ -69,43 +69,45 @@ public class DivisionTeamDao extends AbstractDao<DivisionTeamEntity, Long> {
 
     public Map<Long, List<DivisionTeamEntity>> findActualByDivisionIds(List<Long> divisionIds) {
         final BooleanExpression exp = actual()
-                .and(meta.divisionId.in(divisionIds));
+            .and(meta.divisionId.in(divisionIds));
 
         return query()
-                .from(meta)
-                .select(meta.divisionId, meta)
-                .where(exp)
-                .fetch()
-                .stream()
-                .collect(Collectors.groupingBy(t -> t.get(meta.divisionId), Collectors.mapping(t -> t.get(meta), Collectors.toList())));
+            .from(meta)
+            .select(meta.divisionId, meta)
+            .where(exp)
+            .fetch()
+            .stream()
+            .collect(Collectors.groupingBy(t -> t.get(meta.divisionId), Collectors.mapping(t -> t.get(meta), Collectors.toList())));
     }
 
     public Long findParentIdById(Long id) {
         return query().select(meta.parentId)
-                .from(meta)
-                .where(meta.id.eq(id))
-                .fetchOne();
+            .from(meta)
+            .where(meta.id.eq(id))
+            .fetchOne();
     }
 
     public List<Long> findIdsByParentIds(List<Long> parentIds) {
         return query().select(meta.id)
-                .from(meta)
-                .where(meta.parent.id.in(parentIds))
-                .fetch();
+            .from(meta)
+            .where(meta.parent.id.in(parentIds))
+            .fetch();
     }
 
     public List<DivisionTeamEntity> findActual() {
         return query().selectFrom(meta)
-                .where(actual())
-                .fetch();
+            .where(actual())
+            .fetch();
     }
 
-    public JPQLQuery<?> findAllByLegalEntityId(Long legalEntityId) {
+    public List<Long> findAllByLegalEntityId(Long legalEntityId) {
         QDivisionEntity qdv = QDivisionEntity.divisionEntity;
+        QDivisionTeamEntity qdt = QDivisionTeamEntity.divisionTeamEntity;
         BooleanExpression exp = qdv.legalEntityId.eq(legalEntityId);
         return query().from(meta)
-                .join(meta.division, qdv)
-                .where(exp);
+            .join(meta.division, qdv)
+            .where(exp)
+            .select(qdt.id).fetch();
     }
 
     public List<Long> findAllByEmployee(Long employeeId) {
@@ -113,30 +115,30 @@ public class DivisionTeamDao extends AbstractDao<DivisionTeamEntity, Long> {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final BooleanExpression exp = Expressions.allOf(
-                dta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                dta.employeeId.eq(employeeId));
+            dta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            dta.employeeId.eq(employeeId));
 
         return query().from(dta)
-                .innerJoin(dtr).on(dtr.id.eq(dta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .where(exp)
-                .select(dt.id)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(dta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .where(exp)
+            .select(dt.id)
+            .fetch();
     }
 
     public DivisionTeamEntity findActualById(Long id) {
         return query().selectFrom(meta)
-                .where(meta.id.eq(id).and(meta.dateTo.isNull()))
-                .fetchFirst();
+            .where(meta.id.eq(id).and(meta.dateTo.isNull()))
+            .fetchFirst();
     }
 
-	public Long findIdByExternalId(String externalId) {
-		return query().from(meta)
-			.select(meta.id)
-			.where(meta.externalId.eq(externalId))
-			.fetchFirst();
-	}
+    public Long findIdByExternalId(String externalId) {
+        return query().from(meta)
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
+    }
 
     public DivisionTeamEntity findByHeadEmployeeId(Long employeeId) {
         QDivisionTeamAssignmentEntity divisionTeamAssignment = QDivisionTeamAssignmentEntity.divisionTeamAssignmentEntity;
@@ -158,9 +160,9 @@ public class DivisionTeamDao extends AbstractDao<DivisionTeamEntity, Long> {
 
     public List<Long> findAllChildrenIds(Collection<Long> parentIds) {
         return query().select(meta.id)
-                .from(meta)
-                .distinct()
-                .where(meta.parentId.in(parentIds))
-                .fetch();
+            .from(meta)
+            .distinct()
+            .where(meta.parentId.in(parentIds))
+            .fetch();
     }
 }

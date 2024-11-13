@@ -13,10 +13,10 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USER_LE
 @Getter
 @Setter
 public class UserLearningCourseEntity {
-	@JsonSetter(USER_ID_TAG)
-	private Long userId;
-	@JsonSetter(LEARNING_COURSE_TAG)
-	private LearningCourseEntity learningCourse;
-	@JsonSetter(USER_LEARNING_COURSE_STEPS_TAG)
-	private List<UserLearningCourseStepEntity> userLearningCourseSteps;
+    @JsonSetter(USER_ID_TAG)
+    private Long userId;
+    @JsonSetter(LEARNING_COURSE_TAG)
+    private LearningCourseEntity learningCourse;
+    @JsonSetter(USER_LEARNING_COURSE_STEPS_TAG)
+    private List<UserLearningCourseStepEntity> userLearningCourseSteps;
 }

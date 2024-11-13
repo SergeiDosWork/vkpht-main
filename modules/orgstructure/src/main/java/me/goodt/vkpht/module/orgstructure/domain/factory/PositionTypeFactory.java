@@ -10,6 +10,6 @@ public class PositionTypeFactory {
 
     public static PositionTypeDto create(PositionTypeEntity entity) {
         return new PositionTypeDto(entity.getId(), entity.getName(), entity.getDescription(),
-                entity.getDateFrom(), entity.getDateTo());
+            entity.getDateFrom(), entity.getDateTo());
     }
 }

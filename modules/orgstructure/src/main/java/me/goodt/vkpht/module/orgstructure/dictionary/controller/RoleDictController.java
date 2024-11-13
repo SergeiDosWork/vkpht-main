@@ -31,8 +31,8 @@ public class RoleDictController extends AbstractDictionaryController<Long, RoleD
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(SystemRoleDictController.class)
-                        .withRel("systemRoleId").withName("id").withTitle("name")
+            WebMvcLinkBuilder.linkTo(SystemRoleDictController.class)
+                .withRel("systemRoleId").withName("id").withTitle("name")
         );
     }
 }

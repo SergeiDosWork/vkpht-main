@@ -12,17 +12,17 @@ public class CitizenshipIntegrationAsm extends AbstractAsm<CitizenshipIntegratio
     @Override
     public CitizenshipIntegrationDto toRes(CitizenshipIntegrationEntity entity) {
         return new CitizenshipIntegrationDto()
-                .setId(entity.getId())
-                .setName(entity.getName())
-                .setAbbreviation(entity.getAbbreviation())
-                .setDesignation(entity.getDesignation())
-                .setInEnglish(entity.getInEnglish())
-                .setResponsible(entity.getResponsible())
-                .setBasis(entity.getBasis())
-                .setDateIntroduction(entity.getDateIntroduction())
-                .setDateExpiration(entity.getDateExpiration())
-                .setLastModified(entity.getLastModified())
-                .setReasonForChange(entity.getReasonForChange());
+            .setId(entity.getId())
+            .setName(entity.getName())
+            .setAbbreviation(entity.getAbbreviation())
+            .setDesignation(entity.getDesignation())
+            .setInEnglish(entity.getInEnglish())
+            .setResponsible(entity.getResponsible())
+            .setBasis(entity.getBasis())
+            .setDateIntroduction(entity.getDateIntroduction())
+            .setDateExpiration(entity.getDateExpiration())
+            .setLastModified(entity.getLastModified())
+            .setReasonForChange(entity.getReasonForChange());
     }
 
     @Override

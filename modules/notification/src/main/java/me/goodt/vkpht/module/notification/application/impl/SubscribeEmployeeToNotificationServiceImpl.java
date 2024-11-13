@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,130 +8,124 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
+import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationReceiverSystemDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationReceiverSystemEmployeeDisabledDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentEmployeeSubscribeDao;
-import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
-import me.goodt.vkpht.common.api.exception.NotFoundException;
-import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateContentEmployeeSubscribeFactory;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationReceiverSystemEmployeeDisabledEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationReceiverSystemEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentEmployeeSubscribeEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentEntity;
-import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
+import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateContentEmployeeSubscribeFactory;
 
+@RequiredArgsConstructor
 @Service
 public class SubscribeEmployeeToNotificationServiceImpl implements SubscribeEmployeeToNotificationService {
 
-	@Autowired
-	private NotificationReceiverSystemEmployeeDisabledDao notificationReceiverSystemEmployeeDisabledDao;
+    private final NotificationReceiverSystemEmployeeDisabledDao notificationReceiverSystemEmployeeDisabledDao;
+    private final NotificationTemplateContentEmployeeSubscribeDao notificationTemplateContentEmployeeSubscribeDao;
+    private final NotificationTemplateContentDao notificationTemplateContentDao;
+    private final NotificationReceiverSystemDao notificationReceiverSystemDao;
 
-	@Autowired
-	private NotificationTemplateContentEmployeeSubscribeDao notificationTemplateContentEmployeeSubscribeDao;
+    @Override
+    public boolean isPossibleSendNotificationToEmployee(Long employeeId, Long notificationTemplateContentId, Long notificationReceiverSystemId) {
 
-	@Autowired
-	private NotificationTemplateContentDao notificationTemplateContentDao;
+        boolean isSubscribe = false;
 
-	@Autowired
-	private NotificationReceiverSystemDao notificationReceiverSystemDao;
+        //доступность отправки уведомления сотруднику указанным способом
+        NotificationReceiverSystemEmployeeDisabledEntity disabledNotificationToEmployeeEntity =
+            notificationReceiverSystemEmployeeDisabledDao
+                .findByEmployeeIdAndNotificationReceiverSystemId(employeeId, notificationReceiverSystemId);
 
-	@Override
-	public boolean isPossibleSendNotificationToEmployee(Long employeeId, Long notificationTemplateContentId, Long notificationReceiverSystemId) {
+        if (Objects.isNull(disabledNotificationToEmployeeEntity)) {
+            //доступность отправки сотруднику указанного типа уведомления
+            NotificationTemplateContentEmployeeSubscribeEntity subscribeEmployeeToNotificationEntity =
+                notificationTemplateContentEmployeeSubscribeDao
+                    .findByEmployeeIdAndNotificationTemplateContentId(employeeId, notificationTemplateContentId);
 
-		boolean isSubscribe = false;
+            //по умолчанию все (новые) сотрудники получают все типы уведомлений
+            if (Objects.isNull(subscribeEmployeeToNotificationEntity)) {
 
-		//доступность отправки уведомления сотруднику указанным способом
-		NotificationReceiverSystemEmployeeDisabledEntity disabledNotificationToEmployeeEntity =
-			notificationReceiverSystemEmployeeDisabledDao
-				.findByEmployeeIdAndNotificationReceiverSystemId(employeeId, notificationReceiverSystemId);
+                Optional<NotificationTemplateContentEntity> notificationTemplateContent =
+                    notificationTemplateContentDao.findById(notificationTemplateContentId);
+                if (notificationTemplateContent.isPresent()) {
+                    notificationTemplateContentEmployeeSubscribeDao.save(
+                        new NotificationTemplateContentEmployeeSubscribeEntity(employeeId, notificationTemplateContent.get(), true)
+                    );
+                    isSubscribe = true;
+                }
 
-		if (Objects.isNull(disabledNotificationToEmployeeEntity)) {
-			//доступность отправки сотруднику указанного типа уведомления
-			NotificationTemplateContentEmployeeSubscribeEntity subscribeEmployeeToNotificationEntity =
-				notificationTemplateContentEmployeeSubscribeDao
-					.findByEmployeeIdAndNotificationTemplateContentId(employeeId, notificationTemplateContentId);
+            } else {
+                isSubscribe = subscribeEmployeeToNotificationEntity.getIsEnabled();
+            }
+        }
 
-			//по умолчанию все (новые) сотрудники получают все типы уведомлений
-			if (Objects.isNull(subscribeEmployeeToNotificationEntity)) {
+        return isSubscribe;
+    }
 
-				Optional<NotificationTemplateContentEntity> notificationTemplateContent =
-					notificationTemplateContentDao.findById(notificationTemplateContentId);
-				if (notificationTemplateContent.isPresent()) {
-					notificationTemplateContentEmployeeSubscribeDao.save(
-						new NotificationTemplateContentEmployeeSubscribeEntity(employeeId, notificationTemplateContent.get(), true)
-					);
-					isSubscribe = true;
-				}
+    @Override
+    @Transactional(readOnly = true)
+    public NotificationTemplateContentEmployeeSubscribeDto load(Long employeeId, String receiverSystemName) {
 
-			} else {
-				isSubscribe = subscribeEmployeeToNotificationEntity.getIsEnabled();
-			}
-		}
+        List<NotificationTemplateContentEmployeeSubscribeEntity> subscribesEmployee =
+            notificationTemplateContentEmployeeSubscribeDao.findByEmployeeId(employeeId, receiverSystemName);
 
-		return isSubscribe;
-	}
+        boolean isDisabledReceiverSystem = notificationReceiverSystemEmployeeDisabledDao.existsByEmployeeIdAndReceiverSystemName(employeeId, receiverSystemName);
 
-	@Override
-	@Transactional(readOnly = true)
-	public NotificationTemplateContentEmployeeSubscribeDto load(Long employeeId, String receiverSystemName) {
+        NotificationTemplateContentEmployeeSubscribeDto subscribeDetails =
+            NotificationTemplateContentEmployeeSubscribeFactory.create(employeeId, subscribesEmployee, isDisabledReceiverSystem, receiverSystemName);
 
-		List<NotificationTemplateContentEmployeeSubscribeEntity> subscribesEmployee =
-			notificationTemplateContentEmployeeSubscribeDao.findByEmployeeId(employeeId, receiverSystemName);
+        return subscribeDetails;
+    }
 
-		boolean isDisabledReceiverSystem = notificationReceiverSystemEmployeeDisabledDao.existsByEmployeeIdAndReceiverSystemName(employeeId, receiverSystemName);
+    @Override
+    @Transactional
+    public void save(NotificationTemplateContentEmployeeSubscribeDto dto) {
 
-		NotificationTemplateContentEmployeeSubscribeDto subscribeDetails =
-			NotificationTemplateContentEmployeeSubscribeFactory.create(employeeId, subscribesEmployee, isDisabledReceiverSystem, receiverSystemName);
+        NotificationReceiverSystemEmployeeDisabledEntity disabledEntity =
+            notificationReceiverSystemEmployeeDisabledDao
+                .findByEmployeeIdAndNotificationReceiverSystemName(dto.getEmployeeId(), dto.getReceiverSystemName());
 
-		return subscribeDetails;
-	}
+        //включение канала отправки
+        if (dto.getIsEnabledAllNotifications()) {
+            if (Objects.nonNull(disabledEntity)) {
+                notificationReceiverSystemEmployeeDisabledDao.delete(disabledEntity);
+            }
+        } else {
+            //отключение канала отправки
+            if (Objects.isNull(disabledEntity)) {
+                NotificationReceiverSystemEmployeeDisabledEntity disabledEntityNew = new NotificationReceiverSystemEmployeeDisabledEntity();
+                NotificationReceiverSystemEntity receiverSystemEntity = notificationReceiverSystemDao.findByName(dto.getReceiverSystemName());
+                if (Objects.isNull(receiverSystemEntity)) {
+                    throw new NotFoundException(String.format("Cannot find receiver system '%s'", dto.getReceiverSystemName()));
+                }
 
-	@Override
-	@Transactional
-	public void save(NotificationTemplateContentEmployeeSubscribeDto dto) {
+                disabledEntityNew.setEmployeeId(dto.getEmployeeId());
+                disabledEntityNew.setNotificationReceiverSystem(receiverSystemEntity);
 
-		NotificationReceiverSystemEmployeeDisabledEntity disabledEntity =
-			notificationReceiverSystemEmployeeDisabledDao
-				.findByEmployeeIdAndNotificationReceiverSystemName(dto.getEmployeeId(), dto.getReceiverSystemName());
+                notificationReceiverSystemEmployeeDisabledDao.save(disabledEntityNew);
+            }
+        }
 
-		//включение канала отправки
-		if (dto.getIsEnabledAllNotifications()) {
-			if (Objects.nonNull(disabledEntity)) {
-				notificationReceiverSystemEmployeeDisabledDao.delete(disabledEntity);
-			}
-		} else {
-			//отключение канала отправки
-			if (Objects.isNull(disabledEntity)) {
-				NotificationReceiverSystemEmployeeDisabledEntity disabledEntityNew = new NotificationReceiverSystemEmployeeDisabledEntity();
-				NotificationReceiverSystemEntity receiverSystemEntity = notificationReceiverSystemDao.findByName(dto.getReceiverSystemName());
-				if (Objects.isNull(receiverSystemEntity)) {
-					throw new NotFoundException(String.format("Cannot find receiver system '%s'", dto.getReceiverSystemName()));
-				}
+        //сохранение всех подписок на уведомления
+        dto.getSubscribes().forEach(subscribe -> {
+            NotificationTemplateContentEmployeeSubscribeEntity subscribeEntity =
+                notificationTemplateContentEmployeeSubscribeDao.findByIdAndEmployeeId(
+                    subscribe.getId(),
+                    dto.getEmployeeId()
+                );
 
-				disabledEntityNew.setEmployeeId(dto.getEmployeeId());
-				disabledEntityNew.setNotificationReceiverSystem(receiverSystemEntity);
+            if (Objects.nonNull(subscribeEntity)) {
+                if (!Objects.equals(subscribeEntity.getIsEnabled(), subscribe.getIsEnabled())) {
+                    subscribeEntity.setIsEnabled(subscribe.getIsEnabled());
+                    notificationTemplateContentEmployeeSubscribeDao.save(subscribeEntity);
+                }
+            }
+        });
 
-				notificationReceiverSystemEmployeeDisabledDao.save(disabledEntityNew);
-			}
-		}
-
-		//сохранение всех подписок на уведомления
-		dto.getSubscribes().forEach(subscribe -> {
-			NotificationTemplateContentEmployeeSubscribeEntity subscribeEntity =
-				notificationTemplateContentEmployeeSubscribeDao.findByIdAndEmployeeId(
-					subscribe.getId(),
-					dto.getEmployeeId()
-				);
-
-			if (Objects.nonNull(subscribeEntity)) {
-				if (!Objects.equals(subscribeEntity.getIsEnabled(), subscribe.getIsEnabled())) {
-					subscribeEntity.setIsEnabled(subscribe.getIsEnabled());
-					notificationTemplateContentEmployeeSubscribeDao.save(subscribeEntity);
-				}
-			}
-		});
-
-	}
+    }
 
 }

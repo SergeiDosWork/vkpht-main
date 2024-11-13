@@ -28,7 +28,7 @@ public class AssignmentReadinessCrudService {
             .build();
         return dao.find(filter, pageable).map(mapper::toDto);
     }
-    
+
     public AssignmentReadinessDto getById(Integer id) {
         return mapper.toDto(getSecured(id));
     }
@@ -46,7 +46,7 @@ public class AssignmentReadinessCrudService {
         entity = dao.save(entity);
         return mapper.toDto(entity);
     }
-    
+
     public void delete(Integer id) {
         AssignmentReadinessEntity entity = getSecured(id);
         entity.setDateTo(new Date());

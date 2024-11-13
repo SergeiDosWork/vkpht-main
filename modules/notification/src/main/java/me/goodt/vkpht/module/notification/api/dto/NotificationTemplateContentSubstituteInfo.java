@@ -13,11 +13,11 @@ import lombok.Setter;
 @Schema(description = "Кратка информация о шаблона уведомления, являющимся замещающим шаблоном.")
 public class NotificationTemplateContentSubstituteInfo {
 
-	@Schema(description = "Уникальный идентификатор шаблона уведомления.",
-		requiredMode = Schema.RequiredMode.REQUIRED)
-	private Long id;
+    @Schema(description = "Уникальный идентификатор шаблона уведомления.",
+        requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long id;
 
-	@Schema(description = "Название шаблона.",
-		requiredMode = Schema.RequiredMode.REQUIRED)
-	private String description;
+    @Schema(description = "Название шаблона.",
+        requiredMode = Schema.RequiredMode.REQUIRED)
+    private String description;
 }

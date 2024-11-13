@@ -8,6 +8,6 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class CustomDto extends BaseDynamicObject {
-    
+
     private Long id;
 }

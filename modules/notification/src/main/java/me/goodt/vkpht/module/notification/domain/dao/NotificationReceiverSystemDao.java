@@ -14,17 +14,17 @@ import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class NotificationReceiverSystemDao extends AbstractDao<NotificationReceiverSystemEntity, Long> {
 
-	private static final QNotificationReceiverSystemEntity meta = QNotificationReceiverSystemEntity.notificationReceiverSystemEntity;
+    private static final QNotificationReceiverSystemEntity meta = QNotificationReceiverSystemEntity.notificationReceiverSystemEntity;
 
-	public NotificationReceiverSystemDao(EntityManager em) {
-		super(NotificationReceiverSystemEntity.class, em);
-	}
+    public NotificationReceiverSystemDao(EntityManager em) {
+        super(NotificationReceiverSystemEntity.class, em);
+    }
 
-	public NotificationReceiverSystemEntity findByName(String name) {
-		return query().selectFrom(meta)
-			.where(meta.name.eq(name))
-			.fetchFirst();
-	}
+    public NotificationReceiverSystemEntity findByName(String name) {
+        return query().selectFrom(meta)
+            .where(meta.name.eq(name))
+            .fetchFirst();
+    }
 
     public Page<NotificationReceiverSystemEntity> findAllIsActive(String unitCode, Pageable pageable) {
 

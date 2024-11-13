@@ -16,16 +16,16 @@ import me.goodt.vkpht.module.notification.api.EventService;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
-	private final EventService eventService;
+    private final EventService eventService;
     private final ExecutorService threadPool;
 
-	public NotificationServiceImpl(@Lazy EventService eventService, ExecutorService threadPool) {
-		this.eventService = eventService;
+    public NotificationServiceImpl(@Lazy EventService eventService, ExecutorService threadPool) {
+        this.eventService = eventService;
         this.threadPool = threadPool;
     }
 
-	@Override
-	public void baseNotification(Map<String, Object> tokenValues, String code, Map<String, Object> parameters) {
+    @Override
+    public void baseNotification(Map<String, Object> tokenValues, String code, Map<String, Object> parameters) {
         BaseNotificationInputData data = new BaseNotificationInputData(tokenValues, code, parameters);
 
         // Оборачиваем в DelegatingSecurityContextRunnable, чтобы в новом потоке
@@ -37,5 +37,5 @@ public class NotificationServiceImpl implements NotificationService {
         );
 
         threadPool.execute(runnable);
-	}
+    }
 }

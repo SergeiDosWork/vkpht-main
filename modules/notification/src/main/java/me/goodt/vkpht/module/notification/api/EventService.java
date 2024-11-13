@@ -18,51 +18,51 @@ import me.goodt.vkpht.module.notification.api.dto.SuccessorNotificateByCodeInput
 import me.goodt.vkpht.module.notification.api.dto.monitor.EventDto;
 
 public interface EventService {
-	EventDto expertTaskCreate(EventInputDto input) throws JsonProcessingException;
+    EventDto expertTaskCreate(EventInputDto input) throws JsonProcessingException;
 
-	EventDto employeeHeadExpertReject(EventInputDto input) throws JsonProcessingException;
+    EventDto employeeHeadExpertReject(EventInputDto input) throws JsonProcessingException;
 
-	EventDto expertHeadNotice(EventInputDto input) throws JsonProcessingException;
+    EventDto expertHeadNotice(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> expertHeadReject(EventInputDto input) throws JsonProcessingException;
+    List<EventDto> expertHeadReject(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> hrExpertReject(EventInputDto input) throws JsonProcessingException;
+    List<EventDto> hrExpertReject(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> hrExpertAccept(EventInputDto input) throws JsonProcessingException;
+    List<EventDto> hrExpertAccept(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> hrExpertNotice(EventInputDto input) throws JsonProcessingException;
+    List<EventDto> hrExpertNotice(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> updateDivisionTeamSuccessorReadiness(EventInputDto input);
+    List<EventDto> updateDivisionTeamSuccessorReadiness(EventInputDto input);
 
-	List<EventDto> updateDivisionTeamAssignmentRotation(EventInputDto input) throws JsonProcessingException;
+    List<EventDto> updateDivisionTeamAssignmentRotation(EventInputDto input) throws JsonProcessingException;
 
-	List<EventDto> updateSuccessor(EventInputDto input);
+    List<EventDto> updateSuccessor(EventInputDto input);
 
-	void noticeUpdateDivisionTeamSuccessorReadiness();
+    void noticeUpdateDivisionTeamSuccessorReadiness();
 
-	List<EventDto> taskStatusChange(DataFromStatusChangeToRostalentStatusChange data) throws JsonProcessingException;
+    List<EventDto> taskStatusChange(DataFromStatusChangeToRostalentStatusChange data) throws JsonProcessingException;
 
-	OperationResult quizStart(QuizStartInputDto data);
+    OperationResult quizStart(QuizStartInputDto data);
 
-	OperationResult quizFinish(QuizFinishInputDto data);
+    OperationResult quizFinish(QuizFinishInputDto data);
 
-	OperationResult customEmailEvent(CustomEmailEventInputDto data);
+    OperationResult customEmailEvent(CustomEmailEventInputDto data);
 
-	OperationResult customEmailEventCode(CustomEmailEventCodeInputDto data);
+    OperationResult customEmailEventCode(CustomEmailEventCodeInputDto data);
 
-	OperationResult successorNotificateByCode(SuccessorNotificateByCodeInputData data);
+    OperationResult successorNotificateByCode(SuccessorNotificateByCodeInputData data);
 
-	OperationResult baseNotification(BaseNotificationInputData data);
+    OperationResult baseNotification(BaseNotificationInputData data);
 
-	OperationResult onboardingResultsHead(List<Long> divisionTeamAssignmentIds);
+    OperationResult onboardingResultsHead(List<Long> divisionTeamAssignmentIds);
 
-	OperationResult sendKafkaMessage(DataForKafkaMessageInputDto data);
+    OperationResult sendKafkaMessage(DataForKafkaMessageInputDto data);
 
-	OperationResult remindByHead(RemindByHeadInputDto data);
+    OperationResult remindByHead(RemindByHeadInputDto data);
 
-	EventDto updateDtaRotation(EventInputDto input);
+    EventDto updateDtaRotation(EventInputDto input);
 
-	EventDto updateDtaRotationCompleted(EventInputDto input);
+    EventDto updateDtaRotationCompleted(EventInputDto input);
 
-	void executeBaseNotificationForEventCreate(Long eventTypeId, Long eventId);
+    void executeBaseNotificationForEventCreate(Long eventTypeId, Long eventId);
 }

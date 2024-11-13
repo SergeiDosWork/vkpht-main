@@ -23,7 +23,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.WorkExperienceTypeEntity
 @RequiredArgsConstructor
 public class WorkExperienceTypeServiceImpl implements WorkExperienceTypeService {
 
-	public static final String WORK_EXPERIENCE_TYPE_WITH_ID_D_IS_NOT_FOUND = "WorkExperienceType with id=%d is not found";
+    public static final String WORK_EXPERIENCE_TYPE_WITH_ID_D_IS_NOT_FOUND = "WorkExperienceType with id=%d is not found";
     private final WorkExperienceTypeDao workExperienceTypeDao;
     private final AuthService authService;
     private final UnitAccessService unitAccessService;

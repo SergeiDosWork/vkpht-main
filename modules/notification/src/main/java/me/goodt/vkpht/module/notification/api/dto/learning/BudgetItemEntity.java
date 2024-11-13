@@ -15,16 +15,16 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.SHORT_N
 @Getter
 @Setter
 public class BudgetItemEntity {
-	private Long id;
-	@JsonSetter(DATE_FROM_TAG)
-	private Date dateFrom;
-	@JsonSetter(DATE_TO_TAG)
-	private Date dateTo;
-	private String name;
-	@JsonSetter(SHORT_NAME_TAG)
-	private String shortName;
-	@JsonSetter(EXTERNAL_ID_TAG)
-	private String externalId;
-	@JsonSetter(BUDGET_ITEM_GROUP_TAG)
-	private BudgetItemGroupEntity budgetItemGroup;
+    private Long id;
+    @JsonSetter(DATE_FROM_TAG)
+    private Date dateFrom;
+    @JsonSetter(DATE_TO_TAG)
+    private Date dateTo;
+    private String name;
+    @JsonSetter(SHORT_NAME_TAG)
+    private String shortName;
+    @JsonSetter(EXTERNAL_ID_TAG)
+    private String externalId;
+    @JsonSetter(BUDGET_ITEM_GROUP_TAG)
+    private BudgetItemGroupEntity budgetItemGroup;
 }

@@ -16,7 +16,7 @@ public class EmployeeExtendedInfoDto extends EmployeeInfoDto {
 
     public EmployeeExtendedInfoDto(EmployeeInfoDto employee, List<PositionAssignmentDto> positionAssignments, PersonDto person) {
         super(employee.getId(), employee.getExternalId(), employee.getFirstName(), employee.getLastName(), employee.getMiddleName(), employee.getPhoto(),
-              employee.getNumber(), employee.getEmail(), positionAssignments);
+            employee.getNumber(), employee.getEmail(), positionAssignments);
         this.person = person;
     }
 

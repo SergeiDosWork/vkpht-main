@@ -23,9 +23,9 @@ public class AssignmentTypeDao extends AbstractDao<AssignmentTypeEntity, Integer
 
     public Integer findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public Page<AssignmentTypeEntity> find(AssignmentTypeFilter filter, Pageable pageable) {

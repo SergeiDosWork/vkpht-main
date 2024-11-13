@@ -15,7 +15,7 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProcessInfoDto {
-	private ProcessDto process;
+    private ProcessDto process;
     @JsonSetter(DtoTagConstants.PROCESS_STAGES_TAG)
-	private List<ProcessStageShortDto> processStages;
+    private List<ProcessStageShortDto> processStages;
 }

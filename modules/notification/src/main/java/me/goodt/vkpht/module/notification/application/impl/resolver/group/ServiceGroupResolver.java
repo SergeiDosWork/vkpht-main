@@ -18,29 +18,29 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Slf4j
 public class ServiceGroupResolver implements TokenGroupResolver {
 
-	private final NotificationConfig notificationConfig;
+    private final NotificationConfig notificationConfig;
 
-	public ServiceGroupResolver(NotificationConfig notificationConfig) {
-		this.notificationConfig = notificationConfig;
-	}
+    public ServiceGroupResolver(NotificationConfig notificationConfig) {
+        this.notificationConfig = notificationConfig;
+    }
 
-	@Override
-	public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, SERVICE);
-		List<TokenWithValues> tokens = context.getParsedTokens().get(SERVICE);
-		tokens.forEach(token -> {
-			if (token.getBasicValue().equals(ROOT_URL)) {
-				log.info(LOG_MESSAGE_TOKEN, SERVICE, ROOT_URL);
-				resolvedTokenValues.put(SERVICE_ROOT_URL, notificationConfig.getRootUrl());
-			}
-		});
-	}
+    @Override
+    public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, SERVICE);
+        List<TokenWithValues> tokens = context.getParsedTokens().get(SERVICE);
+        tokens.forEach(token -> {
+            if (token.getBasicValue().equals(ROOT_URL)) {
+                log.info(LOG_MESSAGE_TOKEN, SERVICE, ROOT_URL);
+                resolvedTokenValues.put(SERVICE_ROOT_URL, notificationConfig.getRootUrl());
+            }
+        });
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return List.of(
-			new NotificationToken(SERVICE, ROOT_URL, "WEB ссылка на приложение")
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return List.of(
+            new NotificationToken(SERVICE, ROOT_URL, "WEB ссылка на приложение")
 
-		);
-	}
+        );
+    }
 }

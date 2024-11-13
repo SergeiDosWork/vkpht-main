@@ -71,50 +71,50 @@ public class RecipientResolverUtils {
 
         if (Objects.nonNull(context.getParameters())) {
             if (context.getParameters().containsKey(TASK_ID_TO_TASK_HOLDER_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_TASK_HOLDER_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_TASK_HOLDER_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_AND_STATUS_ID_TO_TASK_HISTORY_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_AND_STATUS_ID_TO_TASK_HISTORY_INFO);
+                taskId = context.getParameters().get(TASK_ID_AND_STATUS_ID_TO_TASK_HISTORY_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_COMPETENCE_PROFILE_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_COMPETENCE_PROFILE_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_COMPETENCE_PROFILE_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_APPRAISAL_EVENT_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_APPRAISAL_EVENT_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_APPRAISAL_EVENT_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_PRACTICE_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_PRACTICE_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_PRACTICE_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_PROCESS_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_PROCESS_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_PROCESS_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_EVALUATION_EVENT_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_EVALUATION_EVENT_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_EVALUATION_EVENT_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_ONBOARDING_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_ONBOARDING_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_ONBOARDING_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_LEARNING_COURSE_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_LEARNING_COURSE_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_LEARNING_COURSE_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_LEARNING_STUDYGROUP_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_LEARNING_STUDYGROUP_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_LEARNING_STUDYGROUP_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_DEVPLAN_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_DEVPLAN_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_DEVPLAN_INFO);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_DEVPLAN_MENTOR)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_DEVPLAN_MENTOR);
+                taskId = context.getParameters().get(TASK_ID_TO_DEVPLAN_MENTOR);
             }
             if (context.getParameters().containsKey(TASK_ID)) {
-                taskId =  context.getParameters().get(TASK_ID);
+                taskId = context.getParameters().get(TASK_ID);
             }
             if (context.getParameters().containsKey(TASK_ID_TO_TASK_HOLDER_HEAD_INFO)) {
-                taskId =  context.getParameters().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
+                taskId = context.getParameters().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
             }
         }
         if (taskId != null) {
-            log.info("task id: {}",taskId);
+            log.info("task id: {}", taskId);
             return Long.parseLong(taskId.toString());
         }
         log.warn("context not contains task key");
@@ -166,45 +166,45 @@ public class RecipientResolverUtils {
         return learningCourseStepId;
     }
 
-	public void findHeadRecipient(ResolverContext context, List<DivisionTeamAssignmentDto> assignments, Set<RecipientInfoDto> employeeList) {
-		Map<Long, DivisionTeamInfo> divisionTeamInfoMap = getDivisionTeamInfoMap(assignments);
-		divisionTeamInfoMap.forEach((dtId, dtInfo) -> {
-			if (dtInfo.getHeadAssignment() != null) {
-				DivisionTeamAssignmentDto headHeadAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getHeadAssignment().getEmployee().getId(), dtId);
-				employeeList.add(headHeadAssignment.getEmployee());
-				dtInfo.getEmployeeIds().remove(dtInfo.getHeadAssignment().getEmployee().getId());
-				if (!dtInfo.getEmployeeIds().isEmpty()) {
-					employeeList.add(dtInfo.getHeadAssignment().getEmployee());
-				}
-			} else {
-				DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
-				employeeList.add(headAssignment.getEmployee());
-			}
-		});
-	}
+    public void findHeadRecipient(ResolverContext context, List<DivisionTeamAssignmentDto> assignments, Set<RecipientInfoDto> employeeList) {
+        Map<Long, DivisionTeamInfo> divisionTeamInfoMap = getDivisionTeamInfoMap(assignments);
+        divisionTeamInfoMap.forEach((dtId, dtInfo) -> {
+            if (dtInfo.getHeadAssignment() != null) {
+                DivisionTeamAssignmentDto headHeadAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getHeadAssignment().getEmployee().getId(), dtId);
+                employeeList.add(headHeadAssignment.getEmployee());
+                dtInfo.getEmployeeIds().remove(dtInfo.getHeadAssignment().getEmployee().getId());
+                if (!dtInfo.getEmployeeIds().isEmpty()) {
+                    employeeList.add(dtInfo.getHeadAssignment().getEmployee());
+                }
+            } else {
+                DivisionTeamAssignmentDto headAssignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(dtInfo.getEmployees().get(0).getId(), dtId);
+                employeeList.add(headAssignment.getEmployee());
+            }
+        });
+    }
 
-	public Map<Long, DivisionTeamInfo> getDivisionTeamInfoMap(List<DivisionTeamAssignmentDto> assignments) {
-		Map<Long, DivisionTeamInfo> divisionTeamInfoMap = new HashMap<>();
-		assignments.forEach(dta -> {
-			if (divisionTeamInfoMap.containsKey(dta.getDivisionTeam().getId())) {
-				DivisionTeamInfo divisionTeamInfo = divisionTeamInfoMap.get(dta.getDivisionTeam().getId());
-				if (divisionTeamInfo.getHeadAssignment() == null && dta.getDivisionTeamRole().getRole().getSystemRole().getId().equals(1)) {
-					divisionTeamInfo.setHeadAssignment(dta);
-				}
-				divisionTeamInfo.getEmployees().add(dta.getEmployee());
-				divisionTeamInfo.getEmployeeIds().add(dta.getEmployee().getId());
-			} else {
-				DivisionTeamInfo divisionTeamInfo = new DivisionTeamInfo(
-					dta.getDivisionTeam().getId(),
-					dta.getDivisionTeamRole().getRole().getSystemRole().getId().equals(1) ? dta : null,
-					Stream.of(dta.getEmployee()).collect(Collectors.toList()),
-					Stream.of(dta.getEmployee().getId()).collect(Collectors.toSet())
-				);
-				divisionTeamInfoMap.put(dta.getDivisionTeam().getId(), divisionTeamInfo);
-			}
-		});
-		return divisionTeamInfoMap;
-	}
+    public Map<Long, DivisionTeamInfo> getDivisionTeamInfoMap(List<DivisionTeamAssignmentDto> assignments) {
+        Map<Long, DivisionTeamInfo> divisionTeamInfoMap = new HashMap<>();
+        assignments.forEach(dta -> {
+            if (divisionTeamInfoMap.containsKey(dta.getDivisionTeam().getId())) {
+                DivisionTeamInfo divisionTeamInfo = divisionTeamInfoMap.get(dta.getDivisionTeam().getId());
+                if (divisionTeamInfo.getHeadAssignment() == null && dta.getDivisionTeamRole().getRole().getSystemRole().getId().equals(1)) {
+                    divisionTeamInfo.setHeadAssignment(dta);
+                }
+                divisionTeamInfo.getEmployees().add(dta.getEmployee());
+                divisionTeamInfo.getEmployeeIds().add(dta.getEmployee().getId());
+            } else {
+                DivisionTeamInfo divisionTeamInfo = new DivisionTeamInfo(
+                    dta.getDivisionTeam().getId(),
+                    dta.getDivisionTeamRole().getRole().getSystemRole().getId().equals(1) ? dta : null,
+                    Stream.of(dta.getEmployee()).collect(Collectors.toList()),
+                    Stream.of(dta.getEmployee().getId()).collect(Collectors.toSet())
+                );
+                divisionTeamInfoMap.put(dta.getDivisionTeam().getId(), divisionTeamInfo);
+            }
+        });
+        return divisionTeamInfoMap;
+    }
 
     public Integer findUserLearningCourseId(ResolverContext context) {
         Integer userLearningCourseId = null;
@@ -305,35 +305,35 @@ public class RecipientResolverUtils {
         return pollId;
     }
 
-	public List<DivisionTeamAssignmentDto> findRecipientByTaskIdHolderByLearningCourse(ResolverContext context) {
-		TaskDto task = (TaskDto) context.getOrResolveObject(SavedObjectNames.TASK, () -> Optional.ofNullable(findTaskId(context))
-			.map(taskId -> context.getResolverServiceContainer().getTasksettingServiceClient()
-				.taskFind(new TaskFindRequest().setIds(Collections.singletonList(taskId.longValue()))))
-			.filter(taskList -> !CollectionUtils.isEmpty(taskList))
-			.map(taskList -> taskList.get(0))
-			.orElse(null));
+    public List<DivisionTeamAssignmentDto> findRecipientByTaskIdHolderByLearningCourse(ResolverContext context) {
+        TaskDto task = (TaskDto) context.getOrResolveObject(SavedObjectNames.TASK, () -> Optional.ofNullable(findTaskId(context))
+            .map(taskId -> context.getResolverServiceContainer().getTasksettingServiceClient()
+                .taskFind(new TaskFindRequest().setIds(Collections.singletonList(taskId.longValue()))))
+            .filter(taskList -> !CollectionUtils.isEmpty(taskList))
+            .map(taskList -> taskList.get(0))
+            .orElse(null));
 
-		if (task != null) {
-			String tfValue = task.getFields()
-				.stream()
-				.filter(tf -> tf.getType().getId().equals(TASK_FIELD_TYPE_ID_342))
-				.map(TaskFieldDto::getValue)
-				.findFirst()
-				.orElse(null);
-			if (tfValue != null) {
-				List<TaskDto> taskList = context.getResolverServiceContainer().getTasksettingServiceClient().taskFind(
-					new TaskFindRequest()
-						.setTaskType(Collections.singletonList(TASK_TYPE_ID_80))
-						.setTaskTypeFieldId(TASK_FIELD_TYPE_ID_140)
-						.setTaskFieldValue(tfValue)
-				);
-				if (taskList != null && !taskList.isEmpty()) {
-					return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(taskList.stream().map(TaskDto::getUserId).filter(Objects::nonNull).collect(Collectors.toList()), null);
-				}
-			}
-		}
-		return null;
-	}
+        if (task != null) {
+            String tfValue = task.getFields()
+                .stream()
+                .filter(tf -> tf.getType().getId().equals(TASK_FIELD_TYPE_ID_342))
+                .map(TaskFieldDto::getValue)
+                .findFirst()
+                .orElse(null);
+            if (tfValue != null) {
+                List<TaskDto> taskList = context.getResolverServiceContainer().getTasksettingServiceClient().taskFind(
+                    new TaskFindRequest()
+                        .setTaskType(Collections.singletonList(TASK_TYPE_ID_80))
+                        .setTaskTypeFieldId(TASK_FIELD_TYPE_ID_140)
+                        .setTaskFieldValue(tfValue)
+                );
+                if (taskList != null && !taskList.isEmpty()) {
+                    return context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(taskList.stream().map(TaskDto::getUserId).filter(Objects::nonNull).collect(Collectors.toList()), null);
+                }
+            }
+        }
+        return null;
+    }
 
     public static Long findEventId(ResolverContext context) {
         Long eventId = null;

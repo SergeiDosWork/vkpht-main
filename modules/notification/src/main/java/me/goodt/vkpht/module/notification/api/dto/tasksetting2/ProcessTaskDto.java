@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProcessTaskDto {
-	private ProcessDto process;
-	private TaskRawExtendedDto task;
+    private ProcessDto process;
+    private TaskRawExtendedDto task;
 }

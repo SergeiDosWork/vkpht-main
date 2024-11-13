@@ -9,7 +9,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentSh
 @Setter
 //@Accessors(chain = true)
 public class DivisionAssignmentRoleDto {
-    
+
     private Integer systemRoleId;
 
     private Long divisionTeamId;

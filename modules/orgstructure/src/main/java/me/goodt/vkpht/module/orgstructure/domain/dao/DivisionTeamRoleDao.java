@@ -23,7 +23,9 @@ import java.util.Set;
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamRoleEntity;
 
-/** Предназначен для формирования запросов {@link DivisionTeamRoleEntity} с различным количеством условий. */
+/**
+ * Предназначен для формирования запросов {@link DivisionTeamRoleEntity} с различным количеством условий.
+ */
 @Repository
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Long> {
@@ -66,17 +68,17 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     private List<DivisionTeamRoleEntity> getDivisionTeamRoleEntities(List<Long> ids) {
         JPQLQuery<DivisionTeamRoleEntity> main = query()
-                .selectFrom(divisionTeamRole)
-                .leftJoin(divisionTeamRole.divisionTeam, divisionTeam).fetchJoin()
-                .leftJoin(divisionTeam.division, QDivisionEntity.divisionEntity).fetchJoin()
-                .leftJoin(divisionTeam.type, QTeamTypeEntity.teamTypeEntity).fetchJoin()
-                .leftJoin(divisionTeam.status, QTeamStatusEntity.teamStatusEntity).fetchJoin()
-                .leftJoin(QDivisionEntity.divisionEntity.costCenter, QCostCenterEntity.costCenterEntity).fetchJoin()
-                .leftJoin(QDivisionEntity.divisionEntity.status, QDivisionStatusEntity.divisionStatusEntity).fetchJoin()
-                .leftJoin(QDivisionEntity.divisionEntity.structure, QStructureEntity.structureEntity).fetchJoin()
-                .leftJoin(divisionTeamRole.role, QRoleEntity.roleEntity).fetchJoin()
-                .leftJoin(QRoleEntity.roleEntity.systemRole, QSystemRoleEntity.systemRoleEntity).fetchJoin()
-                .where(divisionTeamRole.id.in(ids));
+            .selectFrom(divisionTeamRole)
+            .leftJoin(divisionTeamRole.divisionTeam, divisionTeam).fetchJoin()
+            .leftJoin(divisionTeam.division, QDivisionEntity.divisionEntity).fetchJoin()
+            .leftJoin(divisionTeam.type, QTeamTypeEntity.teamTypeEntity).fetchJoin()
+            .leftJoin(divisionTeam.status, QTeamStatusEntity.teamStatusEntity).fetchJoin()
+            .leftJoin(QDivisionEntity.divisionEntity.costCenter, QCostCenterEntity.costCenterEntity).fetchJoin()
+            .leftJoin(QDivisionEntity.divisionEntity.status, QDivisionStatusEntity.divisionStatusEntity).fetchJoin()
+            .leftJoin(QDivisionEntity.divisionEntity.structure, QStructureEntity.structureEntity).fetchJoin()
+            .leftJoin(divisionTeamRole.role, QRoleEntity.roleEntity).fetchJoin()
+            .leftJoin(QRoleEntity.roleEntity.systemRole, QSystemRoleEntity.systemRoleEntity).fetchJoin()
+            .where(divisionTeamRole.id.in(ids));
         return main.fetch();
     }
 
@@ -84,37 +86,37 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
         JPQLQuery<Long> jpqlQuery = query().from(divisionTeamRole).select(divisionTeamRole.id);
         addPagination(jpqlQuery, page, size);
         addJoins(jpqlQuery,
-                 employeeIds,
-                 successorReadinessDateFromStart,
-                 successorReadinessDateFromEnd,
-                 assignmentRotationDateFromStart,
-                 assignmentRotationDateFromEnd,
-                 successorDateFrom,
-                 successorReadinessDateFromPlusYear,
-                 divisionId,
-                 employeeSuccessorId);
+            employeeIds,
+            successorReadinessDateFromStart,
+            successorReadinessDateFromEnd,
+            assignmentRotationDateFromStart,
+            assignmentRotationDateFromEnd,
+            successorDateFrom,
+            successorReadinessDateFromPlusYear,
+            divisionId,
+            employeeSuccessorId);
         addGroupBy(jpqlQuery, successorReadinessDateFromStart,
-                   successorReadinessDateFromEnd,
-                   assignmentRotationDateFromStart,
-                   assignmentRotationDateFromEnd,
-                   successorDateFrom,
-                   successorReadinessDateFromPlusYear,
-                   employeeSuccessorId);
+            successorReadinessDateFromEnd,
+            assignmentRotationDateFromStart,
+            assignmentRotationDateFromEnd,
+            successorDateFrom,
+            successorReadinessDateFromPlusYear,
+            employeeSuccessorId);
         return jpqlQuery
-                .where(
-                        prepareEmployeeIdsExpr(employeeIds),
-                        prepareDivisionTeamRoleIdExpr(divisionTeamRoleId),
-                        prepareDivisionTeamIdExpr(divisionTeamId),
-                        prepareSuccessorReadinessDateFromStartExpr(successorReadinessDateFromStart),
-                        prepareSuccessorReadinessDateFromEndExpr(successorReadinessDateFromEnd),
-                        prepareAssignmentRotationDateFromStartExpr(assignmentRotationDateFromStart),
-                        prepareAssignmentRotationDateFromEndExpr(assignmentRotationDateFromEnd),
-                        prepareSuccessorDateFromExpr(successorDateFrom),
-                        prepareSuccessorReadinessDateFromPlusYearExpr(successorReadinessDateFromPlusYear),
-                        prepareDivisionIdExpr(divisionId),
-                        prepareEmployeeSuccessorIdExpr(employeeSuccessorId))
-                .distinct()
-                .fetch();
+            .where(
+                prepareEmployeeIdsExpr(employeeIds),
+                prepareDivisionTeamRoleIdExpr(divisionTeamRoleId),
+                prepareDivisionTeamIdExpr(divisionTeamId),
+                prepareSuccessorReadinessDateFromStartExpr(successorReadinessDateFromStart),
+                prepareSuccessorReadinessDateFromEndExpr(successorReadinessDateFromEnd),
+                prepareAssignmentRotationDateFromStartExpr(assignmentRotationDateFromStart),
+                prepareAssignmentRotationDateFromEndExpr(assignmentRotationDateFromEnd),
+                prepareSuccessorDateFromExpr(successorDateFrom),
+                prepareSuccessorReadinessDateFromPlusYearExpr(successorReadinessDateFromPlusYear),
+                prepareDivisionIdExpr(divisionId),
+                prepareEmployeeSuccessorIdExpr(employeeSuccessorId))
+            .distinct()
+            .fetch();
     }
 
     /**
@@ -123,51 +125,51 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
      */
     public List<DivisionTeamRoleEntity> find(FindQueryBuilder builder) {
         return find(builder.employeeIds,
-                builder.divisionTeamRoleId,
-                builder.divisionTeamId,
-                builder.successorReadinessDateFromStart,
-                builder.successorReadinessDateFromEnd,
-                builder.assignmentRotationDateFromStart,
-                builder.assignmentRotationDateFromEnd,
-                builder.successorDateFrom,
-                builder.successorReadinessDateFromPlusYear,
-                builder.divisionId,
-                builder.employeeSuccessorId,
-                builder.page,
-                builder.size);
+            builder.divisionTeamRoleId,
+            builder.divisionTeamId,
+            builder.successorReadinessDateFromStart,
+            builder.successorReadinessDateFromEnd,
+            builder.assignmentRotationDateFromStart,
+            builder.assignmentRotationDateFromEnd,
+            builder.successorDateFrom,
+            builder.successorReadinessDateFromPlusYear,
+            builder.divisionId,
+            builder.employeeSuccessorId,
+            builder.page,
+            builder.size);
     }
 
     @Override
     public Optional<DivisionTeamRoleEntity> findById(Long id) {
         return Optional.ofNullable(query().selectFrom(divisionTeamRole)
-                                           .where(divisionTeamRole.id.eq(id))
-                                           .fetchFirst());
+            .where(divisionTeamRole.id.eq(id))
+            .fetchFirst());
     }
 
     @Override
     public List<DivisionTeamRoleEntity> findAll() {
         return query().selectFrom(divisionTeamRole)
-                .fetch();
+            .fetch();
     }
 
     public List<DivisionTeamRoleEntity> findAllByDivisionTeamsAndSystemRole(List<Long> divisionTeamsIds, Integer systemRole) {
         return query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
-                .where(divisionTeamRole.role.systemRole.id.eq(systemRole).and(divisionTeam.id.in(divisionTeamsIds)))
-                .fetch();
+            .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
+            .where(divisionTeamRole.role.systemRole.id.eq(systemRole).and(divisionTeam.id.in(divisionTeamsIds)))
+            .fetch();
     }
 
     public List<DivisionTeamRoleEntity> findAllByDivisionTeam(Long divisionTeamId) {
         return query().selectFrom(divisionTeamRole)
-                .where(divisionTeamRole.divisionTeamId.eq(divisionTeamId))
-                .fetch();
+            .where(divisionTeamRole.divisionTeamId.eq(divisionTeamId))
+            .fetch();
     }
 
     public Page<DivisionTeamRoleEntity> findByIds(List<Long> ids, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .where(divisionTeamRole.id.in(ids));
+            .where(divisionTeamRole.id.in(ids));
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -175,9 +177,9 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllByDivisionTeams(List<Long> divisionTeamIds, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .where(divisionTeamRole.divisionTeamId.in(divisionTeamIds));
+            .where(divisionTeamRole.divisionTeamId.in(divisionTeamIds));
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -185,9 +187,9 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllByIdsAndDivisionTeams(List<Long> ids, List<Long> divisionTeamIds, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .where(divisionTeamRole.id.in(ids).and(divisionTeamRole.divisionTeamId.in(divisionTeamIds)));
+            .where(divisionTeamRole.id.in(ids).and(divisionTeamRole.divisionTeamId.in(divisionTeamIds)));
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -195,27 +197,27 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public DivisionTeamRoleEntity findByEmployeeIdAndDivisionTeamId(Long employeeId, Long divisionTeamId) {
         final BooleanExpression exp = Expressions.allOf(
-                divisionTeamAssignment.dateTo.isNull(),
-                divisionTeamAssignment.employeeId.eq(employeeId),
-                divisionTeamRole.divisionTeamId.eq(divisionTeamId)
+            divisionTeamAssignment.dateTo.isNull(),
+            divisionTeamAssignment.employeeId.eq(employeeId),
+            divisionTeamRole.divisionTeamId.eq(divisionTeamId)
         );
 
         return query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id))
-                .where(exp)
-                .fetchFirst();
+            .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id))
+            .where(exp)
+            .fetchFirst();
     }
 
     public Page<DivisionTeamRoleEntity> findAllBySuccessorReadinessDateFromStart(Date dateFromStart, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
-                .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessorReadiness.dateTo.isNull()))
-                .where(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamSuccessorReadiness.dateFrom).after(dateFromStart))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
+            .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessorReadiness.dateTo.isNull()))
+            .where(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamSuccessorReadiness.dateFrom).after(dateFromStart))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -223,16 +225,16 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllBySuccessorReadinessDateFromEnd(Date dateFromEnd, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
-                .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessorReadiness.dateTo.isNull()))
-                .where(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamSuccessorReadiness.dateFrom).before(dateFromEnd).or(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamSuccessorReadiness.dateFrom).eq(dateFromEnd)))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
+            .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessorReadiness.dateTo.isNull()))
+            .where(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamSuccessorReadiness.dateFrom).before(dateFromEnd).or(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamSuccessorReadiness.dateFrom).eq(dateFromEnd)))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -240,14 +242,14 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllByAssignmentRotationDateFromStart(Date dateFromStart, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamAssignment.dateTo.isNull()))
-                .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id).and(divisionTeamAssignmentRotation.dateTo.isNull()))
-                .where(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamAssignmentRotation.dateFrom).after(dateFromStart))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamAssignment.dateTo.isNull()))
+            .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id).and(divisionTeamAssignmentRotation.dateTo.isNull()))
+            .where(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamAssignmentRotation.dateFrom).after(dateFromStart))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -255,14 +257,14 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllByAssignmentRotationDateFromEnd(Date dateFromEnd, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamAssignment.dateTo.isNull()))
-                .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id).and(divisionTeamAssignmentRotation.dateTo.isNull()))
-                .where(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamAssignmentRotation.dateFrom).before(dateFromEnd))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamAssignment.dateTo.isNull()))
+            .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id).and(divisionTeamAssignmentRotation.dateTo.isNull()))
+            .where(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamAssignmentRotation.dateFrom).before(dateFromEnd))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -270,14 +272,14 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllBySuccessorDateFrom(Date dateFrom, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().from(divisionTeamRole)
-                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
-                .where(Expressions.dateTimeOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamSuccessor.dateFrom).eq(dateFrom))
-                .groupBy(divisionTeamRole.id)
-                .select(divisionTeamRole);
+            .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
+            .where(Expressions.dateTimeOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamSuccessor.dateFrom).eq(dateFrom))
+            .groupBy(divisionTeamRole.id)
+            .select(divisionTeamRole);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -287,11 +289,11 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
         final QDivisionEntity division = QDivisionEntity.divisionEntity;
 
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeam).on(divisionTeamRole.divisionTeamId.eq(divisionTeam.id))
-                .innerJoin(division).on(divisionTeam.divisionId.eq(division.id))
-                .where(divisionTeam.divisionId.eq(divisionId));
+            .innerJoin(divisionTeam).on(divisionTeamRole.divisionTeamId.eq(divisionTeam.id))
+            .innerJoin(division).on(divisionTeam.divisionId.eq(division.id))
+            .where(divisionTeam.divisionId.eq(divisionId));
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -299,10 +301,10 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findByEmployeeIds(Set<Long> employeeId, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id))
-                .where(divisionTeamAssignment.employeeId.in(employeeId));
+            .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id))
+            .where(divisionTeamAssignment.employeeId.in(employeeId));
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -310,11 +312,11 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
 
     public Page<DivisionTeamRoleEntity> findAllByEmployeeSuccessorId(Long employeeSuccessorId, Pageable pageable) {
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id))
-                .where(divisionTeamSuccessor.employee.id.eq(employeeSuccessorId))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id))
+            .where(divisionTeamSuccessor.employee.id.eq(employeeSuccessorId))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -323,20 +325,22 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
     public Page<DivisionTeamRoleEntity> findAllBySuccessorReadinessDateFromPlusOneYear(Pageable pageable) {
         final Date dateMinusYear = Date.from(LocalDate.now().atStartOfDay().minusYears(1).atZone(ZoneId.systemDefault()).toInstant());
         JPQLQuery<DivisionTeamRoleEntity> select = query().selectFrom(divisionTeamRole)
-                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
-                .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessor.dateTo.isNull()))
-                .where(Expressions.dateOperation(
-                        Date.class, Ops.DateTimeOps.DATE,
-                        divisionTeamSuccessorReadiness.dateFrom).eq(dateMinusYear))
-                .groupBy(divisionTeamRole.id);
+            .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id).and(divisionTeamSuccessor.dateTo.isNull()))
+            .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id).and(divisionTeamSuccessor.dateTo.isNull()))
+            .where(Expressions.dateOperation(
+                Date.class, Ops.DateTimeOps.DATE,
+                divisionTeamSuccessorReadiness.dateFrom).eq(dateMinusYear))
+            .groupBy(divisionTeamRole.id);
         JPQLQuery<DivisionTeamRoleEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamRoleEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamRoleEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
     }
 
-    /** Добавляет паджинацию, если нужно исходя из параметров */
+    /**
+     * Добавляет паджинацию, если нужно исходя из параметров
+     */
     private void addPagination(JPQLQuery<?> jpqlQuery, Integer page, Integer size) {
         if (size != null && size > 0) {
             jpqlQuery.limit(size);
@@ -346,7 +350,9 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
         }
     }
 
-    /** В зависимости от параметров, добавляет нужные join-ы */
+    /**
+     * В зависимости от параметров, добавляет нужные join-ы
+     */
     private void addJoins(JPQLQuery<?> jpqlQuery,
                           Set<Long> employeeIds,
                           Date successorReadinessDateFromStart,
@@ -358,35 +364,37 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
                           Long divisionId,
                           Long employeeSuccessorId) {
         if (successorReadinessDateFromStart != null
-                || successorReadinessDateFromEnd != null
-                || successorDateFrom != null
-                || successorReadinessDateFromPlusYear != null
-                || employeeSuccessorId != null) {
+            || successorReadinessDateFromEnd != null
+            || successorDateFrom != null
+            || successorReadinessDateFromPlusYear != null
+            || employeeSuccessorId != null) {
             jpqlQuery
-                    .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id));
+                .innerJoin(divisionTeamSuccessor).on(divisionTeamSuccessor.divisionTeamRole.id.eq(divisionTeamRole.id));
         }
         if (successorReadinessDateFromStart != null
-                || successorReadinessDateFromEnd != null
-                || successorReadinessDateFromPlusYear != null) {
+            || successorReadinessDateFromEnd != null
+            || successorReadinessDateFromPlusYear != null) {
             jpqlQuery
-                    .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id));
+                .innerJoin(divisionTeamSuccessorReadiness).on(divisionTeamSuccessorReadiness.divisionTeamSuccessor.id.eq(divisionTeamSuccessor.id));
         }
         if (assignmentRotationDateFromStart != null || assignmentRotationDateFromEnd != null || employeeIds != null) {
             jpqlQuery
-                    .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id));
+                .innerJoin(divisionTeamAssignment).on(divisionTeamAssignment.divisionTeamRoleId.eq(divisionTeamRole.id));
         }
         if (assignmentRotationDateFromStart != null || assignmentRotationDateFromEnd != null) {
             jpqlQuery
-                    .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id));
+                .innerJoin(divisionTeamAssignmentRotation).on(divisionTeamAssignmentRotation.assignmentId.eq(divisionTeamAssignment.id));
         }
         if (divisionId != null) {
             jpqlQuery
-                    .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
-                    .innerJoin(QDivisionEntity.divisionEntity).on(QDivisionEntity.divisionEntity.id.eq(divisionTeam.divisionId));
+                .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
+                .innerJoin(QDivisionEntity.divisionEntity).on(QDivisionEntity.divisionEntity.id.eq(divisionTeam.divisionId));
         }
     }
 
-    /** Добавляет группирвоку, если нужно исходя из параметров */
+    /**
+     * Добавляет группирвоку, если нужно исходя из параметров
+     */
     private void addGroupBy(JPQLQuery<?> jpqlQuery,
                             Date successorReadinessDateFromStart,
                             Date successorReadinessDateFromEnd,
@@ -396,12 +404,12 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
                             Boolean successorReadinessDateFromPlusYear,
                             Long employeeSuccessorId) {
         if (successorReadinessDateFromStart != null
-                || successorReadinessDateFromEnd != null
-                || assignmentRotationDateFromStart != null
-                || assignmentRotationDateFromEnd != null
-                || successorDateFrom != null
-                || successorReadinessDateFromPlusYear != null
-                || employeeSuccessorId != null) {
+            || successorReadinessDateFromEnd != null
+            || assignmentRotationDateFromStart != null
+            || assignmentRotationDateFromEnd != null
+            || successorDateFrom != null
+            || successorReadinessDateFromPlusYear != null
+            || employeeSuccessorId != null) {
             jpqlQuery.groupBy(divisionTeamRole.id);
         }
     }
@@ -410,103 +418,125 @@ public class DivisionTeamRoleDao extends AbstractDao<DivisionTeamRoleEntity, Lon
         final QDivisionTeamRoleShort qdtrs = QDivisionTeamRoleShort.divisionTeamRoleShort;
         final QDivisionTeamShort qdts = QDivisionTeamShort.divisionTeamShort;
         return query().from(qdtrs)
-                .join(qdts).on(qdtrs.divisionTeamId.eq(qdts.id))
-                .where(qdtrs.id.in(dtrIds));
+            .join(qdts).on(qdtrs.divisionTeamId.eq(qdts.id))
+            .where(qdtrs.id.in(dtrIds));
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareEmployeeIdsExpr(Set<Long> employeeIds) {
         return CollectionUtils.isNotEmpty(employeeIds) ? divisionTeamAssignment.employeeId.in(employeeIds) : null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareDivisionTeamRoleIdExpr(List<Long> divisionTeamRoleId) {
         return CollectionUtils.isNotEmpty(divisionTeamRoleId) ? divisionTeamRole.id.in(divisionTeamRoleId) : null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareDivisionTeamIdExpr(List<Long> divisionTeamId) {
         return CollectionUtils.isNotEmpty(divisionTeamId) ? divisionTeamRole.divisionTeamId.in(divisionTeamId) : null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareSuccessorReadinessDateFromStartExpr(Date successorReadinessDateFromStart) {
         if (successorReadinessDateFromStart != null) {
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamSuccessorReadiness.dateFrom).after(successorReadinessDateFromStart)
-                    .and(divisionTeamSuccessor.dateTo.isNull())
-                    .and(divisionTeamSuccessorReadiness.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamSuccessorReadiness.dateFrom).after(successorReadinessDateFromStart)
+                .and(divisionTeamSuccessor.dateTo.isNull())
+                .and(divisionTeamSuccessorReadiness.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareSuccessorReadinessDateFromEndExpr(Date successorReadinessDateFromEnd) {
         if (successorReadinessDateFromEnd != null) {
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamSuccessorReadiness.dateFrom).loe(successorReadinessDateFromEnd)
-                    .and(divisionTeamSuccessor.dateTo.isNull())
-                    .and(divisionTeamSuccessorReadiness.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamSuccessorReadiness.dateFrom).loe(successorReadinessDateFromEnd)
+                .and(divisionTeamSuccessor.dateTo.isNull())
+                .and(divisionTeamSuccessorReadiness.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareAssignmentRotationDateFromStartExpr(Date assignmentRotationDateFromStart) {
         if (assignmentRotationDateFromStart != null) {
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamAssignmentRotation.dateFrom).after(assignmentRotationDateFromStart)
-                    .and(divisionTeamAssignmentRotation.dateTo.isNull())
-                    .and(divisionTeamAssignment.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamAssignmentRotation.dateFrom).after(assignmentRotationDateFromStart)
+                .and(divisionTeamAssignmentRotation.dateTo.isNull())
+                .and(divisionTeamAssignment.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareAssignmentRotationDateFromEndExpr(Date assignmentRotationDateFromEnd) {
         if (assignmentRotationDateFromEnd != null) {
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamAssignmentRotation.dateFrom).before(assignmentRotationDateFromEnd)
-                    .and(divisionTeamAssignmentRotation.dateTo.isNull())
-                    .and(divisionTeamAssignment.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamAssignmentRotation.dateFrom).before(assignmentRotationDateFromEnd)
+                .and(divisionTeamAssignmentRotation.dateTo.isNull())
+                .and(divisionTeamAssignment.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareSuccessorDateFromExpr(Date successorDateFrom) {
         if (successorDateFrom != null) {
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamSuccessor.dateFrom).eq(successorDateFrom)
-                    .and(divisionTeamSuccessor.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamSuccessor.dateFrom).eq(successorDateFrom)
+                .and(divisionTeamSuccessor.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareSuccessorReadinessDateFromPlusYearExpr(Boolean successorReadinessDateFromPlusYear) {
         if (successorReadinessDateFromPlusYear != null) {
             Date datePlusYear = Date.from(LocalDate.now().atStartOfDay().plusYears(1).atZone(ZoneId.systemDefault()).toInstant());
             return Expressions.dateTimeOperation(
-                            Date.class, Ops.DateTimeOps.DATE,
-                            divisionTeamSuccessorReadiness.dateFrom).eq(datePlusYear)
-                    .and(divisionTeamSuccessor.dateTo.isNull())
-                    .and(divisionTeamSuccessorReadiness.dateTo.isNull());
+                    Date.class, Ops.DateTimeOps.DATE,
+                    divisionTeamSuccessorReadiness.dateFrom).eq(datePlusYear)
+                .and(divisionTeamSuccessor.dateTo.isNull())
+                .and(divisionTeamSuccessorReadiness.dateTo.isNull());
         }
         return null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareDivisionIdExpr(Long divisionId) {
         return divisionId != null ? divisionTeam.divisionId.eq(divisionId) : null;
     }
 
-    /** @return Возвращает нужный предикат, если параметр валиден */
+    /**
+     * @return Возвращает нужный предикат, если параметр валиден
+     */
     private BooleanExpression prepareEmployeeSuccessorIdExpr(Long employeeSuccessorId) {
         return employeeSuccessorId != null ? divisionTeamSuccessor.employeeId.eq(employeeSuccessorId) : null;
     }

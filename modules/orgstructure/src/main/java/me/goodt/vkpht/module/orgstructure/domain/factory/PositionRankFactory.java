@@ -10,6 +10,6 @@ public class PositionRankFactory {
 
     public static PositionRankDto create(PositionRankEntity entity) {
         return new PositionRankDto(entity.getId(), entity.getFullName(), entity.getShortName(),
-                entity.getAbbreviation(), entity.getDateFrom(), entity.getDateTo());
+            entity.getAbbreviation(), entity.getDateFrom(), entity.getDateTo());
     }
 }

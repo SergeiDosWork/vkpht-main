@@ -35,7 +35,7 @@ public class CitizenshipCrudService extends AbstractArchiveDictionaryService<Cit
     @Override
     public void delete(Long id) {
         CitizenshipEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("Citizenship with id = %s not found", id)));
+            new NotFoundException(String.format("Citizenship with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

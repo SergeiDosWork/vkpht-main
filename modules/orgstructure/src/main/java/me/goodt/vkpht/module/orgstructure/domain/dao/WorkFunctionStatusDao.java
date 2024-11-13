@@ -23,15 +23,15 @@ public class WorkFunctionStatusDao extends AbstractDao<WorkFunctionStatusEntity,
 
     public boolean existsByName(String name) {
         return query().selectFrom(meta)
-                .where(meta.name.eq(name))
-                .fetchCount() > 0;
+            .where(meta.name.eq(name))
+            .fetchCount() > 0;
     }
 
     public Integer findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public Page<WorkFunctionStatusEntity> find(WorkFunctionStatusFilter filter, Pageable pageable) {

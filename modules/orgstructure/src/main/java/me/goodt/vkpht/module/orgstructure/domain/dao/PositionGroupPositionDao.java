@@ -22,24 +22,24 @@ public class PositionGroupPositionDao extends AbstractDao<PositionGroupPositionE
 
     public List<PositionGroupPositionEntity> findAllByPositionIdAndPositionGroupId(Long positionId, Long positionGroupId) {
         final BooleanExpression exp = Expressions.allOf(
-                meta.position.id.eq(positionGroupId),
-                meta.positionGroup.id.eq(positionGroupId)
+            meta.position.id.eq(positionGroupId),
+            meta.positionGroup.id.eq(positionGroupId)
         );
 
         return query().selectFrom(meta)
-                .where(exp)
-                .fetch();
+            .where(exp)
+            .fetch();
     }
 
     public List<PositionGroupPositionEntity> findAllByPositionId(Long positionId) {
         return query().selectFrom(meta)
-                .where(meta.position.id.eq(positionId))
-                .fetch();
+            .where(meta.position.id.eq(positionId))
+            .fetch();
     }
 
     public List<PositionGroupPositionEntity> findAllByPositionGroupId(Long positionGroupId) {
         return query().selectFrom(meta)
-                .where(meta.positionGroup.id.eq(positionGroupId))
-                .fetch();
+            .where(meta.positionGroup.id.eq(positionGroupId))
+            .fetch();
     }
 }

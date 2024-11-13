@@ -1,7 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.common.api.dto.RoleInfo;
 import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.common.api.exception.ForbiddenException;
@@ -22,6 +21,7 @@ import me.goodt.vkpht.common.application.util.GlobalDefs;
 import me.goodt.vkpht.common.application.util.TextConstants;
 import me.goodt.vkpht.module.orgstructure.api.RoleService;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.RoleInfo;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDao;
@@ -35,8 +35,6 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamEntity;
-import me.goodt.vkpht.module.orgstructure.domain.entity.QDivisionTeamEntity;
-import me.goodt.vkpht.module.orgstructure.domain.entity.QLegalEntityTeamAssignmentEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.RoleEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.TeamTypeEntity;
 import me.goodt.vkpht.module.orgstructure.domain.factory.LegalEntityTeamAssignmentFactory;
@@ -46,34 +44,24 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.SystemRoleFactory;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class RoleServiceImpl implements RoleService {
 
     private static final Integer TECH_TYPE = 2;
 
-    @Autowired
-    private LegalEntityTeamAssignmentConflictRoleDao legalEntityTeamAssignmentConflictRoleDao;
-    @Autowired
-    private LegalEntityTeamAssignmentDao legalEntityTeamAssignmentDao;
-    @Autowired
-    private LegalEntityDao legalEntityDao;
-    @Autowired
-    private LegalEntityTeamDao legalEntityTeamDao;
-    @Autowired
-    private DivisionTeamAssignmentDao divisionTeamAssignmentDao;
-    @Autowired
-    private RoleDao roleDao;
-    @Autowired
-    private DivisionTeamDao divisionTeamDao;
-    @Autowired
-    private TeamTypeDao teamTypeDao;
-    @Autowired
-    private EmployeeDao employeeDao;
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final LegalEntityTeamAssignmentConflictRoleDao legalEntityTeamAssignmentConflictRoleDao;
+    private final LegalEntityTeamAssignmentDao legalEntityTeamAssignmentDao;
+    private final LegalEntityDao legalEntityDao;
+    private final LegalEntityTeamDao legalEntityTeamDao;
+    private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;
+    private final RoleDao roleDao;
+    private final DivisionTeamDao divisionTeamDao;
+    private final TeamTypeDao teamTypeDao;
+    private final EmployeeDao employeeDao;
+    private final AuthService authService;
+    private final UnitAccessService unitAccessService;
 
     @Override
     public List<RoleInfo> getActualAssignableRoleList() {
@@ -85,9 +73,9 @@ public class RoleServiceImpl implements RoleService {
     public List<LegalEntityTeamAssignmentDto> getLegalTeamAssignmentInfo(List<Long> legalEntityIds, List<Long> roleIds, List<Long> employeeIds) {
         List<LegalEntityTeamAssignmentEntity> assignments = legalEntityTeamAssignmentDao.findByLegalEntityIdsAndRoleId(legalEntityIds, roleIds, employeeIds);
         return assignments.stream()
-                .filter(Objects::nonNull)
-                .map(LegalEntityTeamAssignmentFactory::create)
-                .collect(toList());
+            .filter(Objects::nonNull)
+            .map(LegalEntityTeamAssignmentFactory::create)
+            .collect(toList());
     }
 
     @Override
@@ -99,18 +87,14 @@ public class RoleServiceImpl implements RoleService {
             throw new ForbiddenException(String.format("Role: %d is already exists.", roleId));
         }
 
-        QLegalEntityTeamAssignmentEntity qleta = QLegalEntityTeamAssignmentEntity.legalEntityTeamAssignmentEntity;
-        List<Long> roleIds = legalEntityTeamAssignmentDao.findAllByEmployeeIdAndLegalEntityId(employeeId, legalEntityId)
-            .select(qleta.roleId).fetch();
+        List<Long> roleIds = legalEntityTeamAssignmentDao.findAllByEmployeeIdAndLegalEntityId(employeeId, legalEntityId);
         Set<Long> legalEntityTeamAssignmentIds = new HashSet<>(roleIds);
-
-        QDivisionTeamEntity qdt = QDivisionTeamEntity.divisionTeamEntity;
-        List<Long> divisionTeamIds = divisionTeamDao.findAllByLegalEntityId(legalEntityId).select(qdt.id).fetch();
+        List<Long> divisionTeamIds = divisionTeamDao.findAllByLegalEntityId(legalEntityId);
 
         Set<Long> divisionTeamAssignmentIds = divisionTeamAssignmentDao.findAllByEmployeeIdAnDivisionTeamIds(employeeId, divisionTeamIds)
-                .stream()
-                .map(i -> i.getDivisionTeamRole().getRole().getId())
-                .collect(toSet());
+            .stream()
+            .map(i -> i.getDivisionTeamRole().getRole().getId())
+            .collect(toSet());
 
         boolean existConflict = legalEntityTeamAssignmentConflictRoleDao.existConflictRole(legalEntityTeamAssignmentIds, divisionTeamAssignmentIds, roleId);
 
@@ -188,14 +172,14 @@ public class RoleServiceImpl implements RoleService {
         }
 
         Long assignment = assignmentId != null && divisionTeamAssignmentDao.existsById(assignmentId) ? assignmentId
-                : divisionTeamAssignmentDao.findIdByEmployeeId(employeeId);
+            : divisionTeamAssignmentDao.findIdByEmployeeId(employeeId);
 
         Long legalEntityId = legalEntityDao.findIdFirstByDivisionTeamAssignment(assignment, unitAccessService.getCurrentUnit());
 
         return legalEntityTeamAssignmentDao.findByLegalEntityIdAndSystemRoleIds(legalEntityId, GlobalDefs.HR_ROLE_SET)
-                .stream()
-                .map(LegalEntityTeamAssignmentFactory::create)
-                .collect(toList());
+            .stream()
+            .map(LegalEntityTeamAssignmentFactory::create)
+            .collect(toList());
     }
 
 }

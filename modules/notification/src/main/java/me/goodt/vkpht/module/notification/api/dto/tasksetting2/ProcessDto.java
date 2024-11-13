@@ -15,26 +15,26 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProcessDto {
-	private Long id;
-	private ProcessTypeDto type;
-	private String name;
+    private Long id;
+    private ProcessTypeDto type;
+    private String name;
     @JsonProperty(DtoTagConstants.IS_STARTABLE_TAG)
-	private Integer isStartable;
+    private Integer isStartable;
     @JsonProperty(DtoTagConstants.DATE_FROM_TAG)
-	private Date dateFrom;
+    private Date dateFrom;
     @JsonProperty(DtoTagConstants.DATE_START_CONFIRM_TAG)
-	private Date dateStartConfirm;
+    private Date dateStartConfirm;
     @JsonProperty(DtoTagConstants.DATE_TO_TAG)
-	private Date dateTo;
+    private Date dateTo;
     @JsonProperty(DtoTagConstants.DATE_END_CONFIRM_TAG)
-	private Date dateEndConfirm;
+    private Date dateEndConfirm;
     @JsonProperty(DtoTagConstants.DATE_BLOCK_TAG)
-	private Date dateBlock;
-	private String params;
+    private Date dateBlock;
+    private String params;
     @JsonProperty(DtoTagConstants.DATE_START_TAG)
-	private Date dateStart;
+    private Date dateStart;
     @JsonProperty(DtoTagConstants.DATE_END_TAG)
-	private Date dateEnd;
+    private Date dateEnd;
     @JsonProperty(DtoTagConstants.EXTERNAL_ID_TAG)
-	private String externalId;
+    private String externalId;
 }

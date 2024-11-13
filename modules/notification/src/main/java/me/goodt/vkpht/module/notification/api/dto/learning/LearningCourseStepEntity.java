@@ -15,16 +15,16 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.LEARNIN
 @Getter
 @Setter
 public class LearningCourseStepEntity {
-	private Long id;
-	@JsonSetter(DATE_FROM_TAG)
-	private Date dateFrom;
-	@JsonSetter(DATE_TO_TAG)
-	private Date dateTo;
-	private String name;
-	@JsonSetter(DATE_START_TAG)
-	private Date dateStart;
-	@JsonSetter(DATE_END_TAG)
-	private Date dateEnd;
-	@JsonSetter(LEARNING_COURSE_ID_TAG)
-	private Long learningCourseId;
+    private Long id;
+    @JsonSetter(DATE_FROM_TAG)
+    private Date dateFrom;
+    @JsonSetter(DATE_TO_TAG)
+    private Date dateTo;
+    private String name;
+    @JsonSetter(DATE_START_TAG)
+    private Date dateStart;
+    @JsonSetter(DATE_END_TAG)
+    private Date dateEnd;
+    @JsonSetter(LEARNING_COURSE_ID_TAG)
+    private Long learningCourseId;
 }

@@ -65,7 +65,7 @@ public class PositionCategoryCrudService {
 
     public void delete(Long id) {
         PositionCategoryEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("DivisionStatus with id = %s not found", id)));
+            new NotFoundException(String.format("DivisionStatus with id = %s not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         Date currentDate = new Date();
         entity.setDateTo(currentDate);

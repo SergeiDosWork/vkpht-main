@@ -10,7 +10,7 @@ public class PositionCategoryFactory {
 
     public static PositionCategoryDto create(PositionCategoryEntity entity) {
         return new PositionCategoryDto(entity.getId(), entity.getFullName(),
-                entity.getShortName(), entity.getAbbreviation(),
-                entity.getDateFrom(), entity.getDateTo());
+            entity.getShortName(), entity.getAbbreviation(),
+            entity.getDateFrom(), entity.getDateTo());
     }
 }

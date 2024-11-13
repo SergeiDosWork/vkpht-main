@@ -27,8 +27,8 @@ public class DivisionTeamController {
     @BadRequestAPIResponses
     @GetMapping("/{id}")
     public DivisionTeamDto findById(
-            @Parameter(name = "id", description = "ИД команды дивизиона")
-            @PathVariable("id") Long id) {
+        @Parameter(name = "id", description = "ИД команды дивизиона")
+        @PathVariable("id") Long id) {
         return divisionService.findDivisionTeamById(id);
     }
 

@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+
 import java.util.Date;
 
 import me.goodt.vkpht.common.domain.entity.ArchivableEntity;
@@ -26,7 +27,9 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @Table(name = "org_division_team_assignment")
 public class DivisionTeamAssignmentEntity extends DomainObject implements ArchivableEntity {
 
-    /** from DivisionTeamAssignmentEntity */
+    /**
+     * from DivisionTeamAssignmentEntity
+     */
     @Column(name = "precursor_id")
     private Long precursorId;
     @Column(name = "date_from", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

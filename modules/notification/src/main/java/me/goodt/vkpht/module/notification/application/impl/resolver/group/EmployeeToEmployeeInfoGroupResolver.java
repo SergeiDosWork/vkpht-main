@@ -20,31 +20,31 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class EmployeeToEmployeeInfoGroupResolver implements TokenGroupResolver {
-	@Override
-	public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, EMPLOYEE_TO_EMPLOYEE_INFO);
-		Integer employeeId = (Integer) context.getParameters().get(EMPLOYEE_TO_EMPLOYEE_INFO);
-		log.info("employee_id = {}", employeeId);
-		if (Objects.isNull(employeeId)) {
-			return;
-		}
-		EmployeeInfoDto employeeInfo = (EmployeeInfoDto) context.getOrResolveObject(SavedObjectNames.EMPLOYEE_INFO, () ->
-			context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(employeeId.longValue()));
-		if (Objects.isNull(employeeInfo)) {
-			return;
-		}
-		for (TokenWithValues token : context.getParsedTokens().get(EMPLOYEE_TO_EMPLOYEE_INFO)) {
-			if (token.getBasicValue().equals(FIO_FULL)) {
-				log.info(LOG_MESSAGE_TOKEN, EMPLOYEE_TO_EMPLOYEE_INFO, FIO_FULL);
-				resolvedTokenValues.put(EMPLOYEE_TO_EMPLOYEE_INFO_FIO_FULL, getEmployeeFullName(employeeInfo));
-			}
-		}
-	}
+    @Override
+    public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, EMPLOYEE_TO_EMPLOYEE_INFO);
+        Integer employeeId = (Integer) context.getParameters().get(EMPLOYEE_TO_EMPLOYEE_INFO);
+        log.info("employee_id = {}", employeeId);
+        if (Objects.isNull(employeeId)) {
+            return;
+        }
+        EmployeeInfoDto employeeInfo = (EmployeeInfoDto) context.getOrResolveObject(SavedObjectNames.EMPLOYEE_INFO, () ->
+            context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeInfo(employeeId.longValue()));
+        if (Objects.isNull(employeeInfo)) {
+            return;
+        }
+        for (TokenWithValues token : context.getParsedTokens().get(EMPLOYEE_TO_EMPLOYEE_INFO)) {
+            if (token.getBasicValue().equals(FIO_FULL)) {
+                log.info(LOG_MESSAGE_TOKEN, EMPLOYEE_TO_EMPLOYEE_INFO, FIO_FULL);
+                resolvedTokenValues.put(EMPLOYEE_TO_EMPLOYEE_INFO_FIO_FULL, getEmployeeFullName(employeeInfo));
+            }
+        }
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return List.of(
-			new NotificationToken(EMPLOYEE_TO_EMPLOYEE_INFO, FIO_FULL, "ФИО - Фамилия Имя Отчество сотрудника")
-		);
-	}
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return List.of(
+            new NotificationToken(EMPLOYEE_TO_EMPLOYEE_INFO, FIO_FULL, "ФИО - Фамилия Имя Отчество сотрудника")
+        );
+    }
 }

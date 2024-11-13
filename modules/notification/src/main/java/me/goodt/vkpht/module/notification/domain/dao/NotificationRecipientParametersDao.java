@@ -15,37 +15,37 @@ import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 @SuppressWarnings("SpringDataMethodInconsistencyInspection")
 public class NotificationRecipientParametersDao extends AbstractDao<NotificationRecipientParameterEntity, Long> {
 
-	private final static QNotificationRecipientParameterEntity meta =
-		QNotificationRecipientParameterEntity.notificationRecipientParameterEntity;
+    private final static QNotificationRecipientParameterEntity meta =
+        QNotificationRecipientParameterEntity.notificationRecipientParameterEntity;
 
-	public NotificationRecipientParametersDao(EntityManager em) {
-		super(NotificationRecipientParameterEntity.class, em);
-	}
+    public NotificationRecipientParametersDao(EntityManager em) {
+        super(NotificationRecipientParameterEntity.class, em);
+    }
 
-	public List<NotificationRecipientParameterEntity> findByParent(NotificationRecipientEntity parent) {
-		return query().selectFrom(meta)
-			.where(meta.parent.eq(parent))
-			.fetch();
-	}
+    public List<NotificationRecipientParameterEntity> findByParent(NotificationRecipientEntity parent) {
+        return query().selectFrom(meta)
+            .where(meta.parent.eq(parent))
+            .fetch();
+    }
 
-	public List<NotificationRecipientParameterEntity> findByParentId(Long parentId) {
-		return query().selectFrom(meta)
-			.where(meta.parent.id.eq(parentId))
-			.fetch();
-	}
+    public List<NotificationRecipientParameterEntity> findByParentId(Long parentId) {
+        return query().selectFrom(meta)
+            .where(meta.parent.id.eq(parentId))
+            .fetch();
+    }
 
-	public List<NotificationRecipientParameterEntity> findByParentIds(Collection<Long> parentIds) {
-		return query().selectFrom(meta)
-			.where(meta.parent.id.in(parentIds))
-			.fetch();
-	}
+    public List<NotificationRecipientParameterEntity> findByParentIds(Collection<Long> parentIds) {
+        return query().selectFrom(meta)
+            .where(meta.parent.id.in(parentIds))
+            .fetch();
+    }
 
-	public void deleteAllByRecipientId(Long recipientId) {
-		delete(meta.parent.id.eq(recipientId));
-	}
+    public void deleteAllByRecipientId(Long recipientId) {
+        delete(meta.parent.id.eq(recipientId));
+    }
 
-	public void deleteAllByRecipientIds(Collection<Long> recipientIds) {
-		delete(meta.parent.id.in(recipientIds));
-	}
+    public void deleteAllByRecipientIds(Collection<Long> recipientIds) {
+        delete(meta.parent.id.in(recipientIds));
+    }
 
 }

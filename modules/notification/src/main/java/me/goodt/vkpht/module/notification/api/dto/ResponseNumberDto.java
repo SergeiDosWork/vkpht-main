@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseNumberDto {
-	private List<String> confirmed;
-	private List<String> unconfirmed;
+    private List<String> confirmed;
+    private List<String> unconfirmed;
 }

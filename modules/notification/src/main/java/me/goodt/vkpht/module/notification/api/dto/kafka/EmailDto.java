@@ -13,8 +13,8 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USE_SYS
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmailDto {
-	@JsonSetter(USE_SYSTEM_TEMPLATES_TAG)
-	private Boolean useSystemTemplates;
-	private String body;
-	private String subject;
+    @JsonSetter(USE_SYSTEM_TEMPLATES_TAG)
+    private Boolean useSystemTemplates;
+    private String body;
+    private String subject;
 }

@@ -31,12 +31,12 @@ public class LegalEntityTeamAssignmentConflictRoleDictController extends Abstrac
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(RoleDictController.class)
-                        .withRel("divisionTeamAssignmentRoleIdAssigned").withName("id").withTitle("code"),
-                WebMvcLinkBuilder.linkTo(RoleDictController.class)
-                        .withRel("legalEntityTeamAssignmentRoleIdConflicted").withName("id").withTitle("code"),
-                WebMvcLinkBuilder.linkTo(RoleDictController.class)
-                        .withRel("legalEntityTeamAssignmentRoleIdAssigned").withName("id").withTitle("code")
+            WebMvcLinkBuilder.linkTo(RoleDictController.class)
+                .withRel("divisionTeamAssignmentRoleIdAssigned").withName("id").withTitle("code"),
+            WebMvcLinkBuilder.linkTo(RoleDictController.class)
+                .withRel("legalEntityTeamAssignmentRoleIdConflicted").withName("id").withTitle("code"),
+            WebMvcLinkBuilder.linkTo(RoleDictController.class)
+                .withRel("legalEntityTeamAssignmentRoleIdAssigned").withName("id").withTitle("code")
         );
     }
 }

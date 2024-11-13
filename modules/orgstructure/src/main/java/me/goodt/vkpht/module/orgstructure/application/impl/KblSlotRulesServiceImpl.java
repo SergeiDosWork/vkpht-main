@@ -2,7 +2,7 @@ package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +13,13 @@ import me.goodt.vkpht.common.dictionary.core.service.Converter;
 import me.goodt.vkpht.module.orgstructure.domain.dao.KblSlotRulesDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.KblSlotRules;
 
+@RequiredArgsConstructor
+@Getter
 @Service
 @Transactional
 public class KblSlotRulesServiceImpl extends AbstractCrudService<KblSlotRules, Long> {
 
-    @Getter
-    @Autowired
-    private KblSlotRulesDao dao;
+    private final KblSlotRulesDao dao;
 
     @Transactional(readOnly = true)
     public <T> T getAllByFilter(@NotNull String module, String slotId, Converter<List<KblSlotRules>, T> converter) {

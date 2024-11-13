@@ -19,33 +19,33 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class TaskIdToStatusInfoGroupResolver implements TokenGroupResolver, TaskIdBasedGroupResolver {
-	@Override
-	public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, TASK_ID_TO_STATUS_INFO);
-		Integer taskId = (Integer) context.getParameters().get(TASK_ID_TO_STATUS_INFO);
-		log.info(TASK_ID_IS, taskId);
-		Optional<TaskDto> taskDto = getTaskDto(taskId, context);
-		if (taskDto.isEmpty()) {
-			return;
-		}
+    @Override
+    public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, TASK_ID_TO_STATUS_INFO);
+        Integer taskId = (Integer) context.getParameters().get(TASK_ID_TO_STATUS_INFO);
+        log.info(TASK_ID_IS, taskId);
+        Optional<TaskDto> taskDto = getTaskDto(taskId, context);
+        if (taskDto.isEmpty()) {
+            return;
+        }
 
-		try {
-			StatusDto status = taskDto.get().getStatus();
-			for (TokenWithValues token : context.getParsedTokens().get(TASK_ID_TO_STATUS_INFO)) {
-				if (token.getBasicValue().equals(NAME)) {
-					log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_STATUS_INFO, NAME);
-					resolvedTokenValues.put(TASK_ID_TO_STATUS_INFO_NAME, status.getName());
-				}
-			}
-		} catch (Exception ex) {
-			log.error(LOG_ERROR, ex.getMessage());
-		}
-	}
+        try {
+            StatusDto status = taskDto.get().getStatus();
+            for (TokenWithValues token : context.getParsedTokens().get(TASK_ID_TO_STATUS_INFO)) {
+                if (token.getBasicValue().equals(NAME)) {
+                    log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_STATUS_INFO, NAME);
+                    resolvedTokenValues.put(TASK_ID_TO_STATUS_INFO_NAME, status.getName());
+                }
+            }
+        } catch (Exception ex) {
+            log.error(LOG_ERROR, ex.getMessage());
+        }
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return List.of(
-			new NotificationToken(TASK_ID_TO_STATUS_INFO, NAME, "Наименование статуса в таблице tasksetting.status")
-		);
-	}
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return List.of(
+            new NotificationToken(TASK_ID_TO_STATUS_INFO, NAME, "Наименование статуса в таблице tasksetting.status")
+        );
+    }
 }

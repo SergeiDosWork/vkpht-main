@@ -22,6 +22,7 @@ public class DivisionTeamStatDto extends DivisionTeamDto {
         this.approvedAssignmentsCount = approvedAssignmentsCount;
         this.rotations = rotations;
     }
+
     private Integer assignmentsCount;
     private Integer rotationsCount;
     private Long approvedAssignmentsCount;

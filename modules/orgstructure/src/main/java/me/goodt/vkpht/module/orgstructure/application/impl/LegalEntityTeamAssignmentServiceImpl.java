@@ -2,9 +2,6 @@ package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentFilterDto;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.StopWatch;
@@ -22,7 +19,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import com.goodt.drive.rtcore.configuration.properties.AppProperties;
 import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.application.util.TextConstants;
 import me.goodt.vkpht.common.domain.dao.filter.LegalEntityFilter;
@@ -31,6 +27,8 @@ import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
 import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentFilterDto;
+import me.goodt.vkpht.module.orgstructure.config.OrgstructureConfig;
 import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.LegalEntityTeamAssignmentDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.RoleDao;
@@ -53,7 +51,7 @@ public class LegalEntityTeamAssignmentServiceImpl implements LegalEntityTeamAssi
     private final LegalEntityTeamAssignmentDao legalEntityTeamAssignmentDao;
     private final LegalEntityDao legalEntityDao;
     private final RoleDao roleDao;
-    private final AppProperties appProperties;
+    private final OrgstructureConfig orgstructureConfig;
     private final EmployeeService employeeService;
     private final AssignmentService assignmentService;
     private final AuthService authService;
@@ -74,7 +72,7 @@ public class LegalEntityTeamAssignmentServiceImpl implements LegalEntityTeamAssi
         StopWatch global = StopWatch.createStarted();
 
         List<LegalEntityTeamAssignmentDto> assignmentsDto = new ArrayList<>();
-        Function<LegalEntityTeamAssignmentFilterDto, List<LegalEntityTeamAssignmentDto>> function = operationMode.get(appProperties.getRoleMode());
+        Function<LegalEntityTeamAssignmentFilterDto, List<LegalEntityTeamAssignmentDto>> function = operationMode.get(orgstructureConfig.getRoleMode());
 
         if (function != null) {
             assignmentsDto = function.apply(new LegalEntityTeamAssignmentFilterDto(legalEntityTeamAssignmentId, employeeId, externalEmployeeId, legalEntityTeamId));
@@ -147,7 +145,7 @@ public class LegalEntityTeamAssignmentServiceImpl implements LegalEntityTeamAssi
             Optional<EmployeeEntity> employeeOptional = employeeService.getEmployee(dto.getEmployeeId(), dto.getExternalEmployeeId());
             List<String> groups = authService.getCurrentUser().getGroups();
             if (employeeOptional.isPresent() && groups != null) {
-                if (appProperties.getIncludedDelimiter()) {
+                if (orgstructureConfig.getIncludedDelimiter()) {
                     getAssignmentsWithIncludedDelimiter(assignmentsDto, groups, employeeOptional.get());
                 } else {
                     groups = parseGroups(groups);

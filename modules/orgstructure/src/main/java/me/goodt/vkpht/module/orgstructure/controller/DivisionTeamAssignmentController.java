@@ -60,30 +60,30 @@ public class DivisionTeamAssignmentController {
     @Operation(summary = "Получение списка назначений", description = "Получение списка назначений по переданным параметрам", tags = {"division_team_assignment"})
     @PostMapping("/api/divisionteamassignment/findlist")
     public List<DivisionTeamAssignmentDto> findDivisionTeamAssignment(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для поиска", content = @Content(schema = @Schema(implementation = DivisionTeamAssignmentFindRequestDto.class)))
-            @RequestBody DivisionTeamAssignmentFindRequestDto request) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для поиска", content = @Content(schema = @Schema(implementation = DivisionTeamAssignmentFindRequestDto.class)))
+        @RequestBody DivisionTeamAssignmentFindRequestDto request) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/divisionteamassignment/findlist", null, request);
 
         return divisionService.findAllDivisionTeamAssignment(request)
-                .stream()
-                .map(DivisionTeamAssignmentFactory::create)
-                .collect(Collectors.toList());
+            .stream()
+            .map(DivisionTeamAssignmentFactory::create)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "Получение информации о назначениях по position_category_id", description = "Получение информации о назначениях по position_category_id", tags = {"employee"})
     @GetMapping("/api/division-team-assignment/by-position-category")
     public List<DivisionTeamAssignmentDto> getAssignmentByPositionCategory(
-            @Parameter(name = "position_category_id", description = "ИД position_category")
-            @RequestParam(name = "position_category_id") Long positionCategoryId) {
+        @Parameter(name = "position_category_id", description = "ИД position_category")
+        @RequestParam(name = "position_category_id") Long positionCategoryId) {
         return assignmentService.getAssignmentByPositionCategory(positionCategoryId);
     }
 
     @Operation(summary = "Получение списка ИД назначений", description = "Получение списка ИД назначений по переданным параметрам", tags = {"division_team_assignment"})
     @PostMapping("/api/division-team-assignment/find-id-list")
     public List<Long> findDivisionTeamAssignmentIds(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для поиска", content = @Content(schema = @Schema(implementation = DivisionTeamAssignmentFindRequestDto.class)))
-            @RequestBody DivisionTeamAssignmentFindRequestDto request) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Данные для поиска", content = @Content(schema = @Schema(implementation = DivisionTeamAssignmentFindRequestDto.class)))
+        @RequestBody DivisionTeamAssignmentFindRequestDto request) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/division-team-assignment/find-id-list", null, request);
 
@@ -93,8 +93,8 @@ public class DivisionTeamAssignmentController {
     @Operation(summary = "Получение списка назначений с полностью заполненными командами и дивизионами", description = "Получение списка назначений с полностью заполненными командами и дивизионами", tags = {"division_team_assignment"})
     @GetMapping("/api/division-team-assignment/find-list-with-division-team-full")
     public List<DivisionTeamAssignmentWithDivisionTeamFullDto> findDivisionTeamAssignmentWithDivisionTeamFull(
-            @Parameter(name = "ids", description = "Массив ИД назначений")
-            @RequestParam(name = "ids") List<Long> ids) {
+        @Parameter(name = "ids", description = "Массив ИД назначений")
+        @RequestParam(name = "ids") List<Long> ids) {
         return assignmentService.findDivisionTeamAssignmentWithDivisionTeamFull(ids);
     }
 
@@ -102,8 +102,8 @@ public class DivisionTeamAssignmentController {
     @Hidden
     @GetMapping("/api/division-team-assignment/compact-list")
     public List<DivisionTeamAssignmentCompactProjection> getDivisionTeamAssignmentsCompact(
-            @RequestParam(name = "id", required = false) Collection<Long> ids,
-            @RequestParam(name = "employee", required = false) Collection<Long> employeeIds) {
+        @RequestParam(name = "id", required = false) Collection<Long> ids,
+        @RequestParam(name = "employee", required = false) Collection<Long> employeeIds) {
         StopWatch sw = StopWatch.createStarted();
         List<DivisionTeamAssignmentCompactProjection> result = assignmentService.getDivisionTeamAssignmentCompactList(ids, employeeIds);
         sw.stop();

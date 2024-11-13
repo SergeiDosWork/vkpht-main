@@ -15,20 +15,20 @@ public class DivisionTeamSuccessorFactory {
     public static DivisionTeamSuccessorDto create(DivisionTeamSuccessorEntity entity, List<DivisionTeamSuccessorReadinessDto> divisionTeamSuccessorReadiness,
                                                   DivisionTeamDto divisionTeam) {
         return new DivisionTeamSuccessorDto(
-                entity.getId(),
-                entity.getDateFrom(),
-                entity.getDateTo(),
-                entity.getDateCommitHr(),
-                entity.getEmployee() != null ? EmployeeInfoFactory.create(entity.getEmployee()) : null,
-                entity.getDatePriority(),
-                entity.getReasonIdInclusion(),
-                entity.getReasonIdExclusion(),
-                entity.getCommentInclusion(),
-                entity.getCommentExclusion(),
-                entity.getDocumentUrlInclusion(),
-                entity.getDocumentUrlExclusion(),
-                divisionTeamSuccessorReadiness, divisionTeam,
-                entity.getDivisionTeamRole() != null ? DivisionTeamRoleFactory.create(entity.getDivisionTeamRole()) : null
+            entity.getId(),
+            entity.getDateFrom(),
+            entity.getDateTo(),
+            entity.getDateCommitHr(),
+            entity.getEmployee() != null ? EmployeeInfoFactory.create(entity.getEmployee()) : null,
+            entity.getDatePriority(),
+            entity.getReasonIdInclusion(),
+            entity.getReasonIdExclusion(),
+            entity.getCommentInclusion(),
+            entity.getCommentExclusion(),
+            entity.getDocumentUrlInclusion(),
+            entity.getDocumentUrlExclusion(),
+            divisionTeamSuccessorReadiness, divisionTeam,
+            entity.getDivisionTeamRole() != null ? DivisionTeamRoleFactory.create(entity.getDivisionTeamRole()) : null
         );
     }
 
@@ -40,19 +40,19 @@ public class DivisionTeamSuccessorFactory {
                                                             List<DivisionTeamSuccessorReadinessDto> divisionTeamSuccessorReadiness,
                                                             DivisionTeamDto divisionTeam) {
         return new DivisionTeamSuccessorShortDto(
-                entity.getId(),
-                entity.getDateFrom(),
-                entity.getDateTo(),
-                entity.getDateCommitHr(),
-                entity.getEmployee() != null ? EmployeeInfoFactory.create(entity.getEmployee()) : null,
-                entity.getDatePriority(),
-                entity.getReasonIdInclusion(),
-                entity.getReasonIdExclusion(),
-                entity.getCommentInclusion(),
-                entity.getCommentExclusion(),
-                entity.getDocumentUrlInclusion(),
-                entity.getDocumentUrlExclusion(),
-                divisionTeamSuccessorReadiness, divisionTeam
+            entity.getId(),
+            entity.getDateFrom(),
+            entity.getDateTo(),
+            entity.getDateCommitHr(),
+            entity.getEmployee() != null ? EmployeeInfoFactory.create(entity.getEmployee()) : null,
+            entity.getDatePriority(),
+            entity.getReasonIdInclusion(),
+            entity.getReasonIdExclusion(),
+            entity.getCommentInclusion(),
+            entity.getCommentExclusion(),
+            entity.getDocumentUrlInclusion(),
+            entity.getDocumentUrlExclusion(),
+            divisionTeamSuccessorReadiness, divisionTeam
         );
     }
 

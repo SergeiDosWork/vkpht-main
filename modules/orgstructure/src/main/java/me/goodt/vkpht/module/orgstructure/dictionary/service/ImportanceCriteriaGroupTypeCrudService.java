@@ -10,7 +10,7 @@ import me.goodt.vkpht.common.dictionary.core.service.AbstractDictionaryService;
 
 @Service
 public class ImportanceCriteriaGroupTypeCrudService extends
-        AbstractDictionaryService<ImportanceCriteriaGroupTypeEntity, Long> {
+    AbstractDictionaryService<ImportanceCriteriaGroupTypeEntity, Long> {
 
     @Getter
     @Autowired

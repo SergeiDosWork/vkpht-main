@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,34 +33,28 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaGroupT
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionImportanceCriteriaEntity;
 
+@RequiredArgsConstructor
 @Service
 public class ImportanceCriteriaServiceImpl implements ImportanceCriteriaService {
 
-    @Autowired
-    private CalculationMethodDao calculationMethodDao;
-    @Autowired
-    private ImportanceCriteriaGroupDao importanceCriteriaGroupDao;
-    @Autowired
-    private ImportanceCriteriaGroupTypeDao importanceCriteriaGroupTypeDao;
-    @Autowired
-    private PositionDao positionDao;
-    @Autowired
-    private ImportanceCriteriaDao importanceCriteriaDao;
-    @Autowired
-    private PositionImportanceCriteriaDao positionImportanceCriteriaDao;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final CalculationMethodDao calculationMethodDao;
+    private final ImportanceCriteriaGroupDao importanceCriteriaGroupDao;
+    private final ImportanceCriteriaGroupTypeDao importanceCriteriaGroupTypeDao;
+    private final PositionDao positionDao;
+    private final ImportanceCriteriaDao importanceCriteriaDao;
+    private final PositionImportanceCriteriaDao positionImportanceCriteriaDao;
+    private final UnitAccessService unitAccessService;
 
     @Override
     public ImportanceCriteriaGroupTypeEntity findImportanceCriteriaGroupType(Long id) throws NotFoundException {
         return importanceCriteriaGroupTypeDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteriaGroupType with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteriaGroupType with id %d not found", id)));
     }
 
     @Override
     public List<ImportanceCriteriaGroupTypeEntity> findImportanceCriteriaGroupTypeAll() {
         return StreamSupport.stream(importanceCriteriaGroupTypeDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -87,13 +81,13 @@ public class ImportanceCriteriaServiceImpl implements ImportanceCriteriaService 
     @Override
     public ImportanceCriteriaGroupEntity findImportanceCriteriaGroup(Long id) throws NotFoundException {
         return importanceCriteriaGroupDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteriaGroup with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteriaGroup with id %d not found", id)));
     }
 
     @Override
     public List<ImportanceCriteriaGroupEntity> findImportanceCriteriaGroupAll() {
         return StreamSupport.stream(importanceCriteriaGroupDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -125,13 +119,13 @@ public class ImportanceCriteriaServiceImpl implements ImportanceCriteriaService 
     @Override
     public ImportanceCriteriaEntity findImportanceCriteria(Long id) throws NotFoundException {
         return importanceCriteriaDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteria with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("ImportanceCriteria with id %d not found", id)));
     }
 
     @Override
     public List<ImportanceCriteriaEntity> findImportanceCriteriaAll() {
         return StreamSupport.stream(importanceCriteriaDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -176,13 +170,13 @@ public class ImportanceCriteriaServiceImpl implements ImportanceCriteriaService 
     @Override
     public PositionImportanceCriteriaEntity findPositionImportanceCriteria(Long id) throws NotFoundException {
         return positionImportanceCriteriaDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionImportanceCriteria with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionImportanceCriteria with id %d not found", id)));
     }
 
     @Override
     public List<PositionImportanceCriteriaEntity> findPositionImportanceCriteriaAll() {
         return StreamSupport.stream(positionImportanceCriteriaDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -252,6 +246,6 @@ public class ImportanceCriteriaServiceImpl implements ImportanceCriteriaService 
     @Override
     public CalculationMethodEntity findCalculationMethod(Long id) throws NotFoundException {
         return calculationMethodDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("CalculationMethod with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("CalculationMethod with id %d not found", id)));
     }
 }

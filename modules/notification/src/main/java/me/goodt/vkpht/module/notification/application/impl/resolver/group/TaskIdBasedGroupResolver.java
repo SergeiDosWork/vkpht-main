@@ -13,17 +13,17 @@ import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.SavedObjectNames;
 
 public interface TaskIdBasedGroupResolver {
-	default Optional<TaskDto> getTaskDto(Integer taskId, ResolverContext context) {
-		if (Objects.isNull(taskId)) {
-			return Optional.empty();
-		}
-		TaskDto task = (TaskDto) context.getOrResolveObject(SavedObjectNames.TASK, () -> {
-			List<TaskDto> tasks = context.getResolverServiceContainer().getTasksettingServiceClient().taskFind(new TaskFindRequest().setIds(Collections.singletonList(taskId.longValue())));
-			if (!CollectionUtils.isEmpty(tasks)) {
-				return tasks.getFirst();
-			}
-			return null;
-		});
-		return Optional.ofNullable(task);
-	}
+    default Optional<TaskDto> getTaskDto(Integer taskId, ResolverContext context) {
+        if (Objects.isNull(taskId)) {
+            return Optional.empty();
+        }
+        TaskDto task = (TaskDto) context.getOrResolveObject(SavedObjectNames.TASK, () -> {
+            List<TaskDto> tasks = context.getResolverServiceContainer().getTasksettingServiceClient().taskFind(new TaskFindRequest().setIds(Collections.singletonList(taskId.longValue())));
+            if (!CollectionUtils.isEmpty(tasks)) {
+                return tasks.getFirst();
+            }
+            return null;
+        });
+        return Optional.ofNullable(task);
+    }
 }

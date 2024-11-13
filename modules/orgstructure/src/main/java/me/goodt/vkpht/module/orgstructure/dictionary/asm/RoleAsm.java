@@ -50,7 +50,7 @@ public class RoleAsm extends AbstractAsm<RoleEntity, RoleDto> {
         entity.setShortName(dto.getShortName());
         if (dto.getSystemRoleId() != null) {
             entity.setSystemRole(systemRoleDao.findById(dto.getSystemRoleId()).orElseThrow(() ->
-                    new NotFoundException(String.format("SystemRole id = %d not found", dto.getSystemRoleId()))));
+                new NotFoundException(String.format("SystemRole id = %d not found", dto.getSystemRoleId()))));
         } else {
             entity.setSystemRole(null);
         }

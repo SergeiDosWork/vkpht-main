@@ -20,8 +20,8 @@ public class WorkWeekTypeDao extends AbstractDao<WorkWeekTypeEntity, Integer> {
 
     public boolean existsByName(String name) {
         return query().selectFrom(meta)
-                .where(meta.name.eq(name))
-                .fetchCount() > 0;
+            .where(meta.name.eq(name))
+            .fetchCount() > 0;
     }
 
     public Page<WorkWeekTypeEntity> findAllByUnitCode(String unitCode, Pageable pageable) {

@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class KafkaEmployeeInfo {
-	@EqualsAndHashCode.Include
-	private Long employeeId;
-	private List<String> usersKeycloakIds;
+    @EqualsAndHashCode.Include
+    private Long employeeId;
+    private List<String> usersKeycloakIds;
 }

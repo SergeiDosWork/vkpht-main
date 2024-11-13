@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -119,8 +120,8 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PostMapping("/api/position_type/create")
     public PositionTypeDto createPositionType(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_type)")
-            @RequestBody PositionTypeDto dto) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_type)")
+        @RequestBody PositionTypeDto dto) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_type/create", null, dto);
         PositionTypeEntity entity = positionService.createPositionType(dto);
@@ -132,9 +133,9 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PutMapping("/api/position_type/update/{id}")
     public PositionTypeDto updatePositionType(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_type)")
-            @RequestBody PositionTypeDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_type)")
+        @RequestBody PositionTypeDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_type/update/%d", id), null, dto);
         if (id == null) {
@@ -172,8 +173,8 @@ public class PositionController {
     @Operation(summary = "Создание уровня", description = "Создание уровня", tags = {"position"})
     @PostMapping("/api/position_kr_level/create")
     public PositionKrLevelDto createPositionKrLevel(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_kr_level)")
-            @RequestBody PositionKrLevelDto dto) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_kr_level)")
+        @RequestBody PositionKrLevelDto dto) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_kr_level/create", null, dto);
         PositionKrLevelEntity entity = positionService.createPositionKrLevel(dto);
@@ -185,9 +186,9 @@ public class PositionController {
     @PutMapping("/api/position_kr_level/update/{id}")
     @SurProtected(operation = SurOperation.UNIT)
     public PositionKrLevelDto updatePositionKrLevel(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_kr_level)")
-            @RequestBody PositionKrLevelDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_kr_level)")
+        @RequestBody PositionKrLevelDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_kr_level/update/%d", id), null, dto);
         if (id == null) {
@@ -218,10 +219,10 @@ public class PositionController {
     @GetMapping("/api/position_position_kr_level/{position_id}/{position_kr_level_id}")
     @SurProtected(operation = SurOperation.UNIT)
     public PositionPositionKrLevelDto getPositionPositionKrLevel(
-            @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_kr_level).", example = "1")
-            @PathVariable(name = "position_id") Long positionId,
-            @Parameter(name = "position_kr_level_id", description = "Идентификатор уровня (таблица position_position_kr_level).", example = "1")
-            @PathVariable(name = "position_kr_level_id") Long positionKrLevelId) throws NotFoundException {
+        @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_kr_level).", example = "1")
+        @PathVariable(name = "position_id") Long positionId,
+        @Parameter(name = "position_kr_level_id", description = "Идентификатор уровня (таблица position_position_kr_level).", example = "1")
+        @PathVariable(name = "position_kr_level_id") Long positionKrLevelId) throws NotFoundException {
         PositionPositionKrLevelEntity entity = positionService.findPositionPositionKrLevel(positionId, positionKrLevelId);
         return PositionPositionKrLevelFactory.create(entity);
     }
@@ -230,8 +231,8 @@ public class PositionController {
     @PostMapping("/api/position_position_kr_level/create")
     @SurProtected(operation = SurOperation.UNIT)
     public PositionPositionKrLevelDto createPositionPositionKrLevel(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_position_kr_level)")
-            @RequestBody PositionPositionKrLevelDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_position_kr_level)")
+        @RequestBody PositionPositionKrLevelDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_position_kr_level/create", null, dto);
         PositionPositionKrLevelEntity entity = positionService.createPositionPositionKrLevel(dto);
@@ -243,10 +244,10 @@ public class PositionController {
     @DeleteMapping("/api/position_position_kr_level/delete/{position_id}/{position_kr_level_id}")
     @SurProtected(operation = SurOperation.UNIT)
     public OperationResult deletePositionPositionKrLevel(
-            @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_kr_level).", example = "1")
-            @PathVariable(name = "position_id") Long positionId,
-            @Parameter(name = "position_kr_level_id", description = "Идентификатор уровня (таблица position_position_kr_level).", example = "1")
-            @PathVariable(name = "position_kr_level_id") Long positionKrLevelId) {
+        @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_kr_level).", example = "1")
+        @PathVariable(name = "position_id") Long positionId,
+        @Parameter(name = "position_kr_level_id", description = "Идентификатор уровня (таблица position_position_kr_level).", example = "1")
+        @PathVariable(name = "position_kr_level_id") Long positionKrLevelId) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("DELETE /api/position_position_kr_level/delete/%d/%d", positionId, positionKrLevelId), null, null);
         try {
@@ -269,8 +270,8 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PostMapping("/api/position_group/create")
     public PositionGroupDto createPositionGroup(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group)")
-            @RequestBody @Valid PositionGroupDto dto) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group)")
+        @RequestBody @Valid PositionGroupDto dto) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_group/create", null, dto);
         PositionGroupEntity entity = positionService.createPositionGroup(dto);
@@ -282,9 +283,9 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PutMapping("/api/position_group/update/{id}")
     public PositionGroupDto updatePositionGroup(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group)")
-            @RequestBody @Valid PositionGroupDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group)")
+        @RequestBody @Valid PositionGroupDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_group/update/%d", id), null, dto);
         if (id == null) {
@@ -313,10 +314,10 @@ public class PositionController {
     @Operation(summary = "Получение информации о связях позиций с группами", description = "Получение информации о связях позиций с группами", tags = {"position"})
     @GetMapping("/api/position_group_position")
     public List<PositionGroupPositionDto> getPositionGroupPositionList(
-            @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position).", example = "1")
-            @RequestParam(name = "position_id", required = false) Long positionId,
-            @Parameter(name = "position_group_id", description = "Идентификатор уровня (таблица position_group).", example = "1")
-            @RequestParam(name = "position_group_id", required = false) Long positionGroupId) {
+        @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position).", example = "1")
+        @RequestParam(name = "position_id", required = false) Long positionId,
+        @Parameter(name = "position_group_id", description = "Идентификатор уровня (таблица position_group).", example = "1")
+        @RequestParam(name = "position_group_id", required = false) Long positionGroupId) {
         List<PositionGroupPositionEntity> positionGroupPositionEntities = positionService.findPositionGroupPositionAll(positionId, positionGroupId);
         return positionGroupPositionEntities.stream().map(PositionGroupPositionFactory::create).collect(Collectors.toList());
     }
@@ -325,8 +326,8 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PostMapping("/api/position_group_position/create")
     public PositionGroupPositionDto createPositionGroupPosition(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group_position)")
-            @RequestBody PositionGroupPositionDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_group_position)")
+        @RequestBody PositionGroupPositionDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_group_position/create", null, dto);
         PositionGroupPositionEntity entity = positionService.createPositionGroupPosition(dto);
@@ -337,8 +338,8 @@ public class PositionController {
     @BadRequestAPIResponses
     @DeleteMapping("/api/position_group_position/delete/{id}")
     public OperationResult deletePositionGroupPosition(
-            @Parameter(name = "id", description = "Идентификатор связи позиций с уровнями (таблица position_group_position).", example = "1")
-            @PathVariable(name = "id") Long id) {
+        @Parameter(name = "id", description = "Идентификатор связи позиций с уровнями (таблица position_group_position).", example = "1")
+        @PathVariable(name = "id") Long id) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("DELETE /api/position_group_position/delete/%d", id), null, null);
         try {
@@ -361,8 +362,8 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PostMapping("/api/position_grade/create")
     public PositionGradeDto createPositionGrade(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_grade)")
-            @RequestBody PositionGradeDto dto) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_grade)")
+        @RequestBody PositionGradeDto dto) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_grade/create", null, dto);
         PositionGradeEntity entity = positionService.createPositionGrade(dto);
@@ -374,9 +375,9 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PutMapping("/api/position_grade/update/{id}")
     public PositionGradeDto updatePositionGrade(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_grade)")
-            @RequestBody PositionGradeDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_grade)")
+        @RequestBody PositionGradeDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_grade/update/%d", id), null, dto);
         if (id == null) {
@@ -406,10 +407,10 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position_position_grade/{position_id}/{position_grade_id}")
     public PositionPositionGradeDto getPositionPositionGrade(
-            @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_grade).", example = "1")
-            @PathVariable(name = "position_id") Long positionId,
-            @Parameter(name = "position_grade_id", description = "Идентификатор грейда (таблица position_position_grade).", example = "1")
-            @PathVariable(name = "position_grade_id") Long positionGradeId) throws NotFoundException {
+        @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_grade).", example = "1")
+        @PathVariable(name = "position_id") Long positionId,
+        @Parameter(name = "position_grade_id", description = "Идентификатор грейда (таблица position_position_grade).", example = "1")
+        @PathVariable(name = "position_grade_id") Long positionGradeId) throws NotFoundException {
         PositionPositionGradeEntity entity = positionService.findPositionPositionGrade(positionId, positionGradeId);
         return PositionPositionGradeFactory.create(entity);
     }
@@ -417,8 +418,8 @@ public class PositionController {
     @Operation(summary = "Создание связи позиций с грейдами", description = "Создание связи позиций с грейдами", tags = {"position"})
     @PostMapping("/api/position_position_grade/create")
     public PositionPositionGradeDto createPositionPositionGrade(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_position_grade)")
-            @RequestBody PositionPositionGradeDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_position_grade)")
+        @RequestBody PositionPositionGradeDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_position_grade/create", null, dto);
         PositionPositionGradeEntity entity = positionService.createPositionPositionGrade(dto);
@@ -429,10 +430,10 @@ public class PositionController {
     @BadRequestAPIResponses
     @DeleteMapping("/api/position_position_grade/delete/{position_id}/{position_grade_id}")
     public OperationResult deletePositionPositionGrade(
-            @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_grade).", example = "1")
-            @PathVariable(name = "position_id") Long positionId,
-            @Parameter(name = "position_grade_id", description = "Идентификатор уровня (таблица position_position_grade).", example = "1")
-            @PathVariable(name = "position_grade_id") Long positionGradeId) {
+        @Parameter(name = "position_id", description = "Идентификатор профиля позиции (таблица position_position_grade).", example = "1")
+        @PathVariable(name = "position_id") Long positionId,
+        @Parameter(name = "position_grade_id", description = "Идентификатор уровня (таблица position_position_grade).", example = "1")
+        @PathVariable(name = "position_grade_id") Long positionGradeId) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("DELETE /api/position_position_grade/delete/%d/%d", positionId, positionGradeId), null, null);
         try {
@@ -453,8 +454,8 @@ public class PositionController {
     @Operation(summary = "Создание группы критериев критичности", description = "Создание группы критериев критичности", tags = {"position"})
     @PostMapping("/api/position_importance_reason_group/create")
     public PositionImportanceReasonGroupDto createPositionImportanceReasonGroup(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_importance_reason_group)")
-            @RequestBody PositionImportanceReasonGroupDto dto) {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_importance_reason_group)")
+        @RequestBody PositionImportanceReasonGroupDto dto) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_importance_reason_group/create", null, dto);
         PositionImportanceReasonGroupEntity entity = positionService.createPositionImportanceReasonGroup(dto);
@@ -465,9 +466,9 @@ public class PositionController {
     @BadRequestAPIResponses
     @PutMapping("/api/position_importance_reason_group/update/{id}")
     public PositionImportanceReasonGroupDto updatePositionImportanceReasonGroup(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_importance_reason_group)")
-            @RequestBody PositionImportanceReasonGroupDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_importance_reason_group)")
+        @RequestBody PositionImportanceReasonGroupDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_importance_reason_group/update/%d", id), null, dto);
         if (id == null) {
@@ -503,8 +504,8 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position_successor/{id}")
     public PositionSuccessorDto getPositionSuccessor(
-            @Parameter(name = "id", description = "Идентификатор position successor (см. таблицу position_successor)", example = "4")
-            @PathVariable("id") Long id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор position successor (см. таблицу position_successor)", example = "4")
+        @PathVariable("id") Long id) throws NotFoundException {
         return positionService.getPositionSuccessorById(id);
     }
 
@@ -512,8 +513,8 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PostMapping("/api/position_successor/create")
     public PositionSuccessorDto createPositionSuccessor(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor)")
-            @RequestBody PositionSuccessorRawDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor)")
+        @RequestBody PositionSuccessorRawDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_successor/create", null, dto);
         PositionSuccessorEntity entity = positionService.createPositionSuccessor(dto);
@@ -536,9 +537,9 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PutMapping("/api/position_successor/update/{id}")
     public PositionSuccessorDto updatePositionSuccessor(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor)")
-            @RequestBody PositionSuccessorRawDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor)")
+        @RequestBody PositionSuccessorRawDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_successor/update/%d", id), null, dto);
         PositionSuccessorEntity entity = positionService.findPositionSuccessor(id);
@@ -549,7 +550,7 @@ public class PositionController {
 
         if (dto.getDateCommitHr() != null && dto.getDatePriority() != null) {
             if ((currentDateCommitHr == null || !currentDateCommitHr.equals(dto.getDateCommitHr())) &&
-                    (currentDatePriority == null || !currentDatePriority.equals(dto.getDatePriority()))) {
+                (currentDatePriority == null || !currentDatePriority.equals(dto.getDatePriority()))) {
                 notificationService.baseNotification(null, TextConstants.CODE_170, Map.of(TextConstants.POSITION_SUCCESSOR_ID_TO_POSITION_INFO, entity.getId()));
             }
         }
@@ -597,16 +598,16 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position_successor_readiness/{id}")
     public PositionSuccessorReadinessDto getPositionSuccessorReadiness(
-            @Parameter(name = "id", description = "Идентификатор position successor readiness (см. таблицу position_successor_readiness)", example = "4")
-            @PathVariable("id") Long id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор position successor readiness (см. таблицу position_successor_readiness)", example = "4")
+        @PathVariable("id") Long id) throws NotFoundException {
         return positionService.getPositionSuccessorReadinessById(id);
     }
 
     @Operation(summary = "Создание position successor readiness", description = "Создание position successor readiness", tags = {"position"})
     @PostMapping("/api/position_successor_readiness/create")
     public PositionSuccessorReadinessDto createPositionSuccessorReadiness(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor_readiness)")
-            @RequestBody PositionSuccessorReadinessRawDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor_readiness)")
+        @RequestBody PositionSuccessorReadinessRawDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/position_successor_readiness/create", null, dto);
         PositionSuccessorReadinessEntity entity = positionService.createPositionSuccessorReadiness(dto);
@@ -623,9 +624,9 @@ public class PositionController {
     @BadRequestAPIResponses
     @PutMapping("/api/position_successor_readiness/update/{id}")
     public PositionSuccessorReadinessDto updatePositionSuccessorReadiness(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor_readiness)")
-            @RequestBody PositionSuccessorReadinessRawDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление роли (таблица position_successor_readiness)")
+        @RequestBody PositionSuccessorReadinessRawDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position_successor_readiness/update/%d", id), null, dto);
         if (id == null) {
@@ -671,9 +672,9 @@ public class PositionController {
     @SurProtected(operation = SurOperation.UNIT)
     @PutMapping("/api/position/update/{id}")
     public PositionDto updatePosition(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position (таблица position)")
-            @RequestBody PositionInputDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position (таблица position)")
+        @RequestBody PositionInputDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/position/update/%d", id), null, dto);
 
@@ -684,28 +685,28 @@ public class PositionController {
     @Operation(summary = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", description = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", tags = {"position"})
     @GetMapping("/api/position/find")
     public List<PositionDto> getPositionAssignmentByEmployeeId(
-            @Parameter(name = "employee_id", description = "Идентификатор сотрудника (таблица position_assignment)", example = "3")
-            @RequestParam(name = "employee_id", required = false) Long employeeId,
-            @Parameter(name = "division_id", description = "Массив идентификаторов подразделения (таблица division).", example = "[1,2,3]")
-            @RequestParam(name = "division_id", required = false) List<Long> divisionIds) {
+        @Parameter(name = "employee_id", description = "Идентификатор сотрудника (таблица position_assignment)", example = "3")
+        @RequestParam(name = "employee_id", required = false) Long employeeId,
+        @Parameter(name = "division_id", description = "Массив идентификаторов подразделения (таблица division).", example = "[1,2,3]")
+        @RequestParam(name = "division_id", required = false) List<Long> divisionIds) {
         return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, divisionIds);
     }
 
     @Operation(summary = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", description = "Получение списка Position по идентификатору сотрудника и идентификатору подразделения", tags = {"position"})
     @PostMapping("/api/position/find")
     public List<PositionDto> findPositionAssignmentByEmployeeId(
-            @Parameter(name = "employee_id", description = "Идентификатор сотрудника (таблица position_assignment)", example = "3")
-            @RequestParam(name = "employee_id", required = false) Long employeeId,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект, содержащий массив идентификаторов подразделения (таблица division).")
-            @RequestBody DivisionIdsDto dto) {
+        @Parameter(name = "employee_id", description = "Идентификатор сотрудника (таблица position_assignment)", example = "3")
+        @RequestParam(name = "employee_id", required = false) Long employeeId,
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Объект, содержащий массив идентификаторов подразделения (таблица division).")
+        @RequestBody DivisionIdsDto dto) {
         return positionService.getPositionByEmployeeIdAndDivisionIds(employeeId, dto.getDivisionIds());
     }
 
     @Operation(summary = "Метод расчета рисков", description = "Метод расчета рисков", tags = {"position"})
     @PostMapping("/api/positionimportancecriteria/calculation")
     public OperationResult calculationRisk(
-            @Parameter(name = "legal_entity_id", description = "Идентификатор организации (таблица legal_entity).", example = "1")
-            @RequestParam(name = "legal_entity_id") Long legalEntityId) throws NotFoundException {
+        @Parameter(name = "legal_entity_id", description = "Идентификатор организации (таблица legal_entity).", example = "1")
+        @RequestParam(name = "legal_entity_id") Long legalEntityId) throws NotFoundException {
         calculationRiskService.calculationRisk(legalEntityId);
         return new OperationResult(true, StringUtils.EMPTY);
     }
@@ -714,16 +715,16 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position/{id}")
     public PositionDto getPosition(
-            @Parameter(name = "id", description = "Идентификатор Position (см. таблицу position)", example = "7")
-            @PathVariable("id") Long positionId) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор Position (см. таблицу position)", example = "7")
+        @PathVariable("id") Long positionId) throws NotFoundException {
         return positionService.getPosition(positionId);
     }
 
     @Operation(summary = "Получение PositionAssignment по идентификатору Position", description = "Получение PositionAssignment по идентификатору Position", tags = {"position"})
     @GetMapping("/api/positionassignment")
     public PositionAssignmentDto getPositionAssignmentByPositionId(
-            @Parameter(name = "position_id", description = "Идентификатор объекта Position (см. таблицу position_assignment)", example = "3")
-            @RequestParam(name = "position_id") Long positionId) {
+        @Parameter(name = "position_id", description = "Идентификатор объекта Position (см. таблицу position_assignment)", example = "3")
+        @RequestParam(name = "position_id") Long positionId) {
         return positionService.getPositionAssignmentByPositionId(positionId);
     }
 
@@ -745,8 +746,8 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position_importance/{id}")
     public PositionImportanceDto getPositionImportance(
-            @Parameter(name = "id", description = "Идентификатор значения позиции (таблица position_importance).", example = "3")
-            @PathVariable("id") Integer id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор значения позиции (таблица position_importance).", example = "3")
+        @PathVariable("id") Integer id) throws NotFoundException {
         PositionImportanceEntity entity = positionService.getPositionImportance(id);
         return PositionImportanceFactory.create(entity);
     }
@@ -755,8 +756,8 @@ public class PositionController {
     @BadRequestAPIResponses
     @GetMapping("/api/position_position_importance/{id}")
     public PositionPositionImportanceDto getPositionPositionImportance(
-            @Parameter(name = "id", description = "Идентификатор значения позиции (таблица position_importance).", example = "3")
-            @PathVariable("id") Long id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор значения позиции (таблица position_importance).", example = "3")
+        @PathVariable("id") Long id) throws NotFoundException {
         PositionPositionImportanceEntity entity = positionService.getPositionPositionImportance(id);
         return PositionPositionImportanceFactory.create(entity);
     }
@@ -764,26 +765,26 @@ public class PositionController {
     @Operation(summary = "Получение всех связок позиции и критичности позиции.", description = "Получение всех связок позиции и критичности позиции.", tags = {"position"})
     @GetMapping("/api/position_position_importance")
     public List<PositionPositionImportanceDto> getAllPositionPositionImportance(
-            @Parameter(name = "with_closed", description = "Запрашиваются ли закрытые записи.", example = "true")
-            @RequestParam(name = "with_closed", required = false, defaultValue = "false") boolean withClosed,
-            @Parameter(name = "position_id", description = "Массив идентификаторов должностей (таблица position).", example = "[1, 2, 3]")
-            @RequestParam(name = "position_id", required = false) List<Long> positionIds,
-            @Parameter(name = "division_team", description = "Фильтрация записей по division_team", example = "[1, 2, 3]")
-            @RequestParam(name = "division_team", required = false) List<Long> divisionTeamIds,
-            @Parameter(name = "users", description = "Фильтрация записей по division_team_assigment", example = "[1, 2, 3]")
-            @RequestParam(name = "users", required = false) List<Long> userIds) {
+        @Parameter(name = "with_closed", description = "Запрашиваются ли закрытые записи.", example = "true")
+        @RequestParam(name = "with_closed", required = false, defaultValue = "false") boolean withClosed,
+        @Parameter(name = "position_id", description = "Массив идентификаторов должностей (таблица position).", example = "[1, 2, 3]")
+        @RequestParam(name = "position_id", required = false) List<Long> positionIds,
+        @Parameter(name = "division_team", description = "Фильтрация записей по division_team", example = "[1, 2, 3]")
+        @RequestParam(name = "division_team", required = false) List<Long> divisionTeamIds,
+        @Parameter(name = "users", description = "Фильтрация записей по division_team_assigment", example = "[1, 2, 3]")
+        @RequestParam(name = "users", required = false) List<Long> userIds) {
         return positionService.getAllPositionPositionImportance(withClosed, divisionTeamIds, userIds, positionIds).stream()
-                .map(PositionPositionImportanceFactory::create)
-                .collect(Collectors.toList());
+            .map(PositionPositionImportanceFactory::create)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "Обновление связки позиции и критичности позиции.", description = "Обновление связки позиции и критичности позиции.", tags = {"position"})
     @BadRequestAPIResponses
     @PutMapping("/api/position_position_importance/update/{id}")
     public PositionPositionImportanceDto updatePositionPositionImportance(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position_position_importance (таблица position)")
-            @RequestBody PositionPositionImportanceInputDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position_position_importance (таблица position)")
+        @RequestBody PositionPositionImportanceInputDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         String employeeId = authService.getCurrentUser().getEmployeeExternalId();
         return PositionPositionImportanceFactory.create(positionService.updatePositionPositionImportance(id, dto, employeeId));
     }
@@ -791,8 +792,8 @@ public class PositionController {
     @Operation(summary = "Создание связки позиции и критичности позиции.", description = "Создание связки позиции и критичности позиции.", tags = {"position"})
     @PostMapping("/api/position_position_importance/create")
     public PositionPositionImportanceDto createPositionPositionImportance(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position_position_importance (таблица position)")
-            @RequestBody PositionPositionImportanceInputDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление position_position_importance (таблица position)")
+        @RequestBody PositionPositionImportanceInputDto dto) throws NotFoundException {
         String employeeId = authService.getCurrentUser().getEmployeeExternalId();
         return PositionPositionImportanceFactory.create(positionService.createPositionPositionImportance(dto, employeeId));
     }
@@ -801,7 +802,7 @@ public class PositionController {
     @BadRequestAPIResponses
     @DeleteMapping("/api/position_position_importance/delete/{id}")
     public OperationResult deletePositionPositionImportance(
-            @PathVariable(name = "id") Long id) {
+        @PathVariable(name = "id") Long id) {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("DELETE /api/position_position_importance/delete/%d", id), null, null);
         try {
@@ -813,19 +814,19 @@ public class PositionController {
     }
 
     @Operation(summary = "Получение информации об актуальных локациях работ по workplace id",
-            description = "Получение информации об актуальных локациях работ по workplace id", tags = {"location"})
+        description = "Получение информации об актуальных локациях работ по workplace id", tags = {"location"})
     @SurProtected(operation = SurOperation.UNIT)
     @GetMapping("/api/location_info")
     public List<WorkplaceDto> locationInfoByWorkplaceId(
-            @Parameter(name = "workplace ids", description = "идентификаторы из таблицы org_workplace", required = true)
-            @RequestParam List<Long> workplaceIds) {
+        @Parameter(name = "workplace ids", description = "идентификаторы из таблицы org_workplace", required = true)
+        @RequestParam List<Long> workplaceIds) {
         return workplaceService.getLocationByWorkplaceId(workplaceIds);
     }
 
     @Operation(summary = "Алгоритм получения перечня позиций",
-    description = "Алгоритм получения перечня позиций (бывшая view_tsk2_position_list)", tags = {"BFF. Position list"})
+        description = "Алгоритм получения перечня позиций (бывшая view_tsk2_position_list)", tags = {"BFF. Position list"})
     @PostMapping("api/bff/position/list")
-    public FilterAwarePageResponse<PositionListResponse> positionList(@RequestBody PositionListRequest request){
+    public FilterAwarePageResponse<PositionListResponse> positionList(@RequestBody PositionListRequest request) {
         return positionService.bffPositionList(request);
     }
 }

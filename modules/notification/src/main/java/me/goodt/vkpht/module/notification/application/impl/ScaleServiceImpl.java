@@ -11,10 +11,10 @@ import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 @RequiredArgsConstructor
 public class ScaleServiceImpl implements ScaleService {
 
-	private final RtCoreServiceClient rtCoreServiceClient;
+    private final RtCoreServiceClient rtCoreServiceClient;
 
-	@Override
-	public ScaleLevelNotificationDto findScaleLevelById(Long id) {
-		return rtCoreServiceClient.findScaleLevelById(id);
-	}
+    @Override
+    public ScaleLevelNotificationDto findScaleLevelById(Long id) {
+        return rtCoreServiceClient.findScaleLevelById(id);
+    }
 }

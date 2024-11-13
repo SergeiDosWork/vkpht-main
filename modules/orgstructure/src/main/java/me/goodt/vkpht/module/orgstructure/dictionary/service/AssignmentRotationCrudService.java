@@ -32,7 +32,7 @@ public class AssignmentRotationCrudService {
     public AssignmentRotationDto getById(Integer id) {
         return mapper.toDto(getSecured(id));
     }
-    
+
     public AssignmentRotationDto create(AssignmentRotationDto request) {
         AssignmentRotationEntity entity = mapper.toNewEntity(request);
         entity.setUnitCode(unitAccessService.getCurrentUnit());

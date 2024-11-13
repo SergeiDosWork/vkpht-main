@@ -10,6 +10,6 @@ public class AssignmentTypeFactory {
 
     public static AssignmentTypeDto create(AssignmentTypeEntity entity) {
         return new AssignmentTypeDto(entity.getId(), entity.getFullName(), entity.getShortName(),
-                entity.getAbbreviation(), entity.getDateFrom(), entity.getDateTo());
+            entity.getAbbreviation(), entity.getDateFrom(), entity.getDateTo());
     }
 }

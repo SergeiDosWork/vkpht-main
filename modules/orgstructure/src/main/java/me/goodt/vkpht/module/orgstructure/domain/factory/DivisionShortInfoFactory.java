@@ -10,6 +10,6 @@ public class DivisionShortInfoFactory {
 
     public static DivisionShortInfoDto create(DivisionShortInfo info) {
         return new DivisionShortInfoDto(info.getId(), info.getParentId(), info.getFullName(),
-                                        info.getShortName(), info.getAbbreviation());
+            info.getShortName(), info.getAbbreviation());
     }
 }

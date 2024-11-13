@@ -12,13 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationTemplateContentDto {
-	private Long id;
-	private NotificationTemplateDto notificationTemplate;
-	private List<NotificationRecipientDto> notificationRecipient;
-	private List<NotificationRecipientDto> notificationRecipientCopy;
-	private NotificationReceiverSystemDto receiverSystem;
-	private Integer isEnabled;
-	private Boolean priority;
-	private String bodyJson;
-	private NotificationTemplateContentDto substitute;
+    private Long id;
+    private NotificationTemplateDto notificationTemplate;
+    private List<NotificationRecipientDto> notificationRecipient;
+    private List<NotificationRecipientDto> notificationRecipientCopy;
+    private NotificationReceiverSystemDto receiverSystem;
+    private Integer isEnabled;
+    private Boolean priority;
+    private String bodyJson;
+    private NotificationTemplateContentDto substitute;
 }

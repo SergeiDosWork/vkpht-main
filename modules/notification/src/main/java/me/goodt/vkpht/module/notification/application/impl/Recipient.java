@@ -13,12 +13,12 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientDto;
 @Slf4j
 public class Recipient {
 
-	private static final String LOG_ERROR = "An error has occurred, message: {}";
-	private final String basicValue;
-	private List<Long> ids = new ArrayList<>();
-	private final NotificationRecipientDto recipient;
+    private static final String LOG_ERROR = "An error has occurred, message: {}";
+    private final String basicValue;
+    private List<Long> ids = new ArrayList<>();
+    private final NotificationRecipientDto recipient;
 
-	public Recipient(NotificationRecipientDto recipient) {
+    public Recipient(NotificationRecipientDto recipient) {
         this.recipient = recipient;
         String[] array = recipient.getName().split("[.]");
         this.basicValue = array[0];

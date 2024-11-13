@@ -31,11 +31,11 @@ public class PositionGradeDao extends AbstractDao<PositionGradeEntity, Long> {
     public List<PositionGradeEntity> findActualByPosition(Long positionId) {
         final QPositionGradeLink pgl = QPositionGradeLink.positionGradeLink;
         BooleanExpression exp = pgl.positionId.eq(positionId)
-                .and(pgl.dateTo.isNull());
+            .and(pgl.dateTo.isNull());
         return query().selectFrom(meta)
-                .join(pgl).on(pgl.positionGradeId.eq(meta.id))
-                .where(exp)
-                .fetch();
+            .join(pgl).on(pgl.positionGradeId.eq(meta.id))
+            .where(exp)
+            .fetch();
     }
 
     public Page<PositionGradeEntity> find(PositionGradeFilter filter, Pageable pageable) {

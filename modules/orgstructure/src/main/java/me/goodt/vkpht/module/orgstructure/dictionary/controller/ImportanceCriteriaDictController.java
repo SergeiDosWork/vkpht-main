@@ -35,10 +35,10 @@ public class ImportanceCriteriaDictController extends UnfilteredDictController<L
     @Override
     protected Collection<Link> getRelatedLinks() {
         return List.of(
-                WebMvcLinkBuilder.linkTo(ImportanceCriteriaGroupDictController.class)
-                        .withRel("groupId").withName("id").withTitle("name"),
-                WebMvcLinkBuilder.linkTo(CalculationMethodDictController.class)
-                        .withRel("calculationMethodId").withName("id").withTitle("name")
+            WebMvcLinkBuilder.linkTo(ImportanceCriteriaGroupDictController.class)
+                .withRel("groupId").withName("id").withTitle("name"),
+            WebMvcLinkBuilder.linkTo(CalculationMethodDictController.class)
+                .withRel("calculationMethodId").withName("id").withTitle("name")
         );
     }
 

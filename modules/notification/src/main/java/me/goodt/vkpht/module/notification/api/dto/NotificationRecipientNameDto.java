@@ -13,6 +13,6 @@ import me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipientType
 @Setter
 public class NotificationRecipientNameDto {
 
-	private String name;
-	private NotificationRecipientType type;
+    private String name;
+    private NotificationRecipientType type;
 }

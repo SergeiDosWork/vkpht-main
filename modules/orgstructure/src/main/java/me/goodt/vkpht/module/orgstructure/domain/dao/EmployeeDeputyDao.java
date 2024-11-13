@@ -30,48 +30,48 @@ public class EmployeeDeputyDao extends AbstractDao<EmployeeDeputyEntity, Long> {
 
     public Long findAllActualByEmployees(Long substituteId, Long viceId) {
         BooleanExpression exp = Expressions.allOf(
-                meta.employeeSubstituteId.eq(substituteId),
-                meta.employeeViceId.eq(viceId),
-                meta.dateTo.isNull()
+            meta.employeeSubstituteId.eq(substituteId),
+            meta.employeeViceId.eq(viceId),
+            meta.dateTo.isNull()
         );
         return query().selectFrom(meta)
-                .where(exp)
-                .fetchCount();
+            .where(exp)
+            .fetchCount();
     }
 
     public List<Long> findActualEmployeeViceByEmployees(Long substituteId) {
         BooleanExpression exp = Expressions.allOf(
-                meta.employeeSubstituteId.eq(substituteId),
-                meta.dateTo.isNull()
+            meta.employeeSubstituteId.eq(substituteId),
+            meta.dateTo.isNull()
         );
         return query().select(meta.employeeViceId)
-                .from(meta)
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .where(exp)
+            .fetch();
     }
 
     public Page<EmployeeDeputyEntity> findAllByParams(Long employeeId, Date date, Pageable pageable) {
         BooleanExpression exp = meta.dateTo.isNull();
         if (employeeId != null) {
             exp = exp.and(
-                    Expressions.anyOf(
-                            meta.employeeSubstituteId.eq(employeeId),
-                            meta.employeeViceId.eq(employeeId)
-                    )
+                Expressions.anyOf(
+                    meta.employeeSubstituteId.eq(employeeId),
+                    meta.employeeViceId.eq(employeeId)
+                )
             );
         }
         if (date != null) {
             exp = exp.and(
-                    Expressions.anyOf(
-                            Expressions.dateOperation(Date.class, Ops.DateTimeOps.DATE, meta.dateFrom).eq(date),
-                            Expressions.dateOperation(Date.class, Ops.DateTimeOps.DATE, meta.dateTo).eq(date)
-                    )
+                Expressions.anyOf(
+                    Expressions.dateOperation(Date.class, Ops.DateTimeOps.DATE, meta.dateFrom).eq(date),
+                    Expressions.dateOperation(Date.class, Ops.DateTimeOps.DATE, meta.dateTo).eq(date)
+                )
             );
         }
         JPQLQuery<EmployeeDeputyEntity> select = query().selectFrom(meta)
-                .where(exp);
+            .where(exp);
         JPQLQuery<EmployeeDeputyEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(EmployeeDeputyEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<EmployeeDeputyEntity> content = pagedQuery.fetch();
         return new PageImpl<>(content, pageable, select.fetchCount());
     }

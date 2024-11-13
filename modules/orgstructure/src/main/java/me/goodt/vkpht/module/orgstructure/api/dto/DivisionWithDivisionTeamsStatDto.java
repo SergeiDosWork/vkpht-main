@@ -17,8 +17,9 @@ public class DivisionWithDivisionTeamsStatDto extends DivisionDto {
                                             String abbreviation, Long statusId, Long groupId, String externalId,
                                             List<DivisionTeamStatDto> divisionTeams, Long costCenterId) {
         super(id, parentId, precursorId, dateFrom, dateTo, legalEntityId, structureId, fullName, shortName,
-              abbreviation, statusId, groupId, externalId, costCenterId);
+            abbreviation, statusId, groupId, externalId, costCenterId);
         this.divisionTeams = divisionTeams;
     }
+
     private List<DivisionTeamStatDto> divisionTeams;
 }

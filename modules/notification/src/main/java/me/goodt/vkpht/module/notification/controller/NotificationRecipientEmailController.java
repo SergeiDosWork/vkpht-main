@@ -1,7 +1,7 @@
 package me.goodt.vkpht.module.notification.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,12 +11,12 @@ import java.util.List;
 
 import me.goodt.vkpht.module.notification.application.NotificationRecipientEmailService;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/notification-recipient-email")
 public class NotificationRecipientEmailController {
 
-    @Autowired
-    private NotificationRecipientEmailService service;
+    private final NotificationRecipientEmailService service;
 
     @GetMapping
     public List<String> find(

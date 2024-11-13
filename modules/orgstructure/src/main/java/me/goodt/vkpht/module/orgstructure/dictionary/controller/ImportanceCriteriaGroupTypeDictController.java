@@ -19,7 +19,7 @@ import me.goodt.vkpht.common.dictionary.core.controller.AbstractDictionaryContro
 @RequestMapping("/api/dict/importance-criteria-group-type")
 @SurProtected(entityName = "org_importance_criteria_group_type")
 public class ImportanceCriteriaGroupTypeDictController extends
-        AbstractDictionaryController<Long, ImportanceCriteriaGroupTypeDto> {
+    AbstractDictionaryController<Long, ImportanceCriteriaGroupTypeDto> {
 
     @Getter
     @Autowired

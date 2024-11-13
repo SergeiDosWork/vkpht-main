@@ -1,24 +1,22 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.module.orgstructure.api.DivisionTeamAssignmentRotationService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.orgstructure.api.DivisionTeamAssignmentRotationService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentRotationDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.DivisionTeamAssignmentRotationEntity;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class DivisionTeamAssignmentRotationServiceImpl implements DivisionTeamAssignmentRotationService {
 
-    @Autowired
-    private DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
+    private final DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
 
     @Override
     public DivisionTeamAssignmentRotationEntity getDivisionTeamAssignmentRotation(Long id) throws NotFoundException {

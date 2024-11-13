@@ -1,8 +1,8 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -119,6 +119,7 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.PositionFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorReadinessFactory;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 @Transactional
@@ -133,58 +134,32 @@ public class DivisionServiceImpl implements DivisionService {
     private static final int READY_IN_ONE_YEAR = 2;
     private static final int READY_IN_TWO_YEARS = 3;
 
-    @Autowired
-    private DivisionTeamAssignmentRotationService divisionTeamAssignmentRotationService;
-    @Autowired
-    private DivisionTeamAssignmentDao divisionTeamAssignmentDao;
-    @Autowired
-    private DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
-    @Autowired
-    private EmployeeDao employeeDao;
-    @Autowired
-    private PositionDao positionDao;
-    @Autowired
-    private NotificationService notificationService;
-    @Autowired
-    private AssignmentService assignmentService;
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private AssignmentReadinessDao assignmentReadinessDao;
-    @Autowired
-    private AssignmentRotationDao assignmentRotationDao;
-    @Autowired
-    private DivisionTeamSuccessorDao divisionTeamSuccessorDao;
-    @Autowired
-    private DivisionTeamSuccessorReadinessDao divisionTeamSuccessorReadinessDao;
-    @Autowired
-    private DivisionDao divisionDao;
-    @Autowired
-    private DivisionGroupDao divisionGroupDao;
-    @Autowired
-    private DivisionTeamDao divisionTeamDao;
-    @Autowired
-    private DivisionTeamRoleDao divisionTeamRoleDao;
-    @Autowired
-    private PositionAssignmentDao positionAssignmentDao;
-    @Autowired
-    private NativeDao nativeDao;
-    @Autowired
-    private PositionSuccessorReadinessDao positionSuccessorReadinessDao;
-    @Autowired
-    private PositionGradeDao positionGradeDao;
-    @Autowired
-    private RoleDao roleDao;
-    @Autowired
-    private LegalEntityDao legalEntityDao;
-    @Autowired
-    private DivisionLinksDao divisionLinksDao;
-    @Autowired
-    private PositionKrLevelDao positionKrLevelDao;
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final DivisionTeamAssignmentRotationService divisionTeamAssignmentRotationService;
+    private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;
+    private final DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
+    private final EmployeeDao employeeDao;
+    private final PositionDao positionDao;
+    private final NotificationService notificationService;
+    private final AssignmentService assignmentService;
+    private final EmployeeService employeeService;
+    private final AssignmentReadinessDao assignmentReadinessDao;
+    private final AssignmentRotationDao assignmentRotationDao;
+    private final DivisionTeamSuccessorDao divisionTeamSuccessorDao;
+    private final DivisionTeamSuccessorReadinessDao divisionTeamSuccessorReadinessDao;
+    private final DivisionDao divisionDao;
+    private final DivisionGroupDao divisionGroupDao;
+    private final DivisionTeamDao divisionTeamDao;
+    private final DivisionTeamRoleDao divisionTeamRoleDao;
+    private final PositionAssignmentDao positionAssignmentDao;
+    private final NativeDao nativeDao;
+    private final PositionSuccessorReadinessDao positionSuccessorReadinessDao;
+    private final PositionGradeDao positionGradeDao;
+    private final RoleDao roleDao;
+    private final LegalEntityDao legalEntityDao;
+    private final DivisionLinksDao divisionLinksDao;
+    private final PositionKrLevelDao positionKrLevelDao;
+    private final AuthService authService;
+    private final UnitAccessService unitAccessService;
 
     @Override
     @Transactional(readOnly = true)
@@ -215,7 +190,7 @@ public class DivisionServiceImpl implements DivisionService {
         );
         positions.forEach(p -> {
             List<PositionAssignmentEntity> current = assignments.stream().filter(a -> Objects.equals(a.getPositionId(), p.getId()))
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
             divisionPositionsInfo.add(new PositionInfo(p, current));
         });
         return divisionPositionsInfo;
@@ -249,12 +224,12 @@ public class DivisionServiceImpl implements DivisionService {
     @Transactional(rollbackFor = NotFoundException.class)
     public DivisionTeamSuccessorDto createDivisionTeamSuccessor(Long divisionTeamRoleId, Long employeeId, Long employeeHrId, Date datePriority, Integer reasonIdInclusion, String commentInclusion, String documentUrlInclusion) throws NotFoundException {
         DivisionTeamRoleEntity divisionTeamRole = divisionTeamRoleDao.findById(divisionTeamRoleId)
-                .orElseThrow(() -> new NotFoundException(String.format("Division team role with id=%d is not found", divisionTeamRoleId)));
+            .orElseThrow(() -> new NotFoundException(String.format("Division team role with id=%d is not found", divisionTeamRoleId)));
         DivisionTeamEntity divisionTeam = divisionTeamRole.getDivisionTeam();
 
         if (checkEmployeeHrSuccessor(employeeHrId, employeeId, divisionTeam.getId()) || checkEmployeeHeadTeamDivisionSuccessor(employeeHrId, employeeId, divisionTeam.getId())) {
             EmployeeEntity employee = employeeDao.findById(employeeId)
-                    .orElseThrow(() -> new NotFoundException(String.format("Employee with id=%d is not found", employeeId)));
+                .orElseThrow(() -> new NotFoundException(String.format("Employee with id=%d is not found", employeeId)));
 
             DivisionTeamSuccessorEntity divisionTeamSuccessorEntity = new DivisionTeamSuccessorEntity();
             divisionTeamSuccessorEntity.setDateFrom(new Date());
@@ -272,10 +247,10 @@ public class DivisionServiceImpl implements DivisionService {
             if (headTeamEmployee != null) {
                 DivisionTeamAssignmentEntity assignment = divisionTeamAssignmentDao.getCurrentDivisionTeamAssignmentByDivisionTeamRoleId(divisionTeamRoleId).get(0);
                 notificationService.sendKafkaMessage(
-                        new DataForKafkaMessageInputDto(
-                                Collections.singletonList(headTeamEmployee.getId()),
-                                String.format(MESSAGE_CREATE_DIVISION_TEAM_SUCCESSOR, assignment.getFullName()),
-                                SUBJECT_CREATE_DIVISION_TEAM_SUCCESSOR)
+                    new DataForKafkaMessageInputDto(
+                        Collections.singletonList(headTeamEmployee.getId()),
+                        String.format(MESSAGE_CREATE_DIVISION_TEAM_SUCCESSOR, assignment.getFullName()),
+                        SUBJECT_CREATE_DIVISION_TEAM_SUCCESSOR)
                 );
             }
             return DivisionTeamSuccessorFactory.create(divisionTeamSuccessorEntity);
@@ -288,10 +263,10 @@ public class DivisionServiceImpl implements DivisionService {
     @Transactional(rollbackFor = {NotFoundException.class, AccessDeniedException.class})
     public Boolean deleteDivisionTeamSuccessor(Long divisionTeamSuccessorId, Long employeeHrId, Integer reasonIdExclusion, String commentExclusion, String documentUrlExclusion) throws NotFoundException, AccessDeniedException {
         DivisionTeamSuccessorEntity divisionTeamSuccessorEntity = divisionTeamSuccessorDao.findById(divisionTeamSuccessorId)
-                .orElseThrow(() -> {
-                    log.error("division_team_successor with id={} is not found", divisionTeamSuccessorId);
-                    return new NotFoundException(String.format("division_team_successor with id=%d is not found", divisionTeamSuccessorId));
-                });
+            .orElseThrow(() -> {
+                log.error("division_team_successor with id={} is not found", divisionTeamSuccessorId);
+                return new NotFoundException(String.format("division_team_successor with id=%d is not found", divisionTeamSuccessorId));
+            });
 
         if (divisionTeamSuccessorEntity.getDateTo() != null) {
             log.error("division_team_successor with id={} is already closed", divisionTeamSuccessorId);
@@ -347,12 +322,12 @@ public class DivisionServiceImpl implements DivisionService {
 
             List<DivisionTeamSuccessorReadinessEntity> divisionTeamSuccessorReadinessEntityList = divisionTeamSuccessorReadinessDao.findByDivisionTeamSuccessorId(divisionTeamSuccessorId);
             divisionTeamSuccessorReadinessEntityList.stream()
-                    .filter(Objects::nonNull)
-                    .filter(i -> Objects.isNull(i.getDateTo()))
-                    .forEach(i -> {
-                        i.setDateTo(new Date());
-                        divisionTeamSuccessorReadinessDao.save(i);
-                    });
+                .filter(Objects::nonNull)
+                .filter(i -> Objects.isNull(i.getDateTo()))
+                .forEach(i -> {
+                    i.setDateTo(new Date());
+                    divisionTeamSuccessorReadinessDao.save(i);
+                });
 
             DivisionTeamSuccessorReadinessEntity divisionTeamSuccessorReadinessEntity = new DivisionTeamSuccessorReadinessEntity();
             divisionTeamSuccessorReadinessEntity.setDateFrom(new Date());
@@ -376,11 +351,11 @@ public class DivisionServiceImpl implements DivisionService {
             throw new NotFoundException("division team assignment not found");
         }
         List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
-                PositionAssignmentFilter.builder()
-                    .employeeId(optionalDivisionTeamAssignmentEntity.get().getEmployee().getId())
-                    .unitCode(unitAccessService.getCurrentUnit())
-                    .build()
-            );
+            PositionAssignmentFilter.builder()
+                .employeeId(optionalDivisionTeamAssignmentEntity.get().getEmployee().getId())
+                .unitCode(unitAccessService.getCurrentUnit())
+                .build()
+        );
         Long teamId = optionalDivisionTeamAssignmentEntity.get().getDivisionTeamRole().getDivisionTeam().getId();
         Long divisionId = optionalDivisionTeamAssignmentEntity.get().getDivisionTeamRole().getDivisionTeam().getDivision().getId();
 
@@ -397,10 +372,10 @@ public class DivisionServiceImpl implements DivisionService {
 
             closeAllExistingDivisionTeamAssignmentRotation(listDivisionTeamAssignmentRotationByAssignment);
             return DivisionTeamAssignmentRotationFactory.createWithJobInfo(createDivisionTeamAssignmentRotationEntity(
-                    optionalDivisionTeamAssignmentEntity.get(),
-                    optionalAssignmentRotationEntity,
-                    employeeHrId,
-                    divisionId
+                optionalDivisionTeamAssignmentEntity.get(),
+                optionalAssignmentRotationEntity,
+                employeeHrId,
+                divisionId
             ), positionAssignments);
         } else {
             log.error("Employee is not assigned as HR or is not head of team, employee id = {}", employeeHrId);
@@ -425,7 +400,7 @@ public class DivisionServiceImpl implements DivisionService {
     @Transactional(rollbackFor = {NotFoundException.class, AccessDeniedException.class})
     public void commitTeamDivisionAssignmentRotation(Long divisionTeamAssignmentRotationId, Long employeeId) throws NotFoundException, AccessDeniedException {
         DivisionTeamAssignmentRotationEntity divisionTeamAssignmentRotation = divisionTeamAssignmentRotationService
-                .getDivisionTeamAssignmentRotation(divisionTeamAssignmentRotationId);
+            .getDivisionTeamAssignmentRotation(divisionTeamAssignmentRotationId);
         Long divisionId = divisionDao.findByDivisionTeamAssignmentRotation(divisionTeamAssignmentRotationId, unitAccessService.getCurrentUnit());
         //Long divisionId = divisionTeamAssignmentRotation.getAssignment().getDivisionTeamRole().getDivisionTeam().getDivision().getId();
 
@@ -447,10 +422,10 @@ public class DivisionServiceImpl implements DivisionService {
         EmployeeTeamInfoDto employeeTeamInfoDto;
         if (divisionTeamAssignmentId != null) {
             employeeTeamInfoDto = divisionTeamAssignmentDao.findTeamInfoByAssignmentId(divisionTeamAssignmentId)
-                    .orElseThrow(() -> {
-                        log.error("division team assignment not found, division team assignment id = {}", divisionTeamAssignmentId);
-                        return new NotFoundException(String.format("division team assignment with id=%d is not found", divisionTeamAssignmentId));
-                    });
+                .orElseThrow(() -> {
+                    log.error("division team assignment not found, division team assignment id = {}", divisionTeamAssignmentId);
+                    return new NotFoundException(String.format("division team assignment with id=%d is not found", divisionTeamAssignmentId));
+                });
         } else {
             employeeTeamInfoDto = divisionTeamAssignmentDao.findFirstTeamInfoByExternalEmployeeId(authService.getCurrentUser().getEmployeeExternalId());
         }
@@ -489,12 +464,12 @@ public class DivisionServiceImpl implements DivisionService {
         containerDto.setPositionImportance(divisionTeamRole.getPositionImportance());
 
         List<DivisionTeamAssignmentEntity> assignments =
-                divisionTeamAssignmentDao.getDivisionTeamAssignmentsByDivisionTeamRoleId(divisionTeamRole.getId());
+            divisionTeamAssignmentDao.getDivisionTeamAssignmentsByDivisionTeamRoleId(divisionTeamRole.getId());
 
         containerDto.setDivisionTeamAssignmentDtos(assignmentService.getAssignmentsCreateShortWithJobInfo(assignments, Boolean.TRUE, Boolean.TRUE));
 
         List<DivisionTeamSuccessorEntity> divisionTeamSuccessors =
-                divisionTeamSuccessorDao.getDivisionTeamSuccessorsByDivisionTeamRoleId(divisionTeamRole.getId());
+            divisionTeamSuccessorDao.getDivisionTeamSuccessorsByDivisionTeamRoleId(divisionTeamRole.getId());
 
         containerDto.setDivisionTeamSuccessorDtos(getDivisionTeamSuccessorsCreateShort(divisionTeamSuccessors, divisionTeamRole.getDivisionTeam()));
 
@@ -511,8 +486,8 @@ public class DivisionServiceImpl implements DivisionService {
         List<DivisionTeamRoleContainerDto> result = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(divisionTeamRoles)) {
             List<Long> divisionTeamRoleIds = divisionTeamRoles.stream()
-                    .map(DivisionTeamRoleDto::getId)
-                    .collect(Collectors.toList());
+                .map(DivisionTeamRoleDto::getId)
+                .collect(Collectors.toList());
             Map<Long, List<DivisionTeamAssignmentEntity>> assignments = divisionTeamAssignmentDao.getDivisionTeamAssignmentsByDivisionTeamRoleIds(divisionTeamRoleIds);
             Map<Long, List<DivisionTeamSuccessorEntity>> divisionTeamSuccessors = divisionTeamSuccessorDao.getDivisionTeamSuccessorsByDivisionTeamRoleIds(divisionTeamRoleIds);
             for (DivisionTeamRoleDto divisionTeamRole : divisionTeamRoles) {
@@ -556,21 +531,21 @@ public class DivisionServiceImpl implements DivisionService {
                 List<DivisionTeamAssignmentRotationEntity> assignmentRotations = divisionTeamAssignmentRotationDao.getAllByDivisionTeamId(divisionTeam.getId());
                 int assignmentsCount = assignmentRotations.size();
                 List<Integer> rotationIds = assignmentRotations
-                        .stream()
-                        .map(divisionTeamAssignmentRotation -> divisionTeamAssignmentRotation.getRotation().getId())
-                        .collect(Collectors.toList());
+                    .stream()
+                    .map(divisionTeamAssignmentRotation -> divisionTeamAssignmentRotation.getRotation().getId())
+                    .collect(Collectors.toList());
                 int rotationsCount = new HashSet<>(rotationIds).size();
                 long approvedAssignmentsCount = assignmentRotations
-                        .stream()
-                        .filter(divisionTeamAssignmentRotation -> divisionTeamAssignmentRotation.getDateCommitHr() != null)
-                        .count();
+                    .stream()
+                    .filter(divisionTeamAssignmentRotation -> divisionTeamAssignmentRotation.getDateCommitHr() != null)
+                    .count();
                 Map<Integer, Integer> countMap = calculateRepeats(rotationIds);
                 List<AssignmentRotationStatDto> rotations = new ArrayList<>();
                 assignmentRotations.forEach(divisionTeamAssignmentRotation -> {
-                                                Integer rotationId = divisionTeamAssignmentRotation.getRotation().getId();
-                                                int rotationsCountForDivisionTeam = countMap.get(rotationId);
-                                                rotations.add(new AssignmentRotationStatDto(rotationId, rotationsCountForDivisionTeam));
-                                            }
+                        Integer rotationId = divisionTeamAssignmentRotation.getRotation().getId();
+                        int rotationsCountForDivisionTeam = countMap.get(rotationId);
+                        rotations.add(new AssignmentRotationStatDto(rotationId, rotationsCountForDivisionTeam));
+                    }
                 );
                 divisionTeamStats.add(DivisionTeamFactory.createStat(divisionTeam, assignmentsCount, rotationsCount, approvedAssignmentsCount, rotations));
             });
@@ -607,7 +582,7 @@ public class DivisionServiceImpl implements DivisionService {
                     }
 
                     List<DivisionTeamSuccessorEntity> successors = divisionTeamSuccessorDao.
-                            getDivisionTeamSuccessorsByDivisionTeamRoleId(role.getId());
+                        getDivisionTeamSuccessorsByDivisionTeamRoleId(role.getId());
                     successorsCount += successors.size();
                     for (DivisionTeamSuccessorEntity successor : successors) {
                         float readinessStatus = 0;
@@ -643,14 +618,14 @@ public class DivisionServiceImpl implements DivisionService {
                     roleAndImportanceStat.add(new DivisionTeamRoleAndImportanceStatDto(new ImportanceStatDto(entry.getKey(), entry.getValue())));
                 }
                 DivisionTeamSuccessorsStatDto successorsStat = new DivisionTeamSuccessorsStatDto(successorsCount,
-                                                                                                 acceptedSuccessors);
+                    acceptedSuccessors);
                 divisionTeamsStats.add(
-                        new DivisionTeamWithRolesAndSuccessorsStatDto(divisionTeam.getId(), roleAndImportanceStat,
-                                                                      successorsStat, teamSecurity / roles.size()));
+                    new DivisionTeamWithRolesAndSuccessorsStatDto(divisionTeam.getId(), roleAndImportanceStat,
+                        successorsStat, teamSecurity / roles.size()));
 
             }
             divisionsWithDivisionTeams.add(new DivisionWithDivisionTeamsWithDivisionTeamRolesAndDivisionTeamSuccessorsDto(
-                    division.getId(), divisionTeamsStats
+                division.getId(), divisionTeamsStats
             ));
         }
         return divisionsWithDivisionTeams;
@@ -660,8 +635,8 @@ public class DivisionServiceImpl implements DivisionService {
     @Transactional(rollbackFor = NotFoundException.class)
     public void divisionTeamSuccessorUpdateHr(Long divisionTeamSuccessorId, Date dateCommitHr) throws NotFoundException {
         DivisionTeamSuccessorEntity divisionTeamSuccessor = divisionTeamSuccessorDao
-                .findById(divisionTeamSuccessorId)
-                .orElseThrow(() -> new NotFoundException(String.format("Division team successor with id=%d is not found", divisionTeamSuccessorId)));
+            .findById(divisionTeamSuccessorId)
+            .orElseThrow(() -> new NotFoundException(String.format("Division team successor with id=%d is not found", divisionTeamSuccessorId)));
         divisionTeamSuccessor.setDateCommitHr(dateCommitHr);
         divisionTeamSuccessorDao.save(divisionTeamSuccessor);
 
@@ -751,28 +726,28 @@ public class DivisionServiceImpl implements DivisionService {
         }
         unitAccessService.checkUnitAccess(division.get().getLegalEntityEntity().getUnitCode());
         List<DivisionTeamAssignmentEntity> divisionTeamAssignments = divisionTeamAssignmentDao
-                .getHeadDivisionTeamAssignmentByDivisionId(divisionId,
-                                                           GlobalDefs.HEAD_ID, GlobalDefs.HEAD_SYSTEM_ROLE_ID);
+            .getHeadDivisionTeamAssignmentByDivisionId(divisionId,
+                GlobalDefs.HEAD_ID, GlobalDefs.HEAD_SYSTEM_ROLE_ID);
         if (divisionTeamAssignments.isEmpty()) {
             log.debug("Division team assignment (with head role) for {} division does not exists", divisionId);
             return new DivisionInfo(division.get(), null, null);
         }
         return new DivisionInfo(division.get(),
-                                divisionTeamAssignments.get(0).getEmployee(),
-                                employeeService.getPositionAssignmentInfo(divisionTeamAssignments.get(0).getEmployee().getId()));
+            divisionTeamAssignments.get(0).getEmployee(),
+            employeeService.getPositionAssignmentInfo(divisionTeamAssignments.get(0).getEmployee().getId()));
     }
 
     @Override
     public DivisionInfoDto getDivisionInfoDto(Long divisionId) {
         DivisionInfo info = getDivisionInfo(divisionId);
         List<DivisionTeamEntity> divisionTeams =
-                info.getDivision() != null ? divisionTeamDao.findByDivisionId(info.getDivision().getId()) : new ArrayList<>();
+            info.getDivision() != null ? divisionTeamDao.findByDivisionId(info.getDivision().getId()) : new ArrayList<>();
 
         return DivisionInfoFactory.create(
-                info.getDivision(),
-                info.getDivisionHead(),
-                info.getDivisionHeadInfo() == null ? null : info.getDivisionHeadInfo().getAssignments(),
-                divisionTeams
+            info.getDivision(),
+            info.getDivisionHead(),
+            info.getDivisionHeadInfo() == null ? null : info.getDivisionHeadInfo().getAssignments(),
+            divisionTeams
         );
     }
 
@@ -813,8 +788,8 @@ public class DivisionServiceImpl implements DivisionService {
             }
             // todo: check that there is no loop
             parents.add(new DivisionShortInfo(divisionEntity.getId(),
-                                              divisionEntity.getParentId(),
-                                              divisionEntity.getFullName(), divisionEntity.getShortName(), divisionEntity.getAbbreviation()));
+                divisionEntity.getParentId(),
+                divisionEntity.getFullName(), divisionEntity.getShortName(), divisionEntity.getAbbreviation()));
             if (divisionEntity.getParentId() == null) {
                 break;
             }
@@ -833,8 +808,8 @@ public class DivisionServiceImpl implements DivisionService {
         DivisionEntity division = path.getCurrent().getDivision();
         if (division != null) {
             info.add(0, new DivisionShortInfo(division.getId(), division.getParentId(),
-                                              division.getFullName(), division.getShortName(),
-                                              division.getAbbreviation()));
+                division.getFullName(), division.getShortName(),
+                division.getAbbreviation()));
         }
         return info;
     }
@@ -894,8 +869,8 @@ public class DivisionServiceImpl implements DivisionService {
             List<Long> parents = divisionLinksDao.findAllParents(currentTeamDivisionId);
 
             if (CollectionUtils.containsAny(employeeDivisionIds, parents)) {
-                    log.debug("employee {} is head of team successor or head of parent level", employeeHeadId);
-                    return true;
+                log.debug("employee {} is head of team successor or head of parent level", employeeHeadId);
+                return true;
             }
             log.error("employee {} is not head of team successor and all parent levels", employeeHeadId);
             return false;
@@ -974,7 +949,7 @@ public class DivisionServiceImpl implements DivisionService {
             return getDivisionTeamByTypeAndEmployeeId(divisionTeamTypeId, employeeId);
         } else {
             throw new NotFoundException(String.format("No division team has been found for employee %d and division team type %d",
-                                                    employeeId, divisionTeamTypeId));
+                employeeId, divisionTeamTypeId));
         }
     }
 
@@ -988,14 +963,14 @@ public class DivisionServiceImpl implements DivisionService {
     @Transactional(readOnly = true)
     public List<DivisionTeamDto> findActual() {
         return divisionTeamDao.findActual()
-                .stream()
-                .map(DivisionTeamFactory::create)
-                .collect(Collectors.toList());
+            .stream()
+            .map(DivisionTeamFactory::create)
+            .collect(Collectors.toList());
     }
 
     public List<DivisionDto> findPost(DivisionFindDto dto) {
         return divisionDao.findPost(dto.getId(), dto.getLegalEntityId(), dto.getPage(), dto.getSize(), dto.getSearchingValue(),
-            dto.getWithClosed(), unitAccessService.getCurrentUnit()
+                dto.getWithClosed(), unitAccessService.getCurrentUnit()
             ).stream()
             .map(DivisionFactory::create)
             .collect(Collectors.toList());
@@ -1042,18 +1017,18 @@ public class DivisionServiceImpl implements DivisionService {
 
     private DivisionTeamEntity findDivisionTeamEntityById(Long id) {
         return divisionTeamDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("division_team with id=%d is not found", id) ));
+            .orElseThrow(() -> new NotFoundException(String.format("division_team with id=%d is not found", id)));
     }
 
     private void recursionFillDivisions(List<DivisionEntity> parentList, List<DivisionEntity> divisions) {
         if (!parentList.isEmpty()) {
             List<DivisionEntity> divisionsByParentsIds =
-                    divisionDao.findAll(
-                        DivisionFilter.builder()
-                            .parentIds(parentList.stream().map(DivisionEntity::getId).collect(Collectors.toList()))
-                            .unitCode(unitAccessService.getCurrentUnit())
-                            .build()
-                    );
+                divisionDao.findAll(
+                    DivisionFilter.builder()
+                        .parentIds(parentList.stream().map(DivisionEntity::getId).collect(Collectors.toList()))
+                        .unitCode(unitAccessService.getCurrentUnit())
+                        .build()
+                );
             divisions.addAll(divisionsByParentsIds);
             recursionFillDivisions(divisionsByParentsIds, divisions);
         }
@@ -1062,7 +1037,7 @@ public class DivisionServiceImpl implements DivisionService {
     private List<DivisionInfoDto> getDivisionInfoDtoList(List<DivisionEntity> divisions) {
         List<Long> divisionIds = divisions.stream().map(DivisionEntity::getId).collect(Collectors.toList());
         final Map<Long, List<DivisionTeamAssignmentEntity>> divisionTeamAssignmentsMap =
-                divisionTeamAssignmentDao.findHeadByDivisionIds(divisionIds, GlobalDefs.HEAD_ID, GlobalDefs.HEAD_SYSTEM_ROLE_ID);
+            divisionTeamAssignmentDao.findHeadByDivisionIds(divisionIds, GlobalDefs.HEAD_ID, GlobalDefs.HEAD_SYSTEM_ROLE_ID);
 
         final Map<Long, List<DivisionTeamEntity>> divisionTeamsByDivisionIds = divisionTeamDao.findActualByDivisionIds(divisionIds);
 
@@ -1075,18 +1050,18 @@ public class DivisionServiceImpl implements DivisionService {
         final Map<Long, List<PositionAssignmentEntity>> positionAssignmentsByEmployeeIds =
             positionAssignmentDao.findActualByEmployeeIds(employeeIds, unitAccessService.getCurrentUnit());
         return divisions
-                .stream()
-                .map(d -> {
-                    List<DivisionTeamAssignmentEntity> assignments = divisionTeamAssignmentsMap.getOrDefault(d.getId(), Collections.emptyList());
-                    return DivisionInfoFactory.create(
-                            d,
-                            assignments.isEmpty() ? null : assignments.get(0).getEmployee(),
-                            assignments.isEmpty() ? null : positionAssignmentsByEmployeeIds.getOrDefault(assignments.get(0).getEmployee().getId(), Collections.emptyList())
-                                .stream().map(PositionAssignmentFactory::create).toList(),
-                            divisionTeamsByDivisionIds.getOrDefault(d.getId(), Collections.emptyList())
-                    );
-                })
-                .collect(Collectors.toList());
+            .stream()
+            .map(d -> {
+                List<DivisionTeamAssignmentEntity> assignments = divisionTeamAssignmentsMap.getOrDefault(d.getId(), Collections.emptyList());
+                return DivisionInfoFactory.create(
+                    d,
+                    assignments.isEmpty() ? null : assignments.get(0).getEmployee(),
+                    assignments.isEmpty() ? null : positionAssignmentsByEmployeeIds.getOrDefault(assignments.get(0).getEmployee().getId(), Collections.emptyList())
+                        .stream().map(PositionAssignmentFactory::create).toList(),
+                    divisionTeamsByDivisionIds.getOrDefault(d.getId(), Collections.emptyList())
+                );
+            })
+            .collect(Collectors.toList());
     }
 
     private Map<Integer, Integer> calculateRepeats(List<Integer> list) {
@@ -1095,26 +1070,26 @@ public class DivisionServiceImpl implements DivisionService {
             return result;
         }
         list.forEach(x -> {
-                         if (result.containsKey(x)) {
-                             int value = result.get(x);
-                             value += 1;
-                             result.put(x, value);
-                         } else {
-                             result.put(x, 1);
-                         }
-                     }
+                if (result.containsKey(x)) {
+                    int value = result.get(x);
+                    value += 1;
+                    result.put(x, value);
+                } else {
+                    result.put(x, 1);
+                }
+            }
         );
         return result;
     }
 
     private void closeAllExistingDivisionTeamAssignmentRotation(List<DivisionTeamAssignmentRotationEntity> listByAssignment) {
         listByAssignment.stream()
-                .filter(Objects::nonNull)
-                .filter(i -> Objects.isNull(i.getDateTo()))
-                .forEach(i -> {
-                    i.setDateTo(new Date());
-                    divisionTeamAssignmentRotationDao.save(i);
-                });
+            .filter(Objects::nonNull)
+            .filter(i -> Objects.isNull(i.getDateTo()))
+            .forEach(i -> {
+                i.setDateTo(new Date());
+                divisionTeamAssignmentRotationDao.save(i);
+            });
     }
 
     private DivisionTeamAssignmentRotationEntity createDivisionTeamAssignmentRotationEntity(DivisionTeamAssignmentEntity dta, AssignmentRotationEntity assignmentRotation, Long employeeHrId, Long divisionId) throws NotFoundException {
@@ -1133,10 +1108,10 @@ public class DivisionServiceImpl implements DivisionService {
         divisionTeamAssignmentRotationDao.save(divisionTeamAssignmentRotationEntity);
 
         notificationService.sendKafkaMessage(
-                new DataForKafkaMessageInputDto(
-                        Collections.singletonList(dtaShort.getEmployeeId()),
-                        MESSAGE_CREATE_DIVISION_TEAM_ASSIGNMENT_ROTATION,
-                        SUBJECT_CREATE_DIVISION_TEAM_ASSIGNMENT_ROTATION)
+            new DataForKafkaMessageInputDto(
+                Collections.singletonList(dtaShort.getEmployeeId()),
+                MESSAGE_CREATE_DIVISION_TEAM_ASSIGNMENT_ROTATION,
+                SUBJECT_CREATE_DIVISION_TEAM_ASSIGNMENT_ROTATION)
         );
 
         return divisionTeamAssignmentRotationEntity;
@@ -1146,20 +1121,20 @@ public class DivisionServiceImpl implements DivisionService {
         List<Long> divisionTeamSuccessorIds = divisionTeamSuccessors.stream().map(DivisionTeamSuccessorEntity::getId).collect(Collectors.toList());
 
         Map<Long, List<DivisionTeamSuccessorReadinessEntity>> successorsReadiness =
-                divisionTeamSuccessorReadinessDao.findActualByDivisionTeamSuccessorIds(divisionTeamSuccessorIds);
+            divisionTeamSuccessorReadinessDao.findActualByDivisionTeamSuccessorIds(divisionTeamSuccessorIds);
 
         return divisionTeamSuccessors
-                .stream()
-                .map(dts ->
-                             DivisionTeamSuccessorFactory.createShort(
-                                     dts,
-                                     successorsReadiness.getOrDefault(dts.getId(), Collections.emptyList())
-                                             .stream()
-                                             .map(DivisionTeamSuccessorReadinessFactory::create)
-                                             .collect(Collectors.toList()), divisionTeam
-                             )
+            .stream()
+            .map(dts ->
+                DivisionTeamSuccessorFactory.createShort(
+                    dts,
+                    successorsReadiness.getOrDefault(dts.getId(), Collections.emptyList())
+                        .stream()
+                        .map(DivisionTeamSuccessorReadinessFactory::create)
+                        .collect(Collectors.toList()), divisionTeam
                 )
-                .collect(Collectors.toList());
+            )
+            .collect(Collectors.toList());
     }
 
     private List<PositionSuccessorDto> getPositionSuccessors(DivisionTeamRoleContainerDto containerDto) {

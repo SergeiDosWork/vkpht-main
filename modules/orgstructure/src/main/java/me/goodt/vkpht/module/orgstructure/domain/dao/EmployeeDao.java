@@ -40,9 +40,9 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
 
     public Long findIdByExternalId(String extId) {
         return query().select(meta.id)
-                .from(meta)
-                .where(meta.externalId.eq(extId))
-                .fetchFirst();
+            .from(meta)
+            .where(meta.externalId.eq(extId))
+            .fetchFirst();
     }
 
     public List<EmployeeEntity> findAllBySnils(String snils) {
@@ -76,16 +76,16 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
         List<String> employeeNumber = request.getEmployeeNumber();
         List<String> emails = request.getEmails();
         BooleanExpression exp = Expressions.allOf(
-                request.isWithClosed() ? null : meta.dateTo.isNull(),
-                CollectionUtils.isEmpty(employeeIds) ? null : meta.id.in(employeeIds),
-                CollectionUtils.isEmpty(divisionIds) ? null : pos.divisionId.in(divisionIds),
-                CollectionUtils.isEmpty(divisionIds) && CollectionUtils.isEmpty(functionIds) && legalEntityId == null ? null : posAss.dateTo.isNull(),
-                CollectionUtils.isEmpty(functionIds) ? null : pos.workFunctionId.in(functionIds),
-                jobTitleId == null ? null : pos.jobTitleId.eq(jobTitleId),
-                StringUtils.isBlank(positionShortName) ? null : pos.shortName.equalsIgnoreCase(positionShortName),
-                legalEntityId == null ? null : div.legalEntityId.eq(legalEntityId),
-                CollectionUtils.isEmpty(employeeNumber) ? null : meta.number.in(employeeNumber),
-                CollectionUtils.isEmpty(emails) ? null : meta.email.in(emails)
+            request.isWithClosed() ? null : meta.dateTo.isNull(),
+            CollectionUtils.isEmpty(employeeIds) ? null : meta.id.in(employeeIds),
+            CollectionUtils.isEmpty(divisionIds) ? null : pos.divisionId.in(divisionIds),
+            CollectionUtils.isEmpty(divisionIds) && CollectionUtils.isEmpty(functionIds) && legalEntityId == null ? null : posAss.dateTo.isNull(),
+            CollectionUtils.isEmpty(functionIds) ? null : pos.workFunctionId.in(functionIds),
+            jobTitleId == null ? null : pos.jobTitleId.eq(jobTitleId),
+            StringUtils.isBlank(positionShortName) ? null : pos.shortName.equalsIgnoreCase(positionShortName),
+            legalEntityId == null ? null : div.legalEntityId.eq(legalEntityId),
+            CollectionUtils.isEmpty(employeeNumber) ? null : meta.number.in(employeeNumber),
+            CollectionUtils.isEmpty(emails) ? null : meta.email.in(emails)
         );
 
         String searchingValue = request.getSearchingValue();
@@ -95,14 +95,14 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
             for (String value : searchValue) {
                 if (exp != null) {
                     exp = exp.and(per.surname.toLowerCase().like("%" + value + "%")
-                                          .or(per.name.toLowerCase().like("%" + value + "%"))
-                                          .or(withPatronymic ? per.patronymic.toLowerCase().like("%" + value + "%") : null)
-                                          .or(meta.number.like("%" + value + "%")));
+                        .or(per.name.toLowerCase().like("%" + value + "%"))
+                        .or(withPatronymic ? per.patronymic.toLowerCase().like("%" + value + "%") : null)
+                        .or(meta.number.like("%" + value + "%")));
                 } else {
                     exp = per.surname.toLowerCase().like("%" + value + "%")
-                            .or(per.name.toLowerCase().like("%" + value + "%"))
-                            .or(!withPatronymic ? null : per.patronymic.toLowerCase().like("%" + value + "%"))
-                            .or(meta.number.like("%" + value + "%"));
+                        .or(per.name.toLowerCase().like("%" + value + "%"))
+                        .or(!withPatronymic ? null : per.patronymic.toLowerCase().like("%" + value + "%"))
+                        .or(meta.number.like("%" + value + "%"));
                 }
             }
         }
@@ -110,20 +110,20 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
         JPQLQuery<EmployeeEntity> query = query().selectFrom(meta);
         if (legalEntityId != null) {
             query
-                    .innerJoin(posAss).on(posAss.employee.eq(meta))
-                    .innerJoin(pos).on(pos.eq(posAss.position))
-                    .innerJoin(div).on(div.eq(pos.division));
+                .innerJoin(posAss).on(posAss.employee.eq(meta))
+                .innerJoin(pos).on(pos.eq(posAss.position))
+                .innerJoin(div).on(div.eq(pos.division));
         }
 
         if (legalEntityId == null && (
-                (divisionIds != null && !divisionIds.isEmpty())
+            (divisionIds != null && !divisionIds.isEmpty())
                 || (functionIds != null && !functionIds.isEmpty())
                 || jobTitleId != null
                 || StringUtils.isNotBlank(positionShortName)
         )) {
             query
-                    .innerJoin(posAss).on(posAss.employee.eq(meta))
-                    .innerJoin(pos).on(pos.eq(posAss.position));
+                .innerJoin(posAss).on(posAss.employee.eq(meta))
+                .innerJoin(pos).on(pos.eq(posAss.position));
         }
 
         if (!StringUtils.isEmpty(searchingValue)) {
@@ -137,28 +137,28 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
 
         Pageable pageable = request.getPageable();
         JPQLQuery<EmployeeEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(EmployeeEntity.class))
-                .applyPagination(pageable, query);
+            .applyPagination(pageable, query);
         return new PageImpl<>(pagedQuery.fetch(), pageable, query.fetchCount());
     }
 
     public List<EmployeeEntity> findAllByIds(Set<Long> emplyeIds) {
         return query().selectFrom(meta)
-                .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
-                .where(meta.id.in(emplyeIds))
-                .fetch();
+            .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
+            .where(meta.id.in(emplyeIds))
+            .fetch();
     }
 
     public List<String> getActualNumbers(List<String> numbers) {
         return query().select(meta.number).from(meta)
-                .where(meta.number.in(numbers))
-                .distinct()
-                .fetch();
+            .where(meta.number.in(numbers))
+            .distinct()
+            .fetch();
     }
 
     public List<EmployeeEntity> employeeByExternalId(String externalId) {
         return query().selectFrom(meta)
-                .where(meta.externalId.eq(externalId))
-                .fetch();
+            .where(meta.externalId.eq(externalId))
+            .fetch();
     }
 
     public List<EmployeeEntity> findAllById(Long employeeId) {
@@ -177,9 +177,9 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
 
     public List<EmployeeEntity> findByIds(Collection<Long> ids) {
         return query().selectFrom(meta)
-                .where(meta.id.in(ids))
-                .join(meta.person).fetchJoin()
-                .fetch();
+            .where(meta.id.in(ids))
+            .join(meta.person).fetchJoin()
+            .fetch();
     }
 
     public EmployeeEntity findHeadTeamEmployee(Long divisionTeamId) {
@@ -188,50 +188,50 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
         final QRoleEntity r = QRoleEntity.roleEntity;
 
         final BooleanExpression exp = Expressions.allOf(
-                dtr.divisionTeamId.eq(divisionTeamId),
-                r.systemRoleId.eq(1)
+            dtr.divisionTeamId.eq(divisionTeamId),
+            r.systemRoleId.eq(1)
         );
 
         return query().selectFrom(meta)
-                .join(meta, dta.employee)
-                .join(dtr, dta.divisionTeamRole)
-                .join(r, dtr.role)
-                .where(exp)
-                .fetchFirst();
+            .join(meta, dta.employee)
+            .join(dtr, dta.divisionTeamRole)
+            .join(r, dtr.role)
+            .where(exp)
+            .fetchFirst();
     }
 
     public List<EmployeeEntity> findBySearchValue(String searchValue) {
         final QPersonEntity p = QPersonEntity.personEntity;
 
         final BooleanExpression exp = Expressions.anyOf(
-                p.surname.containsIgnoreCase(searchValue),
-                p.name.containsIgnoreCase(searchValue),
-                p.patronymic.containsIgnoreCase(searchValue),
-                meta.number.containsIgnoreCase(searchValue)
+            p.surname.containsIgnoreCase(searchValue),
+            p.name.containsIgnoreCase(searchValue),
+            p.patronymic.containsIgnoreCase(searchValue),
+            meta.number.containsIgnoreCase(searchValue)
         );
 
         return query().selectFrom(meta)
-                .join(p, meta.person)
-                .where(exp)
-                .fetch();
+            .join(p, meta.person)
+            .where(exp)
+            .fetch();
     }
 
     public List<EmployeeEntity> findByIdAndExternalId(Long id, String externalId) {
         BooleanExpression exp = Expressions.allOf(
-                id == null ? null : meta.id.eq(id),
-                externalId == null ? null : meta.externalId.eq(externalId)
+            id == null ? null : meta.id.eq(id),
+            externalId == null ? null : meta.externalId.eq(externalId)
         );
 
         return query().selectFrom(meta)
-                .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
-                .where(exp)
-                .fetch();
+            .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
+            .where(exp)
+            .fetch();
     }
 
     public Page<EmployeeEntity> findAll(Pageable pageable) {
         JPQLQuery<EmployeeEntity> select = query().selectFrom(meta);
         JPQLQuery<EmployeeEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(EmployeeEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<EmployeeEntity> content = pagedQuery.fetch();
 
         return new PageImpl<>(content, pageable, select.fetchCount());
@@ -239,17 +239,17 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
 
     public Optional<EmployeeEntity> findByIdWithFetch(Long id) {
         JPQLQuery<EmployeeEntity> query = query().selectFrom(meta)
-                .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
-                .where(meta.id.eq(id));
+            .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
+            .where(meta.id.eq(id));
         return Optional.ofNullable(query.fetchOne());
     }
 
     public Optional<EmployeeEntity> findByExternalId(String extId) {
         return Optional.ofNullable(query().select(meta)
-                .from(meta)
-                .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
-                .where(meta.externalId.eq(extId))
-                .fetchFirst());
+            .from(meta)
+            .leftJoin(meta.person, QPersonEntity.personEntity).fetchJoin()
+            .where(meta.externalId.eq(extId))
+            .fetchFirst());
     }
 
     public List<EmployeeEntity> findWorkersByDivisionId(Long divisionId) {
@@ -319,25 +319,25 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
         QUnitEntity unit = QUnitEntity.unitEntity;
 
         BooleanExpression filter = Expressions.allOf(
-                positionAssignment.dateTo.isNull(),
-                position.dateTo.isNull(),
-                division.dateTo.isNull(),
-                legalEntity.dateTo.isNull(),
-                unit.dateTo.isNull(),
-                meta.dateTo.isNull(),
-                meta.externalId.eq(externalEmployeeId)
+            positionAssignment.dateTo.isNull(),
+            position.dateTo.isNull(),
+            division.dateTo.isNull(),
+            legalEntity.dateTo.isNull(),
+            unit.dateTo.isNull(),
+            meta.dateTo.isNull(),
+            meta.externalId.eq(externalEmployeeId)
         );
 
         return query().select(Projections.constructor(UnitShortInfo.class, unit.code, unit.name, unit.description))
-                .from(meta)
-                .join(positionAssignment).on(positionAssignment.employeeId.eq(meta.id))
-                .join(position).on(position.id.eq(positionAssignment.positionId))
-                .join(division).on(division.id.eq(position.divisionId))
-                .join(legalEntity).on(legalEntity.id.eq(division.legalEntityId))
-                .join(unit).on(unit.id.eq(legalEntity.unitCode))
-                .where(filter)
-                .distinct()
-                .fetch();
+            .from(meta)
+            .join(positionAssignment).on(positionAssignment.employeeId.eq(meta.id))
+            .join(position).on(position.id.eq(positionAssignment.positionId))
+            .join(division).on(division.id.eq(position.divisionId))
+            .join(legalEntity).on(legalEntity.id.eq(division.legalEntityId))
+            .join(unit).on(unit.id.eq(legalEntity.unitCode))
+            .where(filter)
+            .distinct()
+            .fetch();
     }
 
     public boolean isUnitAvailable(String unitCode, String externalEmployeeId) {
@@ -348,24 +348,24 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
         QUnitEntity unit = QUnitEntity.unitEntity;
 
         BooleanExpression filter = Expressions.allOf(
-                meta.externalId.eq(externalEmployeeId),
-                unit.code.eq(unitCode),
-                positionAssignment.dateTo.isNull(),
-                position.dateTo.isNull(),
-                division.dateTo.isNull(),
-                legalEntity.dateTo.isNull(),
-                unit.dateTo.isNull(),
-                meta.dateTo.isNull()
+            meta.externalId.eq(externalEmployeeId),
+            unit.code.eq(unitCode),
+            positionAssignment.dateTo.isNull(),
+            position.dateTo.isNull(),
+            division.dateTo.isNull(),
+            legalEntity.dateTo.isNull(),
+            unit.dateTo.isNull(),
+            meta.dateTo.isNull()
         );
 
         return query().selectFrom(meta)
-                .join(positionAssignment).on(positionAssignment.employeeId.eq(meta.id))
-                .join(position).on(position.id.eq(positionAssignment.positionId))
-                .join(division).on(division.id.eq(position.divisionId))
-                .join(legalEntity).on(legalEntity.id.eq(division.legalEntityId))
-                .join(unit).on(unit.id.eq(legalEntity.unitCode))
-                .where(filter)
-                .fetchCount() > 0;
+            .join(positionAssignment).on(positionAssignment.employeeId.eq(meta.id))
+            .join(position).on(position.id.eq(positionAssignment.positionId))
+            .join(division).on(division.id.eq(position.divisionId))
+            .join(legalEntity).on(legalEntity.id.eq(division.legalEntityId))
+            .join(unit).on(unit.id.eq(legalEntity.unitCode))
+            .where(filter)
+            .fetchCount() > 0;
     }
 
     public Tuple getPositionEntity(Long id) {

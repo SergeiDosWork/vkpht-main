@@ -171,11 +171,12 @@ public class PositionServiceImpl implements PositionService {
     private final UnitAccessService unitAccessService;
     private final TaskFieldDao taskFieldDao;
     private final SimpleTaskServiceImpl taskService;
+
     @Override
     @Transactional(readOnly = true)
     public PositionTypeEntity findPositionType(Long id) throws NotFoundException {
         PositionTypeEntity entity = positionTypeDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionTypeEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionTypeEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         return entity;
     }
@@ -229,7 +230,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionKrLevelEntity findPositionKrLevel(Long id) throws NotFoundException {
         var entity = positionKrLevelDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevelEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevelEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         return entity;
     }
@@ -267,15 +268,15 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionPositionKrLevelEntity findPositionPositionKrLevel(Long positionId, Long positionKrLevelId) throws NotFoundException {
         PositionEntity position = positionDao
-                .findById(positionId)
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
+            .findById(positionId)
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
         checkUnit(position);
         PositionKrLevelEntity positionKrLevelEntity = positionKrLevelDao.findById(positionKrLevelId)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", positionKrLevelId)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", positionKrLevelId)));
         unitAccessService.checkUnitAccess(positionKrLevelEntity.getUnitCode());
         return positionPositionKrLevelDao
-                .findById(new PositionPositionKrLevelId(position, positionKrLevelEntity))
-                .orElseThrow(() -> new NotFoundException(String.format("PositionPositionKrLevel with position_id=%d and position_kr_level_id=%d is not found", positionId, positionKrLevelId)));
+            .findById(new PositionPositionKrLevelId(position, positionKrLevelEntity))
+            .orElseThrow(() -> new NotFoundException(String.format("PositionPositionKrLevel with position_id=%d and position_kr_level_id=%d is not found", positionId, positionKrLevelId)));
     }
 
     @Override
@@ -283,11 +284,11 @@ public class PositionServiceImpl implements PositionService {
     public PositionPositionKrLevelEntity createPositionPositionKrLevel(PositionPositionKrLevelDto dto) throws NotFoundException {
         PositionPositionKrLevelEntity entity = new PositionPositionKrLevelEntity();
         PositionEntity position = positionDao
-                .findById(dto.getPositionId())
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
+            .findById(dto.getPositionId())
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
         checkUnit(position);
         PositionKrLevelEntity positionKrLevelEntity = positionKrLevelDao.findById(dto.getPositionKrLevelId())
-                .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", dto.getPositionKrLevelId())));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", dto.getPositionKrLevelId())));
         unitAccessService.checkUnitAccess(positionKrLevelEntity.getUnitCode());
         entity.setId(new PositionPositionKrLevelId(position, positionKrLevelEntity));
         entity.setDateFrom(new Date());
@@ -298,15 +299,15 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(rollbackFor = NotFoundException.class)
     public void deletePositionPositionKrLevel(Long positionId, Long positionKrLevelId) throws NotFoundException {
         PositionEntity position = positionDao
-                .findById(positionId)
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
+            .findById(positionId)
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
         checkUnit(position);
         PositionKrLevelEntity positionKrLevelEntity = positionKrLevelDao.findById(positionKrLevelId)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", positionKrLevelId)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionKrLevel with id=%d is not found", positionKrLevelId)));
         unitAccessService.checkUnitAccess(positionKrLevelEntity.getUnitCode());
         PositionPositionKrLevelEntity entity = positionPositionKrLevelDao
-                .findById(new PositionPositionKrLevelId(position, positionKrLevelEntity))
-                .orElseThrow(() -> new NotFoundException(String.format("PositionPositionKrLevel with position_id=%d and position_kr_level_id=%d is not found", positionId, positionKrLevelId)));
+            .findById(new PositionPositionKrLevelId(position, positionKrLevelEntity))
+            .orElseThrow(() -> new NotFoundException(String.format("PositionPositionKrLevel with position_id=%d and position_kr_level_id=%d is not found", positionId, positionKrLevelId)));
         entity.setDateTo(new Date());
         positionPositionKrLevelDao.save(entity);
     }
@@ -315,7 +316,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionGroupEntity findPositionGroup(Long id) throws NotFoundException {
         PositionGroupEntity entity = positionGroupDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         return entity;
     }
@@ -361,7 +362,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionGroupPositionEntity findPositionGroupPosition(Long id) throws NotFoundException {
         return positionGroupPositionDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGroupPositionEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGroupPositionEntity with id %d not found", id)));
     }
 
     @Override
@@ -378,7 +379,7 @@ public class PositionServiceImpl implements PositionService {
             positionGroupPositionEntityIterable = positionGroupPositionDao.findAll();
         }
         return StreamSupport.stream(positionGroupPositionEntityIterable.spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -386,12 +387,12 @@ public class PositionServiceImpl implements PositionService {
     public PositionGroupPositionEntity createPositionGroupPosition(PositionGroupPositionDto dto) throws NotFoundException {
         PositionGroupPositionEntity entity = new PositionGroupPositionEntity();
         PositionEntity positionEntity = positionDao
-                .findById(dto.getPositionId())
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
+            .findById(dto.getPositionId())
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
         checkUnit(positionEntity);
         PositionGroupEntity positionGroupEntity = positionGroupDao
-                .findById(dto.getPositionGroupId())
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGroup with id=%d is not found", dto.getPositionGroupId())));
+            .findById(dto.getPositionGroupId())
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGroup with id=%d is not found", dto.getPositionGroupId())));
         unitAccessService.checkUnitAccess(positionGroupEntity.getUnitCode());
         entity.setId(dto.getId());
         entity.setPosition(positionEntity);
@@ -411,7 +412,7 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public PositionGradeEntity findPositionGrade(Long id) throws NotFoundException {
         PositionGradeEntity entity = positionGradeDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGradeEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGradeEntity with id %d not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         return entity;
     }
@@ -454,15 +455,15 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionPositionGradeEntity findPositionPositionGrade(Long positionId, Long positionGradeId) throws NotFoundException {
         PositionEntity position = positionDao
-                .findById(positionId)
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
+            .findById(positionId)
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
         checkUnit(position);
         PositionGradeEntity positionGradeEntity = positionGradeDao
-                .findById(positionGradeId)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", positionGradeId)));
+            .findById(positionGradeId)
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", positionGradeId)));
         return positionPositionGradeDao
-                .findById(new PositionPositionGradeId(position, positionGradeEntity))
-                .orElseThrow(() -> new NotFoundException(String.format("PositionPositionGrade with position_id=%d and position_kr_level_id=%d is not found", positionId, positionGradeId)));
+            .findById(new PositionPositionGradeId(position, positionGradeEntity))
+            .orElseThrow(() -> new NotFoundException(String.format("PositionPositionGrade with position_id=%d and position_kr_level_id=%d is not found", positionId, positionGradeId)));
     }
 
     @Override
@@ -470,12 +471,12 @@ public class PositionServiceImpl implements PositionService {
     public PositionPositionGradeEntity createPositionPositionGrade(PositionPositionGradeDto dto) throws NotFoundException {
         PositionPositionGradeEntity entity = new PositionPositionGradeEntity();
         PositionEntity position = positionDao
-                .findById(dto.getPositionId())
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
+            .findById(dto.getPositionId())
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", dto.getPositionId())));
         checkUnit(position);
         PositionGradeEntity positionGradeEntity = positionGradeDao
-                .findById(dto.getPositionGradeId())
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", dto.getPositionGradeId())));
+            .findById(dto.getPositionGradeId())
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", dto.getPositionGradeId())));
         entity.setId(new PositionPositionGradeId(position, positionGradeEntity));
         entity.setDateFrom(new Date());
         return positionPositionGradeDao.save(entity);
@@ -485,15 +486,15 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(rollbackFor = NotFoundException.class)
     public void deletePositionPositionGrade(Long positionId, Long positionGradeId) throws NotFoundException {
         PositionEntity position = positionDao
-                .findById(positionId)
-                .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
+            .findById(positionId)
+            .orElseThrow(() -> new NotFoundException(String.format("Position with id=%d is not found", positionId)));
         checkUnit(position);
         PositionGradeEntity positionGradeEntity = positionGradeDao
-                .findById(positionGradeId)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", positionGradeId)));
+            .findById(positionGradeId)
+            .orElseThrow(() -> new NotFoundException(String.format("PositionGrade with id=%d is not found", positionGradeId)));
         PositionPositionGradeEntity entity = positionPositionGradeDao
-                .findById(new PositionPositionGradeId(position, positionGradeEntity))
-                .orElseThrow(() -> new NotFoundException(String.format("PositionPositionGrade with position_id=%d and position_kr_level_id=%d is not found", positionId, positionGradeId)));
+            .findById(new PositionPositionGradeId(position, positionGradeEntity))
+            .orElseThrow(() -> new NotFoundException(String.format("PositionPositionGrade with position_id=%d and position_kr_level_id=%d is not found", positionId, positionGradeId)));
         entity.setDateTo(new Date());
         positionPositionGradeDao.save(entity);
     }
@@ -502,14 +503,14 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionImportanceReasonGroupEntity findPositionImportanceReasonGroup(Long id) throws NotFoundException {
         return positionImportanceReasonGroupDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionImportanceReasonGroupEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionImportanceReasonGroupEntity with id %d not found", id)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<PositionImportanceReasonGroupEntity> findPositionImportanceReasonGroupAll() {
         return StreamSupport.stream(positionImportanceReasonGroupDao.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -563,7 +564,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionSuccessorDto getPositionSuccessorById(Long id) throws NotFoundException {
         PositionSuccessorEntity entity = positionSuccessorDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("position_successor with id=%d is not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("position_successor with id=%d is not found", id)));
         if (entity.getReasonInclusion() != null) {
             unitAccessService.checkUnitAccess(entity.getReasonInclusion().getUnitCode());
         }
@@ -579,38 +580,38 @@ public class PositionServiceImpl implements PositionService {
         EmployeeEntity employee = null;
         if (dto.getEmployeeId() != null) {
             employee = employeeDao.findById(dto.getEmployeeId())
-                    .orElseThrow(() -> new NotFoundException(String.format("EmployeeEntity with id %d not found", dto.getEmployeeId())));
+                .orElseThrow(() -> new NotFoundException(String.format("EmployeeEntity with id %d not found", dto.getEmployeeId())));
         }
         PositionEntity position = null;
         if (dto.getPositionId() != null) {
             position = positionDao.findById(dto.getPositionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("PositionEntity with id %d not found", dto.getPositionId())));
+                .orElseThrow(() -> new NotFoundException(String.format("PositionEntity with id %d not found", dto.getPositionId())));
             checkUnit(position);
         }
         PositionGroupEntity positionGroup = null;
         if (dto.getPositionGroupId() != null) {
             positionGroup = positionGroupDao.findById(dto.getPositionGroupId())
-                    .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", dto.getPositionGroupId())));
+                .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", dto.getPositionGroupId())));
             unitAccessService.checkUnitAccess(positionGroup.getUnitCode());
         }
         OrgReasonEntity reasonInclusion = null;
         if (dto.getReasonInclusionId() != null) {
             reasonInclusion = orgReasonDao.findById(dto.getReasonInclusionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason inclusion) not found", dto.getReasonInclusionId())));
+                .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason inclusion) not found", dto.getReasonInclusionId())));
             unitAccessService.checkUnitAccess(reasonInclusion.getUnitCode());
         }
         OrgReasonEntity reasonExclusion = null;
         if (dto.getReasonExclusionId() != null) {
             reasonExclusion = orgReasonDao.findById(dto.getReasonExclusionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason exclusion) not found", dto.getReasonExclusionId())));
+                .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason exclusion) not found", dto.getReasonExclusionId())));
             unitAccessService.checkUnitAccess(reasonExclusion.getUnitCode());
         }
         PositionSuccessorEntity entity = new PositionSuccessorEntity(dto.getDateCommitHr(), dto.getDatePriority(), employee,
-                                                                     position, positionGroup,
-                                                                     reasonInclusion, reasonExclusion,
-                                                                     dto.getCommentInclusion(), dto.getCommentExclusion(),
-                                                                     dto.getDocumentUrlInclusion(), dto.getDocumentUrlExclusion(),
-                                                                     new Date(), null);
+            position, positionGroup,
+            reasonInclusion, reasonExclusion,
+            dto.getCommentInclusion(), dto.getCommentExclusion(),
+            dto.getDocumentUrlInclusion(), dto.getDocumentUrlExclusion(),
+            new Date(), null);
 
         return positionSuccessorDao.save(entity);
     }
@@ -621,34 +622,34 @@ public class PositionServiceImpl implements PositionService {
         PositionSuccessorEntity entity = findPositionSuccessor(id);
         if (dto.getEmployeeId() != null) {
             EmployeeEntity employeeEntity = employeeDao.findById(dto.getEmployeeId())
-                    .orElseThrow(() -> new NotFoundException(String.format("EmployeeEntity with id %d not found", dto.getEmployeeId())));
+                .orElseThrow(() -> new NotFoundException(String.format("EmployeeEntity with id %d not found", dto.getEmployeeId())));
             entity.setEmployee(employeeEntity);
         }
         if (dto.getPositionId() != null) {
             PositionEntity positionEntity = positionDao
-                    .findById(dto.getPositionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("PositionEntity with id %d not found", dto.getPositionId())));
+                .findById(dto.getPositionId())
+                .orElseThrow(() -> new NotFoundException(String.format("PositionEntity with id %d not found", dto.getPositionId())));
             checkUnit(positionEntity);
             entity.setPosition(positionEntity);
         }
         if (dto.getPositionGroupId() != null) {
             PositionGroupEntity positionGroupEntity = positionGroupDao
-                    .findById(dto.getPositionGroupId())
-                    .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", dto.getPositionGroupId())));
+                .findById(dto.getPositionGroupId())
+                .orElseThrow(() -> new NotFoundException(String.format("PositionGroupEntity with id %d not found", dto.getPositionGroupId())));
             unitAccessService.checkUnitAccess(positionGroupEntity.getUnitCode());
             entity.setPositionGroup(positionGroupEntity);
         }
         if (dto.getReasonInclusionId() != null) {
             OrgReasonEntity orgReasonEntity = orgReasonDao
-                    .findById(dto.getReasonInclusionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason inclusion) not found", dto.getReasonInclusionId())));
+                .findById(dto.getReasonInclusionId())
+                .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason inclusion) not found", dto.getReasonInclusionId())));
             unitAccessService.checkUnitAccess(orgReasonEntity.getUnitCode());
             entity.setReasonInclusion(orgReasonEntity);
         }
         if (dto.getReasonExclusionId() != null) {
             OrgReasonEntity orgReasonEntity = orgReasonDao
-                    .findById(dto.getReasonExclusionId())
-                    .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason exclusion) not found", dto.getReasonExclusionId())));
+                .findById(dto.getReasonExclusionId())
+                .orElseThrow(() -> new NotFoundException(String.format("ReasonEntity with id %d (reason exclusion) not found", dto.getReasonExclusionId())));
             unitAccessService.checkUnitAccess(orgReasonEntity.getUnitCode());
             entity.setReasonExclusion(orgReasonEntity);
         }
@@ -675,7 +676,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionSuccessorReadinessEntity findPositionSuccessorReadiness(Long id) throws NotFoundException {
         PositionSuccessorReadinessEntity entity = positionSuccessorReadinessDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("PositionSuccessorReadinessEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("PositionSuccessorReadinessEntity with id %d not found", id)));
         if (entity.getReadiness() != null) {
             unitAccessService.checkUnitAccess(entity.getReadiness().getUnitCode());
         }
@@ -692,7 +693,7 @@ public class PositionServiceImpl implements PositionService {
     @Transactional(readOnly = true)
     public PositionSuccessorReadinessDto getPositionSuccessorReadinessById(Long id) throws NotFoundException {
         PositionSuccessorReadinessEntity entity = positionSuccessorReadinessDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("position_successor_readiness with id=%d is not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("position_successor_readiness with id=%d is not found", id)));
         if (entity.getReadiness() != null) {
             unitAccessService.checkUnitAccess(entity.getReadiness().getUnitCode());
         }
@@ -826,23 +827,23 @@ public class PositionServiceImpl implements PositionService {
             resultQuery = positionDao.findAllByDivisionTeamAndEmployee(employeeIds, divisionTeams, unitAccessService.getCurrentUnit());
         }
         List<Tuple> tuples = resultQuery.select(qpa.id, qpa.dateFrom, qpa.dateTo, qpa.employeeId, qpa.typeId, qpa.shortName, qpa.fullName,
-                                                qd.id, qd.parentId, qd.legalEntityId, qd.fullName, qd.shortName,
-                                                qjt.id, qjt.fullName, qjt.shortName,
-                                                qp.id, qp.dateFrom, qp.dateTo, qp.fullName, qp.shortName, qp.categoryId, qp.positionImportanceId,
-                                                qdt.id, qdt.fullName, qdt.shortName)
-                .fetch();
+                qd.id, qd.parentId, qd.legalEntityId, qd.fullName, qd.shortName,
+                qjt.id, qjt.fullName, qjt.shortName,
+                qp.id, qp.dateFrom, qp.dateTo, qp.fullName, qp.shortName, qp.categoryId, qp.positionImportanceId,
+                qdt.id, qdt.fullName, qdt.shortName)
+            .fetch();
         List<PositionAssignmentSmp> rez = new ArrayList<>(tuples.size());
         for (Tuple t : tuples) {
             PositionSmp pos = new PositionSmp().setId(t.get(qp.id)).setDateFrom(t.get(qp.dateFrom)).setDateTo(t.get(qp.dateTo))
-                    .setFullName(t.get(qp.fullName)).setShortName(t.get(qp.shortName)).setCategoryId(t.get(qp.categoryId))
-                    .setPositionImportanceId(t.get(qp.positionImportanceId));
+                .setFullName(t.get(qp.fullName)).setShortName(t.get(qp.shortName)).setCategoryId(t.get(qp.categoryId))
+                .setPositionImportanceId(t.get(qp.positionImportanceId));
             JobTitleSmp jt = new JobTitleSmp().setId(t.get(qjt.id)).setFullName(t.get(qjt.fullName)).setShortName(t.get(qjt.shortName));
             DivisionSmp dv = new DivisionSmp().setId(t.get(qd.id)).setParentId(t.get(qd.parentId))
-                    .setShortName(t.get(qd.shortName)).setFullName(t.get(qd.fullName)).setLegalEntityId(t.get(qd.legalEntityId));
+                .setShortName(t.get(qd.shortName)).setFullName(t.get(qd.fullName)).setLegalEntityId(t.get(qd.legalEntityId));
             PositionAssignmentSmp pa = new PositionAssignmentSmp()
-                    .setId(t.get(qpa.id)).setDateFrom(t.get(qpa.dateFrom)).setDateTo(t.get(qpa.dateTo))
-                    .setEmployeeId(t.get(qpa.employeeId)).setTypeId(t.get(qpa.typeId))
-                    .setShortName(t.get(qpa.shortName)).setFullName(t.get(qpa.fullName));
+                .setId(t.get(qpa.id)).setDateFrom(t.get(qpa.dateFrom)).setDateTo(t.get(qpa.dateTo))
+                .setEmployeeId(t.get(qpa.employeeId)).setTypeId(t.get(qpa.typeId))
+                .setShortName(t.get(qpa.shortName)).setFullName(t.get(qpa.fullName));
             DivisionTeamSmp dt = new DivisionTeamSmp().setId(t.get(qdt.id)).setFullName(t.get(qdt.fullName)).setShortName(t.get(qdt.shortName));
             pa.setPosition(pos).setDivision(dv).setJobTitle(jt).setDivisionTeam(dt);
             // pa.addModel("position", pos).addModel("division", dv).addModel("jobTitle",
@@ -926,12 +927,12 @@ public class PositionServiceImpl implements PositionService {
         checkUnit(position);
         entity.setPosition(position);
         entity.setSystemRoleId(systemRoleDao.findById(dto.getSystemRoleId())
-                                       .orElseThrow(() -> new NotFoundException(String.format("System role with id=%d is not found", dto.getSystemRoleId()))));
+            .orElseThrow(() -> new NotFoundException(String.format("System role with id=%d is not found", dto.getSystemRoleId()))));
 
         EmployeeEntity employee = employeeDao.employeeByExternalId(externalId)
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("Employee with external id=%s is not found", externalId)));
+            .stream()
+            .findFirst()
+            .orElseThrow(() -> new NotFoundException(String.format("Employee with external id=%s is not found", externalId)));
         entity.setAuthorEmployee(employee);
 
         if (dto.getSystemRoleId() == 1) {
@@ -956,9 +957,9 @@ public class PositionServiceImpl implements PositionService {
             for (Long id : divisionTeamsIds) {
                 subordinateEmployeeIdList.addAll(
                     assignmentService.getDivisionTeamSubordinates(employee.getId(), null, id, true)
-                                .stream()
-                                .map(sub -> sub.getEmployee().getId())
-                                .collect(toList())
+                        .stream()
+                        .map(sub -> sub.getEmployee().getId())
+                        .collect(toList())
                 );
             }
 
@@ -1029,8 +1030,8 @@ public class PositionServiceImpl implements PositionService {
         employeeIds.addAll(divisionTeamAssignmentDao.findEmployeeIdByDivisionTeamIdAndNotSystemRoleId(divisionTeamId, 1));
         List<Long> childrenTeam = divisionTeamDao.findActualIdsByParentId(divisionTeamId);
         Map<Long, Long> headEmployeeIdByChildrenTeam = divisionTeamAssignmentDao.findEmployeeIdByDivisionTeamIdsAndSystemRoleId(childrenTeam, 1)
-                .stream()
-                .collect(groupingBy(t -> t.get(0, Long.class), mapping(t -> t.get(1, Long.class), collectingAndThen(toList(), list -> list.get(0)))));
+            .stream()
+            .collect(groupingBy(t -> t.get(0, Long.class), mapping(t -> t.get(1, Long.class), collectingAndThen(toList(), list -> list.get(0)))));
 
         childrenTeam.forEach(teamId -> {
             Long head = headEmployeeIdByChildrenTeam.get(teamId);

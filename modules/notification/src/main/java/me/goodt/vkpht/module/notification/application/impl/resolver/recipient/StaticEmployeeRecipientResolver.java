@@ -18,8 +18,8 @@ import static me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipi
 @Component
 @Slf4j
 public class StaticEmployeeRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(recipient.getBasicValue(), STATIC_EMPLOYEE.getName())) {
             return;
         }

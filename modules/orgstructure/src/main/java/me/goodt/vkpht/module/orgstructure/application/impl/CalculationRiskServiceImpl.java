@@ -1,9 +1,6 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
-import me.goodt.vkpht.module.orgstructure.domain.dao.PositionDao;
-import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.common.api.exception.BadRequestException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.module.orgstructure.api.CalculationRiskService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
 import me.goodt.vkpht.module.orgstructure.domain.dao.ImportanceCriteriaDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionAssignmentDao;
+import me.goodt.vkpht.module.orgstructure.domain.dao.PositionDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionImportanceCriteriaDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionSuccessorDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionSuccessorReadinessDao;
@@ -29,32 +27,16 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.filter.PositionSuccessorFil
 import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PersonEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionAssignmentEntity;
+import me.goodt.vkpht.module.orgstructure.domain.entity.PositionEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionImportanceCriteriaEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadinessEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionTypeEntity;
 
-
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class CalculationRiskServiceImpl implements CalculationRiskService {
-
-    @Autowired
-    private ImportanceCriteriaDao importanceCriteriaDao;
-    @Autowired
-    private PositionService positionService;
-    @Autowired
-    private PositionSuccessorDao positionSuccessorDao;
-    @Autowired
-    private PositionSuccessorReadinessDao positionSuccessorReadinessDao;
-    @Autowired
-    private PositionAssignmentDao positionAssignmentDao;
-    @Autowired
-    private PositionDao positionDao;
-    @Autowired
-    private PositionImportanceCriteriaDao positionImportanceCriteriaDao;
-    @Autowired
-    private UnitAccessService unitAccessService;
 
     private static final String FEMALE = "f";
     private static final String MALE = "m";
@@ -64,6 +46,15 @@ public class CalculationRiskServiceImpl implements CalculationRiskService {
     private static final String VACANCY_EXCEPT_OUT = "vacancy_except_out";
     private static final String RESERV_ALL = "reserv_all";
     private static final String RESERV_EXCEPT_OPERATIVE = "reserv_except_operative";
+
+    private final ImportanceCriteriaDao importanceCriteriaDao;
+    private final PositionService positionService;
+    private final PositionSuccessorDao positionSuccessorDao;
+    private final PositionSuccessorReadinessDao positionSuccessorReadinessDao;
+    private final PositionAssignmentDao positionAssignmentDao;
+    private final PositionDao positionDao;
+    private final PositionImportanceCriteriaDao positionImportanceCriteriaDao;
+    private final UnitAccessService unitAccessService;
 
     @Override
     public void calculationRisk(Long legalEntityId) throws NotFoundException {
@@ -122,8 +113,8 @@ public class CalculationRiskServiceImpl implements CalculationRiskService {
 
     private void createOrUpdate(Long positionId, ImportanceCriteriaEntity item, boolean checkResult, float value) throws NotFoundException {
         Optional<PositionImportanceCriteriaEntity> optionalPositionImportanceCriteria = positionImportanceCriteriaDao.findAllByPositionIdAndImportanceCriteriaId(positionId, item.getId())
-                .stream()
-                .findFirst();
+            .stream()
+            .findFirst();
 
         if (optionalPositionImportanceCriteria.isPresent() && !checkResult) {
             PositionImportanceCriteriaEntity positionImportanceCriteriaEntity = optionalPositionImportanceCriteria.get();

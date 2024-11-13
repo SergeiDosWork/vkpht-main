@@ -22,10 +22,10 @@ public class KblSlotRulesDao extends AbstractDao<KblSlotRules, Long> {
 
     public List<KblSlotRules> findAllByModuleSlot(@NotNull String module, String slotId) {
         BooleanExpression exp = meta.module.eq(module)
-                .and(slotId != null ? meta.slot.eq(slotId) : null);
+            .and(slotId != null ? meta.slot.eq(slotId) : null);
         return query().selectFrom(meta)
-                .where(exp)
-                .fetch();
+            .where(exp)
+            .fetch();
     }
 
 }

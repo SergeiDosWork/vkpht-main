@@ -36,7 +36,7 @@ public class DivisionGroupCrudService extends AbstractArchiveDictionaryService<D
     @Override
     public void delete(Long id) {
         DivisionGroupEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("DivisionGroup with id = %s not found", id)));
+            new NotFoundException(String.format("DivisionGroup with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

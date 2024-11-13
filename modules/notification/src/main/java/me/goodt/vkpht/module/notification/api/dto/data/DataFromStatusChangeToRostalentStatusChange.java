@@ -10,17 +10,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DataFromStatusChangeToRostalentStatusChange {
-	private Long statusId;
-	private Long userId;
-	private Long employeeId;
-	private Long employeeDivisionTeamId;
-	private String fioEmployee;
-	private Long headTaskUserId;
-	private Long headTaskEmployeeId;
-	private Long headTaskDivisionTeamId;
-	private Long buddyTaskUserId;
-	private Long buddyTaskEmployeeId;
-	private Long buddyTaskDivisionTeamId;
-	private List<Long> hrTaskEmployeeIds;
-	private String comment;
+    private Long statusId;
+    private Long userId;
+    private Long employeeId;
+    private Long employeeDivisionTeamId;
+    private String fioEmployee;
+    private Long headTaskUserId;
+    private Long headTaskEmployeeId;
+    private Long headTaskDivisionTeamId;
+    private Long buddyTaskUserId;
+    private Long buddyTaskEmployeeId;
+    private Long buddyTaskDivisionTeamId;
+    private List<Long> hrTaskEmployeeIds;
+    private String comment;
 }

@@ -18,8 +18,8 @@ public class JobTitleClusterDao extends AbstractDao<JobTitleClusterEntity, Long>
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

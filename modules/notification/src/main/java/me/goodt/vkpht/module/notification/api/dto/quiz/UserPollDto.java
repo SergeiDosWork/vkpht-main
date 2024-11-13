@@ -16,18 +16,18 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.EMPLOYE
 @Getter
 @Setter
 public class UserPollDto {
-	private Long id;
-	@JsonSetter(EMPLOYEE_ID_TAG)
-	private Long employeeId;
-	private PollDto poll;
-	@JsonSetter(DATE_FROM_CONFIRM_TAG)
-	private Date dateFromConfirm;
-	@JsonSetter(DATE_START_TAG)
-	private Date dateStart;
-	@JsonSetter(DATE_END_TAG)
-	private Date dateEnd;
-	@JsonSetter(DATE_FROM_TAG)
-	private Date dateFrom;
-	@JsonSetter(DATE_TO_TAG)
-	private Date dateTo;
+    private Long id;
+    @JsonSetter(EMPLOYEE_ID_TAG)
+    private Long employeeId;
+    private PollDto poll;
+    @JsonSetter(DATE_FROM_CONFIRM_TAG)
+    private Date dateFromConfirm;
+    @JsonSetter(DATE_START_TAG)
+    private Date dateStart;
+    @JsonSetter(DATE_END_TAG)
+    private Date dateEnd;
+    @JsonSetter(DATE_FROM_TAG)
+    private Date dateFrom;
+    @JsonSetter(DATE_TO_TAG)
+    private Date dateTo;
 }

@@ -24,24 +24,24 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.USERS_K
 @NoArgsConstructor
 @Accessors(chain = true)
 public class PayloadDto {
-	@JsonSetter(EVENT_SUBTYPE_TAG)
-	private String eventSubtype;
-	private Collection<String> channels;
-	@JsonSetter(NOTIFICATION_LOG_IDS)
-	private Collection<Long> notificationLogIds;
-	private Map<String, Object> content;
-	@JsonSetter(EMPLOYEE_IDS_TAG)
-	private Collection<Long> employeeIds;
-	@JsonSetter(EMPLOYEE_COPY_IDS_TAG)
-	private Collection<Long> employeeCopyIds;
+    @JsonSetter(EVENT_SUBTYPE_TAG)
+    private String eventSubtype;
+    private Collection<String> channels;
+    @JsonSetter(NOTIFICATION_LOG_IDS)
+    private Collection<Long> notificationLogIds;
+    private Map<String, Object> content;
+    @JsonSetter(EMPLOYEE_IDS_TAG)
+    private Collection<Long> employeeIds;
+    @JsonSetter(EMPLOYEE_COPY_IDS_TAG)
+    private Collection<Long> employeeCopyIds;
     @JsonSetter(EMAIL_IDS_TAG)
     private Collection<Long> emailIds;
     @JsonSetter(EMAIL_COPY_IDS_TAG)
     private Collection<Long> emailCopyIds;
-	@JsonSetter(INITIATOR_KEYCLOAK_ID_TAG)
-	private String initiatorEmployeeId;
-	@JsonSetter(USERS_KEYCLOAK_IDS_TAG)
-	private Collection<String> usersKeycloakIds;
+    @JsonSetter(INITIATOR_KEYCLOAK_ID_TAG)
+    private String initiatorEmployeeId;
+    @JsonSetter(USERS_KEYCLOAK_IDS_TAG)
+    private Collection<String> usersKeycloakIds;
     @JsonSetter(UNIT_CODE)
     private String unitCode;
 }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OperationResult {
-	private Object result;
-	private String message;
+    private Object result;
+    private String message;
 }

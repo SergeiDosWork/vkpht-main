@@ -22,13 +22,13 @@ public class NotificationReceiverSystemEntity extends DomainObject {
      * Наименование
      */
     @Column(name = "name", nullable = false, length = 256)
-	private String name;
+    private String name;
 
     /**
      * Описание
      */
     @Column(name = "description", length = 1024)
-	private String description;
+    private String description;
 
     /**
      * Юнит-код
@@ -54,8 +54,8 @@ public class NotificationReceiverSystemEntity extends DomainObject {
     @Column(name = "is_editable_if_system")
     private Boolean isEditableIfSystem;
 
-	public NotificationReceiverSystemEntity(String name, String description) {
-		this.name = name;
-		this.description = description;
-	}
+    public NotificationReceiverSystemEntity(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

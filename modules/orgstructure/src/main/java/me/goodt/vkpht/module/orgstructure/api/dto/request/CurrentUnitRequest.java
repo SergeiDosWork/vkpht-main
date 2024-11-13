@@ -13,8 +13,8 @@ public class CurrentUnitRequest {
 
     @NotEmpty
     @Pattern(
-            regexp = "^[a-zA-Z0-9_-]*$",
-            message = "не является допустимым значением бизнес-единицы (юнита)"
+        regexp = "^[a-zA-Z0-9_-]*$",
+        message = "не является допустимым значением бизнес-единицы (юнита)"
     )
     @Schema(description = "Код бизнес-единицы (юнита)")
     private String unitCode;

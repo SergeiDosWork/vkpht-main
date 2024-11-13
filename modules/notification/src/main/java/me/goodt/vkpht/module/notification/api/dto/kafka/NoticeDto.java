@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NoticeDto {
-	private static final String EVENT_TYPE_TAG = "event_type";
-	@JsonSetter(EVENT_TYPE_TAG)
-	private String eventType;
-	private PayloadDto payload;
-	private Long version;
+    private static final String EVENT_TYPE_TAG = "event_type";
+    @JsonSetter(EVENT_TYPE_TAG)
+    private String eventType;
+    private PayloadDto payload;
+    private Long version;
 }

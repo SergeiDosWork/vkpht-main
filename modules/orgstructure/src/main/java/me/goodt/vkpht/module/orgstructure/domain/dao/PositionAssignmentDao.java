@@ -33,11 +33,11 @@ public class PositionAssignmentDao extends AbstractDao<PositionAssignmentEntity,
 
     public PositionAssignmentEntity getPositionAssignmentByPositionId(Long positionId) {
         BooleanExpression exp = meta.positionId.eq(positionId)
-                .and(actual());
+            .and(actual());
         return query().selectFrom(meta)
-                .where(exp)
-                .orderBy(meta.id.asc())
-                .fetchFirst();
+            .where(exp)
+            .orderBy(meta.id.asc())
+            .fetchFirst();
     }
 
     private BooleanExpression actual() {
@@ -60,35 +60,35 @@ public class PositionAssignmentDao extends AbstractDao<PositionAssignmentEntity,
         final QFamilyStatusEntity f = QFamilyStatusEntity.familyStatusEntity;
         final QSubstitutionTypeEntity st = QSubstitutionTypeEntity.substitutionTypeEntity;
         final BooleanExpression exp = actual()
-                .and(meta.employeeId.in(employeeIds))
-                .and(checkUnit(unitCode));
+            .and(meta.employeeId.in(employeeIds))
+            .and(checkUnit(unitCode));
         final List<PositionAssignmentEntity> list = query()
-                .selectFrom(meta)
-                .leftJoin(meta.category, c).fetchJoin()
-                .leftJoin(meta.position, pos).fetchJoin()
-                .leftJoin(pos.jobTitle, jt).fetchJoin()
-                .leftJoin(pos.division, d).fetchJoin()
-                .leftJoin(meta.type, at).fetchJoin()
-                .leftJoin(meta.employee, em).fetchJoin()
-                .leftJoin(em.person, p).fetchJoin()
-                .leftJoin(p.familyStatus, f).fetchJoin()
-                .leftJoin(st).on(meta.substitutionType.id.eq(st.id))
-                .where(exp)
-                .distinct()
-                .fetch();
+            .selectFrom(meta)
+            .leftJoin(meta.category, c).fetchJoin()
+            .leftJoin(meta.position, pos).fetchJoin()
+            .leftJoin(pos.jobTitle, jt).fetchJoin()
+            .leftJoin(pos.division, d).fetchJoin()
+            .leftJoin(meta.type, at).fetchJoin()
+            .leftJoin(meta.employee, em).fetchJoin()
+            .leftJoin(em.person, p).fetchJoin()
+            .leftJoin(p.familyStatus, f).fetchJoin()
+            .leftJoin(st).on(meta.substitutionType.id.eq(st.id))
+            .where(exp)
+            .distinct()
+            .fetch();
         if (list.size() > 30) {
             log.info("PositionAssignmentDao.findActualByEmployeeIds count {}", list.size());
         }
         return list.stream()
-                .collect(groupingBy(PositionAssignmentEntity::getEmployeeId, mapping(t -> t, toList())));
+            .collect(groupingBy(PositionAssignmentEntity::getEmployeeId, mapping(t -> t, toList())));
     }
 
     public Long findIdByExternalId(String externalId) {
         BooleanExpression exp = meta.externalId.eq(externalId);
         return query().from(meta)
-                .select(meta.id)
-                .where(exp)
-                .fetchFirst();
+            .select(meta.id)
+            .where(exp)
+            .fetchFirst();
     }
 
     public PositionAssignmentEntity find(PositionAssignmentFilter filter) {

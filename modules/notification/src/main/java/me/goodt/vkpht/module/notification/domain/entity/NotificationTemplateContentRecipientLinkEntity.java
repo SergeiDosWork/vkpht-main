@@ -23,16 +23,16 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @Table(name = "notification_template_content_recipient")
 public class NotificationTemplateContentRecipientLinkEntity extends DomainObject {
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "notification_template_content_id")
-	private NotificationTemplateContentEntity notificationTemplateContent;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "notification_template_content_id")
+    private NotificationTemplateContentEntity notificationTemplateContent;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "notification_recipient_id")
-	private NotificationRecipientEntity notificationRecipient;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "notification_recipient_id")
+    private NotificationRecipientEntity notificationRecipient;
 
-	@Column(name = "is_copy", nullable = false)
-	private Boolean isCopy;
+    @Column(name = "is_copy", nullable = false)
+    private Boolean isCopy;
 
     /**
      * Признак системного уведомления

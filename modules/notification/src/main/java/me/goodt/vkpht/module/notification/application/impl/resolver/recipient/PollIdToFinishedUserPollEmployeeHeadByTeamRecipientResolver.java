@@ -30,70 +30,70 @@ import static java.lang.Boolean.TRUE;
 @Slf4j
 public class PollIdToFinishedUserPollEmployeeHeadByTeamRecipientResolver implements RecipientResolver {
 
-	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
-		Map<Object, Boolean> map = new ConcurrentHashMap<>();
-		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-	}
+    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> map = new ConcurrentHashMap<>();
+        return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
 
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
-		if (!StringUtils.equals(POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM, recipient.getBasicValue())) {
-			return;
-		}
-		log.info(LOG_MESSAGE_RECIPIENT, POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM);
-		try {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+        if (!StringUtils.equals(POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM, recipient.getBasicValue())) {
+            return;
+        }
+        log.info(LOG_MESSAGE_RECIPIENT, POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM);
+        try {
 
-			List<UserPollDto> userPollList = (List<UserPollDto>) context.getOrResolveObject(SavedObjectNames.USER_POLL_LIST, () ->
-				Optional.ofNullable(RecipientResolverUtils.findPollId(context))
-					.map(pollId -> context.getResolverServiceContainer().getQuizServiceClient()
-						.findUserPoll(pollId.longValue(), null, TRUE))
-					.map(upl -> upl.stream()
-						.filter(distinctByKey(up -> up.getEmployeeId()))
-						.collect(Collectors.toList()))
-					.orElse(null)
-			);
-			if (CollectionUtils.isEmpty(userPollList)) {
-				return;
-			}
+            List<UserPollDto> userPollList = (List<UserPollDto>) context.getOrResolveObject(SavedObjectNames.USER_POLL_LIST, () ->
+                Optional.ofNullable(RecipientResolverUtils.findPollId(context))
+                    .map(pollId -> context.getResolverServiceContainer().getQuizServiceClient()
+                        .findUserPoll(pollId.longValue(), null, TRUE))
+                    .map(upl -> upl.stream()
+                        .filter(distinctByKey(up -> up.getEmployeeId()))
+                        .collect(Collectors.toList()))
+                    .orElse(null)
+            );
+            if (CollectionUtils.isEmpty(userPollList)) {
+                return;
+            }
 
-			List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.ASSIGNMENTS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceAdapter()
-					.getAssignments(userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList()), null));
-			if (CollectionUtils.isEmpty(assignments)) {
-				return;
-			}
+            List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.ASSIGNMENTS, () ->
+                context.getResolverServiceContainer().getOrgstructureServiceAdapter()
+                    .getAssignments(userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList()), null));
+            if (CollectionUtils.isEmpty(assignments)) {
+                return;
+            }
 
-			Map<Long, DivisionTeamInfo> divisionTeamInfoMap = RecipientResolverUtils.getDivisionTeamInfoMap(assignments);
-			for (Map.Entry<Long, DivisionTeamInfo> entry : divisionTeamInfoMap.entrySet()) {
-				AtomicInteger closedCount = new AtomicInteger();
-				userPollList
-					.stream()
-					.filter(up -> up.getDateTo() != null && entry.getValue().getEmployeeIds().contains(up.getEmployeeId()))
-					.forEach(up -> closedCount.incrementAndGet());
-				log.info("division_team_id = {}, count not null user_poll - {}", entry.getKey(), closedCount.get());
-				if (closedCount.get() == entry.getValue().getEmployeeIds().size()) {
-					DivisionTeamAssignmentDto headTeam;
-					if (entry.getValue().getHeadAssignment() != null) {
-						headTeam = entry.getValue().getHeadAssignment();
-					} else {
-						headTeam = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
-							.getEmployeeHead(entry.getValue().getEmployees().get(0).getId(), entry.getKey());
-					}
-					if (headTeam != null) {
-						recipientList.add(headTeam.getEmployee());
-					}
-				}
-			}
+            Map<Long, DivisionTeamInfo> divisionTeamInfoMap = RecipientResolverUtils.getDivisionTeamInfoMap(assignments);
+            for (Map.Entry<Long, DivisionTeamInfo> entry : divisionTeamInfoMap.entrySet()) {
+                AtomicInteger closedCount = new AtomicInteger();
+                userPollList
+                    .stream()
+                    .filter(up -> up.getDateTo() != null && entry.getValue().getEmployeeIds().contains(up.getEmployeeId()))
+                    .forEach(up -> closedCount.incrementAndGet());
+                log.info("division_team_id = {}, count not null user_poll - {}", entry.getKey(), closedCount.get());
+                if (closedCount.get() == entry.getValue().getEmployeeIds().size()) {
+                    DivisionTeamAssignmentDto headTeam;
+                    if (entry.getValue().getHeadAssignment() != null) {
+                        headTeam = entry.getValue().getHeadAssignment();
+                    } else {
+                        headTeam = context.getResolverServiceContainer().getOrgstructureServiceAdapter()
+                            .getEmployeeHead(entry.getValue().getEmployees().get(0).getId(), entry.getKey());
+                    }
+                    if (headTeam != null) {
+                        recipientList.add(headTeam.getEmployee());
+                    }
+                }
+            }
 
-		} catch (Exception ex) {
-			log.error(LOG_ERROR, ex.getMessage());
-		}
-	}
+        } catch (Exception ex) {
+            log.error(LOG_ERROR, ex.getMessage());
+        }
+    }
 
-	@Override
-	public List<RecipientToken> recipientsRegistration() {
-		return List.of(
-			new RecipientToken(POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM, "Руководитель, в чьей команде все прошли опросы")
-		);
-	}
+    @Override
+    public List<RecipientToken> recipientsRegistration() {
+        return List.of(
+            new RecipientToken(POLL_ID_TO_FINISHED_USER_POLL_EMPLOYEE_HEAD_BY_TEAM, "Руководитель, в чьей команде все прошли опросы")
+        );
+    }
 }

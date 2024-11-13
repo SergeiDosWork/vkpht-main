@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class NotificationLogResponseKafkaDto {
 
-	private List<Long> notificationLogIds;  // список id в notification_log
-	private boolean isSendSuccess;          // признак успешной отправки
-	private String errorMessage;            // сообщение об ошибке во время отправки
+    private List<Long> notificationLogIds;  // список id в notification_log
+    private boolean isSendSuccess;          // признак успешной отправки
+    private String errorMessage;            // сообщение об ошибке во время отправки
 
 }

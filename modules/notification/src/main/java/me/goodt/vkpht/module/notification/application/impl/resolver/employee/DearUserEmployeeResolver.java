@@ -31,9 +31,9 @@ public class DearUserEmployeeResolver implements TokenEmployeeResolver {
 
     private static final String ALTERNATIVE_APPEAL = "Коллега";
 
-	@Override
-	public void resolve(ResolverContext context, RecipientInfoDto employeeInfoDto, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, NOTIFICATION_USER_GREETING);
+    @Override
+    public void resolve(ResolverContext context, RecipientInfoDto employeeInfoDto, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, NOTIFICATION_USER_GREETING);
 
         EmployeeExtendedInfoDto extendedEmployeeInfoDto;
 
@@ -62,13 +62,13 @@ public class DearUserEmployeeResolver implements TokenEmployeeResolver {
                 );
             }
         });
-	}
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return Arrays.asList(
-			new NotificationToken(NOTIFICATION_USER_GREETING, DEAR_USER_FIO_FULL, "ФИО сотрудника в формате Уважаемый(ая) Фамилия Имя Отчество пример: Уважаемый Скорин Иван Васильевич"),
-			new NotificationToken(NOTIFICATION_USER_GREETING, DEAR_USER_FIO_SHORT, "ФИО сотрудника в формате Уважаемый(ая) Фамилия И. О. пример: Уважаемая Петренко И.О.")
-		);
-	}
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return Arrays.asList(
+            new NotificationToken(NOTIFICATION_USER_GREETING, DEAR_USER_FIO_FULL, "ФИО сотрудника в формате Уважаемый(ая) Фамилия Имя Отчество пример: Уважаемый Скорин Иван Васильевич"),
+            new NotificationToken(NOTIFICATION_USER_GREETING, DEAR_USER_FIO_SHORT, "ФИО сотрудника в формате Уважаемый(ая) Фамилия И. О. пример: Уважаемая Петренко И.О.")
+        );
+    }
 }

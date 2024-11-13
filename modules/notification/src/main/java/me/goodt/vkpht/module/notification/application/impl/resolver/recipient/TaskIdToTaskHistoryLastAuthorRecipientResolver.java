@@ -24,8 +24,8 @@ import static java.lang.Boolean.FALSE;
 @Component
 @Slf4j
 public class TaskIdToTaskHistoryLastAuthorRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(TASK_ID_TO_TASK_HISTORY_LAST_AUTHOR, recipient.getBasicValue())) {
             return;
         }

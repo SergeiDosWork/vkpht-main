@@ -15,12 +15,12 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppraisalCommissionDto {
-	private Long id;
-	private String name;
-	@JsonSetter(DtoTagConstants.DIVISION_ID_TAG)
-	private Long divisionId;
-	@JsonSetter(DtoTagConstants.DATE_FROM_TAG)
-	private Date dateFrom;
-	@JsonSetter(DtoTagConstants.DATE_TO_TAG)
-	private Date dateTo;
+    private Long id;
+    private String name;
+    @JsonSetter(DtoTagConstants.DIVISION_ID_TAG)
+    private Long divisionId;
+    @JsonSetter(DtoTagConstants.DATE_FROM_TAG)
+    private Date dateFrom;
+    @JsonSetter(DtoTagConstants.DATE_TO_TAG)
+    private Date dateTo;
 }

@@ -13,18 +13,18 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PollDto {
-	private Long id;
-	@JsonSetter(DtoTagConstants.DATE_START_TAG)
-	private Date dateStart;
-	@JsonSetter(DtoTagConstants.DATE_END_TAG)
-	private Date dateEnd;
-	private String name;
-	private String description;
-	@JsonSetter(DtoTagConstants.IS_ANONYMOUS_TAG)
-	private Integer isAnonymous;
-	private Boolean startable;
-	@JsonSetter(DtoTagConstants.POLL_TYPE_TAG)
-	private PollTypeDto pollType;
-	@JsonSetter(DtoTagConstants.POLL_PARTY_TAG)
-	private PollPartyDto pollParty;
+    private Long id;
+    @JsonSetter(DtoTagConstants.DATE_START_TAG)
+    private Date dateStart;
+    @JsonSetter(DtoTagConstants.DATE_END_TAG)
+    private Date dateEnd;
+    private String name;
+    private String description;
+    @JsonSetter(DtoTagConstants.IS_ANONYMOUS_TAG)
+    private Integer isAnonymous;
+    private Boolean startable;
+    @JsonSetter(DtoTagConstants.POLL_TYPE_TAG)
+    private PollTypeDto pollType;
+    @JsonSetter(DtoTagConstants.POLL_PARTY_TAG)
+    private PollPartyDto pollParty;
 }

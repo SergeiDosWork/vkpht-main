@@ -10,10 +10,10 @@ import me.goodt.vkpht.module.notification.application.impl.TokenResolverImpl;
 import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 
 public interface TokenResolver {
-	Map<String, String> resolveTokens(ResolverContext context);
+    Map<String, String> resolveTokens(ResolverContext context);
 
-	Map<String, String> resolveEmployeeTokens(RecipientInfoDto employeeInfoDto, ResolverContext context);
+    Map<String, String> resolveEmployeeTokens(RecipientInfoDto employeeInfoDto, ResolverContext context);
 
-	TokenResolverImpl.ResolveRecipitentResult resolveRecipients(NotificationTemplateContentDto ntc, ResolverServiceContainer resolverServiceContainer, BaseNotificationInputData data, boolean isCopy, int substituteLevel);
+    TokenResolverImpl.ResolveRecipitentResult resolveRecipients(NotificationTemplateContentDto ntc, ResolverServiceContainer resolverServiceContainer, BaseNotificationInputData data, boolean isCopy, int substituteLevel);
 
 }

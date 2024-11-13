@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CompetenceProfilePositionNotificationDto {
-	private Long id;
-	private Long positionId;
-	private Long competenceProfileId;
-	private String competenceProfileName;
+    private Long id;
+    private Long positionId;
+    private Long competenceProfileId;
+    private String competenceProfileName;
 }

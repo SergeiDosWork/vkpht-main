@@ -6,31 +6,31 @@
 package me.goodt.vkpht.module.notification.api.dto.monitor;
 
 public class EventStatusDto {
-	private Long id;
-	private String name;
+    private Long id;
+    private String name;
 
-	public EventStatusDto() {
+    public EventStatusDto() {
 
-	}
+    }
 
-	public EventStatusDto(Long id, String name) {
-		this.id = id;
-		this.name = name;
-	}
+    public EventStatusDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

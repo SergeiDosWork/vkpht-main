@@ -8,10 +8,10 @@ import java.util.Date;
 @Getter
 @Setter
 public class AppraisalEventNotificationDto {
-	private Long id;
-	private String name;
-	private Long divisionId;
-	private Integer month;
-	private Integer year;
-	private Date meetingDate;
+    private Long id;
+    private String name;
+    private Long divisionId;
+    private Integer month;
+    private Integer year;
+    private Date meetingDate;
 }

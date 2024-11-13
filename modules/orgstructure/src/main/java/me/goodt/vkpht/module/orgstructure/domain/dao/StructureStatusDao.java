@@ -28,9 +28,9 @@ public class StructureStatusDao extends AbstractDao<StructureStatusEntity, Integ
 
     public Integer findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public Page<StructureStatusEntity> find(StructureStatusFilter filter, Pageable pageable) {

@@ -39,10 +39,10 @@ public class UserUnitServiceImpl implements UserUnitService {
         }
 
         return unitDao.findById(currentUnitCode)
-                .filter(e -> e.getDateTo() == null)
-                .map(e -> new UnitDto(e.getCode(), e.getName(), e.getDescription()))
-                .orElseThrow(() -> new IncorrectUnitException("Бизнес-единица (юнит) = "
-                        + currentUnitCode + " не найдена."));
+            .filter(e -> e.getDateTo() == null)
+            .map(e -> new UnitDto(e.getCode(), e.getName(), e.getDescription()))
+            .orElseThrow(() -> new IncorrectUnitException("Бизнес-единица (юнит) = "
+                + currentUnitCode + " не найдена."));
     }
 
     @Override
@@ -52,20 +52,20 @@ public class UserUnitServiceImpl implements UserUnitService {
         if (Boolean.TRUE.equals(currentUser.isTechUser())) {
             // Для системного пользователя доступны все актуальные бизнес-единицы в системе.
             return unitDao.find(UnitFilter.asDefault())
-                    .stream()
-                    .map(e -> new UnitDto(e.getCode(), e.getName(), e.getDescription()))
-                    .collect(Collectors.toList());
+                .stream()
+                .map(e -> new UnitDto(e.getCode(), e.getName(), e.getDescription()))
+                .collect(Collectors.toList());
         }
 
         String externalEmployeeId = currentUser.getEmployeeExternalId();
         if (externalEmployeeId == null) {
             log.info("Запрос выполняется не от лица сотрудника, " +
-                    "информация о доступных бизнес-единицах (юнитах) не предоставляется.");
+                "информация о доступных бизнес-единицах (юнитах) не предоставляется.");
             return Collections.emptyList();
         }
         return employeeDao.findAvailableUnits(externalEmployeeId).stream()
-                .map(proj -> new UnitDto(proj.getCode(), proj.getName(), proj.getDescription()))
-                .collect(Collectors.toList());
+            .map(proj -> new UnitDto(proj.getCode(), proj.getName(), proj.getDescription()))
+            .collect(Collectors.toList());
     }
 
     @Override
@@ -75,8 +75,8 @@ public class UserUnitServiceImpl implements UserUnitService {
             // Если запрос приходит от системного пользователя, то связь в БД между employee -> unit не учитывается.
             // Выполняется обычная проверка наличия полученного юнит-кода в БД.
             var filter = UnitFilter.builder()
-                    .codes(Collections.singletonList(unitCode))
-                    .build();
+                .codes(Collections.singletonList(unitCode))
+                .build();
             return unitDao.exists(filter);
         }
 
@@ -95,7 +95,7 @@ public class UserUnitServiceImpl implements UserUnitService {
 
         if (!isUnitAvailable(unitCode)) {
             throw new IncorrectUnitException("Доступ к запрашиваемой бизнес-единице (юниту) = "
-                    + unitCode + " запрещен.");
+                + unitCode + " запрещен.");
         }
 
         unitStorage.setUnitCode(unitCode);

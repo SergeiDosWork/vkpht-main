@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AppraisalEventCommissionMemberNotificationDto {
-	private Long id;
-	private Long appraisalCommissionMemberId;
-	private Long appraisalCommissionMemberEmployeeId;
+    private Long id;
+    private Long appraisalCommissionMemberId;
+    private Long appraisalCommissionMemberEmployeeId;
 }

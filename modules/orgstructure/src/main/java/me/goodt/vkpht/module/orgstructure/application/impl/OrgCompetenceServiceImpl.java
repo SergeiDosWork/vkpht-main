@@ -1,5 +1,6 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -75,6 +76,7 @@ import static me.goodt.vkpht.common.application.util.GlobalDefs.TASK_TYPE_ID_173
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class OrgCompetenceServiceImpl implements CompetenceService {
 
     /**
@@ -120,32 +122,19 @@ public class OrgCompetenceServiceImpl implements CompetenceService {
         return StringUtils.compareIgnoreCase(fullName1, fullName2);
     };
 
-    @Autowired
-    private OldTaskService taskService;
-    @Autowired
-    private DivisionTeamAssignmentDao divisionTeamAssignmentDao;
-    @Autowired
-    private PositionAssignmentDao positionAssignmentDao;
-    @Autowired
-    private CompetenceDao competenceDao;
-    @Autowired
-    private ICompetenceService competenceService;
-    @Autowired
-    private IModelContext dbContext;
-    @Autowired
-    private CompetenceProfilePositionDao competenceProfilePositionDao;
-    @Autowired
-    private CompetenceCatalogDao competenceCatalogDao;
-    @Autowired
-    private ICompetenceCatalogService competenceCatalogService;
-    @Autowired
-    private JsonMapper jsonMapper;
-    @Autowired
-    private IEvaluationService evaluationService;
-    @Autowired
-    private ScaleLevelCrudService scaleLevelService;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final OldTaskService taskService;
+    private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;
+    private final PositionAssignmentDao positionAssignmentDao;
+    private final CompetenceDao competenceDao;
+    private final ICompetenceService competenceService;
+    private final IModelContext dbContext;
+    private final CompetenceProfilePositionDao competenceProfilePositionDao;
+    private final CompetenceCatalogDao competenceCatalogDao;
+    private final ICompetenceCatalogService competenceCatalogService;
+    private final JsonMapper jsonMapper;
+    private final IEvaluationService evaluationService;
+    private final ScaleLevelCrudService scaleLevelService;
+    private final UnitAccessService unitAccessService;
 
     @Override
     @Transactional(readOnly = true)
@@ -360,12 +349,12 @@ public class OrgCompetenceServiceImpl implements CompetenceService {
         });
 
         var levelFilter = ScaleLevelFilterRequest.builder()
-                .scaleTypeIds(scaleTypeIds)
-                .build();
+            .scaleTypeIds(scaleTypeIds)
+            .build();
         List<com.goodt.drive.rtcore.dictionary.rostalent.dto.ScaleLevelDto> scaleLevelList =
-                scaleLevelService.findAll(levelFilter, Pageable.unpaged()).getContent();
+            scaleLevelService.findAll(levelFilter, Pageable.unpaged()).getContent();
         Map<Long, List<com.goodt.drive.rtcore.dictionary.rostalent.dto.ScaleLevelDto>> scaleTypeIdAndScaleLevels =
-                new HashMap<>();
+            new HashMap<>();
         scaleLevelList.forEach(sclev -> {
             Long scaleTypeId = sclev.getScaleTypeId();
             if (scaleTypeIdAndScaleLevels.containsKey(scaleTypeId)) {
@@ -479,13 +468,13 @@ public class OrgCompetenceServiceImpl implements CompetenceService {
         ScaleTypeDto scaleType = result.getScaleType();
         if (scaleType != null) {
             var levelFilter = ScaleLevelFilterRequest.builder()
-                    .scaleTypeIds(Collections.singletonList(scaleType.getId()))
-                    .build();
+                .scaleTypeIds(Collections.singletonList(scaleType.getId()))
+                .build();
             List<ScaleLevelShortDto> scaleLevels = scaleLevelService.findAll(levelFilter, Pageable.unpaged())
-                    .getContent()
-                    .stream()
-                    .map(ScaleLevelFactory::createShortFromDictDto)
-                    .collect(Collectors.toList());
+                .getContent()
+                .stream()
+                .map(ScaleLevelFactory::createShortFromDictDto)
+                .collect(Collectors.toList());
             scaleType.setScaleLevels(scaleLevels);
         }
         return result;
@@ -559,7 +548,7 @@ public class OrgCompetenceServiceImpl implements CompetenceService {
                                                                        List<CompetenceDto> competenceList,
                                                                        Map<Long, List<RatingDto>> ratingsByIndicator) throws JsonException {
         Map<Long, List<IndicatorInfoDto>> indicatorsByCompetence = getIndicatorsByCompetence(selectedEmployeeId,
-                                                                                             competenceList, ratingsByIndicator);
+            competenceList, ratingsByIndicator);
         Map<Long, List<CompetenceInfoDto>> result = new HashMap<>();
         for (CompetenceDto com : competenceList) {
             List<IndicatorInfoDto> indicators = indicatorsByCompetence.get(com.getId());
@@ -780,14 +769,14 @@ public class OrgCompetenceServiceImpl implements CompetenceService {
     }
 
     private Map<TaskDto, List<TaskDto>> getTasks172by170(Long evaluationEventId, Long employeeId) {
-        Set<Long> excludeStatus = new HashSet<>(asList(STATUS_ID_681,STATUS_ID_682,STATUS_ID_3705, STATUS_ID_3707));
+        Set<Long> excludeStatus = new HashSet<>(asList(STATUS_ID_681, STATUS_ID_682, STATUS_ID_3705, STATUS_ID_3707));
         TaskFindRequest taskSearchCriteria = new TaskFindRequest();
         taskSearchCriteria.setTaskType(asList(TASK_TYPE_ID_170));
         taskSearchCriteria.setTaskTypeFieldId(TASK_FIELD_TYPE_ID_213);
         taskSearchCriteria.setTaskFieldValue(evaluationEventId.toString());
         List<TaskDto> tasks170 = taskService.findTask(taskSearchCriteria)
             .stream()
-            .filter(x-> !excludeStatus.contains(x.getStatus().getId())).collect(Collectors.toList());
+            .filter(x -> !excludeStatus.contains(x.getStatus().getId())).collect(Collectors.toList());
 
         if (CollectionUtils.isEmpty(tasks170)) {
             return Collections.emptyMap();

@@ -2,6 +2,8 @@ package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.Getter;
 
+import lombok.RequiredArgsConstructor;
+
 import me.goodt.vkpht.common.dictionary.core.service.AbstractCrudService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,13 @@ import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDeputyDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.EmployeeDeputyEntity;
 
+@Getter
+@RequiredArgsConstructor
 @Service
 @Transactional
 public class EmployeeDeputyServiceImpl extends AbstractCrudService<EmployeeDeputyEntity, Long> {
 
-    @Getter
-    @Autowired
-    private EmployeeDeputyDao dao;
+    private final EmployeeDeputyDao dao;
 
     @Transactional(readOnly = true)
     public Page<EmployeeDeputyEntity> getAll(Long employeeId, Date date, Pageable pageable) {
@@ -31,7 +33,7 @@ public class EmployeeDeputyServiceImpl extends AbstractCrudService<EmployeeDeput
 
     @Override
     protected void beforeUpdate(EmployeeDeputyEntity entity) {
-        if (entity.getDateTo() != null && !entity.getDateTo().after(new Date())){
+        if (entity.getDateTo() != null && !entity.getDateTo().after(new Date())) {
             throw new ForbiddenException(String.format("employee_deputy with id=%d is already closed ", entity.getId()));
         }
     }

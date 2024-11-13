@@ -17,31 +17,15 @@ import java.util.function.Function;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import com.goodt.drive.rtcore.dto.orgstructure.EmployeeInfoDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.FilterAwarePageResponse;
 import com.goodt.drive.rtcore.dto.tasksetting2.PageResponse;
 import com.goodt.drive.rtcore.dto.tasksetting2.filter.FilterDto;
 import com.goodt.drive.rtcore.dto.tasksetting2.input.PageRequest;
 import com.goodt.drive.rtcore.model.tasksetting2.entities.BaseIdentityEntity;
-import me.goodt.micro.core.entity.DomainObject;
+import me.goodt.vkpht.common.domain.entity.DomainObject;
 
 @UtilityClass
 public class UtilClass {
-
-    /**
-     * Метод извлекает из EmployeeInfoDto строку Фамилия И.О.
-     * @param employee EmployeeInfoDto
-     * @return Фамилия И.О.
-     */
-    public static String getFIOFromEmployee(EmployeeInfoDto employee) {
-        if (employee.getMiddleName() != null) {
-            return String.format("%s %s.%s.", employee.getLastName(),
-                employee.getFirstName().charAt(0),
-                employee.getMiddleName().charAt(0));
-
-        } else
-            return String.format("%s %s.", employee.getLastName(), employee.getFirstName().charAt(0));
-    }
 
     /**
      * Метод превращает Фамилию Имя и Отчество в Фамилию И.О.

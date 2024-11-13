@@ -22,8 +22,8 @@ public class DivisionLinksDao extends AbstractDao<DivisionLinksEntity, DivisionL
 
     public List<Long> findAllParents(Long division) {
         return query().selectFrom(meta)
-                .where(meta.childId.eq(division))
-                .select(meta.parentId)
-                .fetch();
+            .where(meta.childId.eq(division))
+            .select(meta.parentId)
+            .fetch();
     }
 }

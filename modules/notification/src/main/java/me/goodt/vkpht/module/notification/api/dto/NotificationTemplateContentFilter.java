@@ -15,10 +15,10 @@ import org.springdoc.core.annotations.ParameterObject;
 @ParameterObject
 public class NotificationTemplateContentFilter {
 
-	@Schema(description = "Уникальный идентификатор уведомления о события, на который создавался шаблон",
-		requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-		type = "integer")
-	private Long notificationTemplateId;
+    @Schema(description = "Уникальный идентификатор уведомления о события, на который создавался шаблон",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+        type = "integer")
+    private Long notificationTemplateId;
 
     private String unitCode;
 }

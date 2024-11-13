@@ -14,7 +14,7 @@ import me.goodt.vkpht.common.api.AuthService;
 
 @Service
 public class ProjectTeamAssignmentTypeCrudService extends
-        AbstractArchiveDictionaryService<ProjectTeamAssignmentTypeEntity, Long> {
+    AbstractArchiveDictionaryService<ProjectTeamAssignmentTypeEntity, Long> {
 
     @Getter
     @Autowired
@@ -37,7 +37,7 @@ public class ProjectTeamAssignmentTypeCrudService extends
     @Override
     public void delete(Long id) {
         ProjectTeamAssignmentTypeEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("ProjectTeamAssignmentType with id = %s not found", id)));
+            new NotFoundException(String.format("ProjectTeamAssignmentType with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

@@ -13,9 +13,9 @@ import lombok.Setter;
 @Setter
 public class NotificationTokenDto {
 
-	private Long id;
-	private String name;
-	private String description;
-	private String shortName;
-	private String groupName;
+    private Long id;
+    private String name;
+    private String description;
+    private String shortName;
+    private String groupName;
 }

@@ -39,8 +39,7 @@ public class NotificationScheduleService {
             }
         } catch (Exception ex) {
             log.error("Ошибка подключения к Apache Kafka при попытке отправки отложенных уведомлений.", ex);
-        }
-        finally {
+        } finally {
             log.info("STOP SEND DEFERRED NOTIFICATIONS");
         }
     }

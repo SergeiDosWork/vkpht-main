@@ -2,9 +2,11 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Repository;
+
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 
 import jakarta.persistence.EntityManager;
+
 import java.util.Set;
 
 import me.goodt.vkpht.module.orgstructure.domain.entity.LegalEntityTeamAssignmentConflictRoleEntity;
@@ -22,31 +24,31 @@ public class LegalEntityTeamAssignmentConflictRoleDao extends AbstractDao<LegalE
 
     public boolean existConflictRole(Set<Long> legalEntityTeamAssignmentIds, Set<Long> divisionTeamAssignmentIds, Long roleConflictedId) {
         return query().selectFrom(meta)
-                .where(createConflictRoleExpression(legalEntityTeamAssignmentIds, divisionTeamAssignmentIds, roleConflictedId))
-                .fetchCount() > 0;
+            .where(createConflictRoleExpression(legalEntityTeamAssignmentIds, divisionTeamAssignmentIds, roleConflictedId))
+            .fetchCount() > 0;
     }
 
     public Integer findConflictRole(Set<Long> legalEntityTeamAssignmentIds, Set<Long> divisionTeamAssignmentIds, Long roleConflictedId) {
         return query().select(meta.legalEntityTeamAssignmentRoleIdAssigned.systemRole.id)
-                .from(meta)
-                .where(createConflictRoleExpression(legalEntityTeamAssignmentIds, divisionTeamAssignmentIds, roleConflictedId))
-                .fetchFirst();
+            .from(meta)
+            .where(createConflictRoleExpression(legalEntityTeamAssignmentIds, divisionTeamAssignmentIds, roleConflictedId))
+            .fetchFirst();
     }
 
     public boolean existsByRoleIds(Long divisionTeamAssignmentRoleIdAssigned,
                                    Long legalEntityTeamAssignmentRoleIdAssigned,
                                    Long legalEntityTeamAssignmentRoleIdConflicted) {
         BooleanExpression expression =
-                meta.legalEntityTeamAssignmentRoleIdConflicted.id.eq(legalEntityTeamAssignmentRoleIdConflicted);
+            meta.legalEntityTeamAssignmentRoleIdConflicted.id.eq(legalEntityTeamAssignmentRoleIdConflicted);
         expression = divisionTeamAssignmentRoleIdAssigned == null ?
-                expression.and(meta.divisionTeamAssignmentRoleIdAssigned.isNull()) :
-                expression.and(meta.divisionTeamAssignmentRoleIdAssigned.id.eq(divisionTeamAssignmentRoleIdAssigned));
+            expression.and(meta.divisionTeamAssignmentRoleIdAssigned.isNull()) :
+            expression.and(meta.divisionTeamAssignmentRoleIdAssigned.id.eq(divisionTeamAssignmentRoleIdAssigned));
         expression = legalEntityTeamAssignmentRoleIdAssigned == null ?
-                expression.and(meta.legalEntityTeamAssignmentRoleIdAssigned.isNull()) :
-                expression.and(meta.legalEntityTeamAssignmentRoleIdAssigned.id.eq(legalEntityTeamAssignmentRoleIdAssigned));
+            expression.and(meta.legalEntityTeamAssignmentRoleIdAssigned.isNull()) :
+            expression.and(meta.legalEntityTeamAssignmentRoleIdAssigned.id.eq(legalEntityTeamAssignmentRoleIdAssigned));
         return query().selectFrom(meta)
-                .where(expression)
-                .fetchCount() > 0;
+            .where(expression)
+            .fetchCount() > 0;
     }
 
     private static BooleanExpression createConflictRoleExpression(Set<Long> legalEntityTeamAssignmentIds, Set<Long> divisionTeamAssignmentIds, Long roleConflictedId) {
@@ -54,8 +56,8 @@ public class LegalEntityTeamAssignmentConflictRoleDao extends AbstractDao<LegalE
         QRoleEntity divisionAssign = meta.divisionTeamAssignmentRoleIdAssigned;
 
         return meta.legalEntityTeamAssignmentRoleIdConflicted.id.eq(roleConflictedId)
-                .and(legalAssign.isNull().or(legalAssign.id.in(legalEntityTeamAssignmentIds)))
-                .and(divisionAssign.isNull().or(divisionAssign.id.in(divisionTeamAssignmentIds)))
-                .and(legalAssign.isNotNull().or(divisionAssign.isNotNull()));
+            .and(legalAssign.isNull().or(legalAssign.id.in(legalEntityTeamAssignmentIds)))
+            .and(divisionAssign.isNull().or(divisionAssign.id.in(divisionTeamAssignmentIds)))
+            .and(legalAssign.isNotNull().or(divisionAssign.isNotNull()));
     }
 }

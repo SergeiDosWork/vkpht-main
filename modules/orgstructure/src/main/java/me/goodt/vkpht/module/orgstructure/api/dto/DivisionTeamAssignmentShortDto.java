@@ -28,8 +28,8 @@ public class DivisionTeamAssignmentShortDto {
     private DivisionTeamShortDto divisionTeam;
 
     public DivisionTeamAssignmentShortDto(Long id, EmployeeInfoDto employee, String fullName, String shortName, String abbreviation,
-            Date dateFrom, Date dateTo, AssignmentTypeDto type, AssignmentStatusDto status,
-            List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId) {
+                                          Date dateFrom, Date dateTo, AssignmentTypeDto type, AssignmentStatusDto status,
+                                          List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId) {
         this.id = id;
         this.employee = employee;
         this.fullName = fullName;

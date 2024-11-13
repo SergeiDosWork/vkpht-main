@@ -81,14 +81,16 @@ public class LegalEntityTeamAssignmentDao extends AbstractDao<LegalEntityTeamAss
     //      "WHERE (leta.date_to IS NULL OR CURRENT_TIMESTAMP BETWEEN leta.date_from AND leta.date_to) " +
     //      "AND let.legal_entity_id = :legalEntityId AND leta.employee_id = :employeeId", nativeQuery = true)
     // List<LegalEntityTeamAssignment> findByEmployeeIdAndLegalEntityId(@Param("employeeId") Long employeeId, @Param("legalEntityId") Long legalEntityId);
-    public JPQLQuery<?> findAllByEmployeeIdAndLegalEntityId(Long employeeId, Long legalEntityId) {
+    public List<Long> findAllByEmployeeIdAndLegalEntityId(Long employeeId, Long legalEntityId) {
         QLegalEntityTeamEntity qlet = QLegalEntityTeamEntity.legalEntityTeamEntity;
+        QLegalEntityTeamAssignmentEntity qleta = QLegalEntityTeamAssignmentEntity.legalEntityTeamAssignmentEntity;
         BooleanExpression exp = meta.employeeId.eq(employeeId)
             .and(qlet.legalEntityId.eq(legalEntityId))
             .and(meta.dateTo.isNull());
         return query().from(meta)
             .join(meta.legalEntityTeamEntity, qlet)
-            .where(exp);
+            .where(exp)
+            .select(qleta.roleId).fetch();
     }
 
     public List<LegalEntityTeamAssignmentEntity> findByLegalEntityIdAndRoleId(Long legalEntityId, Collection<Long> roleIds, Collection<Long> employeeIds) {
@@ -131,10 +133,10 @@ public class LegalEntityTeamAssignmentDao extends AbstractDao<LegalEntityTeamAss
         );
 
         return Optional.ofNullable(query().from(meta)
-                                       .join(meta.legalEntityTeamEntity, let)
-                                       .where(exp)
-                                       .select(meta)
-                                       .fetchFirst());
+            .join(meta.legalEntityTeamEntity, let)
+            .where(exp)
+            .select(meta)
+            .fetchFirst());
     }
 
     public List<LegalEntityTeamAssignmentEntity> findByEmployeeIdAndLegalEntityId(Long employeeId, Long legalEntityId) {
@@ -149,7 +151,7 @@ public class LegalEntityTeamAssignmentDao extends AbstractDao<LegalEntityTeamAss
             .join(meta.legalEntityTeamEntity, let)
             .where(exp)
             .select(meta)
-                .fetch();
+            .fetch();
     }
 
     public List<LegalEntityTeamAssignmentEntity> findByLegalEntityTeamId(@Param("legalEntityTeamId") Long legalEntityTeamId) {
@@ -168,31 +170,31 @@ public class LegalEntityTeamAssignmentDao extends AbstractDao<LegalEntityTeamAss
         final QLegalEntityTeamEntity legalTeam = QLegalEntityTeamEntity.legalEntityTeamEntity;
         final QRoleEntity role = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                legalTeam.dateTo.isNull(),
-                meta.employeeId.eq(employeeId)
+            meta.dateTo.isNull(),
+            legalTeam.dateTo.isNull(),
+            meta.employeeId.eq(employeeId)
         );
 
         QBean<LegalEntityTeamAssignmentCompactProjection> proj = Projections.bean(LegalEntityTeamAssignmentCompactProjection.class,
-                                                                                  meta.id.as("id"),
-                                                                                  meta.legalEntityTeamId.as("legalEntityTeamId"),
-                                                                                  role.systemRoleId.as("systemRoleId"),
-                                                                                  meta.fullName.as("fullName"),
-                                                                                  meta.shortName.as("shortName")
+            meta.id.as("id"),
+            meta.legalEntityTeamId.as("legalEntityTeamId"),
+            role.systemRoleId.as("systemRoleId"),
+            meta.fullName.as("fullName"),
+            meta.shortName.as("shortName")
         );
 
         return query().select(proj)
-                .from(meta)
-                .join(legalTeam).on(legalTeam.id.eq(meta.legalEntityTeamId))
-                .join(role).on(role.id.eq(meta.roleId))
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .join(legalTeam).on(legalTeam.id.eq(meta.legalEntityTeamId))
+            .join(role).on(role.id.eq(meta.roleId))
+            .where(exp)
+            .fetch();
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

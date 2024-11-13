@@ -35,7 +35,7 @@ public class LocationGroupCrudService extends AbstractArchiveDictionaryService<L
     @Override
     public void delete(Long id) {
         LocationGroupEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("LocationGroup with id = %s not found", id)));
+            new NotFoundException(String.format("LocationGroup with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

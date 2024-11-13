@@ -10,10 +10,10 @@ public class PositionGroupPositionFactory {
 
     public static PositionGroupPositionDto create(PositionGroupPositionEntity entity) {
         return new PositionGroupPositionDto(
-                entity.getId(),
-                entity.getPosition().getId(),
-                entity.getPositionGroup().getId(),
-                entity.getDateFrom(),
-                entity.getDateTo());
+            entity.getId(),
+            entity.getPosition().getId(),
+            entity.getPositionGroup().getId(),
+            entity.getDateFrom(),
+            entity.getDateTo());
     }
 }

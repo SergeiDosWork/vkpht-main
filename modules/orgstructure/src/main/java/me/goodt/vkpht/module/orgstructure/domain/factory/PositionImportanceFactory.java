@@ -10,7 +10,7 @@ public class PositionImportanceFactory {
 
     public static PositionImportanceDto create(PositionImportanceEntity entity) {
         return new PositionImportanceDto(entity.getId(), entity.getName(), entity.getSuccessorCountMax(),
-                entity.getSuccessorCountRec(), entity.getDescription(), entity.getIndex(),
-                entity.getDateFrom(), entity.getDateTo());
+            entity.getSuccessorCountRec(), entity.getDescription(), entity.getIndex(),
+            entity.getDateFrom(), entity.getDateTo());
     }
 }

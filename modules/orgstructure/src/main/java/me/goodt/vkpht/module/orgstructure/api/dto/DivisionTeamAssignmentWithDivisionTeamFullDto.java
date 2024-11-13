@@ -23,9 +23,9 @@ public class DivisionTeamAssignmentWithDivisionTeamFullDto {
     private DivisionTeamFullDto divisionTeam;
 
     public DivisionTeamAssignmentWithDivisionTeamFullDto(Long id, EmployeeInfoDto employee, String fullName, String shortName, String abbreviation,
-            Date dateFrom, Date dateTo, AssignmentTypeDto type, AssignmentStatusDto status,
-            List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId,
-            DivisionTeamFullDto divisionTeam) {
+                                                         Date dateFrom, Date dateTo, AssignmentTypeDto type, AssignmentStatusDto status,
+                                                         List<DivisionTeamAssignmentRotationShortDto> divisionTeamAssignmentRotations, String externalId,
+                                                         DivisionTeamFullDto divisionTeam) {
         this.id = id;
         this.employee = employee;
         this.fullName = fullName;

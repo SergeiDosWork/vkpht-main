@@ -10,10 +10,10 @@ public class CalculationMethodFactory {
 
     public static CalculationMethodDto create(CalculationMethodEntity entity) {
         return new CalculationMethodDto(
-                entity.getId(),
-                entity.getName(),
-                entity.getCode(),
-                entity.getDescription()
+            entity.getId(),
+            entity.getName(),
+            entity.getCode(),
+            entity.getDescription()
         );
     }
 }

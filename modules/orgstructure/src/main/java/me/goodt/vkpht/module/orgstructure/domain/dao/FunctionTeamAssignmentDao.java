@@ -10,16 +10,16 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.QFunctionTeamAssignmentE
 @Repository
 public class FunctionTeamAssignmentDao extends AbstractDao<FunctionTeamAssignmentEntity, Long> {
 
-	private static final QFunctionTeamAssignmentEntity meta = QFunctionTeamAssignmentEntity.functionTeamAssignmentEntity;
+    private static final QFunctionTeamAssignmentEntity meta = QFunctionTeamAssignmentEntity.functionTeamAssignmentEntity;
 
-	public FunctionTeamAssignmentDao(EntityManager em) {
-		super(FunctionTeamAssignmentEntity.class, em);
-	}
+    public FunctionTeamAssignmentDao(EntityManager em) {
+        super(FunctionTeamAssignmentEntity.class, em);
+    }
 
-	public Long findIdByExternalId(String externalId) {
-		return query().from(meta)
-			.select(meta.id)
-			.where(meta.externalId.eq(externalId))
-			.fetchFirst();
-	}
+    public Long findIdByExternalId(String externalId) {
+        return query().from(meta)
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
+    }
 }

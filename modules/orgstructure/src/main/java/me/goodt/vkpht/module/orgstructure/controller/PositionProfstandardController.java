@@ -42,8 +42,8 @@ public class PositionProfstandardController {
     @BadRequestAPIResponses
     @PostMapping("/api/position-profstandard/create")
     public PositionProfstandardDto createPositionType(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление cвязи должности с профстандартами (таблица org_position_profstandard)")
-            @RequestBody PositionProfstandardInputDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление cвязи должности с профстандартами (таблица org_position_profstandard)")
+        @RequestBody PositionProfstandardInputDto dto) throws NotFoundException {
         return PositionProfstandardFactory.create(positionProfstandardService.create(dto));
     }
 
@@ -51,9 +51,9 @@ public class PositionProfstandardController {
     @BadRequestAPIResponses
     @PutMapping("/api/position-profstandard/update/{id}")
     public PositionProfstandardDto updatePositionType(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление cвязи должности с профстандартами (таблица org_position_profstandard)")
-            @RequestBody PositionProfstandardInputDto dto,
-            @PathVariable(name = "id") Long id) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление cвязи должности с профстандартами (таблица org_position_profstandard)")
+        @RequestBody PositionProfstandardInputDto dto,
+        @PathVariable(name = "id") Long id) throws NotFoundException {
         return PositionProfstandardFactory.create(positionProfstandardService.update(dto, id));
     }
 

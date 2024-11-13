@@ -9,6 +9,6 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionProfstandardEnti
 public class PositionProfstandardFactory {
     public static PositionProfstandardDto create(PositionProfstandardEntity entity) {
         return new PositionProfstandardDto(entity.getId(), entity.getCode(), entity.getDateFrom(),
-                                           entity.getDateTo(), entity.getPosition().getId());
+            entity.getDateTo(), entity.getPosition().getId());
     }
 }

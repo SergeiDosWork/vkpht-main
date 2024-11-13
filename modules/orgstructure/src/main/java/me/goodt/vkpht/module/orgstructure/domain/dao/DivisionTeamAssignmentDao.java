@@ -51,15 +51,15 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         BooleanExpression exp = meta.dateTo.isNull()
-                .and(dt.dateTo.isNull())
-                .and(divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null)
-                .and(legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null);
+            .and(dt.dateTo.isNull())
+            .and(divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null)
+            .and(legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null);
         JPQLQuery<DivisionTeamAssignmentEntity> select = query().selectFrom(meta)
-                .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
-                .join(dt).on(dtr.divisionTeam.eq(dt))
-                .where(exp);
+            .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
+            .join(dt).on(dtr.divisionTeam.eq(dt))
+            .where(exp);
         JPQLQuery<DivisionTeamAssignmentEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(DivisionTeamAssignmentEntity.class))
-                .applyPagination(pageable, select);
+            .applyPagination(pageable, select);
         List<DivisionTeamAssignmentEntity> content = pagedQuery.fetch();
         return new PageImpl<>(content, pageable, select.fetchCount());
     }
@@ -68,42 +68,42 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null,
-                legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null,
+            legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null
         );
         return query().selectFrom(meta)
-                .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
-                .join(dt).on(dtr.divisionTeam.id.eq(dt.id))
-                .where(exp)
-                .fetch();
+            .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
+            .join(dt).on(dtr.divisionTeam.id.eq(dt.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<Long> findAllIdsByParams(List<Long> legalEntityIds, List<Long> divisionIds) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null,
-                legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            divisionIds != null && !divisionIds.isEmpty() ? dt.divisionId.in(divisionIds) : null,
+            legalEntityIds != null && !legalEntityIds.isEmpty() ? dt.division.legalEntityId.in(legalEntityIds) : null
         );
         return query().select(meta.id)
-                .from(meta)
-                .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
-                .join(dt).on(dtr.divisionTeam.id.eq(dt.id))
-                .where(exp)
-                .orderBy(meta.id.asc())
-                .fetch();
+            .from(meta)
+            .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
+            .join(dt).on(dtr.divisionTeam.id.eq(dt.id))
+            .where(exp)
+            .orderBy(meta.id.asc())
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> getDivisionTeamAssignments(List<Long> ids, List<Long> employeeIds, Long divisionTeamId, Boolean withClosed) {
         final BooleanExpression exp = Expressions.allOf(
-                ids != null && !ids.isEmpty() ? meta.id.in(ids) : null,
-                employeeIds != null && !employeeIds.isEmpty() ? meta.employeeId.in(employeeIds) : null,
-                divisionTeamId != null ? QDivisionTeamRoleEntity.divisionTeamRoleEntity.divisionTeamId.eq(divisionTeamId) : null,
-                withClosed != null && withClosed ? null : meta.dateTo.isNull()
+            ids != null && !ids.isEmpty() ? meta.id.in(ids) : null,
+            employeeIds != null && !employeeIds.isEmpty() ? meta.employeeId.in(employeeIds) : null,
+            divisionTeamId != null ? QDivisionTeamRoleEntity.divisionTeamRoleEntity.divisionTeamId.eq(divisionTeamId) : null,
+            withClosed != null && withClosed ? null : meta.dateTo.isNull()
         );
 
         StopWatch sw = StopWatch.createStarted();
@@ -124,12 +124,12 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         QRoleEntity role = QRoleEntity.roleEntity;
 
         BooleanExpression exp = Expressions.allOf(
-                CollectionUtils.isEmpty(ids) ? null : meta.id.in(ids),
-                CollectionUtils.isEmpty(employeeIds) ? null : meta.employeeId.in(employeeIds),
-                meta.dateTo.isNull(),
-                emp.dateTo.isNull(),
-                team.dateTo.isNull(),
-                div.dateTo.isNull()
+            CollectionUtils.isEmpty(ids) ? null : meta.id.in(ids),
+            CollectionUtils.isEmpty(employeeIds) ? null : meta.employeeId.in(employeeIds),
+            meta.dateTo.isNull(),
+            emp.dateTo.isNull(),
+            team.dateTo.isNull(),
+            div.dateTo.isNull()
         );
 
         QBean<DivisionTeamAssignmentCompactProjection> proj = Projections.bean(
@@ -149,17 +149,17 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         StopWatch sw = StopWatch.createStarted();
 
         List<DivisionTeamAssignmentCompactProjection> result = query()
-                .select(proj)
-                .from(meta)
-                .join(emp).on(emp.id.eq(meta.employeeId))
-                .join(person).on(person.id.eq(emp.personId))
-                .join(teamRole).on(teamRole.id.eq(meta.divisionTeamRoleId))
-                .join(team).on(team.id.eq(teamRole.divisionTeamId))
-                .join(div).on(div.id.eq(team.divisionId))
-                .join(role).on(role.id.eq(teamRole.roleId))
-                .where(exp)
-                .orderBy(role.systemRoleId.asc())
-                .fetch();
+            .select(proj)
+            .from(meta)
+            .join(emp).on(emp.id.eq(meta.employeeId))
+            .join(person).on(person.id.eq(emp.personId))
+            .join(teamRole).on(teamRole.id.eq(meta.divisionTeamRoleId))
+            .join(team).on(team.id.eq(teamRole.divisionTeamId))
+            .join(div).on(div.id.eq(team.divisionId))
+            .join(role).on(role.id.eq(teamRole.roleId))
+            .where(exp)
+            .orderBy(role.systemRoleId.asc())
+            .fetch();
 
         sw.stop();
         log.info("dao getDivisionTeamAssignmentCompactList fetch {}, count {}", sw.getTime(), result.size());
@@ -176,11 +176,11 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
             .leftJoin(QDivisionTeamRoleEntity.divisionTeamRoleEntity.divisionTeam, QDivisionTeamEntity.divisionTeamEntity).fetchJoin()
             .leftJoin(QDivisionTeamEntity.divisionTeamEntity.division, QDivisionEntity.divisionEntity).fetchJoin()
             .leftJoin(QDivisionEntity.divisionEntity.legalEntityEntity, QLegalEntityEntity.legalEntityEntity).fetchJoin()
-                .leftJoin(QDivisionTeamEntity.divisionTeamEntity.type, QTeamTypeEntity.teamTypeEntity).fetchJoin()
-                .leftJoin(QDivisionTeamEntity.divisionTeamEntity.division, QDivisionEntity.divisionEntity).fetchJoin()
-                .leftJoin(QDivisionTeamRoleEntity.divisionTeamRoleEntity.positionImportance, QPositionImportanceEntity.positionImportanceEntity).fetchJoin()
-                .leftJoin(QDivisionTeamRoleEntity.divisionTeamRoleEntity.role, QRoleEntity.roleEntity).fetchJoin()
-                .leftJoin(QRoleEntity.roleEntity.systemRole, QSystemRoleEntity.systemRoleEntity).fetchJoin();
+            .leftJoin(QDivisionTeamEntity.divisionTeamEntity.type, QTeamTypeEntity.teamTypeEntity).fetchJoin()
+            .leftJoin(QDivisionTeamEntity.divisionTeamEntity.division, QDivisionEntity.divisionEntity).fetchJoin()
+            .leftJoin(QDivisionTeamRoleEntity.divisionTeamRoleEntity.positionImportance, QPositionImportanceEntity.positionImportanceEntity).fetchJoin()
+            .leftJoin(QDivisionTeamRoleEntity.divisionTeamRoleEntity.role, QRoleEntity.roleEntity).fetchJoin()
+            .leftJoin(QRoleEntity.roleEntity.systemRole, QSystemRoleEntity.systemRoleEntity).fetchJoin();
     }
 
     public DivisionTeamAssignmentEntity getDivisionTeamAssignmentFirstByRole(Long employeeId) {
@@ -188,8 +188,8 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         addBaseFetch(query);
 
         return query.where(meta.employeeId.eq(employeeId))
-                .orderBy(QSystemRoleEntity.systemRoleEntity.id.asc())
-                .fetchFirst();
+            .orderBy(QSystemRoleEntity.systemRoleEntity.id.asc())
+            .fetchFirst();
     }
 
     public CompactAssignmentDto findFirstAssignmentByExtEmployeeId(String extEmployeeId) {
@@ -199,51 +199,51 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QEmployeeEntity qem = QEmployeeEntity.employeeEntity;
         final QDivisionTeamEntity qdt = QDivisionTeamEntity.divisionTeamEntity;
         QBean<CompactAssignmentDto> proj = Projections.bean(CompactAssignmentDto.class,
-                                                            meta.employeeId.as("employeeId"), qdt.divisionId.as("divisionId"), meta.id.as("id"), sr.id.as("systemRoleId"));
+            meta.employeeId.as("employeeId"), qdt.divisionId.as("divisionId"), meta.id.as("id"), sr.id.as("systemRoleId"));
         final BooleanExpression exp = meta.dateTo.isNull().
-                and(qem.externalId.eq(extEmployeeId));
+            and(qem.externalId.eq(extEmployeeId));
         return query().from(meta)
-                .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
-                .join(dtr.divisionTeam, qdt)
-                .join(dtr.role, r)
-                .join(r.systemRole, sr)
-                .join(meta.employee, qem)
-                .where(exp)
-                .orderBy(sr.id.asc())
-                .select(proj)
-                .fetchFirst();
+            .join(dtr).on(meta.divisionTeamRoleId.eq(dtr.id))
+            .join(dtr.divisionTeam, qdt)
+            .join(dtr.role, r)
+            .join(r.systemRole, sr)
+            .join(meta.employee, qem)
+            .where(exp)
+            .orderBy(sr.id.asc())
+            .select(proj)
+            .fetchFirst();
     }
 
     public Map<Long, List<DivisionTeamAssignmentEntity>> findHeadByDivisionIds(List<Long> divisionIds, Integer isHead, Integer systemRoleId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         BooleanExpression exp = meta.dateTo.isNull()
-                .and(dtr.divisionTeam.dateTo.isNull())
-                .and(dtr.divisionTeam.divisionId.in(divisionIds))
-                .and(dtr.role.systemRole.id.eq(systemRoleId));
+            .and(dtr.divisionTeam.dateTo.isNull())
+            .and(dtr.divisionTeam.divisionId.in(divisionIds))
+            .and(dtr.role.systemRole.id.eq(systemRoleId));
 
         if (isHead != null) {
             exp = exp.and(dtr.divisionTeam.isHead.eq(isHead));
         }
 
         return query()
-                .from(meta)
-                .select(dtr.divisionTeam.divisionId, meta)
-                .where(exp)
-                .fetch()
-                .stream()
-                .collect(groupingBy(t -> t.get(dtr.divisionTeam.divisionId), mapping(t -> t.get(meta), toList())));
+            .from(meta)
+            .select(dtr.divisionTeam.divisionId, meta)
+            .where(exp)
+            .fetch()
+            .stream()
+            .collect(groupingBy(t -> t.get(dtr.divisionTeam.divisionId), mapping(t -> t.get(meta), toList())));
     }
 
     public DivisionTeamAssignmentEntity findByEmployeeIdAnDivisionTeamId(Long employeeId, Long divisionTeamId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                meta.employeeId.eq(employeeId),
-                dtr.divisionTeamId.eq(divisionTeamId)
+            meta.dateTo.isNull(),
+            meta.employeeId.eq(employeeId),
+            dtr.divisionTeamId.eq(divisionTeamId)
         );
         return query().selectFrom(meta)
-                .where(exp)
-                .fetchOne();
+            .where(exp)
+            .fetchOne();
     }
 
     public JPQLQuery<?> findQueryEmployeeIdAnDivisionTeamId(Long employeeId, Long divTeamId) {
@@ -251,16 +251,16 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = QDivisionTeamEntity.divisionTeamEntity;
         final QRoleEntity r = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                meta.employeeId.eq(employeeId),
-                dtr.divisionTeamId.eq(divTeamId)
+            meta.dateTo.isNull(),
+            meta.employeeId.eq(employeeId),
+            dtr.divisionTeamId.eq(divTeamId)
         );
 
         return query().from(meta)
-                .innerJoin(meta.divisionTeamRole, dtr)
-                .innerJoin(dtr.divisionTeam, dt)
-                .innerJoin(dtr.role, r)
-                .where(exp);
+            .innerJoin(meta.divisionTeamRole, dtr)
+            .innerJoin(dtr.divisionTeam, dt)
+            .innerJoin(dtr.role, r)
+            .where(exp);
     }
 
     public List<DivisionAssignmentRoleDto> findByDivisionTeamParentId(Long divisionTeamParentId) {
@@ -269,19 +269,19 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = QDivisionTeamEntity.divisionTeamEntity;
         final QRoleEntity qrl = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                qdtas.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                dt.parentId.eq(divisionTeamParentId)
+            qdtas.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            dt.parentId.eq(divisionTeamParentId)
         );
         final QBean<DivisionAssignmentRoleDto> proj = Projections.bean(DivisionAssignmentRoleDto.class,
-                                                                       dt.id.as("divisionTeamId"), qrl.systemRoleId.as("systemRoleId"), qdtas.as("assignment"));
+            dt.id.as("divisionTeamId"), qrl.systemRoleId.as("systemRoleId"), qdtas.as("assignment"));
         return query().from(qdtas)
-                .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .leftJoin(dtr.role, qrl)
-                .where(exp)
-                .select(proj)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .leftJoin(dtr.role, qrl)
+            .where(exp)
+            .select(proj)
+            .fetch();
     }
 
     public JPQLQuery<?> findQueryEmployeeIdAndSystemRole(Long employeeId, Integer roleId) {
@@ -289,17 +289,17 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = QDivisionTeamEntity.divisionTeamEntity;
         final QRoleEntity r = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                meta.employeeId.eq(employeeId),
-                r.systemRole.id.eq(roleId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            meta.employeeId.eq(employeeId),
+            r.systemRole.id.eq(roleId)
         );
 
         return query().from(meta)
-                .innerJoin(meta.divisionTeamRole, dtr)
-                .innerJoin(dtr.divisionTeam, dt)
-                .innerJoin(dtr.role, r)
-                .where(exp);
+            .innerJoin(meta.divisionTeamRole, dtr)
+            .innerJoin(dtr.divisionTeam, dt)
+            .innerJoin(dtr.role, r)
+            .where(exp);
     }
 
     public JPQLQuery<?> findQueryEmployeeIdsAndSystemRole(List<Long> employeeIds, Integer roleId) {
@@ -307,32 +307,32 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = QDivisionTeamEntity.divisionTeamEntity;
         final QRoleEntity r = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                meta.employeeId.in(employeeIds),
-                r.systemRole.id.eq(roleId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            meta.employeeId.in(employeeIds),
+            r.systemRole.id.eq(roleId)
         );
 
         return query().from(meta)
-                .innerJoin(meta.divisionTeamRole, dtr)
-                .innerJoin(dtr.divisionTeam, dt)
-                .innerJoin(dtr.role, r)
-                .where(exp);
+            .innerJoin(meta.divisionTeamRole, dtr)
+            .innerJoin(dtr.divisionTeam, dt)
+            .innerJoin(dtr.role, r)
+            .where(exp);
     }
 
     public List<DivisionTeamAssignmentEntity> fetchByDivisionTeamIdAndSystemRoleId(Long divisionTeamId, Integer systemRoleId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dtr.divisionTeam.id.eq(divisionTeamId),
-                r.systemRole.id.eq(systemRoleId)
+            meta.dateTo.isNull(),
+            dtr.divisionTeam.id.eq(divisionTeamId),
+            r.systemRole.id.eq(systemRoleId)
         );
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(r).on(dtr.role.id.eq(r.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(r).on(dtr.role.id.eq(r.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentShort> fetchShortByDivTeamAndSysRole(List<Long> divisionTeamIds, Integer systemRoleId) {
@@ -340,30 +340,30 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                qdtas.dateTo.isNull(),
-                dtr.divisionTeam.id.in(divisionTeamIds),
-                r.systemRole.id.eq(systemRoleId));
+            qdtas.dateTo.isNull(),
+            dtr.divisionTeam.id.in(divisionTeamIds),
+            r.systemRole.id.eq(systemRoleId));
 
         return query().selectFrom(qdtas)
-                .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
-                .innerJoin(r).on(dtr.role.id.eq(r.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
+            .innerJoin(r).on(dtr.role.id.eq(r.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> fetchByNotSystemRoleId(Long divisionTeamId, Integer systemRoleId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dtr.divisionTeam.id.eq(divisionTeamId),
-                r.systemRole.id.notIn(systemRoleId)
+            meta.dateTo.isNull(),
+            dtr.divisionTeam.id.eq(divisionTeamId),
+            r.systemRole.id.notIn(systemRoleId)
         );
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(r).on(dtr.role.id.eq(r.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(r).on(dtr.role.id.eq(r.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentShort> fetchShortByNotSystemRoleId(List<Long> divisionTeamIds, Integer systemRoleId) {
@@ -371,15 +371,15 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                qdtas.dateTo.isNull(),
-                dtr.divisionTeam.id.in(divisionTeamIds),
-                r.systemRole.id.notIn(systemRoleId));
+            qdtas.dateTo.isNull(),
+            dtr.divisionTeam.id.in(divisionTeamIds),
+            r.systemRole.id.notIn(systemRoleId));
 
         return query().selectFrom(qdtas)
-                .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
-                .innerJoin(r).on(dtr.role.id.eq(r.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(qdtas.divisionTeamRoleId))
+            .innerJoin(r).on(dtr.role.id.eq(r.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionAssignmentRoleDto> findShortByParentDivisionTeams(List<Long> parentDivTeams) {
@@ -388,18 +388,18 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = QDivisionTeamEntity.divisionTeamEntity;
         final QRoleEntity qrl = QRoleEntity.roleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                qdta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                dt.parentId.in(parentDivTeams));
+            qdta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            dt.parentId.in(parentDivTeams));
         final QBean<DivisionAssignmentRoleDto> proj = Projections.bean(DivisionAssignmentRoleDto.class,
-                                                                       dt.id.as("divisionTeamId"), qrl.systemRoleId.as("systemRoleId"), qdta.as("assignment"));
+            dt.id.as("divisionTeamId"), qrl.systemRoleId.as("systemRoleId"), qdta.as("assignment"));
         return query().from(qdta)
-                .innerJoin(dtr).on(dtr.id.eq(qdta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .leftJoin(dtr.role, qrl)
-                .where(exp)
-                .select(proj)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(qdta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .leftJoin(dtr.role, qrl)
+            .where(exp)
+            .select(proj)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> getAssignmentByPositionCategory(Long positionCategoryId) {
@@ -407,34 +407,34 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QPositionAssignmentEntity posAss = QPositionAssignmentEntity.positionAssignmentEntity;
         final QPositionEntity pos = QPositionEntity.positionEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                emp.dateTo.isNull(),
-                posAss.dateTo.isNull(),
-                pos.dateTo.isNull(),
-                pos.category.id.eq(positionCategoryId)
+            meta.dateTo.isNull(),
+            emp.dateTo.isNull(),
+            posAss.dateTo.isNull(),
+            pos.dateTo.isNull(),
+            pos.category.id.eq(positionCategoryId)
         );
         return query().selectFrom(meta)
-                .innerJoin(emp).on(emp.id.eq(meta.employeeId))
-                .innerJoin(posAss).on(posAss.employeeId.eq(emp.id))
-                .innerJoin(pos).on(pos.id.eq(posAss.position.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(emp).on(emp.id.eq(meta.employeeId))
+            .innerJoin(posAss).on(posAss.employeeId.eq(emp.id))
+            .innerJoin(pos).on(pos.id.eq(posAss.position.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> findByEmployeeId(Long employeeId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                meta.employeeId.eq(employeeId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            meta.employeeId.eq(employeeId)
         );
 
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .where(exp)
+            .fetch();
     }
 
     public Set<Long> getDivisionIdsByEmployeeIdAndSystemRoleId(Long employeeId, Integer systemRoleId) {
@@ -442,53 +442,53 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                meta.employeeId.eq(employeeId),
-                r.systemRoleId.eq(systemRoleId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            meta.employeeId.eq(employeeId),
+            r.systemRoleId.eq(systemRoleId)
         );
 
         return new HashSet<>(query().from(meta)
-                                     .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                                     .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                                     .innerJoin(r).on(r.id.eq(dtr.role.id))
-                                     .where(exp)
-                                     .select(dt.divisionId)
-                                     .fetch());
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .innerJoin(r).on(r.id.eq(dtr.role.id))
+            .where(exp)
+            .select(dt.divisionId)
+            .fetch());
     }
 
     public List<DivisionTeamAssignmentEntity> findByDivisionTeamId(Long divisionTeamId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("division_team_role");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dtr.divisionTeamId.eq(divisionTeamId)
+            meta.dateTo.isNull(),
+            dtr.divisionTeamId.eq(divisionTeamId)
         );
 
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> findAllByEmployeeIdAnDivisionTeamIds(Long employeeId, Collection<Long> divisionTeamIds) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                meta.employeeId.eq(employeeId),
-                dtr.divisionTeamId.in(divisionTeamIds)
+            meta.dateTo.isNull(),
+            meta.employeeId.eq(employeeId),
+            dtr.divisionTeamId.in(divisionTeamIds)
         );
 
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .where(exp)
+            .fetch();
     }
 
     @Override
     public Optional<DivisionTeamAssignmentEntity> findById(Long id) {
         return Optional.ofNullable(query().selectFrom(meta)
-                                           .where(meta.id.eq(id))
-                                           .fetchOne());
+            .where(meta.id.eq(id))
+            .fetchOne());
     }
 
     public Optional<EmployeeTeamInfoDto> findTeamInfoByAssignmentId(Long id) {
@@ -497,35 +497,35 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
 
         QBean<EmployeeTeamInfoDto> projection = Projections.bean(EmployeeTeamInfoDto.class, meta.employeeId.as("employeeId"), dtr.divisionTeamId.as("teamId"));
         return Optional.ofNullable(query()
-                                           .from(meta)
-                                           .innerJoin(em).on(em.id.eq(meta.employeeId))
-                                           .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                                           .where(meta.id.eq(id))
-                                           .select(projection)
-                                           .fetchOne());
+            .from(meta)
+            .innerJoin(em).on(em.id.eq(meta.employeeId))
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .where(meta.id.eq(id))
+            .select(projection)
+            .fetchOne());
     }
 
     public EmployeeTeamInfoDto findFirstTeamInfoByExternalEmployeeId(String externalEmployeeId) {
         QEmployeeEntity em = QEmployeeEntity.employeeEntity;
         QDivisionTeamRoleEntity dtr = QDivisionTeamRoleEntity.divisionTeamRoleEntity;
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                em.externalId.eq(externalEmployeeId)
+            meta.dateTo.isNull(),
+            em.externalId.eq(externalEmployeeId)
         );
         QBean<EmployeeTeamInfoDto> projection = Projections.bean(EmployeeTeamInfoDto.class, meta.employeeId.as("employeeId"), dtr.divisionTeamId.as("teamId"));
         return query()
-                .from(meta)
-                .innerJoin(em).on(em.id.eq(meta.employeeId))
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .where(exp)
-                .select(projection)
-                .fetchFirst();
+            .from(meta)
+            .innerJoin(em).on(em.id.eq(meta.employeeId))
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .where(exp)
+            .select(projection)
+            .fetchFirst();
     }
 
     @Override
     public List<DivisionTeamAssignmentEntity> findAll() {
         return query().selectFrom(meta)
-                .fetch();
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> getHeadDivisionTeamAssignmentByDivisionId(Long divisionId, Integer isHead, Integer systemRoleId) {
@@ -533,19 +533,19 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final QRoleEntity r = new QRoleEntity("role");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                dt.divisionId.eq(divisionId),
-                dt.isHead.eq(isHead),
-                r.systemRoleId.eq(systemRoleId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            dt.divisionId.eq(divisionId),
+            dt.isHead.eq(isHead),
+            r.systemRoleId.eq(systemRoleId)
         );
 
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .innerJoin(r).on(r.id.eq(dtr.role.id))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .innerJoin(r).on(r.id.eq(dtr.role.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> getDivisionTeamAssignmentsByLegalEntityIds(List<Long> legalEntityIds, boolean isHead, Integer systemRoleId) {
@@ -553,88 +553,88 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final QDivisionEntity d = new QDivisionEntity("division");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                d.legalEntityId.in(legalEntityIds),
-                dtr.role.systemRoleId.eq(systemRoleId).or(Expressions.asBoolean(isHead).eq(false))
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            d.legalEntityId.in(legalEntityIds),
+            dtr.role.systemRoleId.eq(systemRoleId).or(Expressions.asBoolean(isHead).eq(false))
         );
 
         return query().selectFrom(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .innerJoin(d).on(d.id.eq(dt.divisionId))
-                .where(exp)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .innerJoin(d).on(d.id.eq(dt.divisionId))
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> getDivisionTeamAssignmentsByDivisionTeamRoleId(Long divisionTeamRoleId) {
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                meta.divisionTeamRoleId.eq(divisionTeamRoleId)
+            meta.dateTo.isNull(),
+            meta.divisionTeamRoleId.eq(divisionTeamRoleId)
         );
 
         return query().selectFrom(meta)
-                .leftJoin(meta.employee, QEmployeeEntity.employeeEntity).fetchJoin()
-                .leftJoin(QEmployeeEntity.employeeEntity.person, QPersonEntity.personEntity).fetchJoin()
-                .leftJoin(meta.type, QAssignmentTypeEntity.assignmentTypeEntity).fetchJoin()
-                .where(exp)
-                .fetch();
+            .leftJoin(meta.employee, QEmployeeEntity.employeeEntity).fetchJoin()
+            .leftJoin(QEmployeeEntity.employeeEntity.person, QPersonEntity.personEntity).fetchJoin()
+            .leftJoin(meta.type, QAssignmentTypeEntity.assignmentTypeEntity).fetchJoin()
+            .where(exp)
+            .fetch();
     }
 
     public Map<Long, List<DivisionTeamAssignmentEntity>> getDivisionTeamAssignmentsByDivisionTeamRoleIds(List<Long> divisionTeamRoleIds) {
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                meta.divisionTeamRoleId.in(divisionTeamRoleIds)
+            meta.dateTo.isNull(),
+            meta.divisionTeamRoleId.in(divisionTeamRoleIds)
         );
 
         return query()
-                .select(meta.divisionTeamRoleId, meta)
-                .from(meta)
-                .leftJoin(meta.divisionTeamRole, QDivisionTeamRoleEntity.divisionTeamRoleEntity).fetchJoin()
-                .leftJoin(meta.employee, QEmployeeEntity.employeeEntity).fetchJoin()
-                .leftJoin(QEmployeeEntity.employeeEntity.person, QPersonEntity.personEntity).fetchJoin()
-                .leftJoin(meta.type, QAssignmentTypeEntity.assignmentTypeEntity).fetchJoin()
-                .where(exp)
-                .stream()
-                .collect(groupingBy(t -> t.get(meta.divisionTeamRoleId), mapping(t -> t.get(meta), toList())));
+            .select(meta.divisionTeamRoleId, meta)
+            .from(meta)
+            .leftJoin(meta.divisionTeamRole, QDivisionTeamRoleEntity.divisionTeamRoleEntity).fetchJoin()
+            .leftJoin(meta.employee, QEmployeeEntity.employeeEntity).fetchJoin()
+            .leftJoin(QEmployeeEntity.employeeEntity.person, QPersonEntity.personEntity).fetchJoin()
+            .leftJoin(meta.type, QAssignmentTypeEntity.assignmentTypeEntity).fetchJoin()
+            .where(exp)
+            .stream()
+            .collect(groupingBy(t -> t.get(meta.divisionTeamRoleId), mapping(t -> t.get(meta), toList())));
     }
 
     public List<DivisionTeamAssignmentEntity> getCurrentDivisionTeamAssignmentByDivisionTeamRoleId(Long divisionTeamRoleId) {
         final BooleanExpression exp = Expressions.allOf(
-                meta.divisionTeamRoleId.eq(divisionTeamRoleId),
-                meta.dateTo.isNull()
+            meta.divisionTeamRoleId.eq(divisionTeamRoleId),
+            meta.dateTo.isNull()
         );
 
         return query().selectFrom(meta)
-                .where(exp)
-                .fetch();
+            .where(exp)
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> findByIds(List<Long> ids) {
         return query().selectFrom(meta)
-                .where(meta.id.in(ids))
-                .fetch();
+            .where(meta.id.in(ids))
+            .fetch();
     }
 
     public List<DivisionTeamAssignmentEntity> findActualByIds(List<Long> ids) {
         BooleanExpression exp = meta.id.in(ids)
-                .and(meta.dateTo.isNull());
+            .and(meta.dateTo.isNull());
         return query().selectFrom(meta)
-                .where(exp)
-                .fetch();
+            .where(exp)
+            .fetch();
     }
 
     public DivisionTeamAssignmentEntity findFirstByExternalEmployeeId(String externalEmployeeId) {
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                QEmployeeEntity.employeeEntity.id.eq(meta.employeeId),
-                QEmployeeEntity.employeeEntity.externalId.eq(externalEmployeeId)
+            meta.dateTo.isNull(),
+            QEmployeeEntity.employeeEntity.id.eq(meta.employeeId),
+            QEmployeeEntity.employeeEntity.externalId.eq(externalEmployeeId)
         );
         JPQLQuery<DivisionTeamAssignmentEntity> query = query()
-                .selectFrom(meta);
+            .selectFrom(meta);
         addBaseFetch(query);
         return query.where(exp)
-                .fetchFirst();
+            .fetchFirst();
     }
 
     /**
@@ -649,44 +649,44 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final QDivisionEntity d = new QDivisionEntity("division");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                d.legalEntityId.in(legalEntityIds),
-                meta.id.eq(assignmentId).not()
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            d.legalEntityId.in(legalEntityIds),
+            meta.id.eq(assignmentId).not()
         );
 
         return query().from(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .innerJoin(d).on(d.id.eq(dt.divisionId))
-                .where(exp)
-                .orderBy(meta.id.asc())
-                .select(meta.id)
-                .fetch();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .innerJoin(d).on(d.id.eq(dt.divisionId))
+            .where(exp)
+            .orderBy(meta.id.asc())
+            .select(meta.id)
+            .fetch();
     }
 
     public Long findIdByEmployeeId(Long employeeId) {
         final QDivisionTeamRoleEntity dtr = new QDivisionTeamRoleEntity("divisionTeamRole");
         final QDivisionTeamEntity dt = new QDivisionTeamEntity("divisionTeam");
         final BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                dt.dateTo.isNull(),
-                meta.employeeId.eq(employeeId)
+            meta.dateTo.isNull(),
+            dt.dateTo.isNull(),
+            meta.employeeId.eq(employeeId)
         );
 
         return query().from(meta)
-                .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
-                .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
-                .where(exp)
-                .select(meta.id)
-                .fetchFirst();
+            .innerJoin(dtr).on(dtr.id.eq(meta.divisionTeamRoleId))
+            .innerJoin(dt).on(dt.id.eq(dtr.divisionTeamId))
+            .where(exp)
+            .select(meta.id)
+            .fetchFirst();
     }
 
     public DivisionTeamAssignmentShort findShortById(Long id) {
         QDivisionTeamAssignmentShort q = QDivisionTeamAssignmentShort.divisionTeamAssignmentShort;
         return query().selectFrom(q)
-                .where(q.id.eq(id))
-                .fetchFirst();
+            .where(q.id.eq(id))
+            .fetchFirst();
     }
 
     public Map<String, List<DivisionTeamAssignmentShort>> findDtaMapByNumbers(Collection<String> numbers) {
@@ -694,17 +694,17 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         QEmployeeEntity emp = QEmployeeEntity.employeeEntity;
 
         final BooleanExpression exp = Expressions.allOf(
-                q.dateTo.isNull(),
-                emp.dateTo.isNull(),
-                emp.number.in(numbers)
+            q.dateTo.isNull(),
+            emp.dateTo.isNull(),
+            emp.number.in(numbers)
         );
 
         return query().select(emp.number, q).from(q)
-                .innerJoin(emp).on(q.employeeId.eq(emp.id))
-                .where(exp)
-                .fetch()
-                .stream()
-                .collect(groupingBy(t -> t.get(emp.number), mapping(t -> t.get(q), toList())));
+            .innerJoin(emp).on(q.employeeId.eq(emp.id))
+            .where(exp)
+            .fetch()
+            .stream()
+            .collect(groupingBy(t -> t.get(emp.number), mapping(t -> t.get(q), toList())));
     }
 
     public List<DivisionTeamAssignmentEntity> findAllByDivisionTeamsAndSystemRole(List<Long> divisionTeamsIds, Integer systemRole) {
@@ -712,68 +712,70 @@ public class DivisionTeamAssignmentDao extends AbstractDao<DivisionTeamAssignmen
         QDivisionTeamEntity divisionTeam = QDivisionTeamEntity.divisionTeamEntity;
 
         return query().selectFrom(meta)
-                .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
-                .innerJoin(divisionTeamRole).on(divisionTeamRole.id.eq(meta.divisionTeamRole.id))
-                .where(divisionTeamRole.role.systemRole.id.eq(systemRole).and(divisionTeam.id.in(divisionTeamsIds))
-                               .and(meta.dateTo.isNull()))
-                .fetch();
+            .innerJoin(divisionTeam).on(divisionTeam.id.eq(divisionTeamRole.divisionTeamId))
+            .innerJoin(divisionTeamRole).on(divisionTeamRole.id.eq(meta.divisionTeamRole.id))
+            .where(divisionTeamRole.role.systemRole.id.eq(systemRole).and(divisionTeam.id.in(divisionTeamsIds))
+                .and(meta.dateTo.isNull()))
+            .fetch();
     }
 
     public Tuple findSystemRoleAndEmployeeIdByAssignmentsId(Long divisionTeamAssignmentId) {
         return query().select(meta.divisionTeamRole.role.systemRoleId, meta.employeeId)
-                .from(meta)
-                .where(meta.id.eq(divisionTeamAssignmentId).and(meta.dateTo.isNull()))
-                .fetchFirst();
+            .from(meta)
+            .where(meta.id.eq(divisionTeamAssignmentId).and(meta.dateTo.isNull()))
+            .fetchFirst();
     }
 
     /**
      * Найти всех сотрудников в команде, кроме тех у кого системная роль равна = systemRoleId на входе
+     *
      * @param divisionTeamId ИД команды
-     * @param systemRoleId ИД системной роли, которую не нужно находить
+     * @param systemRoleId   ИД системной роли, которую не нужно находить
      * @return массив ИД сотрудников
      */
     public List<Long> findEmployeeIdByDivisionTeamIdAndNotSystemRoleId(Long divisionTeamId, Integer systemRoleId) {
         QDivisionTeamRoleEntity qdtr = QDivisionTeamRoleEntity.divisionTeamRoleEntity;
         QRoleEntity qr = QRoleEntity.roleEntity;
         BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                qdtr.divisionTeamId.eq(divisionTeamId),
-                qr.systemRoleId.ne(systemRoleId)
+            meta.dateTo.isNull(),
+            qdtr.divisionTeamId.eq(divisionTeamId),
+            qr.systemRoleId.ne(systemRoleId)
         );
         return query().select(meta.employeeId)
-                .from(meta)
-                .join(meta.divisionTeamRole, qdtr)
-                .join(qdtr.role, qr)
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .join(meta.divisionTeamRole, qdtr)
+            .join(qdtr.role, qr)
+            .where(exp)
+            .fetch();
     }
 
     /**
      * Найти в командах сотрудников, у которых системная роль = systemRoleId на входе
+     *
      * @param divisionTeamIds массив Ид команд
-     * @param systemRoleId ИД системной роли, которую нужно находить
+     * @param systemRoleId    ИД системной роли, которую нужно находить
      * @return набор данных: ИД команды <-> ИД сотрудника
      */
     public List<Tuple> findEmployeeIdByDivisionTeamIdsAndSystemRoleId(Collection<Long> divisionTeamIds, Integer systemRoleId) {
         QDivisionTeamRoleEntity qdtr = QDivisionTeamRoleEntity.divisionTeamRoleEntity;
         QRoleEntity qr = QRoleEntity.roleEntity;
         BooleanExpression exp = Expressions.allOf(
-                meta.dateTo.isNull(),
-                qdtr.divisionTeamId.in(divisionTeamIds),
-                qr.systemRoleId.eq(systemRoleId)
+            meta.dateTo.isNull(),
+            qdtr.divisionTeamId.in(divisionTeamIds),
+            qr.systemRoleId.eq(systemRoleId)
         );
         return query().select(qdtr.divisionTeamId, meta.employeeId)
-                .from(meta)
-                .join(meta.divisionTeamRole, qdtr)
-                .join(qdtr.role, qr)
-                .where(exp)
-                .fetch();
+            .from(meta)
+            .join(meta.divisionTeamRole, qdtr)
+            .join(qdtr.role, qr)
+            .where(exp)
+            .fetch();
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

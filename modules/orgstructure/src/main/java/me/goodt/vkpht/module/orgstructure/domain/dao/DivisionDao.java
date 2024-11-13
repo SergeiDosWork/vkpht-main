@@ -83,11 +83,11 @@ public class DivisionDao extends AbstractDao<DivisionEntity, Long> {
             .and(l.unitCode.eq(unitCode));
         return query()
             .select(meta.legalEntityEntity.id)
-                .from(meta)
-                .join(p).on(p.division.id.eq(meta.id))
-                .innerJoin(l).on(meta.legalEntityId.eq(l.id))
-                .where(exp)
-                .fetchFirst();
+            .from(meta)
+            .join(p).on(p.division.id.eq(meta.id))
+            .innerJoin(l).on(meta.legalEntityId.eq(l.id))
+            .where(exp)
+            .fetchFirst();
     }
 
     public Long findByDivisionTeamAssignmentRotation(Long divisionTeamAssignmentRotationId, String unitCode) {
@@ -99,13 +99,13 @@ public class DivisionDao extends AbstractDao<DivisionEntity, Long> {
         BooleanExpression exp = qrot.id.eq(divisionTeamAssignmentRotationId)
             .and(l.unitCode.eq(unitCode));
         return query().from(qrot)
-                .join(qrot.assignment, qta)
-                .join(qtre).on(qta.divisionTeamRoleId.eq(qtre.id))
-                .join(qtre.divisionTeam, qdte)
-                .innerJoin(l).on(meta.legalEntityId.eq(l.id))
-                .select(qdte.divisionId)
-                .where(exp)
-                .fetchFirst();
+            .join(qrot.assignment, qta)
+            .join(qtre).on(qta.divisionTeamRoleId.eq(qtre.id))
+            .join(qtre.divisionTeam, qdte)
+            .innerJoin(l).on(meta.legalEntityId.eq(l.id))
+            .select(qdte.divisionId)
+            .where(exp)
+            .fetchFirst();
     }
 
     public Map<Long, DivisionEntity> findActualByDivisionTeamAssignments(Collection<Long> dtaIds, String unitCode) {
@@ -115,26 +115,26 @@ public class DivisionDao extends AbstractDao<DivisionEntity, Long> {
         QDivisionEntity qd = QDivisionEntity.divisionEntity;
 
         return query().from(qdta)
-                .join(qdta.divisionTeamRole, qdtr)
-                .join(qdtr.divisionTeam, qdt)
-                .join(qdt.division, qd)
-                .innerJoin(l).on(meta.legalEntityId.eq(l.id))
-                .select(qdta.id, qd)
-                .where(qdta.id.in(dtaIds)
-                    .and(qd.dateTo.isNull())
-                    .and(qdt.dateTo.isNull())
-                    .and(l.unitCode.eq(unitCode))
-                )
-                .fetch()
-                .stream()
-                .collect(Collectors.toMap(t -> t.get(qdta.id), t -> t.get(qd)));
+            .join(qdta.divisionTeamRole, qdtr)
+            .join(qdtr.divisionTeam, qdt)
+            .join(qdt.division, qd)
+            .innerJoin(l).on(meta.legalEntityId.eq(l.id))
+            .select(qdta.id, qd)
+            .where(qdta.id.in(dtaIds)
+                .and(qd.dateTo.isNull())
+                .and(qdt.dateTo.isNull())
+                .and(l.unitCode.eq(unitCode))
+            )
+            .fetch()
+            .stream()
+            .collect(Collectors.toMap(t -> t.get(qdta.id), t -> t.get(qd)));
     }
 
     public List<DivisionLegalDto> findDivisionLegal(List<Long> divisionIds, String unitCode) {
         return query().from(meta)
-                .where(meta.id.in(divisionIds).and(l.unitCode.eq(unitCode)))
-                .select(Projections.bean(DivisionLegalDto.class, meta.id.as("divisionId"), meta.legalEntityId.as("legalEntityId")))
-                .fetch();
+            .where(meta.id.in(divisionIds).and(l.unitCode.eq(unitCode)))
+            .select(Projections.bean(DivisionLegalDto.class, meta.id.as("divisionId"), meta.legalEntityId.as("legalEntityId")))
+            .fetch();
     }
 
     public List<DivisionEntity> findPost(List<Long> ids, List<Long> legalEntityIds, Integer page, Integer size, String searchingValue, Boolean withClosed, String unitCode) {
@@ -148,10 +148,10 @@ public class DivisionDao extends AbstractDao<DivisionEntity, Long> {
         }
 
         BooleanExpression exp = Expressions.allOf(
-                ids != null && !ids.isEmpty() ? meta.id.in(ids) : null,
-                legalEntityIds != null && !legalEntityIds.isEmpty() ? meta.legalEntityId.in(legalEntityIds) : null,
-                withClosed != null && withClosed ? null : meta.dateTo.isNull(),
-                l.unitCode.eq(unitCode)
+            ids != null && !ids.isEmpty() ? meta.id.in(ids) : null,
+            legalEntityIds != null && !legalEntityIds.isEmpty() ? meta.legalEntityId.in(legalEntityIds) : null,
+            withClosed != null && withClosed ? null : meta.dateTo.isNull(),
+            l.unitCode.eq(unitCode)
         );
 
         if (!StringUtils.isEmpty(searchingValue)) {
@@ -166,16 +166,16 @@ public class DivisionDao extends AbstractDao<DivisionEntity, Long> {
         }
 
         return jpqlQuery
-                .select(meta)
-                .where(exp)
-                .innerJoin(l).on(meta.legalEntityId.eq(l.id))
-                .fetch();
+            .select(meta)
+            .where(exp)
+            .innerJoin(l).on(meta.legalEntityId.eq(l.id))
+            .fetch();
     }
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 }

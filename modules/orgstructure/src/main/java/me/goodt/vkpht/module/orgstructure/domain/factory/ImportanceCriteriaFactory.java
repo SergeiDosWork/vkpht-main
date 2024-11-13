@@ -11,13 +11,13 @@ public class ImportanceCriteriaFactory {
 
     public static ImportanceCriteriaDto create(ImportanceCriteriaEntity entity) {
         return new ImportanceCriteriaDto(
-                entity.getId(),
-                entity.getGroup() != null ? entity.getGroup().getId() : null,
-                entity.getName(),
-                entity.getDescription(),
-                entity.getWeight(),
-                entity.getIsEnabled(),
-                entity.getCalculationMethod() != null ? CalculationMethodFactory.create(entity.getCalculationMethod()) : null
+            entity.getId(),
+            entity.getGroup() != null ? entity.getGroup().getId() : null,
+            entity.getName(),
+            entity.getDescription(),
+            entity.getWeight(),
+            entity.getIsEnabled(),
+            entity.getCalculationMethod() != null ? CalculationMethodFactory.create(entity.getCalculationMethod()) : null
         );
     }
 }

@@ -14,18 +14,18 @@ public class DivisionTeamRoleFactory {
 
     public static DivisionTeamRoleDto create(DivisionTeamRoleEntity entity) {
         return new DivisionTeamRoleDto(entity.getId(),
-                                       entity.getDivisionTeam() != null ? DivisionTeamFactory.create(entity.getDivisionTeam()) : null,
-                                       entity.getRole() != null ? RoleFactory.create(entity.getRole()) : null,
-                                       entity.getPositionImportance() != null ? PositionImportanceFactory.create(entity.getPositionImportance()) : null,
-                                       entity.getExternalId());
+            entity.getDivisionTeam() != null ? DivisionTeamFactory.create(entity.getDivisionTeam()) : null,
+            entity.getRole() != null ? RoleFactory.create(entity.getRole()) : null,
+            entity.getPositionImportance() != null ? PositionImportanceFactory.create(entity.getPositionImportance()) : null,
+            entity.getExternalId());
     }
 
     public static DivisionTeamRoleRawDto createRaw(DivisionTeamRoleEntity entity) {
         return new DivisionTeamRoleRawDto(entity.getId(),
-                                          entity.getDivisionTeam() != null ? entity.getDivisionTeam().getId() : null,
-                                          entity.getRole() != null ? entity.getRole().getId() : null,
-                                          entity.getPositionImportance() != null ? entity.getPositionImportance().getId() : null,
-                                          entity.getExternalId());
+            entity.getDivisionTeam() != null ? entity.getDivisionTeam().getId() : null,
+            entity.getRole() != null ? entity.getRole().getId() : null,
+            entity.getPositionImportance() != null ? entity.getPositionImportance().getId() : null,
+            entity.getExternalId());
     }
 
     public static DivisionTeamRoleShortDto createShort(DivisionTeamRoleShort sh) {

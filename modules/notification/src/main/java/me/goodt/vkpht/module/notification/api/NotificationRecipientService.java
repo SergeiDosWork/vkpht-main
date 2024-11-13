@@ -8,15 +8,15 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationDynamicRecipientDt
 import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientDto;
 
 public interface NotificationRecipientService {
-	List<NotificationRecipientDto> getAllNotificationRecipient();
+    List<NotificationRecipientDto> getAllNotificationRecipient();
 
-	NotificationRecipientDto getNotificationRecipient(Long id) throws NotFoundException;
+    NotificationRecipientDto getNotificationRecipient(Long id) throws NotFoundException;
 
-	NotificationRecipientDto createNotificationRecipient(NotificationRecipientDto dto);
+    NotificationRecipientDto createNotificationRecipient(NotificationRecipientDto dto);
 
-	NotificationRecipientDto updateNotificationRecipient(NotificationRecipientDto dto) throws NotFoundException;
+    NotificationRecipientDto updateNotificationRecipient(NotificationRecipientDto dto) throws NotFoundException;
 
-	boolean deleteNotificationRecipient(Long id);
+    boolean deleteNotificationRecipient(Long id);
 
-	List<NotificationDynamicRecipientDto> getDynamicRecipients();
+    List<NotificationDynamicRecipientDto> getDynamicRecipients();
 }

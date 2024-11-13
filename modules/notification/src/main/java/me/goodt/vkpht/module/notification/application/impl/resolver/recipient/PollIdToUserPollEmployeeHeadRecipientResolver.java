@@ -25,33 +25,33 @@ import static java.lang.Boolean.TRUE;
 @Component
 @Slf4j
 public class PollIdToUserPollEmployeeHeadRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
-		if (!StringUtils.equals(POLL_ID_TO_USER_POLL_EMPLOYEE_HEAD, recipient.getBasicValue())) {
-			return;
-		}
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+        if (!StringUtils.equals(POLL_ID_TO_USER_POLL_EMPLOYEE_HEAD, recipient.getBasicValue())) {
+            return;
+        }
 
-		log.info(LOG_MESSAGE_RECIPIENT, POLL_ID_TO_USER_POLL_EMPLOYEE_HEAD);
-		try {
-			List<UserPollDto> userPollList = (List<UserPollDto>) context.getOrResolveObject(SavedObjectNames.USER_POLL_LIST, () ->
-				Optional.ofNullable(RecipientResolverUtils.findPollId(context))
-					.map(pollId -> context.getResolverServiceContainer().getQuizServiceClient()
-						.findUserPoll(pollId.longValue(), null, TRUE))
-					.orElse(null)
-			);
-			if (CollectionUtils.isEmpty(userPollList)) {
-				return;
-			}
+        log.info(LOG_MESSAGE_RECIPIENT, POLL_ID_TO_USER_POLL_EMPLOYEE_HEAD);
+        try {
+            List<UserPollDto> userPollList = (List<UserPollDto>) context.getOrResolveObject(SavedObjectNames.USER_POLL_LIST, () ->
+                Optional.ofNullable(RecipientResolverUtils.findPollId(context))
+                    .map(pollId -> context.getResolverServiceContainer().getQuizServiceClient()
+                        .findUserPoll(pollId.longValue(), null, TRUE))
+                    .orElse(null)
+            );
+            if (CollectionUtils.isEmpty(userPollList)) {
+                return;
+            }
 
-			List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.POLL_ASSIGNMENTS, () ->
-				context.getResolverServiceContainer().getOrgstructureServiceAdapter()
-					.getAssignments(null, userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList())));
-			if (CollectionUtils.isEmpty(assignments)) {
-				return;
-			}
+            List<DivisionTeamAssignmentDto> assignments = (List<DivisionTeamAssignmentDto>) context.getOrResolveObject(SavedObjectNames.POLL_ASSIGNMENTS, () ->
+                context.getResolverServiceContainer().getOrgstructureServiceAdapter()
+                    .getAssignments(null, userPollList.stream().map(UserPollDto::getEmployeeId).collect(Collectors.toList())));
+            if (CollectionUtils.isEmpty(assignments)) {
+                return;
+            }
 
-			Map<Long, DivisionTeamInfo> divisionTeamInfoMap = RecipientResolverUtils.getDivisionTeamInfoMap(assignments);
-			divisionTeamInfoMap.forEach((dtId, dtInfo) -> {
+            Map<Long, DivisionTeamInfo> divisionTeamInfoMap = RecipientResolverUtils.getDivisionTeamInfoMap(assignments);
+            divisionTeamInfoMap.forEach((dtId, dtInfo) -> {
                 DivisionTeamAssignmentDto headTeam;
                 if (dtInfo.getHeadAssignment() != null) {
                     headTeam = dtInfo.getHeadAssignment();

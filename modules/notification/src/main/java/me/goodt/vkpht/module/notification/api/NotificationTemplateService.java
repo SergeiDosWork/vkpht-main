@@ -1,6 +1,7 @@
 package me.goodt.vkpht.module.notification.api;
 
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,25 +16,25 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateCont
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateEntity;
 
 public interface NotificationTemplateService {
-	NotificationTemplateEntity getById(Long id) throws NotFoundException;
+    NotificationTemplateEntity getById(Long id) throws NotFoundException;
 
-	Page<NotificationTemplateEntity> getAll(NotificationTemplateFilter filter, Pageable paging);
+    Page<NotificationTemplateEntity> getAll(NotificationTemplateFilter filter, Pageable paging);
 
-	NotificationTemplateEntity create(NotificationTemplateDto dto, Long employeeId) throws NotFoundException;
+    NotificationTemplateEntity create(NotificationTemplateDto dto, Long employeeId) throws NotFoundException;
 
-	NotificationTemplateEntity update(Long id, NotificationTemplateDto dto, Long employeeId) throws NotFoundException;
+    NotificationTemplateEntity update(Long id, NotificationTemplateDto dto, Long employeeId) throws NotFoundException;
 
-	void delete(Long id, Long employeeId) throws NotFoundException;
+    void delete(Long id, Long employeeId) throws NotFoundException;
 
-	NotificationTemplateEntity getNotificationTemplateByCode(String code) throws NotFoundException;
+    NotificationTemplateEntity getNotificationTemplateByCode(String code) throws NotFoundException;
 
-	List<NotificationTemplateContentEntity> getNotificationTemplateContentByNotificationTemplateId(Long notificationTemplateId);
+    List<NotificationTemplateContentEntity> getNotificationTemplateContentByNotificationTemplateId(Long notificationTemplateId);
 
-	List<NotificationTemplateContentDto> findNotificationTemplateContentByCode(String code);
+    List<NotificationTemplateContentDto> findNotificationTemplateContentByCode(String code);
 
-	//    List<NotificationRecipientDto> findNotificationRecipientsByTemplateContentCode(String code);
+    //    List<NotificationRecipientDto> findNotificationRecipientsByTemplateContentCode(String code);
 
-	Map<NotificationRecipientEntity, List<NotificationTemplateContentEntity>> findRecipientNameAndNotTempContentByCode(String code);
+    Map<NotificationRecipientEntity, List<NotificationTemplateContentEntity>> findRecipientNameAndNotTempContentByCode(String code);
 
-	List<NotificationTemplateContentEntity> findBySubstituteId(Long substituteId);
+    List<NotificationTemplateContentEntity> findBySubstituteId(Long substituteId);
 }

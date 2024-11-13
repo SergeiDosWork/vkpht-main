@@ -14,8 +14,8 @@ import me.goodt.vkpht.common.dictionary.core.dto.AbstractRes;
 public class ReasonTypeDto extends AbstractRes<ReasonTypeDto> {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	private Long id;
-	@NotNull
-	@Size(max = 128)
-	private String name;
+    private Long id;
+    @NotNull
+    @Size(max = 128)
+    private String name;
 }

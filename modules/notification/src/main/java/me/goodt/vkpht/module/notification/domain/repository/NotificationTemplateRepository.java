@@ -12,9 +12,9 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateEnti
 @Transactional(readOnly = true)
 public interface NotificationTemplateRepository extends CrudRepository<NotificationTemplateEntity, Long> {
 
-	@Query(value = "SELECT * FROM notification_template WHERE code = :code", nativeQuery = true)
-	Optional<NotificationTemplateEntity> getByCode(@Param("code") String code);
+    @Query(value = "SELECT * FROM notification_template WHERE code = :code", nativeQuery = true)
+    Optional<NotificationTemplateEntity> getByCode(@Param("code") String code);
 
-	@Query(value = "SELECT NEXTVAL('notification_template_code_manual_mailing_seq')", nativeQuery = true)
-	Long incrementCodeManualMailing();
+    @Query(value = "SELECT NEXTVAL('notification_template_code_manual_mailing_seq')", nativeQuery = true)
+    Long incrementCodeManualMailing();
 }

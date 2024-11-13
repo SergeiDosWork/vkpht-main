@@ -6,7 +6,7 @@ import java.util.Map;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEntity;
 
 public interface NotificationLogEmployeeService {
-	void create(NotificationLogEntity notificationLog, Map<Long, Boolean> employeeIdIsCopy);
+    void create(NotificationLogEntity notificationLog, Map<Long, Boolean> employeeIdIsCopy);
 
-	List<Long> findEmployeeIdByNotificationLogId(Long notificationLogId, boolean isCopy);
+    List<Long> findEmployeeIdByNotificationLogId(Long notificationLogId, boolean isCopy);
 }

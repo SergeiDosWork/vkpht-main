@@ -24,10 +24,10 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class PositionSuccessorEmployeeRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
-		if (!StringUtils.equalsAny(recipient.getBasicValue(), POSITION_SUCCESSOR_EMPLOYEE, POSITION_SUCCESSOR_EMPLOYEE_HEAD)) {
-			return;
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+        if (!StringUtils.equalsAny(recipient.getBasicValue(), POSITION_SUCCESSOR_EMPLOYEE, POSITION_SUCCESSOR_EMPLOYEE_HEAD)) {
+            return;
         }
         log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
         try {

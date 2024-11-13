@@ -25,8 +25,8 @@ public class ImportanceCriteriaDao extends AbstractDao<ImportanceCriteriaEntity,
 
     public List<ImportanceCriteriaEntity> findAllEnabledWithCalcMethod() {
         return query().selectFrom(meta)
-                .where(meta.calculationMethod.isNotNull().and(meta.isEnabled.isTrue()))
-                .fetch();
+            .where(meta.calculationMethod.isNotNull().and(meta.isEnabled.isTrue()))
+            .fetch();
     }
 
     public Page<ImportanceCriteriaEntity> find(String unitCode, Pageable pageable) {

@@ -18,16 +18,16 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TASK_ID
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskHistoryDto {
-	private Long id;
-	private Date date;
+    private Long id;
+    private Date date;
     @JsonSetter(TASK_ID_TAG)
     private Long taskId;
     @JsonSetter(PARENT_ID_TAG)
     private Long parentId;
     @JsonSetter(STATUS_ID_TAG)
     private Long statusId;
-	private StatusDto status;
-	private String comment;
+    private StatusDto status;
+    private String comment;
     @JsonSetter(EMPLOYEE_ID_TAG)
     private Long employeeId;
 }

@@ -32,50 +32,50 @@ import me.goodt.vkpht.module.notification.application.impl.resolver.recipient.Re
 @Service
 @Slf4j
 public class TokenResolverImpl implements TokenResolver {
-	private final NotificationRecipientParametersDao notificationRecipientParametersDao;
+    private final NotificationRecipientParametersDao notificationRecipientParametersDao;
     private final NotificationRecipientEmailDao notificationRecipientEmailDao;
 
-	private final List<TokenGroupResolver> tokenGroupResolverList;
-	private final List<RecipientResolver> recipientResolverList;
-	private final List<TokenEmployeeResolver> tokenEmployeeResolverList;
+    private final List<TokenGroupResolver> tokenGroupResolverList;
+    private final List<RecipientResolver> recipientResolverList;
+    private final List<TokenEmployeeResolver> tokenEmployeeResolverList;
 
-	public TokenResolverImpl(List<TokenGroupResolver> tokenGroupResolverList,
-							 List<RecipientResolver> recipientResolverList,
-							 List<TokenEmployeeResolver> tokenEmployeeResolverList,
-							 NotificationRecipientParametersDao notificationRecipientParametersDao,
+    public TokenResolverImpl(List<TokenGroupResolver> tokenGroupResolverList,
+                             List<RecipientResolver> recipientResolverList,
+                             List<TokenEmployeeResolver> tokenEmployeeResolverList,
+                             NotificationRecipientParametersDao notificationRecipientParametersDao,
                              NotificationRecipientEmailDao notificationRecipientEmailDao) {
-		this.tokenGroupResolverList = tokenGroupResolverList;
-		this.recipientResolverList = recipientResolverList;
-		this.tokenEmployeeResolverList = tokenEmployeeResolverList;
-		this.notificationRecipientParametersDao = notificationRecipientParametersDao;
+        this.tokenGroupResolverList = tokenGroupResolverList;
+        this.recipientResolverList = recipientResolverList;
+        this.tokenEmployeeResolverList = tokenEmployeeResolverList;
+        this.notificationRecipientParametersDao = notificationRecipientParametersDao;
         this.notificationRecipientEmailDao = notificationRecipientEmailDao;
-	}
+    }
 
-	@Override
-	public Map<String, String> resolveTokens(ResolverContext context) {
-		Map<String, String> resolvedTokenValues = new HashMap<>();
-		tokenGroupResolverList.forEach(tokenGroupResolver -> {
-			if (tokenGroupResolver.tokenMustBeResolved(context.getParsedTokens())) {
-				try {
-					tokenGroupResolver.resolve(context, resolvedTokenValues);
-				} catch (Exception e) {
-					log.error("Ошибка при вычислении токена {}", tokenGroupResolver.getClass().toString(), e);
-				}
-			}
-		});
-		return resolvedTokenValues;
-	}
+    @Override
+    public Map<String, String> resolveTokens(ResolverContext context) {
+        Map<String, String> resolvedTokenValues = new HashMap<>();
+        tokenGroupResolverList.forEach(tokenGroupResolver -> {
+            if (tokenGroupResolver.tokenMustBeResolved(context.getParsedTokens())) {
+                try {
+                    tokenGroupResolver.resolve(context, resolvedTokenValues);
+                } catch (Exception e) {
+                    log.error("Ошибка при вычислении токена {}", tokenGroupResolver.getClass().toString(), e);
+                }
+            }
+        });
+        return resolvedTokenValues;
+    }
 
-	@Override
-	public Map<String, String> resolveEmployeeTokens(RecipientInfoDto employeeInfoDto, ResolverContext context) {
-		Map<String, String> resolvedTokenValues = new HashMap<>();
-		tokenEmployeeResolverList.forEach(tokenEmployeeResolver -> {
-			if (tokenEmployeeResolver.tokenMustBeResolved(context.getParsedTokens())) {
-				tokenEmployeeResolver.resolve(context, employeeInfoDto, resolvedTokenValues);
-			}
-		});
-		return resolvedTokenValues;
-	}
+    @Override
+    public Map<String, String> resolveEmployeeTokens(RecipientInfoDto employeeInfoDto, ResolverContext context) {
+        Map<String, String> resolvedTokenValues = new HashMap<>();
+        tokenEmployeeResolverList.forEach(tokenEmployeeResolver -> {
+            if (tokenEmployeeResolver.tokenMustBeResolved(context.getParsedTokens())) {
+                tokenEmployeeResolver.resolve(context, employeeInfoDto, resolvedTokenValues);
+            }
+        });
+        return resolvedTokenValues;
+    }
 
     @Override
     public ResolveRecipitentResult resolveRecipients(NotificationTemplateContentDto ntc, ResolverServiceContainer resolverServiceContainer, BaseNotificationInputData data, boolean isCopy, int substituteLevel) {

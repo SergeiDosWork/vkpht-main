@@ -2,9 +2,11 @@ package me.goodt.vkpht.module.orgstructure.domain.dao;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.stereotype.Repository;
+
 import me.goodt.vkpht.common.dictionary.core.dao.AbstractDao;
 
 import jakarta.persistence.EntityManager;
+
 import java.util.List;
 
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadinessEntity;
@@ -25,9 +27,9 @@ public class PositionSuccessorReadinessDao extends AbstractDao<PositionSuccessor
         BooleanExpression exp = meta.positionSuccessorId.in(ids)
             .and(readiness.unitCode.eq(unitCode));
         return query().selectFrom(meta)
-                .leftJoin(readiness).on(readiness.id.eq(meta.readiness.id))
-                .where(exp)
-                .fetch();
+            .leftJoin(readiness).on(readiness.id.eq(meta.readiness.id))
+            .where(exp)
+            .fetch();
     }
 
     // @Query("select p from PositionSuccessorReadinessEntity p where
@@ -38,10 +40,10 @@ public class PositionSuccessorReadinessDao extends AbstractDao<PositionSuccessor
         BooleanExpression exp = qps.positionId.eq(positionId)
             .and(readiness.unitCode.eq(unitCode));
         return query().selectFrom(meta)
-                .join(meta.positionSuccessor, qps)
-                .leftJoin(readiness).on(readiness.id.eq(meta.readiness.id))
-                .where(exp)
-                .fetch();
+            .join(meta.positionSuccessor, qps)
+            .leftJoin(readiness).on(readiness.id.eq(meta.readiness.id))
+            .where(exp)
+            .fetch();
     }
 
     public List<PositionSuccessorReadinessEntity> findAll(String unitCode) {

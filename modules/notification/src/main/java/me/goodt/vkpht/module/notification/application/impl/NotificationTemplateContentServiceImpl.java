@@ -70,19 +70,19 @@ import static me.goodt.vkpht.module.notification.api.dto.data.NotificationRecipi
 @RequiredArgsConstructor
 public class NotificationTemplateContentServiceImpl implements NotificationTemplateContentService {
 
-	private final NotificationTemplateContentDao notificationTemplateContentDao;
+    private final NotificationTemplateContentDao notificationTemplateContentDao;
 
-	private final NotificationTemplateContentRecipientDao notificationTemplateContentRecipientDao;
+    private final NotificationTemplateContentRecipientDao notificationTemplateContentRecipientDao;
 
-	private final NotificationRecipientDao notificationRecipientDao;
+    private final NotificationRecipientDao notificationRecipientDao;
 
-	private final NotificationRecipientParametersDao notificationRecipientParametersDao;
+    private final NotificationRecipientParametersDao notificationRecipientParametersDao;
 
-	private final NotificationTemplateContentAttachmentDao attachmentDao;
+    private final NotificationTemplateContentAttachmentDao attachmentDao;
 
-	private final OrgstructureServiceAdapter orgstructureClient;
+    private final OrgstructureServiceAdapter orgstructureClient;
 
-	private final NotificationTemplateDao notificationTemplateDao;
+    private final NotificationTemplateDao notificationTemplateDao;
 
     private final NotificationRecipientEmailDao notificationRecipientEmailDao;
 
@@ -90,287 +90,287 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
 
     private final UnitAccessService unitAccessService;
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<NotificationTemplateContentShortResponse> findAll(NotificationTemplateContentFilter filter) {
+    @Override
+    @Transactional(readOnly = true)
+    public List<NotificationTemplateContentShortResponse> findAll(NotificationTemplateContentFilter filter) {
         filter.setUnitCode(unitAccessService.getCurrentUnit());
 
-		List<NotificationTemplateContentEntity> entities = notificationTemplateContentDao.findAll(filter);
+        List<NotificationTemplateContentEntity> entities = notificationTemplateContentDao.findAll(filter);
 
-		Set<NotificationRecipientEntity> recipients = new HashSet<>();
-		for (NotificationTemplateContentEntity entity : entities) {
-			recipients.addAll(entity.getAllRecipients());
-		}
-		NotificationRecipientAggregate recipientAggregate = aggregateRecipients(recipients);
+        Set<NotificationRecipientEntity> recipients = new HashSet<>();
+        for (NotificationTemplateContentEntity entity : entities) {
+            recipients.addAll(entity.getAllRecipients());
+        }
+        NotificationRecipientAggregate recipientAggregate = aggregateRecipients(recipients);
 
-		return entities.stream()
-			.map(item -> convertToShortResponse(item, recipientAggregate))
-			.collect(Collectors.toList());
-	}
+        return entities.stream()
+            .map(item -> convertToShortResponse(item, recipientAggregate))
+            .collect(Collectors.toList());
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public NotificationTemplateContentResponse getById(Long id) throws NotFoundException {
-		return convertToResponse(findById(id));
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public NotificationTemplateContentResponse getById(Long id) throws NotFoundException {
+        return convertToResponse(findById(id));
+    }
 
-	@Override
-	@Transactional(rollbackFor = NotFoundException.class)
-	public NotificationTemplateContentResponse create(NotificationTemplateContentRequest dto) throws NotFoundException {
-		NotificationTemplateContentEntity entity = new NotificationTemplateContentEntity();
+    @Override
+    @Transactional(rollbackFor = NotFoundException.class)
+    public NotificationTemplateContentResponse create(NotificationTemplateContentRequest dto) throws NotFoundException {
+        NotificationTemplateContentEntity entity = new NotificationTemplateContentEntity();
 
-		NotificationTemplateEntity notificationTemplate = notificationTemplateDao.findById(dto.getNotificationTemplateId())
-			.orElseThrow(() -> new NotFoundException(String.format("Not found notification_template by id = %d", dto.getNotificationTemplateId())));
+        NotificationTemplateEntity notificationTemplate = notificationTemplateDao.findById(dto.getNotificationTemplateId())
+            .orElseThrow(() -> new NotFoundException(String.format("Not found notification_template by id = %d", dto.getNotificationTemplateId())));
         unitAccessService.checkUnitAccess(notificationTemplate.getUnitCode());
-		entity.setNotificationTemplate(notificationTemplate);
+        entity.setNotificationTemplate(notificationTemplate);
 
-		entity.setDescription(dto.getDescription());
+        entity.setDescription(dto.getDescription());
 
-		if (dto.getReceiverSystemId() != null) {
-			NotificationReceiverSystemEntity receiverSystemEntity = new NotificationReceiverSystemEntity();
-			receiverSystemEntity.setId(dto.getReceiverSystemId());
-			entity.setReceiverSystem(receiverSystemEntity);
-		}
+        if (dto.getReceiverSystemId() != null) {
+            NotificationReceiverSystemEntity receiverSystemEntity = new NotificationReceiverSystemEntity();
+            receiverSystemEntity.setId(dto.getReceiverSystemId());
+            entity.setReceiverSystem(receiverSystemEntity);
+        }
 
-		entity.setPriority(dto.isPriority());
-		entity.setDateFrom(new Date());
+        entity.setPriority(dto.isPriority());
+        entity.setDateFrom(new Date());
 
-		if (dto.getSubstituteId() != null) {
-			NotificationTemplateContentEntity notificationTemplateContentEntity =
-				new NotificationTemplateContentEntity();
-			notificationTemplateContentEntity.setId(dto.getSubstituteId());
-			entity.setSubstitute(notificationTemplateContentEntity);
-		}
+        if (dto.getSubstituteId() != null) {
+            NotificationTemplateContentEntity notificationTemplateContentEntity =
+                new NotificationTemplateContentEntity();
+            notificationTemplateContentEntity.setId(dto.getSubstituteId());
+            entity.setSubstitute(notificationTemplateContentEntity);
+        }
 
-		entity.setBodyJson(dto.getBodyJson());
-		entity.setEnabled(dto.isEnabled());
+        entity.setBodyJson(dto.getBodyJson());
+        entity.setEnabled(dto.isEnabled());
         entity.setCodeModule(dto.getCodeModule());
 
-		NotificationTemplateContentEntity dbEntity = notificationTemplateContentDao.save(entity);
+        NotificationTemplateContentEntity dbEntity = notificationTemplateContentDao.save(entity);
 
-		saveAttachments(dto.getAttachments(), dbEntity);
-		updateRecipients(dto, dbEntity);
+        saveAttachments(dto.getAttachments(), dbEntity);
+        updateRecipients(dto, dbEntity);
 
-		//        dto.setId(dbEntity.getId());
-		//        dto.setSubstitute(dbEntity.getSubstitute());
-		//        return convertToResponse(dbEntity);
-		return null;
-	}
+        //        dto.setId(dbEntity.getId());
+        //        dto.setSubstitute(dbEntity.getSubstitute());
+        //        return convertToResponse(dbEntity);
+        return null;
+    }
 
-	@Override
-	@Transactional(rollbackFor = NotFoundException.class)
-	public NotificationTemplateContentResponse update(Long id, NotificationTemplateContentRequest dto) throws NotFoundException {
-		NotificationTemplateContentEntity entity = findById(id);
+    @Override
+    @Transactional(rollbackFor = NotFoundException.class)
+    public NotificationTemplateContentResponse update(Long id, NotificationTemplateContentRequest dto) throws NotFoundException {
+        NotificationTemplateContentEntity entity = findById(id);
 
-		entity.setDescription(dto.getDescription());
+        entity.setDescription(dto.getDescription());
 
-		if (dto.getReceiverSystemId() != null) {
-			NotificationReceiverSystemEntity receiverSystemEntity = new NotificationReceiverSystemEntity();
-			receiverSystemEntity.setId(dto.getReceiverSystemId());
-			entity.setReceiverSystem(receiverSystemEntity);
-		}
+        if (dto.getReceiverSystemId() != null) {
+            NotificationReceiverSystemEntity receiverSystemEntity = new NotificationReceiverSystemEntity();
+            receiverSystemEntity.setId(dto.getReceiverSystemId());
+            entity.setReceiverSystem(receiverSystemEntity);
+        }
 
-		entity.setPriority(dto.isPriority());
+        entity.setPriority(dto.isPriority());
 
-		if (dto.getSubstituteId() != null) {
-			NotificationTemplateContentEntity notificationTemplateContentEntity =
-				new NotificationTemplateContentEntity();
-			notificationTemplateContentEntity.setId(dto.getSubstituteId());
-			entity.setSubstitute(notificationTemplateContentEntity);
-		} else {
-			entity.setSubstitute(null);
-		}
+        if (dto.getSubstituteId() != null) {
+            NotificationTemplateContentEntity notificationTemplateContentEntity =
+                new NotificationTemplateContentEntity();
+            notificationTemplateContentEntity.setId(dto.getSubstituteId());
+            entity.setSubstitute(notificationTemplateContentEntity);
+        } else {
+            entity.setSubstitute(null);
+        }
 
-		entity.setBodyJson(dto.getBodyJson());
-		entity.setEnabled(dto.isEnabled());
+        entity.setBodyJson(dto.getBodyJson());
+        entity.setEnabled(dto.isEnabled());
         entity.setCodeModule(dto.getCodeModule());
 
-		NotificationTemplateContentEntity dbEntity = notificationTemplateContentDao.save(entity);
+        NotificationTemplateContentEntity dbEntity = notificationTemplateContentDao.save(entity);
 
-		updateAttachments(dto.getAttachments(), dbEntity);
-		updateRecipients(dto, entity);
+        updateAttachments(dto.getAttachments(), dbEntity);
+        updateRecipients(dto, entity);
 
-		return null;
-	}
+        return null;
+    }
 
-	@Override
-	@Transactional(rollbackFor = NotFoundException.class)
-	public void delete(Long id) throws NotFoundException {
-		NotificationTemplateContentEntity dbEntity = findById(id);
-		dbEntity.setDateTo(new Date());
-		notificationTemplateContentDao.save(dbEntity);
-	}
+    @Override
+    @Transactional(rollbackFor = NotFoundException.class)
+    public void delete(Long id) throws NotFoundException {
+        NotificationTemplateContentEntity dbEntity = findById(id);
+        dbEntity.setDateTo(new Date());
+        notificationTemplateContentDao.save(dbEntity);
+    }
 
-	@Override
-	public List<NotificationTemplateContentSubstituteInfo> findSubstitutes(Long templateId, Long contentId) {
-		NotificationTemplateContentFilter filter = new NotificationTemplateContentFilter();
-		filter.setNotificationTemplateId(templateId);
+    @Override
+    public List<NotificationTemplateContentSubstituteInfo> findSubstitutes(Long templateId, Long contentId) {
+        NotificationTemplateContentFilter filter = new NotificationTemplateContentFilter();
+        filter.setNotificationTemplateId(templateId);
         filter.setUnitCode(unitAccessService.getCurrentUnit());
 
-		List<NotificationTemplateContentEntity> contents = notificationTemplateContentDao.findAll(filter);
-		if (contentId != null) {
-			contents.removeIf(content -> contentId.equals(content.getId()));
-		}
+        List<NotificationTemplateContentEntity> contents = notificationTemplateContentDao.findAll(filter);
+        if (contentId != null) {
+            contents.removeIf(content -> contentId.equals(content.getId()));
+        }
 
-		return contents.stream()
-			.map(content -> new NotificationTemplateContentSubstituteInfo(
-				content.getId(), content.getDescription()))
-			.collect(Collectors.toList());
-	}
+        return contents.stream()
+            .map(content -> new NotificationTemplateContentSubstituteInfo(
+                content.getId(), content.getDescription()))
+            .collect(Collectors.toList());
+    }
 
-	private void saveAttachments(List<NotificationAttachmentDto> attachments,
-								 NotificationTemplateContentEntity dbEntity) {
-		if (attachments != null) {
-			for (NotificationAttachmentDto attachment : attachments) {
-				NotificationTemplateContentAttachmentEntity attachmentEntity =
-					new NotificationTemplateContentAttachmentEntity();
-				attachmentEntity.setNotificationTemplateContent(dbEntity);
-				attachmentEntity.setFileName(attachment.getFileName());
-				attachmentEntity.setFileType(attachment.getFileType());
-				attachmentEntity.setStorageFilePath(attachment.getStorageFilePath());
-				attachmentDao.save(attachmentEntity);
-			}
-		}
-	}
+    private void saveAttachments(List<NotificationAttachmentDto> attachments,
+                                 NotificationTemplateContentEntity dbEntity) {
+        if (attachments != null) {
+            for (NotificationAttachmentDto attachment : attachments) {
+                NotificationTemplateContentAttachmentEntity attachmentEntity =
+                    new NotificationTemplateContentAttachmentEntity();
+                attachmentEntity.setNotificationTemplateContent(dbEntity);
+                attachmentEntity.setFileName(attachment.getFileName());
+                attachmentEntity.setFileType(attachment.getFileType());
+                attachmentEntity.setStorageFilePath(attachment.getStorageFilePath());
+                attachmentDao.save(attachmentEntity);
+            }
+        }
+    }
 
-	private void updateAttachments(List<NotificationAttachmentDto> listNewAttachmentDto,
-								   NotificationTemplateContentEntity dbEntity) {
+    private void updateAttachments(List<NotificationAttachmentDto> listNewAttachmentDto,
+                                   NotificationTemplateContentEntity dbEntity) {
 
-		//ранее прикрепленные файлы
-		List<NotificationTemplateContentAttachmentEntity> listExistsAttachments =
-			attachmentDao.getAttachmentsByNotificationTemplateContentEntityId(dbEntity.getId());
+        //ранее прикрепленные файлы
+        List<NotificationTemplateContentAttachmentEntity> listExistsAttachments =
+            attachmentDao.getAttachmentsByNotificationTemplateContentEntityId(dbEntity.getId());
 
-		//если прикрепленные файлы отсутствуют, то удаление всех ранее прикрепленных файлов
-		if (CollectionUtils.isEmpty(listNewAttachmentDto)) {
-			if (CollectionUtils.isEmpty(listExistsAttachments)) {
-				return;
-			}
-			attachmentDao.deleteAll(listExistsAttachments);
-			return;
-		}
+        //если прикрепленные файлы отсутствуют, то удаление всех ранее прикрепленных файлов
+        if (CollectionUtils.isEmpty(listNewAttachmentDto)) {
+            if (CollectionUtils.isEmpty(listExistsAttachments)) {
+                return;
+            }
+            attachmentDao.deleteAll(listExistsAttachments);
+            return;
+        }
 
-		//новые файлы
-		List<NotificationTemplateContentAttachmentEntity> listNewAttachmentEntity = listNewAttachmentDto.stream()
-			.map(attachment -> convertAttachmentToEntity(dbEntity, attachment))
-			.collect(Collectors.toList());
+        //новые файлы
+        List<NotificationTemplateContentAttachmentEntity> listNewAttachmentEntity = listNewAttachmentDto.stream()
+            .map(attachment -> convertAttachmentToEntity(dbEntity, attachment))
+            .collect(Collectors.toList());
 
-		//удаляемые файлы (которые уже прикреплены, но отсутствуют в новых)
-		List<NotificationTemplateContentAttachmentEntity> listDeletedAttachment = new ArrayList<>();
-		listExistsAttachments.forEach(existAttachment -> {
+        //удаляемые файлы (которые уже прикреплены, но отсутствуют в новых)
+        List<NotificationTemplateContentAttachmentEntity> listDeletedAttachment = new ArrayList<>();
+        listExistsAttachments.forEach(existAttachment -> {
 
-			boolean isNotDelete = listNewAttachmentEntity.stream().anyMatch(newAttachmentEntity ->
-																				Objects.equals(existAttachment.getStorageFilePath(), newAttachmentEntity.getStorageFilePath())
-			);
+            boolean isNotDelete = listNewAttachmentEntity.stream().anyMatch(newAttachmentEntity ->
+                Objects.equals(existAttachment.getStorageFilePath(), newAttachmentEntity.getStorageFilePath())
+            );
 
-			if (!isNotDelete) {
-				listDeletedAttachment.add(existAttachment);
-			}
-		});
+            if (!isNotDelete) {
+                listDeletedAttachment.add(existAttachment);
+            }
+        });
 
-		//сохраняемые файлы (новые за исключением тех, которые уже прикреплены)
-		List<NotificationTemplateContentAttachmentEntity> savedAttachments = new ArrayList<>();
-		listNewAttachmentEntity.forEach(newAttachmentEntity -> {
+        //сохраняемые файлы (новые за исключением тех, которые уже прикреплены)
+        List<NotificationTemplateContentAttachmentEntity> savedAttachments = new ArrayList<>();
+        listNewAttachmentEntity.forEach(newAttachmentEntity -> {
 
-			boolean isNotSave = listExistsAttachments.stream().anyMatch(existAttachment ->
-																			Objects.equals(existAttachment.getStorageFilePath(), newAttachmentEntity.getStorageFilePath())
-			);
+            boolean isNotSave = listExistsAttachments.stream().anyMatch(existAttachment ->
+                Objects.equals(existAttachment.getStorageFilePath(), newAttachmentEntity.getStorageFilePath())
+            );
 
-			if (!isNotSave) {
-				savedAttachments.add(newAttachmentEntity);
-			}
-		});
+            if (!isNotSave) {
+                savedAttachments.add(newAttachmentEntity);
+            }
+        });
 
-		if (CollectionUtils.isNotEmpty(listDeletedAttachment)) {
-			attachmentDao.deleteAll(listDeletedAttachment);
-			attachmentDao.flush();
-		}
+        if (CollectionUtils.isNotEmpty(listDeletedAttachment)) {
+            attachmentDao.deleteAll(listDeletedAttachment);
+            attachmentDao.flush();
+        }
 
-		attachmentDao.saveAll(savedAttachments);
+        attachmentDao.saveAll(savedAttachments);
 
-	}
+    }
 
-	private NotificationTemplateContentAttachmentEntity convertAttachmentToEntity(NotificationTemplateContentEntity dbContentEntity,
-																				  NotificationAttachmentDto attachment) {
-		NotificationTemplateContentAttachmentEntity attachmentEntity =
-			new NotificationTemplateContentAttachmentEntity();
-		attachmentEntity.setId(attachment.getId());
-		attachmentEntity.setNotificationTemplateContent(dbContentEntity);
-		attachmentEntity.setFileName(attachment.getFileName());
-		attachmentEntity.setFileType(attachment.getFileType());
-		attachmentEntity.setStorageFilePath(attachment.getStorageFilePath());
-		return attachmentEntity;
-	}
+    private NotificationTemplateContentAttachmentEntity convertAttachmentToEntity(NotificationTemplateContentEntity dbContentEntity,
+                                                                                  NotificationAttachmentDto attachment) {
+        NotificationTemplateContentAttachmentEntity attachmentEntity =
+            new NotificationTemplateContentAttachmentEntity();
+        attachmentEntity.setId(attachment.getId());
+        attachmentEntity.setNotificationTemplateContent(dbContentEntity);
+        attachmentEntity.setFileName(attachment.getFileName());
+        attachmentEntity.setFileType(attachment.getFileType());
+        attachmentEntity.setStorageFilePath(attachment.getStorageFilePath());
+        return attachmentEntity;
+    }
 
-	private NotificationAttachmentDto convertAttachmentToDto(NotificationTemplateContentAttachmentEntity entity) {
-		NotificationAttachmentDto dto = new NotificationAttachmentDto();
-		dto.setId(entity.getId());
-		dto.setFileName(entity.getFileName());
-		dto.setFileType(entity.getFileType());
-		dto.setStorageFilePath(entity.getStorageFilePath());
-		return dto;
-	}
+    private NotificationAttachmentDto convertAttachmentToDto(NotificationTemplateContentAttachmentEntity entity) {
+        NotificationAttachmentDto dto = new NotificationAttachmentDto();
+        dto.setId(entity.getId());
+        dto.setFileName(entity.getFileName());
+        dto.setFileType(entity.getFileType());
+        dto.setStorageFilePath(entity.getStorageFilePath());
+        return dto;
+    }
 
-	private void updateRecipients(NotificationTemplateContentRequest dto, NotificationTemplateContentEntity entity) {
-		List<NotificationTemplateContentRecipientLinkEntity> currentRecipients =
-			notificationTemplateContentRecipientDao
-				.findByNotificationTemplateContentId(entity.getId());
+    private void updateRecipients(NotificationTemplateContentRequest dto, NotificationTemplateContentEntity entity) {
+        List<NotificationTemplateContentRecipientLinkEntity> currentRecipients =
+            notificationTemplateContentRecipientDao
+                .findByNotificationTemplateContentId(entity.getId());
 
-		syncRecipientList(
-			entity,
-			dto,
-			currentRecipients.stream().filter(r -> !r.getIsCopy())
-				.map(NotificationTemplateContentRecipientLinkEntity::getNotificationRecipient)
-				.collect(Collectors.toList()),
-			false);
+        syncRecipientList(
+            entity,
+            dto,
+            currentRecipients.stream().filter(r -> !r.getIsCopy())
+                .map(NotificationTemplateContentRecipientLinkEntity::getNotificationRecipient)
+                .collect(Collectors.toList()),
+            false);
 
-		syncRecipientList(
-			entity,
-			dto,
-			currentRecipients.stream().filter(NotificationTemplateContentRecipientLinkEntity::getIsCopy)
-				.map(NotificationTemplateContentRecipientLinkEntity::getNotificationRecipient)
-				.collect(Collectors.toList()),
-			true);
-	}
+        syncRecipientList(
+            entity,
+            dto,
+            currentRecipients.stream().filter(NotificationTemplateContentRecipientLinkEntity::getIsCopy)
+                .map(NotificationTemplateContentRecipientLinkEntity::getNotificationRecipient)
+                .collect(Collectors.toList()),
+            true);
+    }
 
-	private void syncRecipientList(NotificationTemplateContentEntity entity,
-								   NotificationTemplateContentRequest newDto,
-								   List<NotificationRecipientEntity> oldListAll,
-								   boolean isCopy) {
-		NotificationTemplateContentRequestGetRecipientsStrategy strategy =
-			isCopy ? new NotificationTemplateContentRequestGetRecipientsStrategyCopy() : new NotificationTemplateContentRequestGetRecipientsStrategyOriginal();
-		// Этап 1 - синхронизируем все нестатичные токены
-		List<Long> newDynamicRecipientIds = strategy.getDynamicRecipientIds(newDto);
-		List<Long> oldDynamicRecipientIds = oldListAll.stream()
+    private void syncRecipientList(NotificationTemplateContentEntity entity,
+                                   NotificationTemplateContentRequest newDto,
+                                   List<NotificationRecipientEntity> oldListAll,
+                                   boolean isCopy) {
+        NotificationTemplateContentRequestGetRecipientsStrategy strategy =
+            isCopy ? new NotificationTemplateContentRequestGetRecipientsStrategyCopy() : new NotificationTemplateContentRequestGetRecipientsStrategyOriginal();
+        // Этап 1 - синхронизируем все нестатичные токены
+        List<Long> newDynamicRecipientIds = strategy.getDynamicRecipientIds(newDto);
+        List<Long> oldDynamicRecipientIds = oldListAll.stream()
             .filter(n -> !n.getName().equals(STATIC_EMPLOYEE.getName()) && !n.getName().equals(STATIC_DIVISION.getName()) && !n.getName().equals(STATIC_EMAIL.getName()))
-			.map(DomainObject::getId)
-			.collect(Collectors.toList());
+            .map(DomainObject::getId)
+            .collect(Collectors.toList());
 
-		List<Long> needToAddDynamicRecipients = newDynamicRecipientIds.stream().filter(id -> !oldDynamicRecipientIds.contains(id)).collect(Collectors.toList());
-		List<Long> needToRemoveDynamicRecipients = oldDynamicRecipientIds.stream().filter(id -> !newDynamicRecipientIds.contains(id)).collect(Collectors.toList());
+        List<Long> needToAddDynamicRecipients = newDynamicRecipientIds.stream().filter(id -> !oldDynamicRecipientIds.contains(id)).collect(Collectors.toList());
+        List<Long> needToRemoveDynamicRecipients = oldDynamicRecipientIds.stream().filter(id -> !newDynamicRecipientIds.contains(id)).collect(Collectors.toList());
 
-		for (Long needToRemoveAddDynamicRecipient : needToRemoveDynamicRecipients) {
-			notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(entity.getId(), needToRemoveAddDynamicRecipient);
-		}
-		for (Long needToAddDynamicRecipient : needToAddDynamicRecipients) {
-			NotificationTemplateContentRecipientLinkEntity notificationTemplateContentRecipientLinkEntity = new NotificationTemplateContentRecipientLinkEntity();
-			notificationTemplateContentRecipientLinkEntity.setNotificationTemplateContent(entity);
-			notificationTemplateContentRecipientLinkEntity.setNotificationRecipient(notificationRecipientDao.findById(needToAddDynamicRecipient).orElseThrow(() -> new NotFoundException("Recipient not found")));
-			notificationTemplateContentRecipientLinkEntity.setIsCopy(isCopy);
-			notificationTemplateContentRecipientDao.save(notificationTemplateContentRecipientLinkEntity);
-		}
+        for (Long needToRemoveAddDynamicRecipient : needToRemoveDynamicRecipients) {
+            notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(entity.getId(), needToRemoveAddDynamicRecipient);
+        }
+        for (Long needToAddDynamicRecipient : needToAddDynamicRecipients) {
+            NotificationTemplateContentRecipientLinkEntity notificationTemplateContentRecipientLinkEntity = new NotificationTemplateContentRecipientLinkEntity();
+            notificationTemplateContentRecipientLinkEntity.setNotificationTemplateContent(entity);
+            notificationTemplateContentRecipientLinkEntity.setNotificationRecipient(notificationRecipientDao.findById(needToAddDynamicRecipient).orElseThrow(() -> new NotFoundException("Recipient not found")));
+            notificationTemplateContentRecipientLinkEntity.setIsCopy(isCopy);
+            notificationTemplateContentRecipientDao.save(notificationTemplateContentRecipientLinkEntity);
+        }
 
-		// Этап 2 - синхронизируем всех статичных получателей employee
-		List<Long> newRecipientEmployeeIds = strategy.getRecipientEmployeeIds(newDto);
-		saveStaticParameters(oldListAll, STATIC_EMPLOYEE, newRecipientEmployeeIds, entity, isCopy, newDto.getIsSystem());
+        // Этап 2 - синхронизируем всех статичных получателей employee
+        List<Long> newRecipientEmployeeIds = strategy.getRecipientEmployeeIds(newDto);
+        saveStaticParameters(oldListAll, STATIC_EMPLOYEE, newRecipientEmployeeIds, entity, isCopy, newDto.getIsSystem());
 
-		// Этап 3 - синхронизируем всех статичных получателей division
-		List<Long> newRecipientDivisionIds = strategy.getRecipientDivisionIds(newDto);
-		saveStaticParameters(oldListAll, STATIC_DIVISION, newRecipientDivisionIds, entity, isCopy, newDto.getIsSystem());
+        // Этап 3 - синхронизируем всех статичных получателей division
+        List<Long> newRecipientDivisionIds = strategy.getRecipientDivisionIds(newDto);
+        saveStaticParameters(oldListAll, STATIC_DIVISION, newRecipientDivisionIds, entity, isCopy, newDto.getIsSystem());
 
         // Этап 4 - синхронизируем всех получателей по email-адресам
         List<String> newEmailRecipients = strategy.getEmailRecipients(newDto);
         saveStaticEmails(oldListAll, newEmailRecipients, entity, isCopy, newDto.getIsSystem());
-	}
+    }
 
     private void saveStaticEmails(
         List<NotificationRecipientEntity> oldListAll,
@@ -381,7 +381,7 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
     ) {
 
         //Проверяем наличие указанных email в оргструктуре
-        if(CollectionUtils.isNotEmpty(newEmailList)) {
+        if (CollectionUtils.isNotEmpty(newEmailList)) {
             //Проверяем наличие указанных email в оргструктуре
             List<EmployeeInfoDto> employees = orgstructureClient.findEmployeeByEmails(newEmailList).getData();
             //если указанные email привязаны к сотрудникам в оргструктуре, то синхронизируем их как STATIC_EMPLOYEE
@@ -435,67 +435,67 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
             } else {
                 //Новый список email пуст, значит старые email удаляем с получателем и связью
 
-                    List<NotificationRecipientEmailEntity> emails = notificationRecipientEmailDao.findByRecipientId(existedStaticRecipientList.getFirst().getId());
-                    notificationRecipientEmailDao.deleteAll(emails);
-                    notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(
-                        notificationTemplateContent.getId(),
-                        existedStaticRecipientList.getFirst().getId()
-                    );
-                    notificationRecipientDao.delete(existedStaticRecipientList.getFirst());
+                List<NotificationRecipientEmailEntity> emails = notificationRecipientEmailDao.findByRecipientId(existedStaticRecipientList.getFirst().getId());
+                notificationRecipientEmailDao.deleteAll(emails);
+                notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(
+                    notificationTemplateContent.getId(),
+                    existedStaticRecipientList.getFirst().getId()
+                );
+                notificationRecipientDao.delete(existedStaticRecipientList.getFirst());
 
             }
         }
     }
 
-	private void saveStaticParameters(List<NotificationRecipientEntity> oldListAll, NotificationRecipientType staticName, List<Long> newRecipientStaticIds, NotificationTemplateContentEntity entity, boolean isCopy, Boolean isSystem) {
-		Optional<NotificationRecipientEntity> existedStaticRecipient = oldListAll.stream().filter(n -> n.getName().equals(staticName.getName())).findFirst();
-		if (existedStaticRecipient.isEmpty()) {
-			if (!newRecipientStaticIds.isEmpty()) {
-				// Нужно создать STATIC и присвоить параметры
-				NotificationRecipientEntity newStaticRecipient = new NotificationRecipientEntity(staticName.getName(), null);
+    private void saveStaticParameters(List<NotificationRecipientEntity> oldListAll, NotificationRecipientType staticName, List<Long> newRecipientStaticIds, NotificationTemplateContentEntity entity, boolean isCopy, Boolean isSystem) {
+        Optional<NotificationRecipientEntity> existedStaticRecipient = oldListAll.stream().filter(n -> n.getName().equals(staticName.getName())).findFirst();
+        if (existedStaticRecipient.isEmpty()) {
+            if (!newRecipientStaticIds.isEmpty()) {
+                // Нужно создать STATIC и присвоить параметры
+                NotificationRecipientEntity newStaticRecipient = new NotificationRecipientEntity(staticName.getName(), null);
                 newStaticRecipient.setUnitCode(entity.getNotificationTemplate().getUnitCode());
-				notificationRecipientDao.save(newStaticRecipient);
-				for (Long newRecipientDivisionId : newRecipientStaticIds) {
-					NotificationRecipientParameterEntity notificationRecipientParameterEntity = new NotificationRecipientParameterEntity(newRecipientDivisionId, newStaticRecipient);
-					notificationRecipientParametersDao.save(notificationRecipientParameterEntity);
-				}
-				NotificationTemplateContentRecipientLinkEntity notificationTemplateContentRecipientLinkEntity =
-					new NotificationTemplateContentRecipientLinkEntity(entity, newStaticRecipient, isCopy,isSystem);
-				notificationTemplateContentRecipientDao.save(notificationTemplateContentRecipientLinkEntity);
-			}
-		} else {
-			// STATIC уже есть, нужно синхронизировать список id
-			if (!newRecipientStaticIds.isEmpty()) {
-				// Если нужно синхронизировать списки параметров новые и старые
-				syncRecipientParameterList(existedStaticRecipient.get(), newRecipientStaticIds);
-			} else {
-				// Новый список параметров пуст, значит старые параметры удаляем вместе с получателем и связью
-				List<NotificationRecipientParameterEntity> params = notificationRecipientParametersDao.findByParent(existedStaticRecipient.get());
-				notificationRecipientParametersDao.deleteAllInBatch(params);
-				notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(entity.getId(), existedStaticRecipient.get().getId());
-				notificationRecipientDao.delete(existedStaticRecipient.get());
-			}
-		}
-	}
+                notificationRecipientDao.save(newStaticRecipient);
+                for (Long newRecipientDivisionId : newRecipientStaticIds) {
+                    NotificationRecipientParameterEntity notificationRecipientParameterEntity = new NotificationRecipientParameterEntity(newRecipientDivisionId, newStaticRecipient);
+                    notificationRecipientParametersDao.save(notificationRecipientParameterEntity);
+                }
+                NotificationTemplateContentRecipientLinkEntity notificationTemplateContentRecipientLinkEntity =
+                    new NotificationTemplateContentRecipientLinkEntity(entity, newStaticRecipient, isCopy, isSystem);
+                notificationTemplateContentRecipientDao.save(notificationTemplateContentRecipientLinkEntity);
+            }
+        } else {
+            // STATIC уже есть, нужно синхронизировать список id
+            if (!newRecipientStaticIds.isEmpty()) {
+                // Если нужно синхронизировать списки параметров новые и старые
+                syncRecipientParameterList(existedStaticRecipient.get(), newRecipientStaticIds);
+            } else {
+                // Новый список параметров пуст, значит старые параметры удаляем вместе с получателем и связью
+                List<NotificationRecipientParameterEntity> params = notificationRecipientParametersDao.findByParent(existedStaticRecipient.get());
+                notificationRecipientParametersDao.deleteAllInBatch(params);
+                notificationTemplateContentRecipientDao.deleteAllByTemplateContentIdAndNotificationRecipientId(entity.getId(), existedStaticRecipient.get().getId());
+                notificationRecipientDao.delete(existedStaticRecipient.get());
+            }
+        }
+    }
 
-	private void syncRecipientParameterList(NotificationRecipientEntity notificationRecipientEntity, List<Long> newIds) {
-		List<NotificationRecipientParameterEntity> params = notificationRecipientParametersDao.findByParent(notificationRecipientEntity);
-		List<Long> oldIds = params
-			.stream().map(NotificationRecipientParameterEntity::getValue).collect(Collectors.toList());
+    private void syncRecipientParameterList(NotificationRecipientEntity notificationRecipientEntity, List<Long> newIds) {
+        List<NotificationRecipientParameterEntity> params = notificationRecipientParametersDao.findByParent(notificationRecipientEntity);
+        List<Long> oldIds = params
+            .stream().map(NotificationRecipientParameterEntity::getValue).collect(Collectors.toList());
 
-		List<Long> needToAdd = newIds.stream().filter(id -> !oldIds.contains(id)).collect(Collectors.toList());
-		List<Long> needToRemove = oldIds.stream().filter(id -> !newIds.contains(id)).collect(Collectors.toList());
+        List<Long> needToAdd = newIds.stream().filter(id -> !oldIds.contains(id)).collect(Collectors.toList());
+        List<Long> needToRemove = oldIds.stream().filter(id -> !newIds.contains(id)).collect(Collectors.toList());
 
-		for (NotificationRecipientParameterEntity param : params) {
-			if (needToRemove.contains(param.getValue())) {
-				notificationRecipientParametersDao.delete(param);
-			}
-		}
-		for (Long aLong : needToAdd) {
-			NotificationRecipientParameterEntity newParamEntity = new NotificationRecipientParameterEntity(aLong, notificationRecipientEntity);
-			notificationRecipientParametersDao.save(newParamEntity);
-		}
-	}
+        for (NotificationRecipientParameterEntity param : params) {
+            if (needToRemove.contains(param.getValue())) {
+                notificationRecipientParametersDao.delete(param);
+            }
+        }
+        for (Long aLong : needToAdd) {
+            NotificationRecipientParameterEntity newParamEntity = new NotificationRecipientParameterEntity(aLong, notificationRecipientEntity);
+            notificationRecipientParametersDao.save(newParamEntity);
+        }
+    }
 
     private void syncRecipientEmailList(NotificationRecipientEntity notificationRecipient, List<String> newEmailList) {
         List<NotificationRecipientEmailEntity> emails = notificationRecipientEmailDao.findByRecipientId(notificationRecipient.getId());
@@ -519,75 +519,75 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
         }
     }
 
-	private NotificationTemplateContentShortResponse convertToShortResponse(NotificationTemplateContentEntity entity,
-																			NotificationRecipientAggregate recipientAggregate) {
-		NotificationTemplateContentShortResponse response = new NotificationTemplateContentShortResponse();
-		response.setId(entity.getId());
-		response.setNotificationTemplateId(entity.getNotificationTemplate().getId());
-		response.setDescription(entity.getDescription());
-		response.setBodyJson(entity.getBodyJson());
-		response.setReceiverSystem(NotificationReceiverSystemFactory.create(entity.getReceiverSystem()));
-		response.setPriority(entity.getPriority());
-		response.setEnabled(entity.isEnabled());
+    private NotificationTemplateContentShortResponse convertToShortResponse(NotificationTemplateContentEntity entity,
+                                                                            NotificationRecipientAggregate recipientAggregate) {
+        NotificationTemplateContentShortResponse response = new NotificationTemplateContentShortResponse();
+        response.setId(entity.getId());
+        response.setNotificationTemplateId(entity.getNotificationTemplate().getId());
+        response.setDescription(entity.getDescription());
+        response.setBodyJson(entity.getBodyJson());
+        response.setReceiverSystem(NotificationReceiverSystemFactory.create(entity.getReceiverSystem()));
+        response.setPriority(entity.getPriority());
+        response.setEnabled(entity.isEnabled());
 
         if (Objects.nonNull(entity.getCodeModule())) {
             response.setCodeModule(entity.getCodeModule());
         }
 
-		response.setRecipients(convertRecipientNames(entity.getAllRecipients(), recipientAggregate));
+        response.setRecipients(convertRecipientNames(entity.getAllRecipients(), recipientAggregate));
 
-		return response;
-	}
+        return response;
+    }
 
-	private List<NotificationRecipientNameDto> convertRecipientNames(Collection<NotificationRecipientEntity> recipients,
-																	 NotificationRecipientAggregate recipientAggregate) {
-		List<NotificationRecipientNameDto> names = new ArrayList<>();
+    private List<NotificationRecipientNameDto> convertRecipientNames(Collection<NotificationRecipientEntity> recipients,
+                                                                     NotificationRecipientAggregate recipientAggregate) {
+        List<NotificationRecipientNameDto> names = new ArrayList<>();
 
-		for (NotificationRecipientEntity recipient : recipients) {
+        for (NotificationRecipientEntity recipient : recipients) {
 
-			if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
+            if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
                 List<NotificationRecipientParameterEntity> parameters = recipientAggregate.getParameters(recipient.getId());
 
-				if (parameters == null || parameters.isEmpty()) {
-					log.warn("Отсутствуют параметры для получатель ID={} c токеном STATIC_EMPLOYEE", recipient.getId());
-					continue;
-				}
+                if (parameters == null || parameters.isEmpty()) {
+                    log.warn("Отсутствуют параметры для получатель ID={} c токеном STATIC_EMPLOYEE", recipient.getId());
+                    continue;
+                }
 
-				parameters.forEach(parameter -> {
-					EmployeeInfoDto employee = recipientAggregate.getEmployee(parameter.getValue());
-					if (employee == null) {
-						log.warn("Сотрудник ID={}, указанный в параметрах получателя ID={} не получен из orgstructure",
-								 parameter.getValue(), recipient.getId());
-						return;
-					}
+                parameters.forEach(parameter -> {
+                    EmployeeInfoDto employee = recipientAggregate.getEmployee(parameter.getValue());
+                    if (employee == null) {
+                        log.warn("Сотрудник ID={}, указанный в параметрах получателя ID={} не получен из orgstructure",
+                            parameter.getValue(), recipient.getId());
+                        return;
+                    }
 
-					StringJoiner nameJoiner = new StringJoiner(" ");
-					if (employee.getLastName() != null) {
-						nameJoiner.add(employee.getLastName());
-					}
-					if (employee.getFirstName() != null) {
-						nameJoiner.add(employee.getFirstName().charAt(0) + ".");
-					}
-					if (employee.getMiddleName() != null) {
-						nameJoiner.add(employee.getMiddleName().charAt(0) + ".");
-					}
-					names.add(new NotificationRecipientNameDto(nameJoiner.toString(), STATIC_EMPLOYEE));
-				});
-			} else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
+                    StringJoiner nameJoiner = new StringJoiner(" ");
+                    if (employee.getLastName() != null) {
+                        nameJoiner.add(employee.getLastName());
+                    }
+                    if (employee.getFirstName() != null) {
+                        nameJoiner.add(employee.getFirstName().charAt(0) + ".");
+                    }
+                    if (employee.getMiddleName() != null) {
+                        nameJoiner.add(employee.getMiddleName().charAt(0) + ".");
+                    }
+                    names.add(new NotificationRecipientNameDto(nameJoiner.toString(), STATIC_EMPLOYEE));
+                });
+            } else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
                 List<NotificationRecipientParameterEntity> parameters = recipientAggregate.getParameters(recipient.getId());
 
-				parameters.forEach(parameter -> {
-					DivisionDto division = recipientAggregate.getDivision(parameter.getValue());
-					if (division == null) {
-						log.warn("Подразделение ID={}, указанное в параметрах получателя ID={} не получено из orgstructure",
-								 parameter.getValue(), recipient.getId());
-						return;
-					}
+                parameters.forEach(parameter -> {
+                    DivisionDto division = recipientAggregate.getDivision(parameter.getValue());
+                    if (division == null) {
+                        log.warn("Подразделение ID={}, указанное в параметрах получателя ID={} не получено из orgstructure",
+                            parameter.getValue(), recipient.getId());
+                        return;
+                    }
 
-					String name = division.getShortName() != null ? division.getShortName() : division.getFullName();
+                    String name = division.getShortName() != null ? division.getShortName() : division.getFullName();
 
-					names.add(new NotificationRecipientNameDto(name, STATIC_DIVISION));
-				});
+                    names.add(new NotificationRecipientNameDto(name, STATIC_DIVISION));
+                });
             } else if (STATIC_EMAIL.getName().equals(recipient.getName())) {
                 List<NotificationRecipientEmailDto> emails = recipientAggregate.getEmails(recipient.getId());
                 for (NotificationRecipientEmailDto emailInfo : emails) {
@@ -596,73 +596,73 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
             } else {
                 names.add(new NotificationRecipientNameDto(recipient.getDescription(), DYNAMIC));
             }
-		}
+        }
 
-		return names;
-	}
+        return names;
+    }
 
-	private NotificationTemplateContentResponse convertToResponse(NotificationTemplateContentEntity entity) {
-		NotificationTemplateContentResponse response = new NotificationTemplateContentResponse();
-		response.setId(entity.getId());
-		if (entity.getNotificationTemplate() != null) {
-			response.setNotificationTemplateId(entity.getNotificationTemplate().getId());
-		}
-		response.setDescription(entity.getDescription());
-		if (entity.getSubstitute() != null) {
-			response.setSubstitute(convertToSubstituteInfo(entity.getSubstitute()));
-		}
-		response.setBodyJson(entity.getBodyJson());
-		response.setReceiverSystem(NotificationReceiverSystemFactory.create(entity.getReceiverSystem()));
-		response.setPriority(entity.getPriority());
-		response.setEnabled(entity.isEnabled());
+    private NotificationTemplateContentResponse convertToResponse(NotificationTemplateContentEntity entity) {
+        NotificationTemplateContentResponse response = new NotificationTemplateContentResponse();
+        response.setId(entity.getId());
+        if (entity.getNotificationTemplate() != null) {
+            response.setNotificationTemplateId(entity.getNotificationTemplate().getId());
+        }
+        response.setDescription(entity.getDescription());
+        if (entity.getSubstitute() != null) {
+            response.setSubstitute(convertToSubstituteInfo(entity.getSubstitute()));
+        }
+        response.setBodyJson(entity.getBodyJson());
+        response.setReceiverSystem(NotificationReceiverSystemFactory.create(entity.getReceiverSystem()));
+        response.setPriority(entity.getPriority());
+        response.setEnabled(entity.isEnabled());
 
         if (Objects.nonNull(entity.getCodeModule())) {
             response.setCodeModule(entity.getCodeModule());
         }
 
-		response.setAttachments(attachmentDao.getAttachmentsByNotificationTemplateContentEntityId(entity.getId()).stream()
-									.map(this::convertAttachmentToDto)
-									.collect(Collectors.toList()));
+        response.setAttachments(attachmentDao.getAttachmentsByNotificationTemplateContentEntityId(entity.getId()).stream()
+            .map(this::convertAttachmentToDto)
+            .collect(Collectors.toList()));
 
-		// /////////////////////////////////////////////////////////////////////
-		// Данные получателей.
-		//
-		response.setEmployeeRecipients(new ArrayList<>());
-		response.setDivisionRecipients(new ArrayList<>());
-		response.setDynamicRecipients(new ArrayList<>());
+        // /////////////////////////////////////////////////////////////////////
+        // Данные получателей.
+        //
+        response.setEmployeeRecipients(new ArrayList<>());
+        response.setDivisionRecipients(new ArrayList<>());
+        response.setDynamicRecipients(new ArrayList<>());
         response.setEmailRecipients(new ArrayList<>());
 
-		response.setEmployeeCopyRecipients(new ArrayList<>());
-		response.setDivisionCopyRecipients(new ArrayList<>());
-		response.setDynamicCopyRecipients(new ArrayList<>());
+        response.setEmployeeCopyRecipients(new ArrayList<>());
+        response.setDivisionCopyRecipients(new ArrayList<>());
+        response.setDynamicCopyRecipients(new ArrayList<>());
         response.setEmailRecipientsCopy(new ArrayList<>());
 
-		NotificationRecipientAggregate recipientAggregate = aggregateRecipients(entity.getAllRecipients());
+        NotificationRecipientAggregate recipientAggregate = aggregateRecipients(entity.getAllRecipients());
 
-		// Основные получатели
-		for (NotificationRecipientEntity recipient : entity.getNotificationRecipient()) {
-			if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
-				recipientAggregate.getStaticEmployees(recipient.getId()).forEach(employee -> {
-					NotificationEmployeeRecipientDto employeeRecipient = new NotificationEmployeeRecipientDto();
-					employeeRecipient.setRecipientId(recipient.getId());
-					employeeRecipient.setEmployeeId(employee.getId());
-					employeeRecipient.setFirstName(employee.getFirstName());
-					employeeRecipient.setLastName(employee.getLastName());
-					employeeRecipient.setMiddleName(employee.getMiddleName());
+        // Основные получатели
+        for (NotificationRecipientEntity recipient : entity.getNotificationRecipient()) {
+            if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
+                recipientAggregate.getStaticEmployees(recipient.getId()).forEach(employee -> {
+                    NotificationEmployeeRecipientDto employeeRecipient = new NotificationEmployeeRecipientDto();
+                    employeeRecipient.setRecipientId(recipient.getId());
+                    employeeRecipient.setEmployeeId(employee.getId());
+                    employeeRecipient.setFirstName(employee.getFirstName());
+                    employeeRecipient.setLastName(employee.getLastName());
+                    employeeRecipient.setMiddleName(employee.getMiddleName());
 
-					response.getEmployeeRecipients().add(employeeRecipient);
-				});
-			} else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
-				recipientAggregate.getStaticDivisions(recipient.getId()).forEach(division -> {
-					NotificationDivisionRecipientDto divisionRecipient = new NotificationDivisionRecipientDto();
-					divisionRecipient.setRecipientId(recipient.getId());
-					divisionRecipient.setDivisionId(division.getId());
-					divisionRecipient.setAbbreviation(division.getAbbreviation());
-					divisionRecipient.setFullName(division.getFullName());
-					divisionRecipient.setShortName(division.getShortName());
+                    response.getEmployeeRecipients().add(employeeRecipient);
+                });
+            } else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
+                recipientAggregate.getStaticDivisions(recipient.getId()).forEach(division -> {
+                    NotificationDivisionRecipientDto divisionRecipient = new NotificationDivisionRecipientDto();
+                    divisionRecipient.setRecipientId(recipient.getId());
+                    divisionRecipient.setDivisionId(division.getId());
+                    divisionRecipient.setAbbreviation(division.getAbbreviation());
+                    divisionRecipient.setFullName(division.getFullName());
+                    divisionRecipient.setShortName(division.getShortName());
 
-					response.getDivisionRecipients().add(divisionRecipient);
-				});
+                    response.getDivisionRecipients().add(divisionRecipient);
+                });
             } else if (STATIC_EMAIL.getName().equals(recipient.getName())) {
                 response.getEmailRecipients().addAll(
                     recipientAggregate.getEmails(recipient.getId())
@@ -671,39 +671,39 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
                         .collect(Collectors.toList())
                 );
             } else { // Вычисляемые получатели по токену.
-				NotificationDynamicRecipientDto dynamicRecipient = new NotificationDynamicRecipientDto();
-				dynamicRecipient.setRecipientId(recipient.getId());
-				dynamicRecipient.setToken(recipient.getName());
-				dynamicRecipient.setDescription(recipient.getDescription());
+                NotificationDynamicRecipientDto dynamicRecipient = new NotificationDynamicRecipientDto();
+                dynamicRecipient.setRecipientId(recipient.getId());
+                dynamicRecipient.setToken(recipient.getName());
+                dynamicRecipient.setDescription(recipient.getDescription());
 
-				response.getDynamicRecipients().add(dynamicRecipient);
-			}
-		}
+                response.getDynamicRecipients().add(dynamicRecipient);
+            }
+        }
 
-		// Получатели копий
-		for (NotificationRecipientEntity recipient : entity.getNotificationRecipientCopy()) {
-			if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
-				recipientAggregate.getStaticEmployees(recipient.getId()).forEach(employee -> {
-					NotificationEmployeeRecipientDto employeeRecipient = new NotificationEmployeeRecipientDto();
-					employeeRecipient.setRecipientId(recipient.getId());
-					employeeRecipient.setEmployeeId(employee.getId());
-					employeeRecipient.setFirstName(employee.getFirstName());
-					employeeRecipient.setLastName(employee.getLastName());
-					employeeRecipient.setMiddleName(employee.getMiddleName());
+        // Получатели копий
+        for (NotificationRecipientEntity recipient : entity.getNotificationRecipientCopy()) {
+            if (STATIC_EMPLOYEE.getName().equals(recipient.getName())) {
+                recipientAggregate.getStaticEmployees(recipient.getId()).forEach(employee -> {
+                    NotificationEmployeeRecipientDto employeeRecipient = new NotificationEmployeeRecipientDto();
+                    employeeRecipient.setRecipientId(recipient.getId());
+                    employeeRecipient.setEmployeeId(employee.getId());
+                    employeeRecipient.setFirstName(employee.getFirstName());
+                    employeeRecipient.setLastName(employee.getLastName());
+                    employeeRecipient.setMiddleName(employee.getMiddleName());
 
-					response.getEmployeeCopyRecipients().add(employeeRecipient);
-				});
-			} else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
-				recipientAggregate.getStaticDivisions(recipient.getId()).forEach(division -> {
-					NotificationDivisionRecipientDto divisionRecipient = new NotificationDivisionRecipientDto();
-					divisionRecipient.setRecipientId(recipient.getId());
-					divisionRecipient.setDivisionId(division.getId());
-					divisionRecipient.setAbbreviation(division.getAbbreviation());
-					divisionRecipient.setFullName(division.getFullName());
-					divisionRecipient.setShortName(division.getShortName());
+                    response.getEmployeeCopyRecipients().add(employeeRecipient);
+                });
+            } else if (STATIC_DIVISION.getName().equals(recipient.getName())) {
+                recipientAggregate.getStaticDivisions(recipient.getId()).forEach(division -> {
+                    NotificationDivisionRecipientDto divisionRecipient = new NotificationDivisionRecipientDto();
+                    divisionRecipient.setRecipientId(recipient.getId());
+                    divisionRecipient.setDivisionId(division.getId());
+                    divisionRecipient.setAbbreviation(division.getAbbreviation());
+                    divisionRecipient.setFullName(division.getFullName());
+                    divisionRecipient.setShortName(division.getShortName());
 
-					response.getDivisionCopyRecipients().add(divisionRecipient);
-				});
+                    response.getDivisionCopyRecipients().add(divisionRecipient);
+                });
             } else if (STATIC_EMAIL.getName().equals(recipient.getName())) {
                 response.getEmailRecipientsCopy().addAll(
                     recipientAggregate.getEmails(recipient.getId())
@@ -712,35 +712,35 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
                         .collect(Collectors.toList())
                 );
             } else { // Вычисляемые получатели по токену.
-				NotificationDynamicRecipientDto dynamicRecipient = new NotificationDynamicRecipientDto();
-				dynamicRecipient.setRecipientId(recipient.getId());
-				dynamicRecipient.setToken(recipient.getName());
-				dynamicRecipient.setDescription(recipient.getDescription());
+                NotificationDynamicRecipientDto dynamicRecipient = new NotificationDynamicRecipientDto();
+                dynamicRecipient.setRecipientId(recipient.getId());
+                dynamicRecipient.setToken(recipient.getName());
+                dynamicRecipient.setDescription(recipient.getDescription());
 
-				response.getDynamicCopyRecipients().add(dynamicRecipient);
-			}
-		}
+                response.getDynamicCopyRecipients().add(dynamicRecipient);
+            }
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	private NotificationTemplateContentEntity findById(Long id) throws NotFoundException {
+    private NotificationTemplateContentEntity findById(Long id) throws NotFoundException {
         NotificationTemplateContentEntity entity = notificationTemplateContentDao.findById(id).orElseThrow(() ->
             new NotFoundException("NotificationTemplateContent with id = %d not found".formatted(id)));
         unitAccessService.checkUnitAccess(entity.getNotificationTemplate().getUnitCode());
         return entity;
-	}
+    }
 
-	private NotificationTemplateContentSubstituteInfo convertToSubstituteInfo(NotificationTemplateContentEntity entity) {
-		NotificationTemplateContentSubstituteInfo dto = new NotificationTemplateContentSubstituteInfo();
-		dto.setId(entity.getId());
-		dto.setDescription(entity.getDescription());
-		return dto;
-	}
+    private NotificationTemplateContentSubstituteInfo convertToSubstituteInfo(NotificationTemplateContentEntity entity) {
+        NotificationTemplateContentSubstituteInfo dto = new NotificationTemplateContentSubstituteInfo();
+        dto.setId(entity.getId());
+        dto.setDescription(entity.getDescription());
+        return dto;
+    }
 
-	private NotificationRecipientAggregate aggregateRecipients(Collection<NotificationRecipientEntity> recipients) {
+    private NotificationRecipientAggregate aggregateRecipients(Collection<NotificationRecipientEntity> recipients) {
 
-		Set<Long> staticRecipientIds = new HashSet<>();
+        Set<Long> staticRecipientIds = new HashSet<>();
         for (NotificationRecipientEntity recipient : recipients) {
             if (STATIC_EMPLOYEE.getName().equals(recipient.getName()) ||
                 STATIC_DIVISION.getName().equals(recipient.getName()) ||
@@ -749,7 +749,7 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
             }
         }
 
-		List<NotificationRecipientParameterEntity> parameters = notificationRecipientParametersDao.findByParentIds(staticRecipientIds);
+        List<NotificationRecipientParameterEntity> parameters = notificationRecipientParametersDao.findByParentIds(staticRecipientIds);
         List<NotificationRecipientEmailEntity> emailList = notificationRecipientEmailDao.findByRecipientIds(staticRecipientIds);
 
         Set<Long> employeeIds = new HashSet<>();
@@ -762,17 +762,17 @@ public class NotificationTemplateContentServiceImpl implements NotificationTempl
             }
         }
 
-		List<EmployeeInfoDto> employees = employeeIds.isEmpty() ? Collections.emptyList() : orgstructureClient.findEmployee(List.copyOf(employeeIds)).getData();
+        List<EmployeeInfoDto> employees = employeeIds.isEmpty() ? Collections.emptyList() : orgstructureClient.findEmployee(List.copyOf(employeeIds)).getData();
 
         List<DivisionDto> divisions = Collections.emptyList();
-		if (CollectionUtils.isNotEmpty(divisionIds)) {
-			DivisionInfoRequestDto divisionInfoRequestDto = new DivisionInfoRequestDto();
-			divisionInfoRequestDto.setDivisionIds(List.copyOf(divisionIds));
-			divisions = orgstructureClient.getDivisionList(divisionInfoRequestDto)
-				.stream()
-				.map(DivisionInfoDto::getDivision)
-				.collect(Collectors.toList());
-		}
+        if (CollectionUtils.isNotEmpty(divisionIds)) {
+            DivisionInfoRequestDto divisionInfoRequestDto = new DivisionInfoRequestDto();
+            divisionInfoRequestDto.setDivisionIds(List.copyOf(divisionIds));
+            divisions = orgstructureClient.getDivisionList(divisionInfoRequestDto)
+                .stream()
+                .map(DivisionInfoDto::getDivision)
+                .collect(Collectors.toList());
+        }
 
         List<NotificationRecipientEmailDto> emailListDto = emailList.isEmpty() ?
             Collections.emptyList() :

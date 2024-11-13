@@ -27,13 +27,13 @@ public class PositionPositionImportanceDao extends AbstractDao<PositionPositionI
     public List<PositionPositionImportanceEntity> findActualByPositionId(Long positionId, String unitCode) {
         QPositionImportanceEntity pi = QPositionImportanceEntity.positionImportanceEntity;
         final BooleanExpression exp = meta.dateTo.isNull()
-                .and(meta.position.id.eq(positionId))
+            .and(meta.position.id.eq(positionId))
             .and(meta.positionImportance.isNull().or(pi.unitCode.eq(unitCode)));
         return query()
-                .selectFrom(meta)
-                .leftJoin(pi).on(pi.id.eq(meta.positionImportance.id))
-                .where(exp)
-                .fetch();
+            .selectFrom(meta)
+            .leftJoin(pi).on(pi.id.eq(meta.positionImportance.id))
+            .where(exp)
+            .fetch();
     }
 
     //"SELECT DISTINCT ppi.* FROM position_position_importance AS ppi " +
@@ -69,15 +69,15 @@ public class PositionPositionImportanceDao extends AbstractDao<PositionPositionI
         }
 
         return query()
-                .selectFrom(meta)
-                .innerJoin(p).on(meta.position.id.eq(p.id))
-                .innerJoin(d).on(p.division.id.eq(d.id))
-                .innerJoin(dt).on(dt.divisionId.eq(d.id))
-                .innerJoin(dtr).on(dtr.divisionTeam.id.eq(dt.id))
-                .innerJoin(dta).on(dta.divisionTeamRoleId.eq(dtr.id))
-                .leftJoin(pi).on(pi.id.eq(meta.positionImportance.id))
-                .where(ExpressionUtils.allOf(predicates))
-                .distinct()
-                .fetch();
+            .selectFrom(meta)
+            .innerJoin(p).on(meta.position.id.eq(p.id))
+            .innerJoin(d).on(p.division.id.eq(d.id))
+            .innerJoin(dt).on(dt.divisionId.eq(d.id))
+            .innerJoin(dtr).on(dtr.divisionTeam.id.eq(dt.id))
+            .innerJoin(dta).on(dta.divisionTeamRoleId.eq(dtr.id))
+            .leftJoin(pi).on(pi.id.eq(meta.positionImportance.id))
+            .where(ExpressionUtils.allOf(predicates))
+            .distinct()
+            .fetch();
     }
 }

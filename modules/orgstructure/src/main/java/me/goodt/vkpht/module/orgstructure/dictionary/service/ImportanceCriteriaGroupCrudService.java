@@ -33,7 +33,7 @@ public class ImportanceCriteriaGroupCrudService {
         entity = dao.save(entity);
         return mapper.toDto(entity);
     }
-    
+
     public ImportanceCriteriaGroupDto update(Long id, ImportanceCriteriaGroupDto request) {
         ImportanceCriteriaGroupEntity entity = getSecured(id);
         entity = mapper.toUpdatedEntity(request, entity);

@@ -4,18 +4,18 @@ import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmp
 
 public interface SubscribeEmployeeToNotificationService {
 
-	/**
-	 * Доступность отправки шаблона уведомления сотруднику через канал отправки
-	 */
-	boolean isPossibleSendNotificationToEmployee(Long employeeId, Long notificationTemplateContentId, Long notificationReceiverSystemId);
+    /**
+     * Доступность отправки шаблона уведомления сотруднику через канал отправки
+     */
+    boolean isPossibleSendNotificationToEmployee(Long employeeId, Long notificationTemplateContentId, Long notificationReceiverSystemId);
 
-	/**
-	 * Загрузка "Управление подписками"
-	 */
-	NotificationTemplateContentEmployeeSubscribeDto load(Long employeeId, String receiverSystemName);
+    /**
+     * Загрузка "Управление подписками"
+     */
+    NotificationTemplateContentEmployeeSubscribeDto load(Long employeeId, String receiverSystemName);
 
-	/**
-	 * Сохранение "Управление подписками"
-	 */
-	void save(NotificationTemplateContentEmployeeSubscribeDto dto);
+    /**
+     * Сохранение "Управление подписками"
+     */
+    void save(NotificationTemplateContentEmployeeSubscribeDto dto);
 }

@@ -1,7 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,21 +16,20 @@ import me.goodt.vkpht.module.orgstructure.api.dto.CitizenshipInputDto;
 import me.goodt.vkpht.module.orgstructure.domain.dao.CitizenshipDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.CitizenshipEntity;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 @Transactional
 public class CitizenshipServiceImpl implements CitizenshipService {
 
-    @Autowired
-    private CitizenshipDao citizenshipDao;
-	@Autowired
-	private AuthService authService;
+    private final CitizenshipDao citizenshipDao;
+    private final AuthService authService;
 
     @Override
     @Transactional(readOnly = true)
     public CitizenshipEntity getById(Long id) throws NotFoundException {
         return citizenshipDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("CitizenshipEntity with id %d not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("CitizenshipEntity with id %d not found", id)));
     }
 
     @Override
@@ -43,14 +42,14 @@ public class CitizenshipServiceImpl implements CitizenshipService {
     @Transactional(rollbackFor = NotFoundException.class)
     public CitizenshipEntity create(CitizenshipInputDto dto) throws NotFoundException {
         CitizenshipEntity entity = new CitizenshipEntity();
-		entity.setName(dto.getName());
-		entity.setShortName(dto.getShortName());
-		Date currentDate = new Date();
-		entity.setDateFrom(currentDate);
-		entity.setUpdateDate(currentDate);
-		Long sessionEmployeeId = authService.getUserEmployeeId();
-		entity.setAuthorEmployeeId(sessionEmployeeId);
-		entity.setUpdateEmployeeId(sessionEmployeeId);
+        entity.setName(dto.getName());
+        entity.setShortName(dto.getShortName());
+        Date currentDate = new Date();
+        entity.setDateFrom(currentDate);
+        entity.setUpdateDate(currentDate);
+        Long sessionEmployeeId = authService.getUserEmployeeId();
+        entity.setAuthorEmployeeId(sessionEmployeeId);
+        entity.setUpdateEmployeeId(sessionEmployeeId);
         return citizenshipDao.save(entity);
     }
 
@@ -60,8 +59,8 @@ public class CitizenshipServiceImpl implements CitizenshipService {
         CitizenshipEntity entity = getById(id);
         entity.setName(dto.getName());
         entity.setShortName(dto.getShortName());
-		entity.setUpdateDate(new Date());
-		entity.setUpdateEmployeeId(authService.getUserEmployeeId());
+        entity.setUpdateDate(new Date());
+        entity.setUpdateEmployeeId(authService.getUserEmployeeId());
         return citizenshipDao.save(entity);
     }
 
@@ -69,10 +68,10 @@ public class CitizenshipServiceImpl implements CitizenshipService {
     @Transactional(rollbackFor = NotFoundException.class)
     public void delete(Long id) throws NotFoundException {
         CitizenshipEntity entity = getById(id);
-		Date currentDate = new Date();
-		entity.setDateTo(currentDate);
-		entity.setUpdateDate(currentDate);
-		entity.setUpdateEmployeeId(authService.getUserEmployeeId());
+        Date currentDate = new Date();
+        entity.setDateTo(currentDate);
+        entity.setUpdateDate(currentDate);
+        entity.setUpdateEmployeeId(authService.getUserEmployeeId());
         citizenshipDao.save(entity);
     }
 }

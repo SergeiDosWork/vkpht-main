@@ -10,10 +10,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum NotificationLogStatusEnum {
 
-	READY("Подготовлено к отправке"),
-	SUCCESS("Отправлено"),
-	ERROR("Ошибка"),
+    READY("Подготовлено к отправке"),
+    SUCCESS("Отправлено"),
+    ERROR("Ошибка"),
     BROKER_UNAVAILABLE("Брокер сообщений недоступен");
 
-	private String statusName;
+    private String statusName;
 }

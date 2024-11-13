@@ -6,7 +6,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class DivisionLegalDto {
-    
+
     private Long divisionId;
 
     private Long legalEntityId;

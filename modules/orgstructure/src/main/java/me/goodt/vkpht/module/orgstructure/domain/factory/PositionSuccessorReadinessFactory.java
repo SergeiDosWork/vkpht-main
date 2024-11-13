@@ -10,11 +10,11 @@ public class PositionSuccessorReadinessFactory {
 
     public static PositionSuccessorReadinessDto create(PositionSuccessorReadinessEntity entity) {
         return new PositionSuccessorReadinessDto(
-                entity.getId(),
-                entity.getPositionSuccessor() == null ? null : PositionSuccessorFactory.create(entity.getPositionSuccessor()),
-                entity.getReadiness() == null ? null : AssignmentReadinessFactory.create(entity.getReadiness()),
-                entity.getDateFrom(),
-                entity.getDateTo()
+            entity.getId(),
+            entity.getPositionSuccessor() == null ? null : PositionSuccessorFactory.create(entity.getPositionSuccessor()),
+            entity.getReadiness() == null ? null : AssignmentReadinessFactory.create(entity.getReadiness()),
+            entity.getDateFrom(),
+            entity.getDateTo()
         );
     }
 }

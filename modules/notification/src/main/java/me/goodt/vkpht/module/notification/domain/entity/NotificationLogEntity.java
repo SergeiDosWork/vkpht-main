@@ -28,41 +28,41 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @Table(name = "notification_log")
 public class NotificationLogEntity extends DomainObject {
 
-	/**
-	 * Шаблон, на основе которого сформировано уведомление
-	 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "notification_template_content_id")
-	private NotificationTemplateContentEntity notificationTemplateContent;
+    /**
+     * Шаблон, на основе которого сформировано уведомление
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "notification_template_content_id")
+    private NotificationTemplateContentEntity notificationTemplateContent;
 
-	/**
-	 * Дата и время измениения уведомления
-	 */
-	@Column(name = "date_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateTime;
+    /**
+     * Дата и время измениения уведомления
+     */
+    @Column(name = "date_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateTime;
 
-	/**
-	 * Статус отправки уведомления
-	 */
-	@Column(name = "status")
-	private String status;
+    /**
+     * Статус отправки уведомления
+     */
+    @Column(name = "status")
+    private String status;
 
-	/**
-	 * Тема уведомления
-	 */
-	@Column(name = "subject")
-	private String subject;
+    /**
+     * Тема уведомления
+     */
+    @Column(name = "subject")
+    private String subject;
 
-	/**
-	 * Текст уведомления
-	 */
-	@Column(name = "message")
-	private String message;
+    /**
+     * Текст уведомления
+     */
+    @Column(name = "message")
+    private String message;
 
-	/**
-	 * Текст ошибки отправки уведомления
-	 */
-	@Column(name = "error_message")
-	private String errorMessage;
+    /**
+     * Текст ошибки отправки уведомления
+     */
+    @Column(name = "error_message")
+    private String errorMessage;
 }

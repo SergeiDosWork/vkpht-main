@@ -19,7 +19,7 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class DtaToEmployeeIdRecipientResolver implements RecipientResolver {
-	@Override
+    @Override
     public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
         if (!StringUtils.equals(DTA_TO_EMPLOYEE_ID, recipient.getBasicValue())) {
             return;

@@ -12,7 +12,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.QProjectTeamAssignmentTy
 public class ProjectTeamAssignmentTypeDao extends AbstractArchivableDao<ProjectTeamAssignmentTypeEntity, Long> {
 
     private static final QProjectTeamAssignmentTypeEntity meta =
-            QProjectTeamAssignmentTypeEntity.projectTeamAssignmentTypeEntity;
+        QProjectTeamAssignmentTypeEntity.projectTeamAssignmentTypeEntity;
 
     public ProjectTeamAssignmentTypeDao(EntityManager em) {
         super(ProjectTeamAssignmentTypeEntity.class, em);
@@ -21,13 +21,13 @@ public class ProjectTeamAssignmentTypeDao extends AbstractArchivableDao<ProjectT
     @Override
     protected JPQLQuery<ProjectTeamAssignmentTypeEntity> createActualQuery() {
         return query().selectFrom(meta)
-                .where(meta.dateTo.isNull());
+            .where(meta.dateTo.isNull());
     }
 
     public Long findIdByExternalId(String extId) {
         return query().select(meta.id)
-                .from(meta)
-                .where(meta.externalId.eq(extId))
-                .fetchFirst();
+            .from(meta)
+            .where(meta.externalId.eq(extId))
+            .fetchFirst();
     }
 }

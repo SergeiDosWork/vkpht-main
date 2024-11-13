@@ -20,14 +20,14 @@ public class LegalEntityTypeDao extends AbstractArchivableDao<LegalEntityTypeEnt
     public boolean existsByName(String name) {
         return query().selectFrom(meta)
             .where(meta.name.eq(name))
-                .fetchCount() > 0;
+            .fetchCount() > 0;
     }
 
     public Integer findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     @Override

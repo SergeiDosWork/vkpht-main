@@ -20,20 +20,20 @@ import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TASK_LI
 @AllArgsConstructor
 public class TaskLinkDto {
 
-	private Long id;
+    private Long id;
 
     @JsonSetter(TASK_ID_FROM_TAG)
-	private Long taskIdFrom;
+    private Long taskIdFrom;
 
     @JsonSetter(TASK_LINK_TYPE_ID_TAG)
-	private Long taskLinkTypeId;
+    private Long taskLinkTypeId;
 
     @JsonSetter(TASK_ID_TO_TAG)
-	private Long taskIdTo;
+    private Long taskIdTo;
 
     @JsonSetter(DATE_FROM_TAG)
-	private Date dateFrom;
+    private Date dateFrom;
 
     @JsonSetter(DATE_TO_TAG)
-	private Date dateTo;
+    private Date dateTo;
 }

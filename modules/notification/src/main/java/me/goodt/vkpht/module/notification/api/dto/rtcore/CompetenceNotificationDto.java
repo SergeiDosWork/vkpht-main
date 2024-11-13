@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CompetenceNotificationDto {
-	private Long id;
-	private String name;
-	private String competenceCatalogParams;
+    private Long id;
+    private String name;
+    private String competenceCatalogParams;
 }

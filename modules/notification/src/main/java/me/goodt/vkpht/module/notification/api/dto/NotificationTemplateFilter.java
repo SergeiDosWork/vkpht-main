@@ -13,22 +13,22 @@ import org.springdoc.core.annotations.ParameterObject;
 @ParameterObject
 public class NotificationTemplateFilter {
 
-	@Schema(description = "Уникальный идентификатор уведомления о событии",
-		requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-		type = "integer")
-	private Long id;
+    @Schema(description = "Уникальный идентификатор уведомления о событии",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED,
+        type = "integer")
+    private Long id;
 
-	@Schema(description = "Код события.\n\nПоиск на частичное совпадении с указанным значением.",
-		requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-	private String code;
+    @Schema(description = "Код события.\n\nПоиск на частичное совпадении с указанным значением.",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String code;
 
-	@Schema(description = "Название события.\n\nПоиск на частичное совпадении с указанным значением.",
-		requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-	private String name;
+    @Schema(description = "Название события.\n\nПоиск на частичное совпадении с указанным значением.",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String name;
 
-	@Schema(description = "Описание события.\n\nПоиск на частичное совпадении с указанным значением.",
-		requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-	private String description;
+    @Schema(description = "Описание события.\n\nПоиск на частичное совпадении с указанным значением.",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    private String description;
 
     private String unitCode;
 

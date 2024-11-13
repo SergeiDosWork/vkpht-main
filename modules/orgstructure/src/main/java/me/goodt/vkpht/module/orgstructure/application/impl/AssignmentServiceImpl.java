@@ -6,13 +6,15 @@ import com.querydsl.core.types.QBean;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.time.StopWatch;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,14 +36,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.goodt.drive.auth.sur.unit.UnitAccessService;
-import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
-import me.goodt.vkpht.common.application.util.ExpiredConcurrentHashMap;
 import me.goodt.vkpht.common.application.util.GlobalDefs;
 import me.goodt.vkpht.common.application.util.UtilClass;
 import me.goodt.vkpht.common.domain.dao.NativeDao;
+import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
 import me.goodt.vkpht.module.orgstructure.api.dto.CompactAssignmentDto;
@@ -54,7 +54,11 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentWithDivi
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleShortDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamShortDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoShortDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.projection.DivisionTeamAssignmentCompactProjection;
+import me.goodt.vkpht.module.orgstructure.config.CacheConfig.AssignmentCache;
+import me.goodt.vkpht.module.orgstructure.config.CacheConfig.DivisionTeamAssignmentKey;
+import me.goodt.vkpht.module.orgstructure.config.CacheConfig.EmployeeAssignmentCache;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentRotationDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamDao;
@@ -77,40 +81,27 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory
 import static java.util.stream.Collectors.toList;
 import static me.goodt.vkpht.common.application.util.GlobalDefs.HEAD_SYSTEM_ROLE_ID;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class AssignmentServiceImpl implements AssignmentService {
 
     private static final Integer HSR_ID = HEAD_SYSTEM_ROLE_ID;
 
-    @Autowired
-    private DivisionTeamAssignmentDao divisionTeamAssignmentDao;
-    @Autowired
-    private DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
-    @Autowired
-    private PositionAssignmentDao positionAssignmentDao;
-    @Autowired
-    private DivisionTeamDao divisionTeamDao;
-    @Autowired
-    private DivisionTeamRoleDao divisionTeamRoleDao;
-    @Autowired
-    private NativeDao nativeDao;
-    @Autowired
-    private EmployeeDao employeeDao;
-    @Autowired
-    private EmployeeDeputyDao employeeDeputyDao;
-    @Autowired
-    @Qualifier("assignments")
-    private ExpiredConcurrentHashMap<DivisionTeamAssignmentKey, List<DivisionTeamAssignmentEntity>> assignmentsCache;
-    @Autowired
-    @Qualifier("employeeAssignments")
-    private ExpiredConcurrentHashMap<Long, DivisionTeamAssignmentDto> employeeAssignments;
-    @Autowired
-    private EmployeeService employeeService;
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private UnitAccessService unitAccessService;
+    private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;
+    private final DivisionTeamAssignmentRotationDao divisionTeamAssignmentRotationDao;
+    private final PositionAssignmentDao positionAssignmentDao;
+    private final DivisionTeamDao divisionTeamDao;
+    private final DivisionTeamRoleDao divisionTeamRoleDao;
+    private final NativeDao nativeDao;
+    private final EmployeeDao employeeDao;
+    private final EmployeeDeputyDao employeeDeputyDao;
+    private final EmployeeService employeeService;
+    private final AuthService authService;
+    private final UnitAccessService unitAccessService;
+
+    private final AssignmentCache assignmentsCache;
+    private final EmployeeAssignmentCache employeeAssignmentCache;
 
     @Override
     public List<DivisionTeamAssignmentEntity> getTeamAssignments(Long employeeId) {
@@ -134,7 +125,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public DivisionTeamAssignmentEntity getDivisionTeamAssignment(Long id) {
         return divisionTeamAssignmentDao.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Division team assignment %d is not found", id)));
+            .orElseThrow(() -> new NotFoundException(String.format("Division team assignment %d is not found", id)));
     }
 
     private List<DivisionTeamAssignmentDto> getAssignmentsCreateWithJobInfo(Collection<DivisionTeamAssignmentEntity> dtaList, boolean withAssignments, boolean withRotations, boolean withEmployee, boolean withDtr) {
@@ -157,12 +148,12 @@ public class AssignmentServiceImpl implements AssignmentService {
         log.info("getAssignmentsCreateWithJobInfo load positionAssignmentDao {}", sw.getTime());
 
         return dtaList.stream().map(d -> DivisionTeamAssignmentFactory.createWithJobInfoAndFlags(
-                        d,
-                        withAssignments ? positionAssignments.getOrDefault(d.getEmployeeId(), Collections.emptyList()) : Collections.emptyList(),
-                        withRotations ? rotations.getOrDefault(d.getId(), Collections.emptyList()).stream().map(DivisionTeamAssignmentRotationFactory::createShort).collect(toList()) : Collections.emptyList(),
-                        withEmployee,
-                        withDtr))
-                .collect(toList());
+                d,
+                withAssignments ? positionAssignments.getOrDefault(d.getEmployeeId(), Collections.emptyList()) : Collections.emptyList(),
+                withRotations ? rotations.getOrDefault(d.getId(), Collections.emptyList()).stream().map(DivisionTeamAssignmentRotationFactory::createShort).collect(toList()) : Collections.emptyList(),
+                withEmployee,
+                withDtr))
+            .collect(toList());
     }
 
     private List<DivisionTeamAssignmentShortDto> getShortAssignmentsCreateWithJobInfo(Collection<DivisionTeamAssignmentShort> dtaList, boolean withAssignments,
@@ -205,14 +196,14 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         return dtaList.stream().map(d -> {
             DivisionTeamAssignmentShortDto dta = DivisionTeamAssignmentFactory.createShortWithJobInfoAndFlags(
-                    d,
-                    withAssignments ? positionAssignments.getOrDefault(d.getEmployeeId(), Collections.emptyList()) : Collections.emptyList(),
-                    withRotations
-                            ? rotations.getOrDefault(d.getId(), Collections.emptyList()).stream().map(DivisionTeamAssignmentRotationFactory::createShort)
-                            .collect(toList())
-                            : Collections.emptyList(),
-                    emplMap.get(d.getEmployeeId()),
-                    withDtr);
+                d,
+                withAssignments ? positionAssignments.getOrDefault(d.getEmployeeId(), Collections.emptyList()) : Collections.emptyList(),
+                withRotations
+                    ? rotations.getOrDefault(d.getId(), Collections.emptyList()).stream().map(DivisionTeamAssignmentRotationFactory::createShort)
+                    .collect(toList())
+                    : Collections.emptyList(),
+                emplMap.get(d.getEmployeeId()),
+                withDtr);
             DivisionTeamShortDto divisionTeam = DivisionTeamFactory.createShort(dtMap.get(d.getDivisionTeamRoleId()));
             dta.setDivisionTeam(divisionTeam);
             DivisionTeamRoleShortDto teamRole = DivisionTeamRoleFactory.createShort(dtrMap.get(d.getDivisionTeamRoleId()));
@@ -235,18 +226,18 @@ public class AssignmentServiceImpl implements AssignmentService {
         final Map<Long, List<DivisionTeamAssignmentRotationEntity>> rotationsByAssignmentIds = divisionTeamAssignmentRotationDao.findActualByAssignmentIds(assignmentIds);
         final Map<Long, List<PositionAssignmentEntity>> positionByEmployeeIds = positionAssignmentDao.findActualByEmployeeIds(employeeIds, unitAccessService.getCurrentUnit());
         return assignments
-                .stream()
-                .map(dta ->
-                             DivisionTeamAssignmentFactory.createShortWithJobInfo(
-                                     dta,
-                                     withAssignments ? positionByEmployeeIds.getOrDefault(dta.getEmployee().getId(), Collections.emptyList()) : Collections.emptyList(),
-                                     withRotations ? rotationsByAssignmentIds.getOrDefault(dta.getId(), Collections.emptyList())
-                                             .stream()
-                                             .map(DivisionTeamAssignmentRotationFactory::createShort)
-                                             .collect(toList()) : Collections.emptyList()
-                             )
+            .stream()
+            .map(dta ->
+                DivisionTeamAssignmentFactory.createShortWithJobInfo(
+                    dta,
+                    withAssignments ? positionByEmployeeIds.getOrDefault(dta.getEmployee().getId(), Collections.emptyList()) : Collections.emptyList(),
+                    withRotations ? rotationsByAssignmentIds.getOrDefault(dta.getId(), Collections.emptyList())
+                        .stream()
+                        .map(DivisionTeamAssignmentRotationFactory::createShort)
+                        .collect(toList()) : Collections.emptyList()
                 )
-                .collect(toList());
+            )
+            .collect(toList());
     }
 
     @Override
@@ -264,10 +255,10 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         StopWatch sw = StopWatch.createStarted();
         List<DivisionTeamAssignmentDto> divisionTeamAssignments = getDivisionTeamAssignments(
-                ids,
-                ids == null ? processedEmployeeIds : null,
-                divisionTeamId,
-                BooleanUtils.isTrue(withClosed)
+            ids,
+            ids == null ? processedEmployeeIds : null,
+            divisionTeamId,
+            BooleanUtils.isTrue(withClosed)
         );
         sw.stop();
         log.info("getDivisionTeamAssignmentsFull, getDivisionTeamAssignments: {}", sw.getTime());
@@ -312,8 +303,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         StopWatch sw = StopWatch.createStarted();
         List<DivisionTeamAssignmentCompactProjection> divisionTeamAssignments = getDivisionTeamAssignmentCompactListInner(
-                ids,
-                ids == null ? processedEmployeeIds : null
+            ids,
+            ids == null ? processedEmployeeIds : null
         );
         sw.stop();
         log.info("getDivisionTeamAssignmentCompactList, getDivisionTeamAssignmentCompactListInner: {}", sw.getTime());
@@ -337,17 +328,17 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Transactional(readOnly = true)
     public DivisionTeamAssignmentDto getFirstDivisionTeamAssignment() {
         Long employeeId = authService.getUserEmployeeId();
-        final DivisionTeamAssignmentDto rez = employeeAssignments.get(employeeId);
+        final DivisionTeamAssignmentDto rez = employeeAssignmentCache.get(employeeId);
         if (rez != null) {
             return rez;
         }
         final DivisionTeamAssignmentEntity entity = divisionTeamAssignmentDao.getDivisionTeamAssignmentFirstByRole(employeeId);
         if (entity == null) {
-            employeeAssignments.put(employeeId, null);
+            employeeAssignmentCache.put(employeeId, null);
             return null;
         }
         final DivisionTeamAssignmentDto dto = DivisionTeamAssignmentFactory.createWithJobInfo(entity, Collections.emptyList(), Collections.emptyList());
-        employeeAssignments.put(employeeId, dto);
+        employeeAssignmentCache.put(employeeId, dto);
         return dto;
     }
 
@@ -408,7 +399,7 @@ public class AssignmentServiceImpl implements AssignmentService {
             if (count.get() > 0) {
                 sw = StopWatch.createStarted();
                 subordinates.putAll(
-                        UtilClass.toMap(divisionTeamAssignmentDao.fetchShortByDivTeamAndSysRole(divTeams, HSR_ID))
+                    UtilClass.toMap(divisionTeamAssignmentDao.fetchShortByDivTeamAndSysRole(divTeams, HSR_ID))
                 );
                 sw.stop();
                 log.info("getDivisionTeamSubordinates fetchByDivisionTeamIdAndSystemRoleId time {}", sw.getTime());
@@ -476,9 +467,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         if (!withAssignments && !withRotation) {
             return divisionTeamAssignments
-                    .stream()
-                    .map(i -> DivisionTeamAssignmentFactory.createSuperShort(i, withEmployee, withDtr))
-                    .collect(toList());
+                .stream()
+                .map(i -> DivisionTeamAssignmentFactory.createSuperShort(i, withEmployee, withDtr))
+                .collect(toList());
         }
 
         return getAssignmentsCreateWithJobInfo(divisionTeamAssignments, withAssignments, withRotation, withEmployee, withDtr);
@@ -511,15 +502,15 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         if (!headSearchResult.getSearchStatus()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Search result is empty, therefore we couldn't not return info. employee: %d, external_employee: %s, team: %d",
-                                                                                  employeeId, externalId, divisionTeamId));
+                employeeId, externalId, divisionTeamId));
         }
         DivisionTeamAssignmentEntity assignment = getDivisionTeamAssignment(headSearchResult.getDivisionTeamAssignmentId());
 
         List<DivisionTeamAssignmentRotationShortDto> rotations = divisionTeamAssignmentRotationDao
-                .findByAssignmentId(assignment.getId())
-                .stream()
-                .map(DivisionTeamAssignmentRotationFactory::createShort)
-                .collect(toList());
+            .findByAssignmentId(assignment.getId())
+            .stream()
+            .map(DivisionTeamAssignmentRotationFactory::createShort)
+            .collect(toList());
 
         List<PositionAssignmentEntity> positionAssignments = positionAssignmentDao.findAll(
             PositionAssignmentFilter.builder()
@@ -586,9 +577,9 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public List<DivisionTeamAssignmentWithDivisionTeamFullDto> findDivisionTeamAssignmentWithDivisionTeamFull(Collection<Long> ids) {
         return divisionTeamAssignmentDao.findAllById(ids)
-                .stream()
-                .map(DivisionTeamAssignmentFactory::createWithDivisionTeamFull)
-                .collect(toList());
+            .stream()
+            .map(DivisionTeamAssignmentFactory::createWithDivisionTeamFull)
+            .collect(toList());
     }
 
     @Override
@@ -668,7 +659,7 @@ public class AssignmentServiceImpl implements AssignmentService {
             return;
         }
         List<DivisionTeamAssignmentShort> list = divisionTeamAssignmentDao.findShortByParentDivisionTeams(divisionTeamIds)
-                .stream().map(d -> d.getAssignment()).collect(toList());
+            .stream().map(d -> d.getAssignment()).collect(toList());
 
         subordinates.putAll(UtilClass.toMap(list));
         List<Long> byParentIds = divisionTeamDao.findIdsByParentIds(divisionTeamIds);
@@ -699,15 +690,15 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
         processedDivisionTeamIds.add(divisionTeamId);
         nativeDao.findNearestChildIdsWithoutHead(List.of(divisionTeamId), HSR_ID)
-                .forEach(childId -> {
-                    Long childrenNumber = divisionTeamDao.countNearestChildren(childId);
-                    subordinates.putAll(getSubordinatesShortMap(Collections.singletonList(childId)));
-                    if (childrenNumber == 0) {
-                        processedDivisionTeamIds.add(childId);
-                    } else {
-                        extractSubordinatesFromTree(childId, subordinates, processedDivisionTeamIds);
-                    }
-                });
+            .forEach(childId -> {
+                Long childrenNumber = divisionTeamDao.countNearestChildren(childId);
+                subordinates.putAll(getSubordinatesShortMap(Collections.singletonList(childId)));
+                if (childrenNumber == 0) {
+                    processedDivisionTeamIds.add(childId);
+                } else {
+                    extractSubordinatesFromTree(childId, subordinates, processedDivisionTeamIds);
+                }
+            });
     }
 
     @Override
@@ -741,7 +732,6 @@ public class AssignmentServiceImpl implements AssignmentService {
             subordinates.putAll(getSubordinatesShortMap(divTeams));
             sw.stop();
             log.info("getDivisionTeamSubordinates getSubordinatesMap_2 time {}", sw.getTime());
-
 
 
             sw = StopWatch.createStarted();
@@ -793,6 +783,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
         return subordinates.stream().map(x -> x.getEmployee().getId().intValue()).collect(toList());
     }
+
     @Transactional
     public List<EmployeeInfoShortDto> getDivisionTeamSubordinatesEmployeeFull(Long employeeId, Boolean withChilds) {
 
@@ -804,14 +795,30 @@ public class AssignmentServiceImpl implements AssignmentService {
         List<DivisionTeamAssignmentShortDto> subordinates = getDivisionTeamSubordinatesTeam(divisionTeamAssignment.getDivisionTeam().getId(), withChilds);
 
         return subordinates.stream().map(x -> new EmployeeInfoShortDto(x.getEmployee().getId().intValue(),
-                                                                       UtilClass.getFIOFromEmployee(x.getEmployee()),
-                                                                       x.getDivisionTeam().getDivisionId(),
-                                                                       x.getEmployee().getFirstName(),
-                                                                       x.getEmployee().getLastName(),
-                                                                       x.getEmployee().getMiddleName(),
-                                                                       x.getEmployee().getPhoto(),
-                                                                       x.getEmployee().getPositionAssignments().get(0).getShortName()))
+                getFIOFromEmployee(x.getEmployee()),
+                x.getDivisionTeam().getDivisionId(),
+                x.getEmployee().getFirstName(),
+                x.getEmployee().getLastName(),
+                x.getEmployee().getMiddleName(),
+                x.getEmployee().getPhoto(),
+                x.getEmployee().getPositionAssignments().get(0).getShortName()))
             .collect(toList());
+    }
+
+    /**
+     * Метод извлекает из EmployeeInfoDto строку Фамилия И.О.
+     *
+     * @param employee EmployeeInfoDto
+     * @return Фамилия И.О.
+     */
+    public static String getFIOFromEmployee(EmployeeInfoDto employee) {
+        if (employee.getMiddleName() != null) {
+            return String.format("%s %s.%s.", employee.getLastName(),
+                employee.getFirstName().charAt(0),
+                employee.getMiddleName().charAt(0));
+
+        } else
+            return String.format("%s %s.", employee.getLastName(), employee.getFirstName().charAt(0));
     }
 
     private void extractSubordinatesRecursion(Long divisionTeamId, Map<Long, DivisionTeamAssignmentShort> subordinates) {
@@ -867,9 +874,9 @@ public class AssignmentServiceImpl implements AssignmentService {
                 }
             } else {
                 DivisionTeamInfoForSubordinates subordinates = new DivisionTeamInfoForSubordinates(
-                        divTeamId,
-                        Objects.equals(systemRoleId, HSR_ID) ? asmnt : null,
-                        !Objects.equals(systemRoleId, HSR_ID) ? Stream.of(asmnt).collect(toList()) : new ArrayList<>()
+                    divTeamId,
+                    Objects.equals(systemRoleId, HSR_ID) ? asmnt : null,
+                    !Objects.equals(systemRoleId, HSR_ID) ? Stream.of(asmnt).collect(toList()) : new ArrayList<>()
                 );
                 result.put(divTeamId, subordinates);
             }
@@ -877,56 +884,5 @@ public class AssignmentServiceImpl implements AssignmentService {
         return result;
     }
 
-    private static class DivisionTeamAssignmentKey {
-        List<Long> ids;
-        List<Long> employeeIds;
-        Long divisionTeamId;
-        Boolean withClosed;
 
-        public DivisionTeamAssignmentKey(List<Long> ids, List<Long> employeeIds, Long divisionTeamId, Boolean withClosed) {
-            this.ids = ids;
-            this.employeeIds = employeeIds;
-            this.divisionTeamId = divisionTeamId;
-            this.withClosed = withClosed;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o == this) {
-                return true;
-            }
-            if (!(o instanceof DivisionTeamAssignmentKey)) {
-                return false;
-            }
-            DivisionTeamAssignmentKey other = (DivisionTeamAssignmentKey) o;
-            boolean idsEquals = this.ids == other.ids || ((this.ids != null && other.ids != null)
-                    && equalsIgnoreOrder(this.ids, other.ids));
-            boolean employeeIdsEquals = this.employeeIds == other.employeeIds || ((this.employeeIds != null && other.employeeIds != null)
-                    && equalsIgnoreOrder(this.employeeIds, other.employeeIds));
-            return idsEquals && employeeIdsEquals && Objects.equals(other.divisionTeamId, this.divisionTeamId) &&
-                    Objects.equals(this.withClosed, other.withClosed);
-        }
-
-        @Override
-        public final int hashCode() {
-            int result = 17;
-            if (ids != null) {
-                result = 31 * result + ids.hashCode();
-            }
-            if (employeeIds != null) {
-                result = 31 * result + employeeIds.hashCode();
-            }
-            if (divisionTeamId != null) {
-                result = 31 * result + divisionTeamId.hashCode();
-            }
-            if (withClosed != null) {
-                result = 31 * result + withClosed.hashCode();
-            }
-            return result;
-        }
-
-        private boolean equalsIgnoreOrder(List<Long> l1, List<Long> l2) {
-            return new HashSet<>(l1).equals(new HashSet<>(l2));
-        }
-    }
 }

@@ -11,7 +11,7 @@ import me.goodt.vkpht.module.notification.api.dto.DtoTagConstants;
 public class ProcessInfoWithUserIdDto {
 
     @JsonSetter(DtoTagConstants.USER_ID_TAG)
-	private Long userId;
+    private Long userId;
 
-	private ProcessDto process;
+    private ProcessDto process;
 }

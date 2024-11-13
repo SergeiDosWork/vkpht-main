@@ -1,7 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,16 +15,15 @@ import me.goodt.vkpht.module.orgstructure.domain.dao.PositionDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.PositionProfstandardDao;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionProfstandardEntity;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 @Transactional
 public class PositionProfstandardServiceImpl implements PositionProfstandardService {
 
-    @Autowired
-    private PositionProfstandardDao positionProfstandardDao;
+    private final PositionProfstandardDao positionProfstandardDao;
 
-    @Autowired
-    private PositionDao positionDao;
+    private final PositionDao positionDao;
 
     @Override
     @Transactional(readOnly = true)

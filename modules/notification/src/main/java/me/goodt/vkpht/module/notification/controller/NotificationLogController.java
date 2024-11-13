@@ -26,46 +26,46 @@ import me.goodt.vkpht.module.notification.api.dto.kafka.NotificationLogResponseK
 @RequestMapping("/api/notification-log")
 public class NotificationLogController {
 
-	private final NotificationLogService notificationLogService;
+    private final NotificationLogService notificationLogService;
 
-	@Operation(summary = "Обновление статуса отправки уведомления в Журнале уведомлений", description = "Обновление статуса отправки уведомления в Журнале уведомлений на основе ответа из kafka-messenger", tags = {"notification_log"})
-	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "В случае если не возникло проблем с обновлением БД (см. таблицу notification_log)",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "401", description = "В случае если запрос отправлен без токена или с недействительным токеном возвращается ошибка 401 и строка с ошибкой в теле запроса",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "403", description = "В случае если пользователь не является HR",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "404", description = "В случае если что-то из представленных данных не найдено.",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "500", description = "В случае если что-то пошло не так.",
-			content = @Content(schema = @Schema(implementation = String.class))),
-	})
-	@PutMapping(value = "/update-status")
+    @Operation(summary = "Обновление статуса отправки уведомления в Журнале уведомлений", description = "Обновление статуса отправки уведомления в Журнале уведомлений на основе ответа из kafka-messenger", tags = {"notification_log"})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "В случае если не возникло проблем с обновлением БД (см. таблицу notification_log)",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "401", description = "В случае если запрос отправлен без токена или с недействительным токеном возвращается ошибка 401 и строка с ошибкой в теле запроса",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "403", description = "В случае если пользователь не является HR",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "404", description = "В случае если что-то из представленных данных не найдено.",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "500", description = "В случае если что-то пошло не так.",
+            content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    @PutMapping(value = "/update-status")
     @SurProtected(operation = SurOperation.UNIT)
-	public void updateStatus(
-		@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление ответа от kafka-messenger")
-		@RequestBody NotificationLogResponseKafkaDto notificationLogResponseKafkaDto) {
-		notificationLogService.updateStatusFromOutside(notificationLogResponseKafkaDto);
-	}
+    public void updateStatus(
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление ответа от kafka-messenger")
+        @RequestBody NotificationLogResponseKafkaDto notificationLogResponseKafkaDto) {
+        notificationLogService.updateStatusFromOutside(notificationLogResponseKafkaDto);
+    }
 
-	@Operation(summary = "Загрузка карточки в Журнале уведомлений", description = "Загрузка карточки в Журнале уведомлений", tags = {"notification_log"})
-	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "В случае если не возникло проблем с загрузкой данных из БД (см. таблицу notification_log)",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "401", description = "В случае если запрос отправлен без токена или с недействительным токеном возвращается ошибка 401 и строка с ошибкой в теле запроса",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "403", description = "В случае если пользователь не является HR",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "404", description = "В случае если что-то из представленных данных не найдено.",
-			content = @Content(schema = @Schema(implementation = String.class))),
-		@ApiResponse(responseCode = "500", description = "В случае если что-то пошло не так.",
-			content = @Content(schema = @Schema(implementation = String.class))),
-	})
-	@GetMapping(value = "/{id}")
+    @Operation(summary = "Загрузка карточки в Журнале уведомлений", description = "Загрузка карточки в Журнале уведомлений", tags = {"notification_log"})
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "В случае если не возникло проблем с загрузкой данных из БД (см. таблицу notification_log)",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "401", description = "В случае если запрос отправлен без токена или с недействительным токеном возвращается ошибка 401 и строка с ошибкой в теле запроса",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "403", description = "В случае если пользователь не является HR",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "404", description = "В случае если что-то из представленных данных не найдено.",
+            content = @Content(schema = @Schema(implementation = String.class))),
+        @ApiResponse(responseCode = "500", description = "В случае если что-то пошло не так.",
+            content = @Content(schema = @Schema(implementation = String.class))),
+    })
+    @GetMapping(value = "/{id}")
     @SurProtected(operation = SurOperation.UNIT)
-	public ResponseEntity<NotificationLogDto> load(@PathVariable Long id) throws NotFoundException {
-		return ResponseEntity.ok(notificationLogService.load(id));
-	}
+    public ResponseEntity<NotificationLogDto> load(@PathVariable Long id) throws NotFoundException {
+        return ResponseEntity.ok(notificationLogService.load(id));
+    }
 
 }

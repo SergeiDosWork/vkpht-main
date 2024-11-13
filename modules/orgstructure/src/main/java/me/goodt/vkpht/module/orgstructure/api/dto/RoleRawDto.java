@@ -16,5 +16,6 @@ public class RoleRawDto extends RoleDto {
         super(id, fullName, shortName, abbreviation, systemRole, code, dateFrom, dateTo);
         this.systemRoleId = getSystemRole().getId().longValue();
     }
+
     private Long systemRoleId;
 }

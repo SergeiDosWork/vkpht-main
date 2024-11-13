@@ -59,8 +59,8 @@ public class LibraryController {
     @GetMapping("/api/library/assignmentrotation/{id}")
     @SurProtected(operation = SurOperation.UNIT)
     public AssignmentRotationDto getAssignmentRotation(
-            @Parameter(name = "id", description = "Идентификатор ротации назначения (таблица assignment_rotation)", example = "1")
-            @PathVariable(name = "id") Integer id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор ротации назначения (таблица assignment_rotation)", example = "1")
+        @PathVariable(name = "id") Integer id) throws NotFoundException {
         return AssignmentRotationFactory.create(libraryService.getAssignmentRotation(id));
     }
 
@@ -83,8 +83,8 @@ public class LibraryController {
     @GetMapping("/api/library/assignmentreadiness/{id}")
     @SurProtected(operation = SurOperation.UNIT)
     public AssignmentReadinessDto getAssignmentReadiness(
-            @Parameter(name = "id", description = "Идентификатор готовности к назначению (таблица assignment_readiness)", example = "1")
-            @PathVariable(name = "id") Integer id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор готовности к назначению (таблица assignment_readiness)", example = "1")
+        @PathVariable(name = "id") Integer id) throws NotFoundException {
         return AssignmentReadinessFactory.create(libraryService.getAssignmentReadiness(id));
     }
 }

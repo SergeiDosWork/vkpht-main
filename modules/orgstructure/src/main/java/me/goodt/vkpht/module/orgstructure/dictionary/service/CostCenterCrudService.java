@@ -35,7 +35,7 @@ public class CostCenterCrudService extends AbstractArchiveDictionaryService<Cost
     @Override
     public void delete(Long id) {
         CostCenterEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("CostCenter with id = %s not found", id)));
+            new NotFoundException(String.format("CostCenter with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

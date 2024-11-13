@@ -23,9 +23,9 @@ public class StructureDao extends AbstractDao<StructureEntity, Long> {
 
     public Long findIdByExternalId(String externalId) {
         return query().from(meta)
-                .select(meta.id)
-                .where(meta.externalId.eq(externalId))
-                .fetchFirst();
+            .select(meta.id)
+            .where(meta.externalId.eq(externalId))
+            .fetchFirst();
     }
 
     public StructureEntity find(StructureFilter filter) {

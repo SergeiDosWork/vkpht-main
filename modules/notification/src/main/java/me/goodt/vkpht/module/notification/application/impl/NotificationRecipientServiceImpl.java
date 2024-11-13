@@ -1,6 +1,7 @@
 package me.goodt.vkpht.module.notification.application.impl;
 
 import me.goodt.vkpht.common.api.exception.NotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ import me.goodt.vkpht.module.notification.api.NotificationRecipientService;
 @RequiredArgsConstructor
 public class NotificationRecipientServiceImpl implements NotificationRecipientService {
 
-	private final NotificationRecipientDao notificationRecipientDao;
-	private final NotificationRecipientParametersDao notificationRecipientParametersDao;
+    private final NotificationRecipientDao notificationRecipientDao;
+    private final NotificationRecipientParametersDao notificationRecipientParametersDao;
     private final NotificationRecipientEmailDao notificationRecipientEmailDao;
     private final NotificationTemplateContentRecipientDao notificationTemplateContentRecipientDao;
     private final UnitAccessService unitAccessService;
@@ -46,11 +47,11 @@ public class NotificationRecipientServiceImpl implements NotificationRecipientSe
 
         Map<NotificationRecipientEntity, List<Long>> collectAllParams = allParams.stream()
             .collect(Collectors.groupingBy(NotificationRecipientParameterEntity::getParent,
-                                           Collectors.collectingAndThen(Collectors.toList(), n -> n.stream().map(NotificationRecipientParameterEntity::getValue).collect(Collectors.toList()))));
+                Collectors.collectingAndThen(Collectors.toList(), n -> n.stream().map(NotificationRecipientParameterEntity::getValue).collect(Collectors.toList()))));
 
         Map<NotificationRecipientEntity, List<String>> collectAllEmails = allEmails.stream()
             .collect(Collectors.groupingBy(NotificationRecipientEmailEntity::getNotificationRecipient,
-                                           Collectors.collectingAndThen(Collectors.toList(), n -> n.stream().map(NotificationRecipientEmailEntity::getEmail).collect(Collectors.toList()))));
+                Collectors.collectingAndThen(Collectors.toList(), n -> n.stream().map(NotificationRecipientEmailEntity::getEmail).collect(Collectors.toList()))));
 
         List<NotificationRecipientEntity> dbEntity = notificationRecipientDao.findAll(unitAccessService.getCurrentUnit());
 
@@ -59,14 +60,14 @@ public class NotificationRecipientServiceImpl implements NotificationRecipientSe
             .collect(Collectors.toList());
     }
 
-	@Transactional(readOnly = true)
-	@Override
+    @Transactional(readOnly = true)
+    @Override
     public NotificationRecipientDto getNotificationRecipient(Long id) throws NotFoundException {
 
         return notificationRecipientDao.findById(id)
             .map(entity -> {
-                unitAccessService.checkUnitAccess(entity.getUnitCode());
-                return NotificationRecipientFactory.create(
+                    unitAccessService.checkUnitAccess(entity.getUnitCode());
+                    return NotificationRecipientFactory.create(
                         entity,
                         notificationRecipientParametersDao.findByParent(entity).stream().map(NotificationRecipientParameterEntity::getValue).collect(Collectors.toList()),
                         notificationRecipientEmailDao.findByRecipientId(entity.getId()).stream().map(NotificationRecipientEmailEntity::getEmail).collect(Collectors.toList())
@@ -123,8 +124,8 @@ public class NotificationRecipientServiceImpl implements NotificationRecipientSe
             .stream().map(aLong -> new NotificationRecipientParameterEntity(aLong, entity, entity.getIsSystem()))
             .collect(Collectors.toList());
         parameters.addAll(dto.getParameters()
-                              .stream().map(aLong -> new NotificationRecipientParameterEntity(aLong, entity, entity.getIsSystem()))
-                              .collect(Collectors.toList()));
+            .stream().map(aLong -> new NotificationRecipientParameterEntity(aLong, entity, entity.getIsSystem()))
+            .collect(Collectors.toList()));
         notificationRecipientParametersDao.deleteAllInBatch(parametersToRemove);
         notificationRecipientParametersDao.saveAll(parametersToAdd);
 
@@ -166,31 +167,31 @@ public class NotificationRecipientServiceImpl implements NotificationRecipientSe
         );
     }
 
-	@Override
-	public boolean deleteNotificationRecipient(Long id)  {
-		Optional<NotificationRecipientEntity> byId = notificationRecipientDao.findById(id);
+    @Override
+    public boolean deleteNotificationRecipient(Long id) {
+        Optional<NotificationRecipientEntity> byId = notificationRecipientDao.findById(id);
 
-		if (byId.isEmpty()) {
-			return false;
-		}
+        if (byId.isEmpty()) {
+            return false;
+        }
         unitAccessService.checkUnitAccess(byId.get().getUnitCode());
         notificationTemplateContentRecipientDao.deleteAll(notificationTemplateContentRecipientDao.findByRecipient(byId.get()));
         notificationRecipientParametersDao.deleteAll(notificationRecipientParametersDao.findByParent(byId.get()));
         notificationRecipientEmailDao.deleteAll(notificationRecipientEmailDao.findByRecipient(byId.get()));
-		notificationRecipientDao.delete(byId.get());
-		return true;
-	}
+        notificationRecipientDao.delete(byId.get());
+        return true;
+    }
 
-	@Override
-	public List<NotificationDynamicRecipientDto> getDynamicRecipients() {
-		return notificationRecipientDao.getDynamicRecipients(unitAccessService.getCurrentUnit()).stream()
-			.map(recipientToken -> {
-				NotificationDynamicRecipientDto dto = new NotificationDynamicRecipientDto();
-				dto.setRecipientId(recipientToken.getId());
-				dto.setToken(recipientToken.getName());
-				dto.setDescription(recipientToken.getDescription());
-				return dto;
-			})
-			.collect(Collectors.toList());
-	}
+    @Override
+    public List<NotificationDynamicRecipientDto> getDynamicRecipients() {
+        return notificationRecipientDao.getDynamicRecipients(unitAccessService.getCurrentUnit()).stream()
+            .map(recipientToken -> {
+                NotificationDynamicRecipientDto dto = new NotificationDynamicRecipientDto();
+                dto.setRecipientId(recipientToken.getId());
+                dto.setToken(recipientToken.getName());
+                dto.setDescription(recipientToken.getDescription());
+                return dto;
+            })
+            .collect(Collectors.toList());
+    }
 }

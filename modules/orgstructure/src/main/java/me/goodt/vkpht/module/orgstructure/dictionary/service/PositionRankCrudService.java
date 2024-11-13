@@ -24,7 +24,7 @@ public class PositionRankCrudService {
     private final PositionRankDao dao;
     private final AuthService authService;
     private final UnitAccessService unitAccessService;
-    private  final PositionRankMapper mapper;
+    private final PositionRankMapper mapper;
 
     @Transactional(readOnly = true)
     public Page<PositionRankDto> findAll(Pageable pageable) {
@@ -42,6 +42,7 @@ public class PositionRankCrudService {
 
         return mapper.toDto(entity);
     }
+
     @Transactional
     public PositionRankDto create(PositionRankDto request) {
         PositionRankEntity entity = mapper.toNewEntity(request);
@@ -67,7 +68,7 @@ public class PositionRankCrudService {
     @Transactional
     public void delete(Long id) {
         PositionRankEntity entity = dao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("PositionRank with id = %s not found", id)));
+            new NotFoundException(String.format("PositionRank with id = %s not found", id)));
         unitAccessService.checkUnitAccess(entity.getUnitCode());
         entity.setDateTo(new Date());
         entity.setUpdateDate(new Date());

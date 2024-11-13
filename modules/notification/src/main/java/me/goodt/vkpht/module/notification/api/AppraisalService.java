@@ -8,12 +8,12 @@ import me.goodt.vkpht.module.notification.api.dto.rtcore.AppraisalEventNotificat
 import me.goodt.vkpht.module.notification.api.dto.rtcore.AppraisalRecommendationDto;
 
 public interface AppraisalService {
-	AppraisalEventNotificationDto findAppraisalEventById(Long id);
+    AppraisalEventNotificationDto findAppraisalEventById(Long id);
 
-	List<AppraisalEventCommissionMemberNotificationDto> findActualAppraisalEventCommissionMemberByAppraisalEventId(Long appraisalEventId);
+    List<AppraisalEventCommissionMemberNotificationDto> findActualAppraisalEventCommissionMemberByAppraisalEventId(Long appraisalEventId);
 
-	List<AppraisalCommissionMemberDto> findAppraisalCommissionMemberByParams(Long appraisalEventId,
-																			 Long appraisalCommissionRoleId);
+    List<AppraisalCommissionMemberDto> findAppraisalCommissionMemberByParams(Long appraisalEventId,
+                                                                             Long appraisalCommissionRoleId);
 
-	List<AppraisalRecommendationDto> getAppraisalRecommendations(List<Long> appraisalRecommendationIds);
+    List<AppraisalRecommendationDto> getAppraisalRecommendations(List<Long> appraisalRecommendationIds);
 }

@@ -1,9 +1,7 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -11,7 +9,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -83,6 +80,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeExtendedInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeFlatInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
@@ -117,43 +115,28 @@ import static java.util.stream.Collectors.toSet;
 import static org.apache.commons.collections4.CollectionUtils.isEmpty;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    @Autowired
-    private PositionAssignmentDao positionAssignmentDao;
-    @Autowired
-    private EmployeeDao employeeDao;
-    @Autowired
-    private AssignmentService assignmentService;
-    @Autowired
-    private DivisionTeamDao divisionTeamDao;
-    @Autowired
-    private DivisionTeamAssignmentDao divisionTeamAssignmentDao;
-    @Autowired
-    private RoleDao roleDao;
-    @Autowired
-    private AuthService authService;
-    @Autowired
-    private IndicatorGoalService indicatorGoalService;
-    @Autowired
-    private StatusService statusService;
-    @Autowired
-    private ProcessEventService processEventService;
-    @Autowired
-    private EmployeeMapper employeeMapper;
-    @Autowired
-    private PositionDao positionDao;
-    @Autowired
-    private PositionService positionService;
-    @Autowired
-    private IProcessService processService;
-    @Autowired
-    private ProcessTaskDao processTaskDao;
-    @Autowired
-    private UnitAccessService unitAccessService;
-    @Autowired
-    private CycleService cycleService;
+
+    private final PositionAssignmentDao positionAssignmentDao;
+    private final EmployeeDao employeeDao;
+    private final AssignmentService assignmentService;
+    private final DivisionTeamDao divisionTeamDao;
+    private final DivisionTeamAssignmentDao divisionTeamAssignmentDao;
+    private final RoleDao roleDao;
+    private final AuthService authService;
+    private final IndicatorGoalService indicatorGoalService;
+    private final StatusService statusService;
+    private final ProcessEventService processEventService;
+    private final EmployeeMapper employeeMapper;
+    private final PositionDao positionDao;
+    private final PositionService positionService;
+    private final IProcessService processService;
+    private final ProcessTaskDao processTaskDao;
+    private final UnitAccessService unitAccessService;
+    private final CycleService cycleService;
 
     @Override
     public EmployeeSearchResult getDivisionTeamHeadByDivisionTeam(Long divisionTeamId, Long headLevel) {

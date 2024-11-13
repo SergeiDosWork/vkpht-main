@@ -13,20 +13,20 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Slf4j
 @Component
 public class TaskStatuschangeCommentGroupResolver implements TokenGroupResolver {
-	@Override
-	public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, TASK_STATUSCHANGE_COMMENT);
-		String comment = (String) context.getParameters().get(TASK_STATUSCHANGE_COMMENT);
-		if (comment != null) {
-			resolvedTokenValues.put(TASK_STATUSCHANGE_COMMENT, comment);
-		}
-	}
+    @Override
+    public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, TASK_STATUSCHANGE_COMMENT);
+        String comment = (String) context.getParameters().get(TASK_STATUSCHANGE_COMMENT);
+        if (comment != null) {
+            resolvedTokenValues.put(TASK_STATUSCHANGE_COMMENT, comment);
+        }
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return List.of(
-			new NotificationToken(TASK_STATUSCHANGE_COMMENT, null, "Комментарий при обновлении статуса таска")
-		);
-	}
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return List.of(
+            new NotificationToken(TASK_STATUSCHANGE_COMMENT, null, "Комментарий при обновлении статуса таска")
+        );
+    }
 
 }

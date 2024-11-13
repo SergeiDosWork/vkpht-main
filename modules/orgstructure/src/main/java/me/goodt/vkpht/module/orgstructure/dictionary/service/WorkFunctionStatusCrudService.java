@@ -20,8 +20,8 @@ import me.goodt.vkpht.common.api.AuthService;
 @Service
 @RequiredArgsConstructor
 public class WorkFunctionStatusCrudService {
-	@Getter
-	private final WorkFunctionStatusDao dao;
+    @Getter
+    private final WorkFunctionStatusDao dao;
     private final UnitAccessService unitAccessService;
     private final AuthService authService;
     private final CrudDtoMapper<WorkFunctionStatusEntity, WorkFunctionStatusDto> mapper;

@@ -33,20 +33,20 @@ public class WorkFunctionController {
     @SurProtected(operation = SurOperation.UNIT)
     @GetMapping("/api/workfunction/{id}")
     public WorkFunctionDto get(
-            @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
-            @PathVariable("id") Long id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
+        @PathVariable("id") Long id) throws NotFoundException {
         return WorkFunctionFactory.create(workFunctionService.get(id));
     }
 
     @Operation(summary = "Получение информации о всех актуальных рабочих функциях",
-            description = "Получение информации о всех актуальных рабочих функциях",
-            tags = {"work_function"})
+        description = "Получение информации о всех актуальных рабочих функциях",
+        tags = {"work_function"})
     @SurProtected(operation = SurOperation.UNIT)
     @GetMapping("/api/workfunction")
     public List<WorkFunctionDto> get() {
         return workFunctionService.get().stream()
-                .map(WorkFunctionFactory::create)
-                .collect(Collectors.toList());
+            .map(WorkFunctionFactory::create)
+            .collect(Collectors.toList());
     }
 
     @Operation(summary = "Создание рабочей функции", description = "Создание рабочей функции", tags = {"work_function"})
@@ -54,8 +54,8 @@ public class WorkFunctionController {
     @BadRequestAPIResponses
     @PostMapping("/api/workfunction")
     public WorkFunctionDto create(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление объекта")
-            @RequestBody WorkFunctionDto dto) throws NotFoundException {
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление объекта")
+        @RequestBody WorkFunctionDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "POST /api/workfunction", null, dto);
         return WorkFunctionFactory.create(workFunctionService.create(dto));
@@ -66,10 +66,10 @@ public class WorkFunctionController {
     @BadRequestAPIResponses
     @PutMapping("/api/workfunction/{id}")
     public WorkFunctionDto update(
-            @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
-            @PathVariable("id") Long id,
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление объекта")
-            @RequestBody WorkFunctionDto dto) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
+        @PathVariable("id") Long id,
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление объекта")
+        @RequestBody WorkFunctionDto dto) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("PUT /api/workfunction/%d", id), null, dto);
         return WorkFunctionFactory.create(workFunctionService.update(id, dto));
@@ -80,8 +80,8 @@ public class WorkFunctionController {
     @BadRequestAPIResponses
     @DeleteMapping("/api/workfunction/{id}")
     public OperationResult delete(
-            @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
-            @PathVariable("id") Long id) throws NotFoundException {
+        @Parameter(name = "id", description = "Идентификатор рабочей функции (таблица work_function)")
+        @PathVariable("id") Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, String.format("DELETE /api/workfunction/%d", id), null, null);
         try {

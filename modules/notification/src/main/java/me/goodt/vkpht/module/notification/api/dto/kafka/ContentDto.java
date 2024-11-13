@@ -12,8 +12,8 @@ import org.json.JSONObject;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class ContentDto {
-	private static final String TEMPLATES_CONTEXT_TAG = "templates_context";
-	@JsonSetter(TEMPLATES_CONTEXT_TAG)
-	private JSONObject templatesContext;
-	private EmailDto email;
+    private static final String TEMPLATES_CONTEXT_TAG = "templates_context";
+    @JsonSetter(TEMPLATES_CONTEXT_TAG)
+    private JSONObject templatesContext;
+    private EmailDto email;
 }

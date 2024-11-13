@@ -24,11 +24,11 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class PositionSuccessorReadinesIdToEmployeeRecipientResolver implements RecipientResolver {
-	@Override
-	public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
-		if (!StringUtils.equalsAny(recipient.getBasicValue(), POSITION_SUCCESSOR_READINESS_ID_TO_EMPLOYEE, POSITION_SUCCESSOR_READINESS_ID_TO_EMPLOYEE_HEAD)) {
-			return;
-		}
+    @Override
+    public void resolve(ResolverContext context, Recipient recipient, Set<RecipientInfoDto> recipientList) {
+        if (!StringUtils.equalsAny(recipient.getBasicValue(), POSITION_SUCCESSOR_READINESS_ID_TO_EMPLOYEE, POSITION_SUCCESSOR_READINESS_ID_TO_EMPLOYEE_HEAD)) {
+            return;
+        }
         log.info(LOG_MESSAGE_RECIPIENT, recipient.getBasicValue());
         try {
 

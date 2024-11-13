@@ -36,7 +36,7 @@ public class FamilyStatusCrudService extends AbstractArchiveDictionaryService<Fa
     @Override
     public void delete(Integer id) {
         FamilyStatusEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("FamilyStatusEntity with id = %s not found", id)));
+            new NotFoundException(String.format("FamilyStatusEntity with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

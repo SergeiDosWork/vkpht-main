@@ -36,7 +36,7 @@ public class TeamTypeCrudService extends AbstractArchiveDictionaryService<TeamTy
     @Override
     public void delete(Integer id) {
         TeamTypeEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("TeamTypeEntity with id = %s not found", id)));
+            new NotFoundException(String.format("TeamTypeEntity with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);

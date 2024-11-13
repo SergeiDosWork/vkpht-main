@@ -15,6 +15,7 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.ImportanceCriteriaEntity
 public class ImportanceCriteriaMapper implements CrudDtoMapper<ImportanceCriteriaEntity, ImportanceCriteriaDto> {
     private final ImportanceCriteriaGroupDao importanceCriteriaGroupDao;
     private final CalculationMethodDao calculationMethodDao;
+
     @Override
     public ImportanceCriteriaEntity toNewEntity(ImportanceCriteriaDto dto) {
         ImportanceCriteriaEntity entity = new ImportanceCriteriaEntity();

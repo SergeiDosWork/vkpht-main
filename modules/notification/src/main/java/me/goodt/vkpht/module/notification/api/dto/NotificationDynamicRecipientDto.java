@@ -11,15 +11,15 @@ import lombok.Setter;
 @Schema(description = "Информация о токене вычисляемого получателя уведомлений")
 public class NotificationDynamicRecipientDto {
 
-	@Schema(description = "Уникальный идентификатор записи получателя, к которой относится токен.",
-		requiredMode = Schema.RequiredMode.REQUIRED)
-	private Long recipientId;
+    @Schema(description = "Уникальный идентификатор записи получателя, к которой относится токен.",
+        requiredMode = Schema.RequiredMode.REQUIRED)
+    private Long recipientId;
 
-	@Schema(description = "Наименование токена, идентифицирующего вычисляемого получателя.",
-		requiredMode = Schema.RequiredMode.REQUIRED)
-	private String token;
+    @Schema(description = "Наименование токена, идентифицирующего вычисляемого получателя.",
+        requiredMode = Schema.RequiredMode.REQUIRED)
+    private String token;
 
-	@Schema(description = "Текстовое описание вычисляемого получателя.",
-		requiredMode = Schema.RequiredMode.REQUIRED)
-	private String description;
+    @Schema(description = "Текстовое описание вычисляемого получателя.",
+        requiredMode = Schema.RequiredMode.REQUIRED)
+    private String description;
 }

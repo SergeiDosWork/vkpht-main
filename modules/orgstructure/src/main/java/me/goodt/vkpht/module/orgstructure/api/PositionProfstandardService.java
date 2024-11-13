@@ -8,8 +8,12 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionProfstandardEnti
 
 public interface PositionProfstandardService {
     List<PositionProfstandardEntity> getAll();
+
     PositionProfstandardEntity getById(Long id) throws NotFoundException;
+
     PositionProfstandardEntity create(PositionProfstandardInputDto dto) throws NotFoundException;
+
     PositionProfstandardEntity update(PositionProfstandardInputDto dto, Long id) throws NotFoundException;
+
     void delete(Long id) throws NotFoundException;
 }

@@ -40,7 +40,7 @@ public interface UserUnitService {
      *
      * @param request тело запроса с информацией о бизнес-единице (юните)
      * @throws IncorrectUnitException если у сотрудника выбрана некорректная или недоступная бизнес-единица (юнит)
-     * или же если запрос был выполнен не от лица сотрудника.
+     *                                или же если запрос был выполнен не от лица сотрудника.
      */
     void setCurrentUnit(CurrentUnitRequest request);
 }

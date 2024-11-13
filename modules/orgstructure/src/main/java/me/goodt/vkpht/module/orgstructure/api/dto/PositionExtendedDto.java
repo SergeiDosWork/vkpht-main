@@ -22,8 +22,8 @@ public class PositionExtendedDto extends PositionDto {
                                List<PositionKrLevelDto> positionKrLevelDto, Long positionTypeId, Long costCenterId, List<DivisionTeamDto> divisionTeams,
                                List<PositionSuccessorReadinessDto> readiness) {
         super(id, precursorId, dateFrom, dateTo, divisionId, jobTitleId, workplaceId, workFunctionId, fullName,
-              shortName, abbreviation, categoryId, rankId, statusId, positionTypeId, stake, isKey, isVariable, teamRoleImportance, isKeyManagement,
-              jobTitle, externalId, divisionShortName, costCenterId, division);
+            shortName, abbreviation, categoryId, rankId, statusId, positionTypeId, stake, isKey, isVariable, teamRoleImportance, isKeyManagement,
+            jobTitle, externalId, divisionShortName, costCenterId, division);
         this.division = division;
         this.assignments = assignments;
         this.positionGradeDto = positionGradeDto;

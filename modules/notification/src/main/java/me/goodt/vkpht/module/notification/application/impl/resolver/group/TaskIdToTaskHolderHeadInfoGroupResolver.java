@@ -30,49 +30,49 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @Component
 @Slf4j
 public class TaskIdToTaskHolderHeadInfoGroupResolver implements TokenGroupResolver, TaskIdBasedGroupResolver {
-	@Override
-	public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
-		log.info(LOG_MESSAGE_GROUP, TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
-		Integer taskId = (Integer) context.getParameters().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
-		log.info(TASK_ID_IS, taskId);
-		Optional<TaskDto> taskDto = getTaskDto(taskId, context);
-		if (taskDto.isEmpty()) {
-			return;
-		}
+    @Override
+    public void resolve(ResolverContext context, Map<String, String> resolvedTokenValues) {
+        log.info(LOG_MESSAGE_GROUP, TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
+        Integer taskId = (Integer) context.getParameters().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO);
+        log.info(TASK_ID_IS, taskId);
+        Optional<TaskDto> taskDto = getTaskDto(taskId, context);
+        if (taskDto.isEmpty()) {
+            return;
+        }
 
-		List<DivisionTeamAssignmentDto> assignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null);
-		if (assignment != null && !assignment.isEmpty()) {
-			DivisionTeamAssignmentDto head = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(assignment.getFirst().getEmployee().getId(), assignment.getFirst().getDivisionTeam().getId());
-			if (head != null) {
-				for (TokenWithValues token : context.getParsedTokens().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO)) {
-					if (token.getBasicValue().equals(FIO_FULL)) {
-						log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_FULL);
-						resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FIO_FULL, getEmployeeFullName(head.getEmployee()));
-					}
-					if (token.getBasicValue().equals(FIO_SHORT)) {
-						log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_SHORT);
-						resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FIO_SHORT, getEmployeeShortName(head.getEmployee()));
-					}
-					if (token.getBasicValue().equals(FI)) {
-						log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FI);
-						resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FI, getEmployeeSurnameAndName(head.getEmployee()));
-					}
-					if (token.getBasicValue().equals(ASSIGNMENT_ID)) {
-						log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, ASSIGNMENT_ID);
-						resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_ASSIGNMENT_ID, String.valueOf(assignment.getFirst().getId()));
-					}
-				}
-			}
-		}
-	}
+        List<DivisionTeamAssignmentDto> assignment = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getAssignments(Collections.singletonList(taskDto.get().getUserId()), null);
+        if (assignment != null && !assignment.isEmpty()) {
+            DivisionTeamAssignmentDto head = context.getResolverServiceContainer().getOrgstructureServiceAdapter().getEmployeeHead(assignment.getFirst().getEmployee().getId(), assignment.getFirst().getDivisionTeam().getId());
+            if (head != null) {
+                for (TokenWithValues token : context.getParsedTokens().get(TASK_ID_TO_TASK_HOLDER_HEAD_INFO)) {
+                    if (token.getBasicValue().equals(FIO_FULL)) {
+                        log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_FULL);
+                        resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FIO_FULL, getEmployeeFullName(head.getEmployee()));
+                    }
+                    if (token.getBasicValue().equals(FIO_SHORT)) {
+                        log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_SHORT);
+                        resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FIO_SHORT, getEmployeeShortName(head.getEmployee()));
+                    }
+                    if (token.getBasicValue().equals(FI)) {
+                        log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FI);
+                        resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_FI, getEmployeeSurnameAndName(head.getEmployee()));
+                    }
+                    if (token.getBasicValue().equals(ASSIGNMENT_ID)) {
+                        log.info(LOG_MESSAGE_TOKEN, TASK_ID_TO_TASK_HOLDER_HEAD_INFO, ASSIGNMENT_ID);
+                        resolvedTokenValues.put(TASK_ID_TO_TASK_HOLDER_HEAD_INFO_ASSIGNMENT_ID, String.valueOf(assignment.getFirst().getId()));
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public List<NotificationToken> getResolvedTokens() {
-		return Arrays.asList(
-			new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_FULL, "ФИО руководителя владельца БО в формате Фамилия Имя Отчество"),
-			new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_SHORT, "ФИО руководителя владельца БО в формате Фамилия И.О."),
-			new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FI, "ФИО руководителя владельца БО в формате Фамилия Имя"),
-			new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, ASSIGNMENT_ID, "ID назначения руководителя владельца БО")
-		);
-	}
+    @Override
+    public List<NotificationToken> getResolvedTokens() {
+        return Arrays.asList(
+            new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_FULL, "ФИО руководителя владельца БО в формате Фамилия Имя Отчество"),
+            new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FIO_SHORT, "ФИО руководителя владельца БО в формате Фамилия И.О."),
+            new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, FI, "ФИО руководителя владельца БО в формате Фамилия Имя"),
+            new NotificationToken(TASK_ID_TO_TASK_HOLDER_HEAD_INFO, ASSIGNMENT_ID, "ID назначения руководителя владельца БО")
+        );
+    }
 }

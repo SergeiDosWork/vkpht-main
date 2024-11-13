@@ -59,5 +59,5 @@ public class StructureStatusCrudService {
         return dao.findById(id).orElseThrow(() ->
             new NotFoundException("Запись StructureStatusEntity c идентификатором = " + id + " не найдена"));
     }
-    
+
 }

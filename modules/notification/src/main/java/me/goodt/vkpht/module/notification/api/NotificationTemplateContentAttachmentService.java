@@ -7,7 +7,7 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateCont
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentEntity;
 
 public interface NotificationTemplateContentAttachmentService {
-	List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentEntity ntc);
+    List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentEntity ntc);
 
-	List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentDto ntc);
+    List<NotificationTemplateContentAttachmentEntity> getAttachments(NotificationTemplateContentDto ntc);
 }

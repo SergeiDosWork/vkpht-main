@@ -23,17 +23,17 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @Table(name = "notification_receiver_system_employee_disabled")
 public class NotificationReceiverSystemEmployeeDisabledEntity extends DomainObject {
 
-	/**
-	 * id сотрудника в orgstructure.Employee
-	 */
-	@Column(name = "employee_id")
-	private Long employeeId;
+    /**
+     * id сотрудника в orgstructure.Employee
+     */
+    @Column(name = "employee_id")
+    private Long employeeId;
 
-	/**
-	 * Канал отправки уведомления
-	 */
-	@ManyToOne
-	@JoinColumn(name = "notification_receiver_system_id", referencedColumnName = "id")
-	private NotificationReceiverSystemEntity notificationReceiverSystem;
+    /**
+     * Канал отправки уведомления
+     */
+    @ManyToOne
+    @JoinColumn(name = "notification_receiver_system_id", referencedColumnName = "id")
+    private NotificationReceiverSystemEntity notificationReceiverSystem;
 
 }

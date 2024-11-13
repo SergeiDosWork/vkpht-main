@@ -9,13 +9,13 @@ import me.goodt.vkpht.module.notification.domain.entity.NotificationRecipientEnt
 
 @UtilityClass
 public class NotificationRecipientFactory {
-	public static NotificationRecipientDto create(NotificationRecipientEntity entity, List<Long> parameters, List<String> emails) {
-		return new NotificationRecipientDto(
-			entity.getId(),
-			entity.getName(),
-			entity.getDescription(),
-			parameters,
+    public static NotificationRecipientDto create(NotificationRecipientEntity entity, List<Long> parameters, List<String> emails) {
+        return new NotificationRecipientDto(
+            entity.getId(),
+            entity.getName(),
+            entity.getDescription(),
+            parameters,
             emails
-		);
-	}
+        );
+    }
 }

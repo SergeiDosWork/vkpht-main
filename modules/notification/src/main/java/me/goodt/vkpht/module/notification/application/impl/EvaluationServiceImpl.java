@@ -11,10 +11,10 @@ import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 @RequiredArgsConstructor
 public class EvaluationServiceImpl implements EvaluationService {
 
-	private final RtCoreServiceClient rtCoreServiceClient;
+    private final RtCoreServiceClient rtCoreServiceClient;
 
-	@Override
-	public EvaluationEventNotificationDto findEvaluationEventById(Long id) {
-		return rtCoreServiceClient.findEvaluationEventById(id);
-	}
+    @Override
+    public EvaluationEventNotificationDto findEvaluationEventById(Long id) {
+        return rtCoreServiceClient.findEvaluationEventById(id);
+    }
 }

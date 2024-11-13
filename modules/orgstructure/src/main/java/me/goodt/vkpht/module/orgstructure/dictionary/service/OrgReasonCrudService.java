@@ -39,7 +39,7 @@ public class OrgReasonCrudService {
         entity = dao.save(entity);
         return mapper.toDto(entity);
     }
-    
+
     public ReasonDto update(Long id, ReasonDto request) {
         OrgReasonEntity entity = mapper.toUpdatedEntity(request, getSecured(id));
         entity = dao.save(entity);

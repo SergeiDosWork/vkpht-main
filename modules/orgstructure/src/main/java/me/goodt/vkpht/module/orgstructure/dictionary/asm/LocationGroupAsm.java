@@ -46,7 +46,7 @@ public class LocationGroupAsm extends AbstractAsm<LocationGroupEntity, LocationG
         entity.setName(dto.getName());
         if (dto.getParentId() != null) {
             entity.setParent(locationGroupEntityDao.findById(dto.getParentId()).orElseThrow(() ->
-                    new NotFoundException(String.format("Parent id = %d not found", dto.getParentId()))));
+                new NotFoundException(String.format("Parent id = %d not found", dto.getParentId()))));
         } else {
             entity.setParent(null);
         }

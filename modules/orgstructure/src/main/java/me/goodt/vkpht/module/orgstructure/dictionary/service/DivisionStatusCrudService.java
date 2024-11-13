@@ -36,7 +36,7 @@ public class DivisionStatusCrudService extends AbstractArchiveDictionaryService<
     @Override
     public void delete(Integer id) {
         DivisionStatusEntity entity = archivableDao.findById(id).orElseThrow(() ->
-                new NotFoundException(String.format("DivisionStatus with id = %s not found", id)));
+            new NotFoundException(String.format("DivisionStatus with id = %s not found", id)));
         Date currentDate = new Date();
         entity.setDateTo(currentDate);
         entity.setUpdateDate(currentDate);
