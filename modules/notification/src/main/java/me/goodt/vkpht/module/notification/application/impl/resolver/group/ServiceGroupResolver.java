@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
-import com.goodt.drive.notify.application.configuration.NotificationConfig;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
+import me.goodt.vkpht.module.notification.config.NotificationConfig;
 
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.ROOT_URL;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.SERVICE;

@@ -24,3 +24,4 @@
 * modules/platform - (старый rostalent) модуль с основными системными сущностями и базовыми методами доступа к ним
 * modules/tasksetting - движок бизнес-процессов tasksettings
 * modules/orgstructure - базовые методы доступа к орг.структуре (9ad292672a8166c44f6e22c906e6927926ed558d)
+* modules/notification - уведомления (cddd3020ca17d9ccd5016c4d145cc31330c0306e)

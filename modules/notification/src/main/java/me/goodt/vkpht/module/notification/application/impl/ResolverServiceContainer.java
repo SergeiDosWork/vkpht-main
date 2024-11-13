@@ -3,12 +3,18 @@ package me.goodt.vkpht.module.notification.application.impl;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import me.goodt.vkpht.module.notification.api.*;
+import me.goodt.vkpht.module.notification.api.AppraisalService;
+import me.goodt.vkpht.module.notification.api.CompetenceService;
+import me.goodt.vkpht.module.notification.api.EvaluationService;
+import me.goodt.vkpht.module.notification.api.KeycloakDataService;
+import me.goodt.vkpht.module.notification.api.NotificationTemplateService;
+import me.goodt.vkpht.module.notification.api.ScaleService;
+import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
 import me.goodt.vkpht.module.notification.api.learning.LearningServiceClient;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
-import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.api.quiz.QuizServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 
 @Component
 @Getter

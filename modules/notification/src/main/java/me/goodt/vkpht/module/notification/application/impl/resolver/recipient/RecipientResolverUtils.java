@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import me.goodt.vkpht.module.notification.api.dto.data.DivisionTeamInfo;
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFieldDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFindRequest;
-import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.SavedObjectNames;
+import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 
-import static com.goodt.drive.notify.GlobalDefs.TASK_FIELD_TYPE_ID_140;
-import static com.goodt.drive.notify.GlobalDefs.TASK_FIELD_TYPE_ID_342;
-import static com.goodt.drive.notify.GlobalDefs.TASK_TYPE_ID_80;
+import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.TASK_FIELD_TYPE_ID_140;
+import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.TASK_FIELD_TYPE_ID_342;
+import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.TASK_TYPE_ID_80;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.APPRAISAL_EVENT_ID_TO_APPRAISAL_EVENT_INFO;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.APPRAISAL_EVENT_ID_TO_TASK_HOLDER_INFO;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.EVENT_ID_TO_EVENT_INFO;
