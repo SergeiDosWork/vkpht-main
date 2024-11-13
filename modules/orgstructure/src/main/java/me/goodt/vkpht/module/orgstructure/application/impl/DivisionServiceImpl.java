@@ -1,20 +1,10 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.common.api.exception.BadRequestException;
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentRotationShortDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
-import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
-import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamRoleFactory;
-
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +26,6 @@ import com.goodt.drive.rtcore.dto.rostalent.DataForKafkaMessageInputDto;
 import com.goodt.drive.rtcore.dto.rostalent.SuccessorNotificateByCodeInputData;
 import com.goodt.drive.rtcore.service.notification.NotificationService;
 import me.goodt.vkpht.common.api.AuthService;
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfo;
 import me.goodt.vkpht.common.api.dto.PositionInfo;
 import me.goodt.vkpht.common.api.exception.ForbiddenException;
 import me.goodt.vkpht.common.api.exception.NotFoundException;
@@ -55,8 +44,11 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionFindDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfo;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionPathData;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionShortInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentFindRequestDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentRotationDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentRotationShortDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleAndImportanceStatDto;
@@ -70,6 +62,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamSuccessorsStatDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamWithRolesAndSuccessorsStatDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionWithDivisionTeamsStatDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionWithDivisionTeamsWithDivisionTeamRolesAndDivisionTeamSuccessorsDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeTeamInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.ImportanceStatDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionExtendedDto;
@@ -116,15 +109,15 @@ import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorEntity;
 import me.goodt.vkpht.module.orgstructure.domain.entity.PositionSuccessorReadinessEntity;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionInfoFactory;
+import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamAssignmentRotationFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamSuccessorFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.DivisionTeamSuccessorReadinessFactory;
+import me.goodt.vkpht.module.orgstructure.domain.factory.PositionAssignmentFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionSuccessorReadinessFactory;
-
-import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 @Service
@@ -1088,7 +1081,8 @@ public class DivisionServiceImpl implements DivisionService {
                     return DivisionInfoFactory.create(
                             d,
                             assignments.isEmpty() ? null : assignments.get(0).getEmployee(),
-                            assignments.isEmpty() ? null : positionAssignmentsByEmployeeIds.getOrDefault(assignments.get(0).getEmployee().getId(), Collections.emptyList()),
+                            assignments.isEmpty() ? null : positionAssignmentsByEmployeeIds.getOrDefault(assignments.get(0).getEmployee().getId(), Collections.emptyList())
+                                .stream().map(PositionAssignmentFactory::create).toList(),
                             divisionTeamsByDivisionIds.getOrDefault(d.getId(), Collections.emptyList())
                     );
                 })

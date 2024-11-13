@@ -11,7 +11,7 @@ CREATE TABLE notification_receiver_system (
 	is_system bool DEFAULT false NOT NULL,
 	is_editable_if_system bool DEFAULT false NOT NULL,
 	is_enabled bool DEFAULT false NOT NULL,
-	CONSTRAINT "notification_receiver_systemPK" PRIMARY KEY (id)
+	CONSTRAINT "notification_receiver_system_pkey" PRIMARY KEY (id)
 );
 COMMENT ON TABLE notification_receiver_system IS 'Каналы отправки уведомления';
 COMMENT ON COLUMN notification_receiver_system.id IS 'Синтетический id';
@@ -30,7 +30,7 @@ CREATE TABLE notification_recipient (
 	description varchar(1024) NULL,
 	is_system bool DEFAULT false NOT NULL,
 	unit_code varchar(128) DEFAULT 'default'::character varying NOT NULL,
-	CONSTRAINT "notification_recipientPK" PRIMARY KEY (id)
+	CONSTRAINT "notification_recipient_pkey" PRIMARY KEY (id)
 );
 COMMENT ON COLUMN notification_recipient.unit_code IS 'Код юнита';
 
@@ -49,7 +49,7 @@ CREATE TABLE notification_template (
 	is_enabled int2 DEFAULT 0 NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	unit_code varchar(128) DEFAULT 'default'::character varying NOT NULL,
-	CONSTRAINT "notification_template_PK" PRIMARY KEY (id)
+	CONSTRAINT "notification_template_pkey" PRIMARY KEY (id)
 );
 COMMENT ON COLUMN notification_template.unit_code IS 'Код юнита';
 
@@ -63,7 +63,7 @@ CREATE TABLE notification_token (
 	group_name varchar(256) NOT NULL,
 	unit_code varchar(128) DEFAULT 'default'::character varying NOT NULL,
 	CONSTRAINT notification_token_pkey PRIMARY KEY (id),
-	CONSTRAINT uq_notification_token_unit_code_name UNIQUE (unit_code, name)
+	CONSTRAINT notification_token_unit_code_name_key UNIQUE (unit_code, name)
 );
 COMMENT ON TABLE notification_token IS 'Информация о токенах уведомлений';
 COMMENT ON COLUMN notification_token.id IS 'Уникальный идентификатор записи';
@@ -81,8 +81,8 @@ CREATE TABLE notification_token_constant (
 	constant varchar(128) NOT NULL,
 	value BIGINT NOT NULL,
 	unit_code varchar(128) DEFAULT 'default'::character varying NOT NULL,
-	CONSTRAINT "notification_token_constantPK" PRIMARY KEY (id),
-	CONSTRAINT uq_notification_token_constant_token_full_name UNIQUE (token_full_name)
+	CONSTRAINT "notification_token_constant_pkey" PRIMARY KEY (id),
+	CONSTRAINT notification_token_constant_token_full_name_key UNIQUE (token_full_name)
 );
 COMMENT ON COLUMN notification_token_constant.unit_code IS 'Код юнита';
 
@@ -93,7 +93,7 @@ CREATE TABLE notification_receiver_system_employee_disabled (
 	employee_id BIGINT NOT NULL,
 	notification_receiver_system_id BIGINT NOT NULL,
 	CONSTRAINT notification_receiver_system_employee_disabled_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_receiver_system_id_FK" FOREIGN KEY (notification_receiver_system_id) REFERENCES notification_receiver_system(id)
+	CONSTRAINT "notfctn_recvr_systm_empl_disbld_notfctn_recvr_systm_id_fkey" FOREIGN KEY (notification_receiver_system_id) REFERENCES notification_receiver_system(id)
 );
 COMMENT ON TABLE notification_receiver_system_employee_disabled IS 'Отключенные каналы отправки уведомлений для Сотрудников';
 COMMENT ON COLUMN notification_receiver_system_employee_disabled.id IS 'Синтетический id';
@@ -108,9 +108,9 @@ CREATE TABLE notification_recipient_email (
 	notification_recipient_id BIGINT NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_recipient_email_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_notification_recipient_id FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id)
+	CONSTRAINT notification_recipient_email_notification_recipient_id_fkey FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id)
 );
-CREATE INDEX fk_notification_recipient_id_idx ON notification_recipient_email USING btree (notification_recipient_id);
+CREATE INDEX notification_recipient_email_notification_recipient_id_idx ON notification_recipient_email USING btree (notification_recipient_id);
 COMMENT ON TABLE notification_recipient_email IS 'Статичные Email получателей уведомления';
 COMMENT ON COLUMN notification_recipient_email.id IS 'Синтетический id';
 COMMENT ON COLUMN notification_recipient_email.email IS 'Статичный Email получателя';
@@ -125,7 +125,7 @@ CREATE TABLE notification_recipient_parameters (
 	notification_recipient_id BIGINT NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_recipient_parameters_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_recipient_id_FK" FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id)
+	CONSTRAINT "notfctn_recpnt_parmtrs_notfctn_recpnt_id_fkey" FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id)
 );
 COMMENT ON TABLE notification_recipient_parameters IS 'Таблица содержит параметры для вычисляемых групп получателей уведомлений';
 COMMENT ON COLUMN notification_recipient_parameters.id IS 'Идентификатор записи';
@@ -135,11 +135,11 @@ COMMENT ON COLUMN notification_recipient_parameters.notification_recipient_id IS
 
 -- notification_template_content definition
 CREATE TABLE notification_template_content (
-	notification_template_id BIGINT GENERATED ALWAYS AS IDENTITY  NOT NULL,
+	id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
+	notification_template_id BIGINT NOT NULL,
 	receiver_system_id BIGINT NOT NULL,
 	is_enabled int2 DEFAULT 0 NOT NULL,
 	body_json json DEFAULT '{}'::json NOT NULL,
-	id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
 	id_to_substitute BIGINT NULL,
 	description varchar(1024) NULL,
 	priority bool DEFAULT false NOT NULL,
@@ -147,10 +147,10 @@ CREATE TABLE notification_template_content (
 	date_to timestamp NULL,
 	is_system bool DEFAULT false NOT NULL,
 	code_module varchar(128) NULL,
-	CONSTRAINT notification_template_contentpk PRIMARY KEY (id),
-	CONSTRAINT fk_notification_template_content_notification_template_id FOREIGN KEY (notification_template_id) REFERENCES notification_template(id),
-	CONSTRAINT fk_notification_template_content_receiver_system_id FOREIGN KEY (receiver_system_id) REFERENCES notification_receiver_system(id),
-	CONSTRAINT fk_notificationtemplatecontent_id_to_substitute FOREIGN KEY (id_to_substitute) REFERENCES notification_template_content(id)
+	CONSTRAINT notification_template_content_pkey PRIMARY KEY (id),
+	CONSTRAINT notification_template_content_notification_template_id_fkey FOREIGN KEY (notification_template_id) REFERENCES notification_template(id),
+	CONSTRAINT notification_template_content_receiver_system_id_fkey FOREIGN KEY (receiver_system_id) REFERENCES notification_receiver_system(id),
+	CONSTRAINT notification_template_content_id_to_substitute_fkey FOREIGN KEY (id_to_substitute) REFERENCES notification_template_content(id)
 );
 COMMENT ON COLUMN notification_template_content.description IS 'Наименование шаблона';
 COMMENT ON COLUMN notification_template_content.priority IS 'Признак указания приоритета уведомления';
@@ -168,8 +168,8 @@ CREATE TABLE notification_template_content_attachment (
 	file_type varchar(128) NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_template_content_attachment_pkey PRIMARY KEY (id),
-	CONSTRAINT notification_template_content_notification_template_content_key UNIQUE (notification_template_content_id, storage_file_path),
-	CONSTRAINT fk_notification_template_content_attachment_id FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
+	CONSTRAINT notfctn_templt_contnt_attchmnt_templt_contnt_storg_fil_path_key UNIQUE (notification_template_content_id, storage_file_path),
+	CONSTRAINT notfctn_templt_contnt_attchmnt_notfctn_templt_contnt_id_fkey FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
 );
 COMMENT ON TABLE notification_template_content_attachment IS 'Таблица вложений, относящихся к конкретным шаблонам уведомлений';
 COMMENT ON COLUMN notification_template_content_attachment.id IS 'Уникальный идентификатор записи';
@@ -187,7 +187,7 @@ CREATE TABLE notification_template_content_employee_subscribe (
 	is_enabled bool DEFAULT true NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_template_content_employee_subscribe_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_template_content_id_FK" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
+	CONSTRAINT "notfctn_templt_contnt_empl_subscrb_templt_contnt_id_fkey" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
 );
 COMMENT ON TABLE notification_template_content_employee_subscribe IS 'Подписки сотрудников на Типы уведомлений (включение/отключение)';
 COMMENT ON COLUMN notification_template_content_employee_subscribe.id IS 'Синтетический id';
@@ -205,7 +205,7 @@ CREATE TABLE notification_template_content_event (
 	"location" varchar(1024) NULL,
 	reminders varchar(128) NULL,
 	CONSTRAINT notification_template_content_event_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_notification_template_content_id FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
+	CONSTRAINT notfctn_templt_contnt_evnt_notfctn_templt_contnt_id_fkey FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
 );
 COMMENT ON TABLE notification_template_content_event IS 'Событие в календарь на основе шаблона уведомления';
 COMMENT ON COLUMN notification_template_content_event.id IS 'Синтетический id';
@@ -224,10 +224,10 @@ CREATE TABLE notification_template_content_recipient (
 	is_copy bool DEFAULT false NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_template_content_recipient_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_recipient_id_FK" FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id),
-	CONSTRAINT "notification_template_content_id_FK" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
+	CONSTRAINT "notfctn_templt_contnt_recpnt_notfctn_recpnt_id_fkey" FOREIGN KEY (notification_recipient_id) REFERENCES notification_recipient(id),
+	CONSTRAINT "notfctn_templt_contnt_recpnt_notfctn_templt_contnt_id_fkey" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
 );
-CREATE UNIQUE INDEX uq_ntf_template_content_recipient_tmplt_id_ntf_rec_id_is_copy ON notification_template_content_recipient USING btree (notification_recipient_id, notification_template_content_id, is_copy);
+CREATE UNIQUE INDEX notfctn_templt_contnt_recpnt_id_templt_contnt_id_is_cop_key ON notification_template_content_recipient USING btree (notification_recipient_id, notification_template_content_id, is_copy);
 COMMENT ON TABLE notification_template_content_recipient IS '{"tegs":["Уведомления"], description:"данная таблица содержит информацию о связях шаблона уведомления с получателем"}';
 COMMENT ON COLUMN notification_template_content_recipient.id IS 'Идентификатор записи';
 COMMENT ON COLUMN notification_template_content_recipient.notification_recipient_id IS 'Идентификатор из таблицы вычисляемых получателей уведомлений';
@@ -245,7 +245,7 @@ CREATE TABLE notification_log (
 	message varchar NULL,
 	error_message varchar NULL,
 	CONSTRAINT notification_log_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_template_content_id_FK" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
+	CONSTRAINT "notification_log_notification_template_content_id_fkey" FOREIGN KEY (notification_template_content_id) REFERENCES notification_template_content(id)
 );
 COMMENT ON TABLE notification_log IS 'Журнал уведомлений';
 COMMENT ON COLUMN notification_log.id IS 'Синтетический id';
@@ -265,9 +265,9 @@ CREATE TABLE notification_log_email (
 	is_copy bool DEFAULT false NOT NULL,
 	is_system bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_log_email_pkey PRIMARY KEY (id),
-	CONSTRAINT fk_notification_log_id FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
+	CONSTRAINT notification_log_email_notification_log_id_fkey FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
 );
-CREATE INDEX fk_notification_log_id_idx ON notification_log_email USING btree (notification_log_id);
+CREATE INDEX notification_log_email_notification_log_id_idx ON notification_log_email USING btree (notification_log_id);
 COMMENT ON TABLE notification_log_email IS 'Журнал уведомлений. Статичный Email получателей уведомления';
 COMMENT ON COLUMN notification_log_email.id IS 'Email адрес, на который было отправлено уведомление';
 COMMENT ON COLUMN notification_log_email.notification_log_id IS 'ID записи в Журнале уведомлений (notification_log)';
@@ -282,7 +282,7 @@ CREATE TABLE notification_log_employee (
 	employee_id BIGINT NOT NULL,
 	is_copy bool DEFAULT false NOT NULL,
 	CONSTRAINT notification_log_employee_pkey PRIMARY KEY (id),
-	CONSTRAINT "notification_log_id_FK" FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
+	CONSTRAINT "notification_log_employee_notification_log_id_fkey" FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
 );
 COMMENT ON TABLE notification_log_employee IS 'Информация о получателях уведомлений в разрезе журнала уведомлений';
 COMMENT ON COLUMN notification_log_employee.notification_log_id IS 'id записи Журнала уведомлений в notification_log (FK)';
@@ -295,8 +295,8 @@ CREATE TABLE notification_deferred_send (
 	notification_log_id BIGINT GENERATED ALWAYS AS IDENTITY NOT NULL,
 	body_json json DEFAULT '{}'::json NOT NULL,
 	date_from timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT notification_deferred_send_pk PRIMARY KEY (notification_log_id),
-	CONSTRAINT fk_notification_log_id FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
+	CONSTRAINT notification_deferred_send_pkey PRIMARY KEY (notification_log_id),
+	CONSTRAINT notification_deferred_send_notification_log_id_fkey FOREIGN KEY (notification_log_id) REFERENCES notification_log(id)
 );
 COMMENT ON TABLE notification_deferred_send IS 'Журнал отложенных уведомлений (которые не были отправлены из-за недоступности kafka-messenger)';
 COMMENT ON COLUMN notification_deferred_send.notification_log_id IS 'Идентификатор записи в журнале уведомлений (notification_log.id)';

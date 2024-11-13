@@ -38,19 +38,19 @@ import static me.goodt.vkpht.module.notification.application.utils.TextConstants
 @RequiredArgsConstructor
 public class KafkaServiceImpl implements KafkaService {
 
-	private final NotificationLogService notificationLogService;
-	private final NotificationLogEmployeeService notificationLogEmployeeService;
+    private final NotificationLogService notificationLogService;
+    private final NotificationLogEmployeeService notificationLogEmployeeService;
     private final NotificationRecipientEmailService notificationRecipientEmailService;
     private final NotificationLogEmailService notificationLogEmailService;
     private final NotificationDeferredSendService notificationDeferredSendService;
-	private final KafkaConfig kafkaConfig;
-	private final KafkaTemplate<Long, NoticeDto> kafkaTemplate;
+    private final KafkaConfig kafkaConfig;
+    private final KafkaTemplate<Long, NoticeDto> kafkaTemplate;
     private final UnitAccessService unitAccessService;
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-	@Override
-	public void sendKafkaMessage(
+    @Override
+    public void sendKafkaMessage(
         List<Long> notificationTemplateContentIds,
         Collection<Long> employeeIds,
         Collection<Long> employeeCopyIds,
@@ -137,31 +137,31 @@ public class KafkaServiceImpl implements KafkaService {
         } catch (Exception e) {
             log.error("An error occurred during sending notification.", e);
         }
-	}
+    }
 
-	@Override
-	public void sendKafkaMessage(Collection<Long> employeeIds, Map<String, Object> content, String eventSubType) {
-		try {
-			NoticeDto notice = createNotice(null, employeeIds, null, null, null, null, null, content, eventSubType);
-			kafkaTemplate.send(kafkaConfig.getTopic(), notice);
-			log.info("sending data to kafka with topic {}", kafkaConfig.getTopic());
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-	}
+    @Override
+    public void sendKafkaMessage(Collection<Long> employeeIds, Map<String, Object> content, String eventSubType) {
+        try {
+            NoticeDto notice = createNotice(null, employeeIds, null, null, null, null, null, content, eventSubType);
+            kafkaTemplate.send(kafkaConfig.getTopic(), notice);
+            log.info("sending data to kafka with topic {}", kafkaConfig.getTopic());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
-	@Override
-	public void sendKafkaMessage(Map<KafkaEmployeeInfo, Map<String, Object>> data, Collection<String> channels, String eventSubType) {
-		try {
-			data.forEach((kei, content) -> {
-				NoticeDto notice = createNotice(null, Collections.singletonList(kei.getEmployeeId()), null, null, null, kei.getUsersKeycloakIds(), channels, content, eventSubType);
-				kafkaTemplate.send(kafkaConfig.getTopic(), notice);
-				log.info("sending data to kafka with topic {}", kafkaConfig.getTopic());
-			});
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-	}
+    @Override
+    public void sendKafkaMessage(Map<KafkaEmployeeInfo, Map<String, Object>> data, Collection<String> channels, String eventSubType) {
+        try {
+            data.forEach((kei, content) -> {
+                NoticeDto notice = createNotice(null, Collections.singletonList(kei.getEmployeeId()), null, null, null, kei.getUsersKeycloakIds(), channels, content, eventSubType);
+                kafkaTemplate.send(kafkaConfig.getTopic(), notice);
+                log.info("sending data to kafka with topic {}", kafkaConfig.getTopic());
+            });
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
     @Override
     public boolean kafkaTemplateSend(NoticeDto notice) {
@@ -198,7 +198,7 @@ public class KafkaServiceImpl implements KafkaService {
         }
     }
 
-	private NoticeDto createNotice(
+    private NoticeDto createNotice(
         List<Long> notificationLogIds,
         Collection<Long> employeeIds,
         Collection<Long> employeeCopyIds,
@@ -209,19 +209,19 @@ public class KafkaServiceImpl implements KafkaService {
         Map<String, Object> content,
         String eventSubType
     ) {
-		PayloadDto payload = new PayloadDto()
-			.setEventSubtype(eventSubType == null ? kafkaConfig.getSubtype() : eventSubType)
-			.setChannels(channels == null ? Collections.singletonList(RECEIVER_SYSTEM_EMAIL) : channels)
-			.setNotificationLogIds(notificationLogIds)
-			.setContent(content)
-			.setEmployeeIds(employeeIds)
-			.setEmployeeCopyIds(employeeCopyIds)
+        PayloadDto payload = new PayloadDto()
+            .setEventSubtype(eventSubType == null ? kafkaConfig.getSubtype() : eventSubType)
+            .setChannels(channels == null ? Collections.singletonList(RECEIVER_SYSTEM_EMAIL) : channels)
+            .setNotificationLogIds(notificationLogIds)
+            .setContent(content)
+            .setEmployeeIds(employeeIds)
+            .setEmployeeCopyIds(employeeCopyIds)
             .setEmailIds(emailIds)
             .setEmailCopyIds(emailCopyIds)
-			.setUsersKeycloakIds(usersKeycloakIds)
-			.setInitiatorEmployeeId(kafkaConfig.getInitiatorKeycloakId())
+            .setUsersKeycloakIds(usersKeycloakIds)
+            .setInitiatorEmployeeId(kafkaConfig.getInitiatorKeycloakId())
             .setUnitCode(unitAccessService.getCurrentUnit());
 
-		return new NoticeDto(kafkaConfig.getType(), payload, 1L);
-	}
+        return new NoticeDto(kafkaConfig.getType(), payload, 1L);
+    }
 }
