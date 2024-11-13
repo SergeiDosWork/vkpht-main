@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import me.goodt.vkpht.module.notification.api.*;
 import me.goodt.vkpht.module.notification.api.learning.LearningServiceClient;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.api.quiz.QuizServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
 

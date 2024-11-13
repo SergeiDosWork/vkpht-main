@@ -5,6 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindDivisionTeamRolesRequest;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -270,9 +273,22 @@ public class DivisionTeamRoleController {
         getParams.put("legal_entity_id", legalEntityId);
         loggerService.createLog(hash, "POST /api/divisionteamrole/find", getParams, null);
         boolean isDivisionTeamRoleIdOnlyParam = getParams.values().stream().mapToInt(item -> item != null ? 1 : 0).sum() == 1;
-        return divisionTeamRoleService.findDivisionTeamRoles(page, size, successorReadinessDateFromPlusYear, successorReadinessDateFromStart,
-            successorReadinessDateFromEnd, assignmentRotationDateFromStart, assignmentRotationDateFromEnd, successorDateFrom,
-            divisionTeamRoleId, divisionTeamId, divisionId, searchingValue, employeeSuccessorId, legalEntityId, isDivisionTeamRoleIdOnlyParam);
+        FindDivisionTeamRolesRequest request = new FindDivisionTeamRolesRequest();
+        request.setDivisionTeamRoleIdOnlyParam(isDivisionTeamRoleIdOnlyParam);
+        request.setSearchingValue(searchingValue);
+        request.setEmployeeSuccessorId(employeeSuccessorId);
+        request.setLegalEntityIds(legalEntityId);
+        request.setDivisionTeamRoleIds(divisionTeamRoleId);
+        request.setDivisionId(divisionId);
+        request.setSuccessorReadinessDateFromStart(successorReadinessDateFromStart);
+        request.setSuccessorReadinessDateFromEnd(successorReadinessDateFromEnd);
+        request.setAssignmentRotationDateFromStart(assignmentRotationDateFromStart);
+        request.setAssignmentRotationDateFromEnd(assignmentRotationDateFromEnd);
+        request.setSuccessorDateFrom(successorDateFrom);
+        request.setSuccessorReadinessDateFromPlusYear(successorReadinessDateFromPlusYear);
+        request.setPage(page);
+        request.setSize(size);
+        return divisionTeamRoleService.findDivisionTeamRoles(request);
 
     }
 }

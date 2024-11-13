@@ -7,6 +7,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindEmployeeRequest;
+
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -128,7 +131,7 @@ public class EmployeeController {
             @RequestParam(name = "function", required = false) List<Long> functionIds,
             @Parameter(name = "search", description = "Строка поиска по фамилии, имени, отчеству или номеру сотрудника (таблица employee).", example = "Ива Иванович")
             @RequestParam(name = "search", required = false) String searchingValue) {
-        List<EmployeeEntity> employees = employeeService.findEmployee(employeeIds, divisionIds, functionIds, searchingValue, null, true, null, CoreUtils.getPageable(page, size)).getContent();
+        List<EmployeeInfoDto> employees = employeeService.findEmployee(employeeIds, divisionIds, functionIds, searchingValue, null, true, null, CoreUtils.getPageable(page, size));
         return employeeService.getEmployeeInfoList(employees, false);
     }
 
@@ -191,16 +194,21 @@ public class EmployeeController {
             divisionIds = data.getDivisionIds();
         }
 
-        Page<EmployeeEntity> employees = employeeService.findEmployeeNew(employeeIds, divisionIds, functionIds, jobTitleId,
-            positionShortName, legalEntityId, searchingValue, withPatronymic, withClosed, employeeNumber, emails, pageable);
-        List<EmployeeInfoDto> employeeInfoDtoList = employeeService.getEmployeeInfoList(employees.getContent(), hasPositionAssignment);
-
-        EmployeeInfoResponse response = new EmployeeInfoResponse();
-        response.setPage(employees.getNumber());
-        response.setTotalElements(employees.getTotalElements());
-        response.setTotalPages(employees.getTotalPages());
-        response.setData(employeeInfoDtoList);
-        return response;
+        FindEmployeeRequest request = new FindEmployeeRequest();
+        request.setPageable(pageable);
+        request.setEmployeeIds(employeeIds);
+        request.setDivisionIds(divisionIds);
+        request.setFunctionIds(functionIds);
+        request.setSearchingValue(searchingValue);
+        request.setLegalEntityId(legalEntityId);
+        request.setJobTitleId(jobTitleId);
+        request.setPositionShortName(positionShortName);
+        request.setWithPatronymic(withPatronymic);
+        request.setWithClosed(withClosed);
+        request.setEmployeeNumber(employeeNumber);
+        request.setEmails(emails);
+        request.setHasPositionAssignment(hasPositionAssignment);
+        return employeeService.findEmployees(request);
     }
 
     @Operation(summary = "Получение информации о назначениях в команду подразделения", description = "Получение информации о назначениях в команду подразделения", tags = {"employee"})

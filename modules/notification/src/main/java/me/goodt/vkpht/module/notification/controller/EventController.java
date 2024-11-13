@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,9 +32,26 @@ import java.util.stream.Collectors;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
+import me.goodt.vkpht.common.api.LoggerService;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.notification.api.CompetenceService;
+import me.goodt.vkpht.module.notification.api.EventService;
+import me.goodt.vkpht.module.notification.api.dto.BaseNotificationInputData;
+import me.goodt.vkpht.module.notification.api.dto.CustomEmailEventCodeInputDto;
+import me.goodt.vkpht.module.notification.api.dto.CustomEmailEventInputDto;
+import me.goodt.vkpht.module.notification.api.dto.DataForKafkaMessageInputDto;
+import me.goodt.vkpht.module.notification.api.dto.DevFormAchievementDto;
+import me.goodt.vkpht.module.notification.api.dto.EventInputDto;
+import me.goodt.vkpht.module.notification.api.dto.KrAchievementEventDto;
+import me.goodt.vkpht.module.notification.api.dto.KrProgressDto;
+import me.goodt.vkpht.module.notification.api.dto.Params;
+import me.goodt.vkpht.module.notification.api.dto.QuizFinishInputDto;
+import me.goodt.vkpht.module.notification.api.dto.QuizStartInputDto;
+import me.goodt.vkpht.module.notification.api.dto.RemindByHeadInputDto;
+import me.goodt.vkpht.module.notification.api.dto.SuccessorNotificateByCodeInputData;
+import me.goodt.vkpht.module.notification.api.dto.TaskAchievementDto;
 import me.goodt.vkpht.module.notification.api.dto.data.DataFromStatusChangeToRostalentStatusChange;
 import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
-import me.goodt.vkpht.module.notification.api.dto.*;
 import me.goodt.vkpht.module.notification.api.dto.monitor.EventDto;
 import me.goodt.vkpht.module.notification.api.dto.monitor.EventExtendedDto;
 import me.goodt.vkpht.module.notification.api.dto.monitor.ShortEventDto;
@@ -46,17 +62,23 @@ import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFieldDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFindRequest;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.UserTaskTreeDto;
-import me.goodt.vkpht.common.api.exception.CustomException;
-import me.goodt.vkpht.module.notification.api.CompetenceService;
-import me.goodt.vkpht.module.notification.api.EventService;
-import me.goodt.vkpht.module.notification.api.logging.LoggerService;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
 import me.goodt.vkpht.module.notification.api.rtcore.RtCoreServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
 import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 
-import static com.goodt.drive.notify.GlobalDefs.TASK_TYPE_ID_5;
-import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.*;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.COMPETENCE_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.GOAL_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.ID_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.KP_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.NAME_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.PARENT_ID_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.PROGRESS_OLD_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.PROGRESS_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TASK_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TASK_TYPE_NAME_TAG;
+import static me.goodt.vkpht.module.notification.api.dto.DtoTagConstants.TITLE_TAG;
+import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.TASK_TYPE_ID_5;
 
 @Slf4j
 @RestController
@@ -869,7 +891,7 @@ public class EventController {
 			TaskFieldDto field = body.getFields().stream()
 				.filter(f -> Objects.equals(f.getType().getId(), 36L))
 				.findFirst()
-				.orElseThrow(() -> new CustomException("Field not found", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new NotFoundException("Field not found"));
 			devForm.put("comment", field.getValue());
 		}
 

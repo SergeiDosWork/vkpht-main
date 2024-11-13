@@ -1,6 +1,5 @@
 package me.goodt.vkpht.module.notification.domain.entity;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,9 +13,9 @@ import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 
@@ -24,7 +23,6 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "NotificationDeferredSend")
-@TypeDef(name = "json", typeClass = JsonType.class)
 public class NotificationDeferredSendEntity {
 
     @Id
@@ -41,7 +39,7 @@ public class NotificationDeferredSendEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateFrom;
 
-    @Type(json.class)
-    @Column(name = "body_json")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "body_json", columnDefinition = "jsonb")
     private String noticeBodyJson;
 }

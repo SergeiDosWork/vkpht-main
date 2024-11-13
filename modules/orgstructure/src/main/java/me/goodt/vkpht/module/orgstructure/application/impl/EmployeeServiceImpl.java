@@ -1,6 +1,9 @@
 package me.goodt.vkpht.module.orgstructure.application.impl;
 
 import lombok.extern.slf4j.Slf4j;
+
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -24,7 +27,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +68,6 @@ import me.goodt.vkpht.common.application.util.PersonUtil;
 import me.goodt.vkpht.common.application.util.UtilClass;
 import me.goodt.vkpht.common.domain.dao.filter.PositionAssignmentFilter;
 import me.goodt.vkpht.common.domain.dao.tasksetting2.ProcessTaskDao;
-import me.goodt.vkpht.common.domain.entity.orgstructure.specification.EmployeeSpecification;
-import me.goodt.vkpht.common.domain.entity.orgstructure.specification.SearchCriteria;
-import me.goodt.vkpht.common.domain.entity.orgstructure.specification.SearchOperation;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.ComponentEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.CycleEntity;
 import me.goodt.vkpht.common.domain.entity.tasksetting2.entities.CycleTaskEntity;
@@ -87,6 +86,7 @@ import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeSearchResult;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentInfo;
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindEmployeeRequest;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamAssignmentDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.DivisionTeamDao;
 import me.goodt.vkpht.module.orgstructure.domain.dao.EmployeeDao;
@@ -105,12 +105,17 @@ import me.goodt.vkpht.module.orgstructure.domain.factory.EmployeeExtendedInfoFac
 import me.goodt.vkpht.module.orgstructure.domain.factory.EmployeeInfoFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PersonFactory;
 import me.goodt.vkpht.module.orgstructure.domain.factory.PositionAssignmentFactory;
+import me.goodt.vkpht.module.orgstructure.domain.specification.EmployeeSpecification;
+import me.goodt.vkpht.module.orgstructure.domain.specification.SearchCriteria;
+import me.goodt.vkpht.module.orgstructure.domain.specification.SearchOperation;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
+import static org.apache.commons.collections4.CollectionUtils.isEmpty;
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 @Slf4j
 @Service
@@ -153,10 +158,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeSearchResult getDivisionTeamHeadByDivisionTeam(Long divisionTeamId, Long headLevel) {
         DivisionTeamEntity divisionTeam = divisionTeamDao.findById(divisionTeamId)
-                .orElseThrow(() -> new NotFoundException(String.format("Division team %d is not found", divisionTeamId)));
+            .orElseThrow(() -> new NotFoundException(String.format("Division team %d is not found", divisionTeamId)));
 
         List<DivisionTeamAssignmentEntity> list = divisionTeamAssignmentDao
-                .fetchByDivisionTeamIdAndSystemRoleId(divisionTeam.getId(), GlobalDefs.HEAD_SYSTEM_ROLE_ID);
+            .fetchByDivisionTeamIdAndSystemRoleId(divisionTeam.getId(), GlobalDefs.HEAD_SYSTEM_ROLE_ID);
 
         if (!list.isEmpty()) {
             headLevel -= 1;
@@ -165,9 +170,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         while ((list.isEmpty() || headLevel > 0) && divisionTeam.getParent() != null) {
             Long divisionTeamParentId = divisionTeam.getParent().getId();
             divisionTeam = divisionTeamDao.findById(divisionTeamParentId)
-                    .orElseThrow(() -> new NotFoundException(String.format("Division team %d is not found", divisionTeamParentId)));
+                .orElseThrow(() -> new NotFoundException(String.format("Division team %d is not found", divisionTeamParentId)));
             list = divisionTeamAssignmentDao
-                    .fetchByDivisionTeamIdAndSystemRoleId(divisionTeam.getId(), GlobalDefs.HEAD_SYSTEM_ROLE_ID);
+                .fetchByDivisionTeamIdAndSystemRoleId(divisionTeam.getId(), GlobalDefs.HEAD_SYSTEM_ROLE_ID);
             if (!list.isEmpty()) {
                 headLevel -= 1;
             }
@@ -177,8 +182,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new NotFoundException(String.format("Head with this head_level not found in division team: %d", divisionTeamId));
         }
         DivisionTeamAssignmentEntity dta = list.stream()
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("Head not found, division team: %d", divisionTeamId)));
+            .findFirst()
+            .orElseThrow(() -> new NotFoundException(String.format("Head not found, division team: %d", divisionTeamId)));
 
         return new EmployeeSearchResult(true, dta.getEmployee(), dta.getDivisionTeamRole().getDivisionTeam().getId(), dta.getId());
     }
@@ -239,11 +244,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public PositionAssignmentInfo getPositionAssignmentInfo(Long employeeId) {
         List<PositionAssignmentDto> positionAssignments = positionAssignmentDao.findAll(
-            PositionAssignmentFilter.builder()
-                .employeeId(employeeId)
-                .unitCode(unitAccessService.getCurrentUnit())
-                .build()
-        ).stream()
+                PositionAssignmentFilter.builder()
+                    .employeeId(employeeId)
+                    .unitCode(unitAccessService.getCurrentUnit())
+                    .build()
+            ).stream()
             .map(PositionAssignmentFactory::create)
             .toList();
         return new PositionAssignmentInfo(positionAssignments);
@@ -289,10 +294,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<EmployeeEntity> findEmployee(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, String searchingValue, List<Long> legalEntityIds, Boolean withPatronymic, Long jobTitleId, Pageable pageable) {
+    public List<EmployeeInfoDto> findEmployee(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, String searchingValue, List<Long> legalEntityIds, Boolean withPatronymic, Long jobTitleId, Pageable pageable) {
         Page<EmployeeEntity> result;
         if (CollectionUtils.isEmpty(employeeIds) && CollectionUtils.isEmpty(functionIds) && CollectionUtils.isEmpty(divisionIds) && searchingValue == null
-                && CollectionUtils.isEmpty(legalEntityIds) && withPatronymic == null && jobTitleId == null) {
+            && CollectionUtils.isEmpty(legalEntityIds) && withPatronymic == null && jobTitleId == null) {
             result = employeeDao.findAll(pageable);
         } else {
             EmployeeSpecification specification = new EmployeeSpecification();
@@ -320,37 +325,62 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
             result = employeeDao.findAll(specification, pageable);
         }
-        return result;
+        return result.getContent().stream().map(EmployeeInfoFactory::create).toList();
     }
 
     @Override
-    public Page<EmployeeEntity> findEmployeeNew(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, Long jobTitleId, String positionShortName, Long legalEntityId, String searchingValue, Boolean withPatronymic, Boolean withClosed, List<String> employeeNumber, List<String> emails, Pageable pageable) {
-        if (CollectionUtils.isEmpty(employeeIds) && CollectionUtils.isEmpty(functionIds) && CollectionUtils.isEmpty(divisionIds) && jobTitleId == null &&
-            StringUtils.isBlank(positionShortName) && legalEntityId == null && StringUtils.isEmpty(searchingValue) && withClosed &&
-            CollectionUtils.isEmpty(employeeNumber) && CollectionUtils.isEmpty(emails)) {
-
-            return employeeDao.findAll(pageable);
+    public EmployeeInfoResponse findEmployees(FindEmployeeRequest request) {
+        Page<EmployeeEntity> result = employeeDao.findByParams(request);
+        List<EmployeeEntity> entities = result.getContent();
+        EmployeeInfoResponse response = new EmployeeInfoResponse();
+        if (isEmpty(entities)) {
+            return response;
         }
 
-        return employeeDao.findByParams(employeeIds, divisionIds, functionIds, jobTitleId, positionShortName, legalEntityId, searchingValue, withPatronymic, withClosed, employeeNumber, emails, pageable);
+        List<Long> employeeIds = entities.stream().map(EmployeeEntity::getId).collect(toList());
+        Map<Long, List<PositionAssignmentEntity>> positionAssignmentByEmployeeIds =
+            positionAssignmentDao.findActualByEmployeeIds(employeeIds, unitAccessService.getCurrentUnit());
+
+        boolean hasPositionAssignment = request.isHasPositionAssignment();
+        List<EmployeeInfoDto> employees = entities.stream()
+            .filter(emp -> !hasPositionAssignment || isNotEmpty(positionAssignmentByEmployeeIds.get(emp.getId())))
+            .map(entity -> {
+                EmployeeInfoDto item = EmployeeInfoFactory.create(entity);
+                List<PositionAssignmentEntity> assignments = positionAssignmentByEmployeeIds.get(item.getId());
+                if (isNotEmpty(assignments)) {
+                    item.setPositionAssignments(assignments.stream().map(PositionAssignmentFactory::create).toList());
+                }
+                return item;
+            }).toList();
+
+
+        response.setPage(result.getNumber());
+        response.setTotalElements(result.getTotalElements());
+        response.setTotalPages(result.getTotalPages());
+        response.setData(employees);
+        return response;
     }
 
     @Override
-    public List<EmployeeInfoDto> getEmployeeInfoList(Collection<EmployeeEntity> employees, boolean hasPositionAssignment) {
-        List<Long> employeeIds = employees.stream().map(EmployeeEntity::getId).collect(Collectors.toList());
+    public List<EmployeeInfoDto> findEmployeeNew(FindEmployeeRequest request) {
+        return employeeDao.findByParams(request).getContent().stream()
+            .map(EmployeeInfoFactory::create)
+            .toList();
+    }
+
+    @Override
+    public List<EmployeeInfoDto> getEmployeeInfoList(Collection<EmployeeInfoDto> employees, boolean hasPositionAssignment) {
+        List<Long> employeeIds = employees.stream().map(EmployeeInfoDto::getId).collect(toList());
         Map<Long, List<PositionAssignmentEntity>> positionAssignmentByEmployeeIds =
             positionAssignmentDao.findActualByEmployeeIds(employeeIds, unitAccessService.getCurrentUnit());
-        return employees
-                .stream()
-                .map(emp -> EmployeeInfoFactory.createWithJobInfo(emp, positionAssignmentByEmployeeIds.getOrDefault(emp.getId(), Collections.emptyList())))
-                .filter(emp -> {
-                    if (hasPositionAssignment) {
-                        return !emp.getPositionAssignments().isEmpty();
-                    } else {
-                        return true;
-                    }
-                })
-                .collect(Collectors.toList());
+        return employees.stream()
+            .filter(emp -> !hasPositionAssignment || isNotEmpty(positionAssignmentByEmployeeIds.get(emp.getId())))
+            .peek(emp -> {
+                List<PositionAssignmentEntity> assignments = positionAssignmentByEmployeeIds.get(emp.getId());
+                if (isNotEmpty(assignments)) {
+                    emp.setPositionAssignments(assignments.stream().map(PositionAssignmentFactory::create).toList());
+                }
+            }).collect(toList());
     }
 
     @Override
@@ -393,7 +423,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeSearchResult getDivisionTeamHead(Long divisionTeamId, List<Long> processedDivisionTeams) {
         if (processedDivisionTeams.stream().anyMatch(item -> Objects.equals(item, divisionTeamId))) {
-            log.error("A loop in division team for division: %d during search division team head", divisionTeamId);
+            log.error("A loop in division team for division: {} during search division team head", divisionTeamId);
             throw new VerifyError(String.format("Processed division teams list already contains this &d division team (LOOP)!", divisionTeamId));
         }
         List<DivisionTeamAssignmentEntity> headAssignments = assignmentService.getHeadAssignment(divisionTeamId);
@@ -449,10 +479,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                     .filter(Objects::nonNull)
                     .collect(Collectors.joining(" "));
 
-                return new EmployeeFlatInfoDto(assignment.getEmployeeId(),fio, person.getPhoto(), assignment.getFullName());
+                return new EmployeeFlatInfoDto(assignment.getEmployeeId(), fio, person.getPhoto(), assignment.getFullName());
             })
             .distinct()
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -606,10 +636,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             .map(CycleTaskEntity::getTask)
             .map(TaskEntity::getUserId)
             .map(Long::valueOf)
-            .collect(Collectors.toList());
+            .collect(toList());
 
         List<ProcessEntity> processList = processService.getProcessesByCycleId(cycle.getId());
-        List<Long> processIds = processList.stream().map(ProcessEntity::getId).collect(Collectors.toList());
+        List<Long> processIds = processList.stream().map(ProcessEntity::getId).collect(toList());
 
         Map<Long, ProcessTaskEntity> processTasks = processTaskDao.findByProcessIdList(processIds, unitAccessService.getCurrentUnit())
             .stream()
@@ -634,7 +664,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 processTasks,
                 employeeEntity
             ))
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     @Override
@@ -673,7 +703,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 }
                 String photoOrInitials = PersonUtil.getPhotoOrInitials(person.getPhoto(), person.getSurname(), person.getName());
 
-                ProcessEmployeeDto dto  = new ProcessEmployeeDto();
+                ProcessEmployeeDto dto = new ProcessEmployeeDto();
                 dto.setEmployeeId(employee.getId());
                 dto.setEmployeePhoto(photoOrInitials);
                 dto.setEmployeeName(employeeName);
@@ -690,7 +720,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         List<FilterDto> filters = List.of();
         if (request.isUseFilter()) {
-           filters = buildFilters(goalCards);
+            filters = buildFilters(goalCards);
         }
 
         return UtilClass.wrapWithFilterAwarePageResponse(request, result, filters);
@@ -735,7 +765,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             .stream()
             .filter(assignment -> assignment.getDivisionTeamRole().getRole().getId() == 2L)
             .map(DivisionTeamAssignmentShortDto::getEmployee)
-            .collect(Collectors.toList());
+            .collect(toList());
     }
 
     private static String getStringValue(Cell cell) throws NotFoundException {

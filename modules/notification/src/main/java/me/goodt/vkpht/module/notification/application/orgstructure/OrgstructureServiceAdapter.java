@@ -1,10 +1,8 @@
-package me.goodt.vkpht.module.notification.api.orgstructure;
+package me.goodt.vkpht.module.notification.application.orgstructure;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import com.goodt.drive.notify.application.dto.ResponseNumberDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoRequestDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
@@ -13,15 +11,12 @@ import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleContainerDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamSuccessorDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeMetaLukViewDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.FunctionDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorReadinessDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.RequestNumbersDto;
 
 public interface OrgstructureServiceAdapter {
 
@@ -40,8 +35,6 @@ public interface OrgstructureServiceAdapter {
     DivisionTeamAssignmentDto getEmployeeHead(Long employeeId, Long divisionTeamId);
 
     DivisionInfoDto getDivisionInfo(Long id);
-
-    ResponseNumberDto checkNumbersFromFile(RequestNumbersDto dto);
 
     List<LegalEntityTeamAssignmentDto> getLegalEntityAssignments(List<Long> legalEntityIds, List<Long> roleIds, List<Long> employeeIds);
 
@@ -93,9 +86,5 @@ public interface OrgstructureServiceAdapter {
 
     List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds);
 
-    List<EmployeeMetaLukViewDto> getEmployeeMetaLukView();
-
     List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto divisionInfoRequestDto);
-
-    List<FunctionDto> getFunctionList();
 }

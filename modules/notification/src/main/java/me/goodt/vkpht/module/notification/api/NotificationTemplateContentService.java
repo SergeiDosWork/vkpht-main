@@ -1,6 +1,6 @@
 package me.goodt.vkpht.module.notification.api;
 
-import javassist.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 
 import java.util.List;
 

@@ -61,7 +61,7 @@ import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFieldDto;
 import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskFindRequest;
 import me.goodt.vkpht.module.notification.api.monitor.MonitorServiceClient;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.api.quiz.QuizServiceClient;
 import me.goodt.vkpht.module.notification.api.tasksetting2.TasksettingServiceClient;
 import me.goodt.vkpht.module.notification.application.NotificationService;
@@ -98,7 +98,6 @@ import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.EV
 import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.EVENT_TYPE_UPDATE_SUCCESSOR;
 import static me.goodt.vkpht.module.notification.application.utils.GlobalDefs.HR_ROLE_LIST_LONG;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.ATTACHMENT_FILES;
-import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_PATTERN_1;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_PATTERN_2;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.EVENT_ID_TO_EVENT_INFO;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.HIGH_PRIORITY;

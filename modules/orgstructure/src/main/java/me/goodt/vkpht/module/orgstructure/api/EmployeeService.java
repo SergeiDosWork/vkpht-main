@@ -2,6 +2,9 @@ package me.goodt.vkpht.module.orgstructure.api;
 
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeExtendedInfoDto;
 
+import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindEmployeeRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,11 +50,13 @@ public interface EmployeeService {
 
     Optional<EmployeeEntity> getEmployeeByExternalId(String externalId);
 
-    Page<EmployeeEntity> findEmployee(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, String searchingValue, List<Long> legalEntityIds, Boolean withPatronymic, Long jobTitleId, Pageable pageable);
+    List<EmployeeInfoDto> findEmployee(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, String searchingValue, List<Long> legalEntityIds, Boolean withPatronymic, Long jobTitleId, Pageable pageable);
 
-    Page<EmployeeEntity> findEmployeeNew(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, Long jobTitleId, String positionShortName, Long legalEntityId, String searchingValue, Boolean withPatronymic, Boolean withClosed, List<String> employeeNumber, List<String> emails, Pageable pageable);
+    EmployeeInfoResponse findEmployees(FindEmployeeRequest request);
 
-    List<EmployeeInfoDto> getEmployeeInfoList(Collection<EmployeeEntity> employees, boolean hasPositionAssignment);
+    List<EmployeeInfoDto> findEmployeeNew(FindEmployeeRequest request);
+
+    List<EmployeeInfoDto> getEmployeeInfoList(Collection<EmployeeInfoDto> employees, boolean hasPositionAssignment);
 
     Optional<EmployeeEntity> getEmployee(Long id, String externalId);
 

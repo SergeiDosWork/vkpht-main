@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import javassist.NotFoundException;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 import me.goodt.vkpht.module.notification.api.dto.NotificationDynamicRecipientDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationRecipientDto;
 import me.goodt.vkpht.module.notification.api.NotificationRecipientService;
-import me.goodt.vkpht.module.notification.api.logging.LoggerService;
+import me.goodt.vkpht.common.api.LoggerService;
 
 @Slf4j
 @RestController
@@ -69,7 +69,7 @@ public class NotificationRecipientController {
 	@GetMapping("/api/notification-recipient/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationRecipientDto getNotificationRecipient(
-		@Parameter(name = "id", title = "Идентификатор notification_recipient (таблица notification_recipient).", example = "1")
+		@Parameter(name = "id", description = "Идентификатор notification_recipient (таблица notification_recipient).", example = "1")
 		@PathVariable Long id) throws NotFoundException {
 		return notificationRecipientService.getNotificationRecipient(id);
 	}

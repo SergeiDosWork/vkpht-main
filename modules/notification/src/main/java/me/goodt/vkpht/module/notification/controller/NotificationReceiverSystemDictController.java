@@ -11,11 +11,11 @@ import java.util.Collection;
 import java.util.Collections;
 
 import com.goodt.drive.auth.sur.service.SurProtected;
+import me.goodt.vkpht.common.application.util.CoreUtils;
+import me.goodt.vkpht.common.dictionary.core.controller.DictionaryMetaGenerator;
+import me.goodt.vkpht.common.dictionary.core.controller.UnfilteredDictController;
 import me.goodt.vkpht.module.notification.api.dto.NotificationReceiverSystemDictDto;
-import com.goodt.drive.notify.application.hateoas.service.NotificationReceiverSystemCrudService;
-import com.goodt.drive.notify.application.utils.CoreUtils;
-import me.goodt.micro.core.controller.UnfilteredDictController;
-import me.goodt.micro.core.util.DictionaryMetaGenerator;
+import me.goodt.vkpht.module.notification.application.impl.NotificationReceiverSystemCrudService;
 
 @RestController
 @RequestMapping("/api/dict/notification-receiver-system")

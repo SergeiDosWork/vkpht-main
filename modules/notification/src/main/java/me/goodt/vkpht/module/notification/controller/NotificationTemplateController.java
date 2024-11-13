@@ -7,14 +7,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import me.goodt.vkpht.common.api.LoggerService;
-
-import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,15 +27,16 @@ import java.util.UUID;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
+import me.goodt.vkpht.common.api.LoggerService;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.notification.api.NotificationTemplateService;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateFilter;
-import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateFactory;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateEntity;
-import me.goodt.vkpht.module.notification.api.NotificationTemplateService;
-import me.goodt.vkpht.module.notification.api.logging.LoggerService;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
+import me.goodt.vkpht.module.notification.domain.factory.NotificationTemplateFactory;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -67,7 +63,7 @@ public class NotificationTemplateController {
     @GetMapping("/api/notification-template/{id}")
     @SurProtected(operation = SurOperation.UNIT)
     public NotificationTemplateDto getNotificationTemplate(
-        @Parameter(name = "id", title = "Идентификатор notification_template (таблица notification_template).", example = "1")
+        @Parameter(name = "id", description = "Идентификатор notification_template (таблица notification_template).", example = "1")
         @PathVariable Long id) throws NotFoundException {
         return NotificationTemplateFactory.create(notificationTemplateService.getById(id));
     }
@@ -126,7 +122,7 @@ public class NotificationTemplateController {
     public NotificationTemplateDto updateNotificationTemplate(
         @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "DTO представление шаблона (таблица notification_template)")
         @RequestBody NotificationTemplateDto dto,
-        @Parameter(name = "id", title = "Идентификатор email (таблица notification_template).", example = "1")
+        @Parameter(name = "id", description = "Идентификатор email (таблица notification_template).", example = "1")
         @PathVariable Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "PUT /api/notification-template/%d".formatted(id), null, dto);
@@ -149,7 +145,7 @@ public class NotificationTemplateController {
     @DeleteMapping("/api/notification-template/{id}")
     @SurProtected(operation = SurOperation.UNIT)
     public OperationResult deleteNotificationTemplate(
-        @Parameter(name = "id", title = "Идентификатор notification_template (таблица notification_template).", example = "1")
+        @Parameter(name = "id", description = "Идентификатор notification_template (таблица notification_template).", example = "1")
         @PathVariable Long id) throws NotFoundException {
         UUID hash = UUID.randomUUID();
         loggerService.createLog(hash, "DELETE /api/notification-template/%d".formatted(id), null, null);
@@ -178,7 +174,7 @@ public class NotificationTemplateController {
     @GetMapping("/api/notificationtemplate/findbycode")
     @SurProtected(operation = SurOperation.UNIT)
     public NotificationTemplateDto findNotificationTemplateByCode(
-        @Parameter(name = "code", title = "Уникальный код шаблона")
+        @Parameter(name = "code", description = "Уникальный код шаблона")
         @RequestParam String code) throws NotFoundException {
         return NotificationTemplateFactory.create(notificationTemplateService.getNotificationTemplateByCode(code));
     }
@@ -194,7 +190,7 @@ public class NotificationTemplateController {
     })
     @GetMapping("/api/notificationtemplatecontent/findbycode")
     public List<NotificationTemplateContentDto> findNotificationTemplateContentByCode(
-        @Parameter(name = "code", title = "Уникальный код шаблона")
+        @Parameter(name = "code", description = "Уникальный код шаблона")
         @RequestParam String code) {
         return notificationTemplateService.findNotificationTemplateContentByCode(code);
     }

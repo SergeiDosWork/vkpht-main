@@ -1,59 +1,43 @@
-package me.goodt.vkpht.module.notification.api.orgstructure;
+package me.goodt.vkpht.module.notification.application.orgstructure;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 import me.goodt.vkpht.common.api.AuthService;
 import me.goodt.vkpht.module.orgstructure.api.AssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionService;
 import me.goodt.vkpht.module.orgstructure.api.DivisionTeamRoleService;
 import me.goodt.vkpht.module.orgstructure.api.EmployeeService;
-
 import me.goodt.vkpht.module.orgstructure.api.LegalEntityTeamAssignmentService;
 import me.goodt.vkpht.module.orgstructure.api.LegalService;
 import me.goodt.vkpht.module.orgstructure.api.PositionService;
 import me.goodt.vkpht.module.orgstructure.api.RoleService;
-
-import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto;
-
-import org.springframework.stereotype.Service;
-
-import java.util.AbstractMap;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import com.goodt.drive.notify.application.dto.ResponseNumberDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionInfoRequestDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentDto;
+import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamAssignmentShortDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamRoleContainerDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.DivisionTeamSuccessorDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
-import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeMetaLukViewDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.FunctionDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.IdDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.LegalEntityTeamAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionAssignmentDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorReadinessDto;
-import me.goodt.vkpht.module.orgstructure.api.dto.RequestNumbersDto;
-import com.goodt.drive.notify.application.services.clients.RtCoreApi;
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindDivisionTeamRolesRequest;
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindEmployeeRequest;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class OrgstructureServiceAdapterImpl implements OrgstructureServiceAdapter {
 
-    private static final String EMPLOYEE = "employee";
-    private static final String TEAM = "team";
-
-    private final RtCoreApi rtCoreApi;
     private final EmployeeService employeeService;
     private final AssignmentService assignmentService;
     private final DivisionService divisionService;
@@ -122,9 +106,15 @@ public class OrgstructureServiceAdapterImpl implements OrgstructureServiceAdapte
                                                                     Long divisionTeamRoleId) {
         boolean isDivisionTeamRoleIdOnlyParam = divisionTeamRoleId != null;
         List<Long> divisionTeamRoleIds = isDivisionTeamRoleIdOnlyParam ? List.of(divisionTeamRoleId) : null;
-        return divisionTeamRoleService.findDivisionTeamRoles(null, null, null, successorReadinessDateFromStart,
-            successorReadinessDateFromEnd, assignmentRotationDateFromStart, assignmentRotationDateFromEnd, successorDateFrom,
-            divisionTeamRoleIds, null, null, null, null, null, isDivisionTeamRoleIdOnlyParam);
+        FindDivisionTeamRolesRequest request = new FindDivisionTeamRolesRequest();
+        request.setDivisionTeamRoleIdOnlyParam(isDivisionTeamRoleIdOnlyParam);
+        request.setDivisionTeamRoleIds(divisionTeamRoleIds);
+        request.setSuccessorReadinessDateFromStart(successorReadinessDateFromStart);
+        request.setSuccessorReadinessDateFromEnd(successorReadinessDateFromEnd);
+        request.setAssignmentRotationDateFromStart(assignmentRotationDateFromStart);
+        request.setAssignmentRotationDateFromEnd(assignmentRotationDateFromEnd);
+        request.setSuccessorDateFrom(successorDateFrom);
+        return divisionTeamRoleService.findDivisionTeamRoles(request);
     }
 
     @Override
@@ -202,45 +192,32 @@ public class OrgstructureServiceAdapterImpl implements OrgstructureServiceAdapte
 
     @Override
     public EmployeeInfoResponse findEmployee(List<Long> employeeIds) {
-        return rtCoreApi.findEmployee(Map.of("id", employeeIds, "size", Integer.MAX_VALUE));
+        FindEmployeeRequest request = new FindEmployeeRequest();
+        request.setEmployeeIds(employeeIds);
+        return employeeService.findEmployees(request);
     }
 
     @Override
     public EmployeeInfoResponse findEmployeeByEmails(List<String> emails) {
-        return rtCoreApi.findEmployee(Map.of("emails", emails));
+        FindEmployeeRequest request = new FindEmployeeRequest();
+        request.setEmails(emails);
+        return employeeService.findEmployees(request);
     }
 
     @Override
     public EmployeeInfoResponse findEmployeeByDivision(List<Long> divisionIds) {
-        return rtCoreApi.findEmployee(Map.of("division", divisionIds, "size", Integer.MAX_VALUE));
+        FindEmployeeRequest request = new FindEmployeeRequest();
+        request.setDivisionIds(divisionIds);
+        return employeeService.findEmployees(request);
     }
 
     @Override
     public List<LegalEntityDto> getLegalEntityList(List<Long> divisionIds, List<Long> divisionGroupIds) {
-        return rtCoreApi.getLegalEntityList(
-            Stream.of(new AbstractMap.SimpleEntry<String, Object>("division_id", divisionIds),
-                    new AbstractMap.SimpleEntry<String, Object>("division_group_id", divisionGroupIds))
-                .collect(HashMap::new, (map, entry) -> map.put(entry.getKey(), entry.getValue()), HashMap::putAll)
-        );
+        return legalService.getLegalEntityList(divisionIds, divisionGroupIds);
     }
 
     @Override
-    public List<EmployeeMetaLukViewDto> getEmployeeMetaLukView() {
-        return rtCoreApi.getEmployeeMetaLukView();
-    }
-
-    @Override
-    public List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto divisionInfoRequestDto) {
-        return rtCoreApi.divisionInfos(divisionInfoRequestDto);
-    }
-
-    @Override
-    public ResponseNumberDto checkNumbersFromFile(RequestNumbersDto dto) {
-        return rtCoreApi.checkNumbersFromFile(dto);
-    }
-
-    @Override
-    public List<FunctionDto> getFunctionList() {
-        return rtCoreApi.getFunctionList();
+    public List<DivisionInfoDto> getDivisionList(DivisionInfoRequestDto dto) {
+        return divisionService.getDivisionInfoByParams(dto.getDivisionIds(), dto.getParentId(), dto.getLegalEntityId(), dto.getGroupIds(), dto.isWithChilds());
     }
 }

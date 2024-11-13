@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import javassist.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +21,12 @@ import java.util.UUID;
 
 import com.goodt.drive.auth.sur.service.SurOperation;
 import com.goodt.drive.auth.sur.service.SurProtected;
-import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
+import me.goodt.vkpht.common.api.LoggerService;
+import me.goodt.vkpht.common.api.exception.NotFoundException;
+import me.goodt.vkpht.module.notification.api.NotificationReceiverSystemService;
 import me.goodt.vkpht.module.notification.api.dto.NotificationReceiverSystemDto;
 import me.goodt.vkpht.module.notification.api.dto.NotificationReceiverSystemRequestDto;
-import me.goodt.vkpht.module.notification.api.NotificationReceiverSystemService;
-import me.goodt.vkpht.module.notification.api.logging.LoggerService;
+import me.goodt.vkpht.module.notification.api.dto.data.OperationResult;
 
 @Slf4j
 @RestController
@@ -69,7 +69,7 @@ public class NotificationReceiverSystemController {
 	@GetMapping("/api/notification-receiver-system/{id}")
     @SurProtected(operation = SurOperation.UNIT)
 	public NotificationReceiverSystemDto findNotificationReceiverSystemById(
-		@Parameter(name = "id", title = "Уникальный код шаблона")
+		@Parameter(name = "id", description = "Уникальный код шаблона")
 		@PathVariable Long id) throws NotFoundException {
 		return notificationReceiverSystemService.getNotificationReceiverSystemById(id);
 	}

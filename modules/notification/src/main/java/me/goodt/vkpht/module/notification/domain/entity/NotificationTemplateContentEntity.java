@@ -1,6 +1,5 @@
 package me.goodt.vkpht.module.notification.domain.entity;
 
-import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,9 +17,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.WhereJoinTable;
+import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -34,7 +33,6 @@ import me.goodt.vkpht.common.domain.entity.DomainObject;
 @Accessors(chain = true)
 @NoArgsConstructor
 @Table(name = "notification_template_content")
-@TypeDef(name = "json", typeClass = JsonType.class)
 public class NotificationTemplateContentEntity extends DomainObject {
 
     @ManyToOne
@@ -68,8 +66,8 @@ public class NotificationTemplateContentEntity extends DomainObject {
     @Column(name = "is_enabled", nullable = false)
     @ColumnDefault("0")
     private Integer isEnabled;
-    @Type(json.class)
-    @Column(name = "body_json", nullable = false, columnDefinition = "json")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "body_json", nullable = false, columnDefinition = "jsonb")
     private String bodyJson;
     @ManyToOne
     @JoinColumn(name = "id_to_substitute")

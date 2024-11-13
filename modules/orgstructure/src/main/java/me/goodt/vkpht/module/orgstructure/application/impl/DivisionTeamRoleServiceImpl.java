@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import me.goodt.vkpht.common.api.exception.BadRequestException;
 
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindDivisionTeamRolesRequest;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -116,13 +118,12 @@ public class DivisionTeamRoleServiceImpl implements DivisionTeamRoleService {
     }
 
     @Override
-    public List<DivisionTeamRoleContainerDto> findDivisionTeamRoles(Integer page, Integer size,
-                                                                    Boolean successorReadinessDateFromPlusYear, Date successorReadinessDateFromStart,
-                                                                    Date successorReadinessDateFromEnd, Date assignmentRotationDateFromStart,
-                                                                    Date assignmentRotationDateFromEnd, Date successorDateFrom,
-                                                                    List<Long> divisionTeamRoleIds, List<Long> divisionTeamIds, Long divisionId,
-                                                                    String searchingValue, Long employeeSuccessorId, List<Long> legalEntityIds,
-                                                                    boolean isDivisionTeamRoleIdOnlyParam) {
+    public List<DivisionTeamRoleContainerDto> findDivisionTeamRoles(FindDivisionTeamRolesRequest request) {
+        String searchingValue = request.getSearchingValue();
+        List<Long> legalEntityIds = request.getLegalEntityIds();
+        List<Long> divisionTeamIds = request.getDivisionTeamIds();
+        List<Long> divisionTeamRoleIds = request.getDivisionTeamRoleIds();
+        Long divisionId = request.getDivisionId();
         boolean isFindBySearchingValue = searchingValue != null && !searchingValue.isEmpty();
         boolean withPositionSuccessors = isFindBySearchingValue && (legalEntityIds != null || divisionTeamIds != null || divisionTeamRoleIds != null || divisionId != null);
         validate(searchingValue, legalEntityIds);
@@ -132,23 +133,23 @@ public class DivisionTeamRoleServiceImpl implements DivisionTeamRoleService {
             .collect(Collectors.toSet()) : null;
         List<DivisionTeamRoleDto> divisionTeamRoleDtos = new ArrayList<>();
         if (!isFindBySearchingValue || !employeeIds.isEmpty()) {
-            divisionTeamRoleDtos = divisionTeamRoleDao.find(DivisionTeamRoleDao.FindQueryBuilder.newInstance(page, size)
+            divisionTeamRoleDtos = divisionTeamRoleDao.find(DivisionTeamRoleDao.FindQueryBuilder.newInstance(request.getPage(), request.getSize())
                     .employeeIds(employeeIds)
                     .divisionTeamRoleId(divisionTeamRoleIds)
                     .divisionTeamId(divisionTeamIds)
-                    .successorReadinessDateFromStart(successorReadinessDateFromStart)
-                    .successorReadinessDateFromEnd(successorReadinessDateFromEnd)
-                    .assignmentRotationDateFromStart(assignmentRotationDateFromStart)
-                    .assignmentRotationDateFromEnd(assignmentRotationDateFromEnd)
-                    .successorDateFrom(successorDateFrom)
-                    .successorReadinessDateFromPlusYear(successorReadinessDateFromPlusYear)
+                    .successorReadinessDateFromStart(request.getSuccessorReadinessDateFromStart())
+                    .successorReadinessDateFromEnd(request.getSuccessorReadinessDateFromEnd())
+                    .assignmentRotationDateFromStart(request.getAssignmentRotationDateFromStart())
+                    .assignmentRotationDateFromEnd(request.getAssignmentRotationDateFromEnd())
+                    .successorDateFrom(request.getSuccessorDateFrom())
+                    .successorReadinessDateFromPlusYear(request.getSuccessorReadinessDateFromPlusYear())
                     .divisionId(divisionId)
-                    .employeeSuccessorId(employeeSuccessorId))
+                    .employeeSuccessorId(request.getEmployeeSuccessorId()))
                 .stream()
                 .map(DivisionTeamRoleFactory::create)
                 .collect(Collectors.toList());
         }
-        return divisionService.createRoleContainers(divisionTeamRoleDtos, withPositionSuccessors || isDivisionTeamRoleIdOnlyParam);
+        return divisionService.createRoleContainers(divisionTeamRoleDtos, withPositionSuccessors || request.isDivisionTeamRoleIdOnlyParam());
     }
 
     private void validate(String searchingValue, List<Long> legalEntityId) throws BadRequestException {

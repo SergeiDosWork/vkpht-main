@@ -17,7 +17,7 @@ import me.goodt.vkpht.common.api.exception.NotFoundException;
 import me.goodt.vkpht.module.notification.api.SubscribeEmployeeToNotificationService;
 import me.goodt.vkpht.module.notification.api.dto.NotificationTemplateContentEmployeeSubscribeDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoResponse;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 
 @RestController

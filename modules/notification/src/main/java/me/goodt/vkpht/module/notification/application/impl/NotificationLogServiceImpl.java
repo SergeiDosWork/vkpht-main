@@ -26,7 +26,7 @@ import me.goodt.vkpht.module.notification.api.dto.data.NotificationLogStatusEnum
 import me.goodt.vkpht.module.notification.api.dto.kafka.NotificationLogResponseKafkaDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.notification.application.NotificationLogEmailService;
-import me.goodt.vkpht.module.notification.api.orgstructure.OrgstructureServiceAdapter;
+import me.goodt.vkpht.module.notification.application.orgstructure.OrgstructureServiceAdapter;
 import me.goodt.vkpht.module.notification.application.utils.TextConstants;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationLogDao;
 import me.goodt.vkpht.module.notification.domain.dao.NotificationTemplateContentDao;

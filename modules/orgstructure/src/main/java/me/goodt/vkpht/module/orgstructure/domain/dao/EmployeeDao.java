@@ -8,6 +8,7 @@ import com.querydsl.core.types.dsl.PathBuilderFactory;
 import com.querydsl.jpa.JPQLQuery;
 import jakarta.persistence.EntityManager;
 
+import me.goodt.vkpht.module.orgstructure.api.dto.request.FindEmployeeRequest;
 import me.goodt.vkpht.module.orgstructure.domain.projection.UnitShortInfo;
 
 import org.apache.commons.lang3.StringUtils;
@@ -60,16 +61,22 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
             .fetch();
     }
 
-    public Page<EmployeeEntity> findByParams(List<Long> employeeIds, List<Long> divisionIds, List<Long> functionIds, Long jobTitleId, String positionShortName,
-                                             Long legalEntityId, String searchingValue, Boolean withPatronymic, Boolean withClosed, List<String> employeeNumber,
-                                             List<String> emails, Pageable pageable) {
+    public Page<EmployeeEntity> findByParams(FindEmployeeRequest request) {
         final QPositionAssignmentEntity posAss = QPositionAssignmentEntity.positionAssignmentEntity;
         final QPositionEntity pos = QPositionEntity.positionEntity;
         final QDivisionEntity div = QDivisionEntity.divisionEntity;
         final QPersonEntity per = QPersonEntity.personEntity;
 
+        List<Long> employeeIds = request.getEmployeeIds();
+        List<Long> divisionIds = request.getDivisionIds();
+        List<Long> functionIds = request.getFunctionIds();
+        Long jobTitleId = request.getJobTitleId();
+        String positionShortName = request.getPositionShortName();
+        Long legalEntityId = request.getLegalEntityId();
+        List<String> employeeNumber = request.getEmployeeNumber();
+        List<String> emails = request.getEmails();
         BooleanExpression exp = Expressions.allOf(
-                withClosed ? null : meta.dateTo.isNull(),
+                request.isWithClosed() ? null : meta.dateTo.isNull(),
                 CollectionUtils.isEmpty(employeeIds) ? null : meta.id.in(employeeIds),
                 CollectionUtils.isEmpty(divisionIds) ? null : pos.divisionId.in(divisionIds),
                 CollectionUtils.isEmpty(divisionIds) && CollectionUtils.isEmpty(functionIds) && legalEntityId == null ? null : posAss.dateTo.isNull(),
@@ -81,8 +88,10 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
                 CollectionUtils.isEmpty(emails) ? null : meta.email.in(emails)
         );
 
+        String searchingValue = request.getSearchingValue();
         if (!StringUtils.isEmpty(searchingValue)) {
             String[] searchValue = searchingValue.toLowerCase().split(" ");
+            boolean withPatronymic = request.isWithPatronymic();
             for (String value : searchValue) {
                 if (exp != null) {
                     exp = exp.and(per.surname.toLowerCase().like("%" + value + "%")
@@ -92,7 +101,7 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
                 } else {
                     exp = per.surname.toLowerCase().like("%" + value + "%")
                             .or(per.name.toLowerCase().like("%" + value + "%"))
-                            .or(withPatronymic != null && !withPatronymic ? null : per.patronymic.toLowerCase().like("%" + value + "%"))
+                            .or(!withPatronymic ? null : per.patronymic.toLowerCase().like("%" + value + "%"))
                             .or(meta.number.like("%" + value + "%"));
                 }
             }
@@ -126,6 +135,7 @@ public class EmployeeDao extends AbstractDao<EmployeeEntity, Long> {
             query.orderBy(meta.number.asc());
         }
 
+        Pageable pageable = request.getPageable();
         JPQLQuery<EmployeeEntity> pagedQuery = new Querydsl(em, new PathBuilderFactory().create(EmployeeEntity.class))
                 .applyPagination(pageable, query);
         return new PageImpl<>(pagedQuery.fetch(), pageable, query.fetchCount());
