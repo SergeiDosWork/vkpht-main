@@ -12,9 +12,9 @@ import java.util.Map;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.extractNumberOfDays;
-import static com.goodt.drive.notify.application.utils.DataUtils.getChangedDate;
-import static com.goodt.drive.notify.application.utils.DataUtils.getStringDateByPattern;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.extractNumberOfDays;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getChangedDate;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getStringDateByPattern;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.CALENDAR_DATES_INFO;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.CALENDAR_DATES_INFO_CURRENT_YEAR;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.CALENDAR_DATES_INFO_NEXT_YEAR;

@@ -14,9 +14,9 @@ import me.goodt.vkpht.module.notification.api.dto.tasksetting2.TaskDto;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.getEmployeeFullName;
-import static com.goodt.drive.notify.application.utils.DataUtils.getEmployeeShortName;
-import static com.goodt.drive.notify.application.utils.DataUtils.getEmployeeSurnameAndName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getEmployeeFullName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getEmployeeShortName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getEmployeeSurnameAndName;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.ASSIGNMENT_ID;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.FI;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.FIO_FULL;

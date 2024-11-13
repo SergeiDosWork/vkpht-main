@@ -13,7 +13,7 @@ import me.goodt.vkpht.module.notification.api.dto.configuration.ModuleDto;
 import me.goodt.vkpht.module.orgstructure.api.dto.EmployeeInfoDto;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationLogEntity;
 import me.goodt.vkpht.module.notification.domain.entity.NotificationTemplateContentAttachmentEntity;
-import com.goodt.drive.notify.application.utils.DataUtils;
+import me.goodt.vkpht.module.notification.application.utils.DataUtils;
 
 public final class NotificationLogFactory {
     public static NotificationLogDto create(NotificationLogEntity entity,

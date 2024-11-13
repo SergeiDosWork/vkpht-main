@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import java.util.Map;
 
-import com.goodt.drive.notify.application.utils.DataUtils;
+import me.goodt.vkpht.module.notification.application.utils.DataUtils;
 
 @Getter
 @Setter

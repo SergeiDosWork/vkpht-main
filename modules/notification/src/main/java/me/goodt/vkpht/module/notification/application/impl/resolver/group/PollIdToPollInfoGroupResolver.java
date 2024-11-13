@@ -12,7 +12,7 @@ import me.goodt.vkpht.module.notification.api.dto.quiz.PollRawDto;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.getStringDateByPattern;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getStringDateByPattern;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_END;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_PATTERN;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_START;

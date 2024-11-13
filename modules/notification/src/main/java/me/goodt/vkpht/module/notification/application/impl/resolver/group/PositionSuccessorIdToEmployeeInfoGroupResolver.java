@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorDto;
-import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.SavedObjectNames;
+import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
+import me.goodt.vkpht.module.orgstructure.api.dto.PositionSuccessorDto;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.getEmployeeFullName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getEmployeeFullName;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.FIO_FULL;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.POSITION_SUCCESSOR_ID_TO_EMPLOYEE_INFO;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.POSITION_SUCCESSOR_TO_EMPLOYEE_INFO_FIO_FULL;

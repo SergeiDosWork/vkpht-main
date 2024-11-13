@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringJoiner;
 
-import com.goodt.drive.notify.application.configuration.KeyCloakConfig;
 import me.goodt.vkpht.module.notification.api.KeycloakDataService;
+import me.goodt.vkpht.module.notification.config.KeyCloakConfig;
 
 @Slf4j
 @Service

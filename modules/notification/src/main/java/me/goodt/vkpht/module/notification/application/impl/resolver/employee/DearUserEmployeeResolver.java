@@ -17,8 +17,8 @@ import me.goodt.vkpht.module.orgstructure.api.dto.RecipientInfoDto;
 import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.getGreetingEmployeeFullName;
-import static com.goodt.drive.notify.application.utils.DataUtils.getGreetingEmployeeShorName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getGreetingEmployeeFullName;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getGreetingEmployeeShorName;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DEAR_USER_FIO_FULL;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DEAR_USER_FIO_SHORT;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.NOTIFICATION_USER_GREETING;

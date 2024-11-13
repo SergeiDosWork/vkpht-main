@@ -12,7 +12,7 @@ import me.goodt.vkpht.module.notification.application.impl.ResolverContext;
 import me.goodt.vkpht.module.notification.application.SavedObjectNames;
 import me.goodt.vkpht.module.notification.application.impl.TokenWithValues;
 
-import static com.goodt.drive.notify.application.utils.DataUtils.getStringDateByPattern;
+import static me.goodt.vkpht.module.notification.application.utils.DataUtils.getStringDateByPattern;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_FROM;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.DATE_PATTERN;
 import static me.goodt.vkpht.module.notification.application.utils.TextConstants.POSITION_SUCCESSOR_READINESS_ID_TO_POSITION_SUCCESSOR_READINESS_INFO;
