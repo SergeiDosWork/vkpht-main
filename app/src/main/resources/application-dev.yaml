@@ -3,12 +3,11 @@ logging:
     ROOT: DEBUG
 
 datasources:
-  common:
+  platform:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/vkpht3?currentSchema=common
+    url: jdbc:postgresql://localhost:5432/vkpht3?currentSchema=platform
     username: rostalent_user
     password: rostalent_pww_pg_2
-    schema: classpath:db/create-schema-common.sql
     hikari:
       maxLifeTime: 600000
   orgstructure:
@@ -16,7 +15,6 @@ datasources:
     url: jdbc:postgresql://localhost:5432/vkpht3?currentSchema=orgstructure
     username: rostalent_user
     password: rostalent_pww_pg_2
-    schema: classpath:db/create-schema-orgstructure.sql
     hikari:
       maxLifeTime: 600000
   tasksetting:
@@ -24,16 +22,15 @@ datasources:
     url: jdbc:postgresql://localhost:5432/vkpht3?currentSchema=tasksetting
     username: rostalent_user
     password: rostalent_pww_pg_2
-    schema: classpath:db/create-schema-tasksetting.sql
     hikari:
       maxLifeTime: 600000
 
 liquibase:
-  common:
+  platform:
     enabled: true
-    change-log: classpath:db/changelog/common/changelog.xml
-    default-schema: common
-    liquibase-schema: common
+    change-log: classpath:db/changelog/platform/changelog.xml
+    default-schema: platform
+    liquibase-schema: platform
   orgstructure:
     enabled: true
     change-log: classpath:db/changelog/orgstructure/changelog.xml

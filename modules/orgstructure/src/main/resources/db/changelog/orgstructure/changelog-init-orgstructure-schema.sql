@@ -209,8 +209,8 @@ CREATE TABLE function_status
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT function_status_name_unit_code_uq UNIQUE (name, unit_code),
-    CONSTRAINT function_status_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT function_status_name_unit_code_key UNIQUE (name, unit_code),
+    CONSTRAINT function_status_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE function_status IS 'Статусы функций';
 COMMENT ON COLUMN function_status.id IS 'Уникальный идентификатор записи';
@@ -286,7 +286,7 @@ CREATE TABLE management_structure_type
     author_employee_id    BIGINT                              NOT NULL,
     update_employee_id    BIGINT                              NOT NULL,
     code                  VARCHAR(128)                        NOT NULL,
-    CONSTRAINT management_structure_type_name_unit_code_uq UNIQUE (code, unit_code),
+    CONSTRAINT management_structure_type_name_unit_code_key UNIQUE (code, unit_code),
     CONSTRAINT "management_structure_type_unit_code_fk" FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE management_structure_type IS 'Данные о типах управленческих структур';
@@ -417,7 +417,7 @@ CREATE TABLE team_status
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT team_status_name_unit_code_uq UNIQUE ("name", unit_code),
+    CONSTRAINT team_status_name_unit_code_key UNIQUE ("name", unit_code),
     CONSTRAINT "team_status_unit_code_fk" FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE team_status IS 'Статусы команд';
@@ -444,8 +444,8 @@ CREATE TABLE team_type
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT team_type_name_unit_code_uq UNIQUE (name, unit_code),
-    CONSTRAINT team_type_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT team_type_name_unit_code_key UNIQUE (name, unit_code),
+    CONSTRAINT team_type_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE team_type IS 'Типы команд';
 COMMENT ON COLUMN team_type.id IS 'Уникальный идентификатор записи';
@@ -519,8 +519,8 @@ CREATE TABLE work_function_status
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT work_function_status_name_unit_code_uq UNIQUE ("name", unit_code),
-    CONSTRAINT work_function_status_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT work_function_status_name_unit_code_key UNIQUE ("name", unit_code),
+    CONSTRAINT work_function_status_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE work_function_status IS 'Статусы рабочих функций';
 COMMENT ON COLUMN work_function_status.id IS 'Уникальный идентификатор записи';
@@ -1292,7 +1292,7 @@ COMMENT ON COLUMN assignment_status.author_employee_id IS 'Идентифика�
 COMMENT ON COLUMN assignment_status.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
 COMMENT ON COLUMN assignment_status.update_date IS 'Дата обновления записи';
 COMMENT ON COLUMN assignment_status.unit_code IS 'Код юнита';
-CREATE INDEX assignment_status_unit_code_fk ON assignment_status (unit_code);
+CREATE INDEX assignment_status_unit_code_fkey ON assignment_status (unit_code);
 
 --substitution_type
 CREATE TABLE substitution_type
@@ -1516,7 +1516,7 @@ CREATE TABLE system_role
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT system_role_name_unit_code_uq UNIQUE (name, unit_code),
+    CONSTRAINT system_role_name_unit_code_key UNIQUE (name, unit_code),
     CONSTRAINT "system_role_unit_code_fk" FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE system_role IS 'Системные роли';
@@ -1969,7 +1969,7 @@ CREATE TABLE personnel_document_type
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
     code               VARCHAR(128),
-    CONSTRAINT personnel_document_type_name_unit_code_uq UNIQUE (name, unit_code),
+    CONSTRAINT personnel_document_type_name_unit_code_key UNIQUE (name, unit_code),
     CONSTRAINT "personnel_document_type_unit_code_fk" FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE personnel_document_type IS 'Типы документов работника';
@@ -1983,7 +1983,7 @@ COMMENT ON COLUMN personnel_document_type.update_employee_id IS 'Идентиф�
 COMMENT ON COLUMN personnel_document_type.update_date IS 'Дата обновления записи';
 COMMENT ON COLUMN personnel_document_type.unit_code IS 'Код юнита';
 COMMENT ON COLUMN personnel_document_type.code IS 'Код типа документа';
-CREATE INDEX personnel_document_type_unit_code_fk ON personnel_document_type (unit_code);
+CREATE INDEX personnel_document_type_unit_code_fkey ON personnel_document_type (unit_code);
 
 --personnel_document_form
 CREATE TABLE personnel_document_form
@@ -1998,8 +1998,8 @@ CREATE TABLE personnel_document_form
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
     code               VARCHAR(128),
-    CONSTRAINT personnel_document_form_name_unit_code_uq UNIQUE (name, unit_code),
-    CONSTRAINT personnel_document_form_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT personnel_document_form_name_unit_code_key UNIQUE (name, unit_code),
+    CONSTRAINT personnel_document_form_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE personnel_document_form IS 'Формы документов работника';
 COMMENT ON COLUMN personnel_document_form.id IS 'Уникальный идентификатор записи';
@@ -2078,7 +2078,7 @@ CREATE TABLE work_experience_type
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT work_experience_type_name_unit_code_uq UNIQUE ("name", unit_code),
+    CONSTRAINT work_experience_type_name_unit_code_key UNIQUE ("name", unit_code),
     CONSTRAINT "work_experience_type_unit_code_fk" FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON COLUMN work_experience_type.id IS 'Уникальный идентификатор записи';
@@ -2421,7 +2421,7 @@ CREATE TABLE employee_status
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_stake_free      boolean   DEFAULT FALSE,
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT employee_status_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT employee_status_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE employee_status IS 'Статусы состояния работников';
 COMMENT ON COLUMN employee_status.id IS 'Уникальный идентификатор записи';
@@ -2453,7 +2453,7 @@ CREATE TABLE employee_condition
     unit_code          VARCHAR(128)                        NOT NULL DEFAULT 'default',
     CONSTRAINT "employee_condition_status_id_fk" FOREIGN KEY (status_id) REFERENCES employee_status (id),
     CONSTRAINT "employee_condition_employee_id_fk" FOREIGN KEY (employee_id) REFERENCES employee (id),
-    CONSTRAINT employee_condition_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT employee_condition_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE employee_condition IS 'Каталог состояния работников';
 COMMENT ON COLUMN employee_condition.id IS 'Уникальный идентификатор записи';
@@ -2732,8 +2732,8 @@ CREATE TABLE employee_academic_degree
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     external_id        VARCHAR(128) UNIQUE,
-    CONSTRAINT employee_academic_degreeacademic_degree_id_fk FOREIGN KEY (academic_degree_id) REFERENCES academic_degree (id),
-    CONSTRAINT employee_academic_degree_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee (id)
+    CONSTRAINT employee_academic_degreeacademic_degree_id_fkey FOREIGN KEY (academic_degree_id) REFERENCES academic_degree (id),
+    CONSTRAINT employee_academic_degree_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employee (id)
 );
 COMMENT ON TABLE employee_academic_degree IS 'Данные об ученых степенях сотрудников';
 COMMENT ON COLUMN employee_academic_degree.id IS 'Уникальный идентификатор';
@@ -2764,8 +2764,8 @@ CREATE TABLE employee_contract
     update_employee_id BIGINT                                   NOT NULL,
     update_date        TIMESTAMP      DEFAULT CURRENT_TIMESTAMP NOT NULL,
     external_id        VARCHAR(128) UNIQUE,
-    CONSTRAINT employee_contract_contract_type_id_fk FOREIGN KEY (contract_type_id) REFERENCES contract_type (id),
-    CONSTRAINT employee_contract_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee (id)
+    CONSTRAINT employee_contract_contract_type_id_fkey FOREIGN KEY (contract_type_id) REFERENCES contract_type (id),
+    CONSTRAINT employee_contract_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employee (id)
 );
 COMMENT ON TABLE employee_contract IS 'Таблица данных об договорах с сотрудником';
 COMMENT ON COLUMN employee_contract.id IS 'Уникальный идентификатор';
@@ -2814,10 +2814,10 @@ CREATE TABLE employee_dismissal
     update_date         TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     external_id         VARCHAR(128) UNIQUE,
     unit_code           VARCHAR(128)                        NOT NULL DEFAULT 'default',
-    CONSTRAINT employee_dismissaldismissal_reason_id_fk FOREIGN KEY (dismissal_reason_id) REFERENCES dismissal_reason (id),
-    CONSTRAINT employee_dismissal_dismissal_type_id_fk FOREIGN KEY (dismissal_type_id) REFERENCES dismissal_type (id),
-    CONSTRAINT employee_dismissal_employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee (id),
-    CONSTRAINT employee_dismissal_unit_code_fk FOREIGN KEY (unit_code) REFERENCES unit (code)
+    CONSTRAINT employee_dismissaldismissal_reason_id_fkey FOREIGN KEY (dismissal_reason_id) REFERENCES dismissal_reason (id),
+    CONSTRAINT employee_dismissal_dismissal_type_id_fkey FOREIGN KEY (dismissal_type_id) REFERENCES dismissal_type (id),
+    CONSTRAINT employee_dismissal_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES employee (id),
+    CONSTRAINT employee_dismissal_unit_code_fkey FOREIGN KEY (unit_code) REFERENCES unit (code)
 );
 COMMENT ON TABLE employee_dismissal IS 'Данные о причинах увольнения сотрудника с возможностью указания комментария от руководителя и/или HR-а';
 COMMENT ON COLUMN employee_dismissal.id IS 'Уникальный идентификатор записи';
@@ -2895,9 +2895,9 @@ CREATE TABLE language_person
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     external_id        VARCHAR(128) UNIQUE,
-    CONSTRAINT language_person_language_id_fk FOREIGN KEY (language_id) REFERENCES language (id),
-    CONSTRAINT language_person_language_level_id_fk FOREIGN KEY (language_level_id) REFERENCES language_level (id),
-    CONSTRAINT language_person_person_id_fk FOREIGN KEY (person_id) REFERENCES person (id)
+    CONSTRAINT language_person_language_id_fkey FOREIGN KEY (language_id) REFERENCES language (id),
+    CONSTRAINT language_person_language_level_id_fkey FOREIGN KEY (language_level_id) REFERENCES language_level (id),
+    CONSTRAINT language_person_person_id_fkey FOREIGN KEY (person_id) REFERENCES person (id)
 );
 COMMENT ON TABLE language_person IS 'Данные об уровне владения языком физ.лиц';
 COMMENT ON COLUMN language_person.id IS 'Уникальный идентификатор записи';
@@ -2921,12 +2921,12 @@ CREATE TABLE legal_entity_team_assignment_conflict_roles
     legal_entity_team_assignment_role_id_assigned   BIGINT,
     legal_entity_team_assignment_role_id_conflicted BIGINT                              NOT NULL,
     division_team_assignment_role_id_assigned       BIGINT,
-    CONSTRAINT legal_entity_team_assignment_conflict_roles_all_id_uq UNIQUE (legal_entity_team_assignment_role_id_assigned,
+    CONSTRAINT legal_entity_team_assignment_conflict_roles_all_id_key UNIQUE (legal_entity_team_assignment_role_id_assigned,
                                                                              legal_entity_team_assignment_role_id_conflicted,
                                                                              division_team_assignment_role_id_assigned),
-    CONSTRAINT legal_entity_team_assignment_conflict_roles_dta_fk FOREIGN KEY (division_team_assignment_role_id_assigned) REFERENCES role (id),
-    CONSTRAINT legal_entity_team_assignment_conflict_roles_letaria_fk FOREIGN KEY (legal_entity_team_assignment_role_id_assigned) REFERENCES role (id),
-    CONSTRAINT legal_entity_team_assignment_conflict_roles_letaric_fk FOREIGN KEY (legal_entity_team_assignment_role_id_conflicted) REFERENCES role (id)
+    CONSTRAINT legal_entity_team_assignment_conflict_roles_dta_fkey FOREIGN KEY (division_team_assignment_role_id_assigned) REFERENCES role (id),
+    CONSTRAINT legal_entity_team_assignment_conflict_roles_letaria_fkey FOREIGN KEY (legal_entity_team_assignment_role_id_assigned) REFERENCES role (id),
+    CONSTRAINT legal_entity_team_assignment_conflict_roles_letaric_fkey FOREIGN KEY (legal_entity_team_assignment_role_id_conflicted) REFERENCES role (id)
 );
 COMMENT ON TABLE legal_entity_team_assignment_conflict_roles IS 'Конфликтные роли';
 COMMENT ON COLUMN legal_entity_team_assignment_conflict_roles.legal_entity_team_assignment_role_id_assigned IS 'Назначенная работнику "назначаемая" роль в legal_entity_team_assignment';

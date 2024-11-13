@@ -11,6 +11,7 @@ module vkpht.main.common {
     requires jakarta.persistence;
     requires java.compiler;
     requires json.path;
+    requires java.validation;
     requires com.github.victools.jsonschema.generator;
     requires com.github.victools.jsonschema.module.jackson;
     requires com.github.victools.jsonschema.module.javax.validation;

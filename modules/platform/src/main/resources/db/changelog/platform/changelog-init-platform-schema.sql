@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset s_podrezov:init-common-schema
+--changeset s_podrezov:init-platform-schema
 
 -- input_source
 CREATE TABLE input_source
@@ -116,7 +116,7 @@ CREATE TABLE competence
     master_id              BIGINT,
     correct_id             BIGINT,
     external_id            VARCHAR(128),
-    CONSTRAINT competence_name_competencecatalogid_datefrom_uq UNIQUE (name, competence_catalog_id, date_from),
+    CONSTRAINT competence_name_competencecatalogid_datefrom_key UNIQUE (name, competence_catalog_id, date_from),
     CONSTRAINT "competence_competence_type_id_fk" FOREIGN KEY (competence_type_id) REFERENCES competence_type (id),
     CONSTRAINT "competence_competence_catalog_id_fk" FOREIGN KEY (competence_catalog_id) REFERENCES competence_catalog (id),
     CONSTRAINT "competence_correct_id_fk" FOREIGN KEY (correct_id) REFERENCES competence (id),
@@ -230,7 +230,7 @@ COMMENT ON COLUMN competence_profile_family.name IS 'Название семей
 COMMENT ON COLUMN competence_profile_family.parent_id IS 'Ссылка на уникальный идентификатор записи из данной таблицы (родительская запись)';
 COMMENT ON COLUMN competence_profile_family.unit_code IS 'Код юнита';
 CREATE INDEX competence_profile_family_parent_id_idx ON competence_profile_family (parent_id);
-CREATE UNIQUE INDEX competence_profile_family_unit_code_name_uq ON competence_profile_family (unit_code, name) WHERE date_to IS NULL;
+CREATE UNIQUE INDEX competence_profile_family_unit_code_name_key ON competence_profile_family (unit_code, name) WHERE date_to IS NULL;
 
 -- competence_profile
 CREATE TABLE competence_profile
@@ -1132,7 +1132,7 @@ CREATE TABLE division_team_competence
     weight           BIGINT                  NOT NULL,
     date_from        TIMESTAMP DEFAULT NOW() NOT NULL,
     date_to          TIMESTAMP,
-    CONSTRAINT division_team_competence_competence_id_division_team_id_pk PRIMARY KEY (competence_id, division_team_id),
+    CONSTRAINT division_team_competence_competence_id_division_team_id_pkey PRIMARY KEY (competence_id, division_team_id),
     CONSTRAINT "division_team_competence_competence_id_fk" FOREIGN KEY (competence_id) REFERENCES competence (id)
 );
 COMMENT ON TABLE division_team_competence IS 'Связи компетенций и подразделений организации';
@@ -1192,7 +1192,7 @@ COMMENT ON COLUMN project_experience_type.update_date IS 'Дата обновл�
 COMMENT ON COLUMN project_experience_type.author_employee_id IS 'Автор записи';
 COMMENT ON COLUMN project_experience_type.update_employee_id IS 'Автор последнего обновления записи';
 COMMENT ON COLUMN project_experience_type.external_id IS 'Внешний идентификатор';
-CREATE UNIQUE INDEX project_experience_type_code_uq ON project_experience_type (code) WHERE (date_to IS NULL);
+CREATE UNIQUE INDEX project_experience_type_code_key ON project_experience_type (code) WHERE (date_to IS NULL);
 
 -- project_experience
 CREATE TABLE project_experience
@@ -1373,7 +1373,7 @@ CREATE TABLE evaluation_event_competence_profile_type
     is_editable boolean   DEFAULT TRUE              NOT NULL,
     is_system   boolean   DEFAULT FALSE             NOT NULL,
     unit_code   VARCHAR(128)                        NOT NULL,
-    CONSTRAINT evaluation_event_competence_profile_type_code_unit_code_uq UNIQUE (code, unit_code)
+    CONSTRAINT evaluation_event_competence_profile_type_code_unit_code_key UNIQUE (code, unit_code)
 );
 COMMENT ON TABLE evaluation_event_competence_profile_type IS 'Справочник сценариев проведения оценки';
 COMMENT ON COLUMN evaluation_event_competence_profile_type.id IS 'Синтетический ID';
@@ -1397,7 +1397,7 @@ CREATE TABLE evaluation_event_format
     is_editable boolean   DEFAULT TRUE              NOT NULL,
     is_system   boolean   DEFAULT FALSE             NOT NULL,
     unit_code   VARCHAR(128)                        NOT NULL,
-    CONSTRAINT evaluation_event_format_code_unit_code_uq UNIQUE (code, unit_code)
+    CONSTRAINT evaluation_event_format_code_unit_code_key UNIQUE (code, unit_code)
 );
 COMMENT ON TABLE evaluation_event_format IS 'Справочник форматов проведения оценки';
 COMMENT ON COLUMN evaluation_event_format.id IS 'Синтетический ID';
@@ -1419,7 +1419,7 @@ CREATE TABLE evaluation_event_type_evaluation_role
     is_event_available        boolean,
     is_employee_available     boolean,
     index                     integer,
-    CONSTRAINT evaluation_event_type_evaluation_role_eet_id_role_id_uq UNIQUE (evaluation_event_type_id, evaluation_role_id),
+    CONSTRAINT evaluation_event_type_evaluation_role_eet_id_role_id_key UNIQUE (evaluation_event_type_id, evaluation_role_id),
     CONSTRAINT "evaluation_event_type_evaluation_role_eet_id_fk" FOREIGN KEY (evaluation_event_type_id) REFERENCES evaluation_event_type (id),
     CONSTRAINT "evaluation_event_type_evaluation_role_er_id_fk" FOREIGN KEY (evaluation_role_id) REFERENCES evaluation_role (id)
 );
@@ -1450,7 +1450,7 @@ CREATE TABLE evaluation_process_type_process_stage_group
     process_type_code        VARCHAR(256)                        NOT NULL,
     process_stage_group_id   BIGINT                              NOT NULL,
     process_stage_group_name VARCHAR(256) DEFAULT ''::VARCHAR    NOT NULL,
-    CONSTRAINT evaluation_process_type_process_stage_group_code_fk FOREIGN KEY (process_type_code) REFERENCES evaluation_process_type (code)
+    CONSTRAINT evaluation_process_type_process_stage_group_code_fkey FOREIGN KEY (process_type_code) REFERENCES evaluation_process_type (code)
 );
 CREATE INDEX evaluation_process_type_process_stage_group_code_idx ON evaluation_process_type_process_stage_group (process_type_code);
 
@@ -1472,7 +1472,7 @@ CREATE TABLE evaluation_scale_kpi_responsibility_zone_type
     kpi_code                      VARCHAR(128),
     responsibility_zone_type_code VARCHAR(128),
     scale_code                    VARCHAR(128),
-    CONSTRAINT evaluation_scale_kpi_responsibility_zone_type_type_code_fk FOREIGN KEY (responsibility_zone_type_code) REFERENCES responsibility_zone_type (code)
+    CONSTRAINT evaluation_scale_kpi_responsibility_zone_type_type_code_fkey FOREIGN KEY (responsibility_zone_type_code) REFERENCES responsibility_zone_type (code)
 );
 CREATE INDEX evaluation_scale_kpi_responsibility_zone_type_code_idx ON evaluation_scale_kpi_responsibility_zone_type (responsibility_zone_type_code);
 
@@ -1484,7 +1484,7 @@ CREATE TABLE evaluator_evaluation_event
     evaluation_role_id  BIGINT,
     date_from           TIMESTAMP DEFAULT NOW() NOT NULL,
     date_to             TIMESTAMP,
-    CONSTRAINT "evaluator_evaluation_event_pk" PRIMARY KEY (evaluation_event_id, employee_id),
+    CONSTRAINT "evaluator_evaluation_event_pkey" PRIMARY KEY (evaluation_event_id, employee_id),
     CONSTRAINT "evaluator_evaluation_event_evaluation_event_id_fk" FOREIGN KEY (evaluation_event_id) REFERENCES evaluation_event (id),
     CONSTRAINT "evaluator_evaluation_event_evaluation_role_id_fk" FOREIGN KEY (evaluation_role_id) REFERENCES evaluation_role (id)
 );
@@ -1833,7 +1833,7 @@ CREATE TABLE onboarding_task_subgroup
     index         BIGINT                              NOT NULL,
     task_group_id BIGINT                              NOT NULL,
     plan_id       BIGINT,
-    CONSTRAINT onboarding_task_subgroup_plan_id_index_uq UNIQUE (plan_id, index),
+    CONSTRAINT onboarding_task_subgroup_plan_id_index_key UNIQUE (plan_id, index),
     CONSTRAINT "onboarding_task_subgroup_task_group_id_fk" FOREIGN KEY (task_group_id) REFERENCES onboarding_task_group (id),
     CONSTRAINT "onboarding_task_subgroup_plan_id_fk" FOREIGN KEY (plan_id) REFERENCES onboarding_plan (id)
 );
@@ -2057,7 +2057,7 @@ CREATE TABLE pst_work_function
     parent_id              BIGINT                  NOT NULL,
     name                   VARCHAR(256)            NOT NULL,
     qualification_level_id BIGINT                  NOT NULL,
-    CONSTRAINT pst_work_function_code_profstandard_code_uq UNIQUE (code, profstandard_code),
+    CONSTRAINT pst_work_function_code_profstandard_code_key UNIQUE (code, profstandard_code),
     CONSTRAINT "pst_work_function_profstandard_code_fk" FOREIGN KEY (profstandard_code) REFERENCES pst_profstandard (code),
     CONSTRAINT "pst_work_function_qualification_level_id_fk" FOREIGN KEY (qualification_level_id) REFERENCES pst_qualification_level (id)
 );

@@ -8,7 +8,9 @@ plugins {
 group = 'me.goodt'
 version = '3.0.0-SNAPSHOT'
 
-archivesBaseName = 'vkpht-main'
+base {
+    archivesName = 'vkpht-main'
+}
 
 java {
     modularity.inferModulePath = true
@@ -37,7 +39,6 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'io.freefair.lombok'
 
-    sourceCompatibility = '21'
     java {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -61,6 +62,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.liquibase:liquibase-core'
         implementation "org.postgresql:postgresql:$postgreJDBCDriverVersion"
+        implementation 'org.apache.commons:commons-lang3:3.17.0'
     }
 
     dependencyManagement {

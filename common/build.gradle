@@ -2,19 +2,23 @@ plugins {
 }
 
 ext {
-    schemaGenVer = '4.36.0'
+    schemaGenVer = '4.37.0'
 }
 
 dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     compileOnly 'org.projectlombok:lombok'
 
     // Генерация JSON-схемы для справочных данных
-    compileOnly "com.github.victools:jsonschema-generator:$schemaGenVer"
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation "com.github.victools:jsonschema-generator:$schemaGenVer"
     implementation "com.github.victools:jsonschema-module-jackson:$schemaGenVer"
     implementation "com.github.victools:jsonschema-module-javax-validation:$schemaGenVer"
+
+//    implementation "me.goodt:auth-sur-core:3.0.0-SNAPSHOT"
 
     // querydsl
     implementation("io.github.openfeign.querydsl:querydsl-core:$queryDslVersion")

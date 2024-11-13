@@ -39,18 +39,16 @@ import java.sql.Statement;
 public class TasksettingDataSourceConfig {
 
     @Bean(name = "tasksettingDataSourceProperties")
-    @ConfigurationProperties("datasources.common")
+    @ConfigurationProperties("datasources.tasksetting")
     public DataSourceProperties tasksettingDataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean(name = "tasksettingDataSource")
     public DataSource orgstructureDataSource(@Qualifier("tasksettingDataSourceProperties") DataSourceProperties tasksettingDataSourceProperties) {
-        HikariDataSource dataSource = tasksettingDataSourceProperties.initializeDataSourceBuilder()
+        return tasksettingDataSourceProperties.initializeDataSourceBuilder()
             .type(HikariDataSource.class)
             .build();
-
-        return dataSource;
     }
 
     @Bean(name = "tasksettingEntityManagerFactory")

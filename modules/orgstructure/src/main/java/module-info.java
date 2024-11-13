@@ -13,5 +13,8 @@ module vkpht.main.mod.orgstructure {
     requires spring.tx;
     requires spring.beans;
     requires spring.data.jpa;
+
+    opens me.goodt.vkpht.module.orgstructure.config to spring.core, spring.beans, spring.context;
+
     //    exports me.goodt.vkpht.module.orgstructure.api;
 }

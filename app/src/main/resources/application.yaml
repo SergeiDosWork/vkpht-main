@@ -34,12 +34,11 @@ logging:
   config: classpath:logback-spring.xml
 
 datasources:
-  common:
+  platform:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=common
+    url: jdbc:postgresql://localhost:5432/rtl?currentSchema=platform
     username: postgres
     password: postgres
-    schema: classpath:db/create-schema-common.sql
     hikari:
       maxLifeTime: 600000
   orgstructure:
@@ -47,7 +46,6 @@ datasources:
     url: jdbc:postgresql://localhost:5432/rtl?currentSchema=orgstructure
     username: postgres
     password: postgres
-    schema: classpath:db/create-schema-orgstructure.sql
     hikari:
       maxLifeTime: 600000
   tasksetting:
@@ -55,16 +53,15 @@ datasources:
     url: jdbc:postgresql://localhost:5432/rtl?currentSchema=tasksetting
     username: postgres
     password: postgres
-    schema: classpath:db/create-schema-tasksetting.sql
     hikari:
       maxLifeTime: 600000
 
 liquibase:
-  common:
+  platform:
     enabled: true
-    change-log: classpath:db/changelog/common/changelog.xml
-    default-schema: common
-    liquibase-schema: common
+    change-log: classpath:db/changelog/platform/changelog.xml
+    default-schema: platform
+    liquibase-schema: platform
   orgstructure:
     enabled: true
     change-log: classpath:db/changelog/orgstructure/changelog.xml

@@ -1,4 +1,4 @@
-module vkpht.main.app {
+open module vkpht.main.app {
     requires vkpht.main.common;
     requires spring.boot;
     requires spring.boot.autoconfigure;

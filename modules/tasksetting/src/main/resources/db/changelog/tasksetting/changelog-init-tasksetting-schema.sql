@@ -37,7 +37,7 @@ CREATE TABLE status
     is_system             BOOLEAN      DEFAULT FALSE              NOT NULL,
     is_editable_if_system BOOLEAN      DEFAULT FALSE              NOT NULL,
     unit_code             VARCHAR(128) DEFAULT 'default'::VARCHAR NOT NULL,
-    CONSTRAINT status_canban_level_id_fk FOREIGN KEY (canban_level_id) REFERENCES canban_level (id)
+    CONSTRAINT status_canban_level_id_fkey FOREIGN KEY (canban_level_id) REFERENCES canban_level (id)
 );
 COMMENT ON TABLE status IS 'Реестр статусов';
 COMMENT ON COLUMN status.id IS 'Уникальный идентификационный номер статуса';
@@ -78,6 +78,36 @@ COMMENT ON COLUMN duration.update_date IS 'Дата обновления зап�
 COMMENT ON COLUMN duration.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN duration.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 
+--module
+CREATE TABLE module
+(
+    code                  VARCHAR(128) PRIMARY KEY                NOT NULL,
+    name                  VARCHAR(256)                            NOT NULL,
+    description           VARCHAR(2048) DEFAULT ''::VARCHAR       NOT NULL,
+    is_adminable          smallint      DEFAULT 0                 NOT NULL,
+    external_id           VARCHAR(128) UNIQUE,
+    date_from             TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    date_to               TIMESTAMP,
+    author_employee_id    BIGINT                                  NOT NULL,
+    update_employee_id    BIGINT                                  NOT NULL,
+    update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    is_system             BOOLEAN       DEFAULT FALSE             NOT NULL,
+    is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL
+);
+COMMENT ON TABLE module IS 'Данная таблица содержит каталог бизнес-процессов.';
+COMMENT ON COLUMN module.code IS 'Уникальный код модуля';
+COMMENT ON COLUMN module.name IS 'Наименование бизнес-процесса';
+COMMENT ON COLUMN module.description IS 'Описание бизнес-процесса';
+COMMENT ON COLUMN module.is_adminable IS 'Признак администрирования.';
+COMMENT ON COLUMN module.external_id IS 'Уникальный идентификатор внешней системы';
+COMMENT ON COLUMN module.date_from IS 'Системная дата о появлении записи';
+COMMENT ON COLUMN module.date_to IS 'Системная дата о закрытии записи';
+COMMENT ON COLUMN module.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
+COMMENT ON COLUMN module.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
+COMMENT ON COLUMN module.update_date IS 'Дата обновления записи';
+COMMENT ON COLUMN module.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
+COMMENT ON COLUMN module.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
+
 --process_type
 CREATE TABLE process_type
 (
@@ -96,8 +126,7 @@ CREATE TABLE process_type
     is_system                       BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_editable_if_system           BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_integral_evaluation_required BOOLEAN       DEFAULT FALSE             NOT NULL,
-    is_constant_required            BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT process_type_member_root_task_component_id_fk FOREIGN KEY (member_root_task_component_id) REFERENCES component (id)
+    is_constant_required BOOLEAN DEFAULT FALSE NOT NULL
 );
 COMMENT ON TABLE process_type IS 'Данная таблица содержит каталог типов процессов.';
 COMMENT ON COLUMN process_type.code IS 'Код типа процесса';
@@ -113,6 +142,48 @@ COMMENT ON COLUMN process_type.is_system IS 'Признак указывающи
 COMMENT ON COLUMN process_type.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 COMMENT ON COLUMN process_type.is_constant_required IS 'Признак, указывающий, что процесс данного типа должен быть постоянным';
 CREATE INDEX process_type_member_root_task_component_id_idx ON process_type (member_root_task_component_id);
+
+--component
+CREATE TABLE component
+(
+    id                    BIGINT GENERATED ALWAYS AS IDENTITY      NOT NULL PRIMARY KEY,
+    date_from             TIMESTAMP     DEFAULT NOW()              NOT NULL,
+    date_to               TIMESTAMP,
+    module_code           VARCHAR(128)                             NOT NULL,
+    name                  VARCHAR(256)                             NOT NULL,
+    description           VARCHAR(2048) DEFAULT ''::VARCHAR        NOT NULL,
+    code                  VARCHAR(128)                             NOT NULL,
+    is_system             BOOLEAN       DEFAULT FALSE,
+    process_type_code     VARCHAR(128),
+    external_id           VARCHAR(128) UNIQUE,
+    author_employee_id    BIGINT                                   NOT NULL,
+    update_employee_id    BIGINT                                   NOT NULL,
+    update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP  NOT NULL,
+    is_editable_if_system BOOLEAN       DEFAULT FALSE              NOT NULL,
+    unit_code             VARCHAR(128)  DEFAULT 'default'::VARCHAR NOT NULL,
+    CONSTRAINT component_module_code_fkey FOREIGN KEY (module_code) REFERENCES module (code),
+    CONSTRAINT component_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code)
+);
+COMMENT ON TABLE component IS 'Компоненты';
+COMMENT ON COLUMN component.id IS 'Уникальный идентификационный номер части бизнес-процесса.';
+COMMENT ON COLUMN component.date_from IS 'Дата и время создания.';
+COMMENT ON COLUMN component.date_to IS 'Дата и время удаления.';
+COMMENT ON COLUMN component.module_code IS 'Идентификатор бизнес-процесса';
+COMMENT ON COLUMN component.name IS 'Наименование части бизнес-процесса.';
+COMMENT ON COLUMN component.description IS 'Описание части бизнес-процесса.';
+COMMENT ON COLUMN component.code IS 'Уникальный код компонента';
+COMMENT ON COLUMN component.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
+COMMENT ON COLUMN component.external_id IS 'Уникальный идентификатор внешней системы';
+COMMENT ON COLUMN component.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
+COMMENT ON COLUMN component.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
+COMMENT ON COLUMN component.update_date IS 'Дата обновления записи';
+COMMENT ON COLUMN component.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
+COMMENT ON COLUMN component.unit_code IS 'Код юнита';
+CREATE INDEX component_module_code_idx ON component (module_code);
+CREATE INDEX component_process_type_code_idx ON component (process_type_code);
+
+ALTER TABLE process_type
+    ADD CONSTRAINT process_type_member_root_task_component_id_fkey FOREIGN KEY (member_root_task_component_id) REFERENCES component (id);
 
 --access_type
 CREATE TABLE access_type
@@ -168,7 +239,7 @@ COMMENT ON COLUMN user_type.update_date IS 'Дата обновления зап
 COMMENT ON COLUMN user_type.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN user_type.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 COMMENT ON COLUMN user_type.code IS 'Уникальный код типа владельца таска';
-CREATE UNIQUE INDEX user_type_code_uq ON user_type (code) WHERE date_to IS NULL;
+CREATE UNIQUE INDEX user_type_code_key ON user_type (code) WHERE date_to IS NULL;
 
 --process_type_status_group
 CREATE TABLE process_type_status_group
@@ -186,7 +257,7 @@ CREATE TABLE process_type_status_group
     is_system             BOOLEAN      DEFAULT FALSE              NOT NULL,
     is_editable_if_system BOOLEAN      DEFAULT FALSE              NOT NULL,
     unit_code             VARCHAR(128) DEFAULT 'default'::VARCHAR NOT NULL,
-    CONSTRAINT process_type_status_group_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code)
+    CONSTRAINT process_type_status_group_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code)
 );
 COMMENT ON COLUMN process_type_status_group.external_id IS 'Уникальный идентификатор внешней системы';
 COMMENT ON COLUMN process_type_status_group.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
@@ -217,12 +288,12 @@ CREATE TABLE task_type
     update_date                  TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system                    BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system        BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_access_type_id_fk FOREIGN KEY (access_type_id) REFERENCES access_type (id),
-    CONSTRAINT task_type_component_id_fk FOREIGN KEY (component_id) REFERENCES component (id),
-    CONSTRAINT task_type_duration_id_fk FOREIGN KEY (duration_id) REFERENCES duration (id),
-    CONSTRAINT task_type_user_type_id_fk FOREIGN KEY (user_type_id) REFERENCES user_type (id),
-    CONSTRAINT task_type_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code),
-    CONSTRAINT task_type_process_type_status_group_id_fk FOREIGN KEY (process_type_status_group_id) REFERENCES process_type_status_group (id)
+    CONSTRAINT task_type_access_type_id_fkey FOREIGN KEY (access_type_id) REFERENCES access_type (id),
+    CONSTRAINT task_type_component_id_fkey FOREIGN KEY (component_id) REFERENCES component (id),
+    CONSTRAINT task_type_duration_id_fkey FOREIGN KEY (duration_id) REFERENCES duration (id),
+    CONSTRAINT task_type_user_type_id_fkey FOREIGN KEY (user_type_id) REFERENCES user_type (id),
+    CONSTRAINT task_type_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code),
+    CONSTRAINT task_type_process_type_status_group_id_fkey FOREIGN KEY (process_type_status_group_id) REFERENCES process_type_status_group (id)
 );
 COMMENT ON TABLE task_type IS 'Типы бизнес-объектов';
 COMMENT ON COLUMN task_type.id IS 'Уникальный идентификационный номер типа таска';
@@ -261,10 +332,10 @@ CREATE TABLE task
     external_id        VARCHAR(128) UNIQUE,
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT task_root_id_fk FOREIGN KEY (root_id) REFERENCES task (id),
-    CONSTRAINT task_status_id_fk FOREIGN KEY (status_id) REFERENCES status (id),
-    CONSTRAINT task_parent_id_fk FOREIGN KEY (parent_id) REFERENCES task (id),
-    CONSTRAINT task_type_id_fk FOREIGN KEY (type_id) REFERENCES task_type (id)
+    CONSTRAINT task_root_id_fkey FOREIGN KEY (root_id) REFERENCES task (id),
+    CONSTRAINT task_status_id_fkey FOREIGN KEY (status_id) REFERENCES status (id),
+    CONSTRAINT task_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES task (id),
+    CONSTRAINT task_type_id_fkey FOREIGN KEY (type_id) REFERENCES task_type (id)
 );
 COMMENT ON TABLE task IS 'У Task с разными типами в качестве user_id могут выступать различные сущности.\nДля карточек и целей - это назначения. Для ПЭБД - это подразделение.';
 COMMENT ON COLUMN task.id IS 'Уникальный идентификационный номер таска';
@@ -301,7 +372,7 @@ CREATE TABLE task_type_field_group
     is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL,
     code                  VARCHAR(128),
     unit_code             VARCHAR(128)                            NOT NULL,
-    CONSTRAINT task_type_field_group_unit_code_code_uq UNIQUE (unit_code, code)
+    CONSTRAINT task_type_field_group_unit_code_code_key UNIQUE (unit_code, code)
 );
 COMMENT ON TABLE task_type_field_group IS 'Группы полей бизнес-объектов';
 COMMENT ON COLUMN task_type_field_group.id IS 'Уникальный идентификационный номер.';
@@ -358,7 +429,7 @@ CREATE TABLE field_type
     update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT field_type_basic_data_type_code_fk FOREIGN KEY (basic_data_type_code) REFERENCES basic_data_type (code)
+    CONSTRAINT field_type_basic_data_type_code_fkey FOREIGN KEY (basic_data_type_code) REFERENCES basic_data_type (code)
 );
 COMMENT ON TABLE field_type IS 'Типы полей';
 COMMENT ON COLUMN field_type.code IS 'Уникальный код типа поля';
@@ -374,75 +445,6 @@ COMMENT ON COLUMN field_type.update_date IS 'Дата обновления за�
 COMMENT ON COLUMN field_type.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN field_type.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 CREATE INDEX field_type_basic_data_type_code_idx ON field_type (basic_data_type_code);
-
---module
-CREATE TABLE module
-(
-    code                  VARCHAR(128) PRIMARY KEY                NOT NULL,
-    name                  VARCHAR(256)                            NOT NULL,
-    description           VARCHAR(2048) DEFAULT ''::VARCHAR       NOT NULL,
-    is_adminable          smallint      DEFAULT 0                 NOT NULL,
-    external_id           VARCHAR(128) UNIQUE,
-    date_from             TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    date_to               TIMESTAMP,
-    author_employee_id    BIGINT                                  NOT NULL,
-    update_employee_id    BIGINT                                  NOT NULL,
-    update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    is_system             BOOLEAN       DEFAULT FALSE             NOT NULL,
-    is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL
-);
-COMMENT ON TABLE module IS 'Данная таблица содержит каталог бизнес-процессов.';
-COMMENT ON COLUMN module.code IS 'Уникальный код модуля';
-COMMENT ON COLUMN module.name IS 'Наименование бизнес-процесса';
-COMMENT ON COLUMN module.description IS 'Описание бизнес-процесса';
-COMMENT ON COLUMN module.is_adminable IS 'Признак администрирования.';
-COMMENT ON COLUMN module.external_id IS 'Уникальный идентификатор внешней системы';
-COMMENT ON COLUMN module.date_from IS 'Системная дата о появлении записи';
-COMMENT ON COLUMN module.date_to IS 'Системная дата о закрытии записи';
-COMMENT ON COLUMN module.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
-COMMENT ON COLUMN module.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
-COMMENT ON COLUMN module.update_date IS 'Дата обновления записи';
-COMMENT ON COLUMN module.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
-COMMENT ON COLUMN module.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
-
---component
-CREATE TABLE component
-(
-    id                    BIGINT GENERATED ALWAYS AS IDENTITY      NOT NULL PRIMARY KEY,
-    date_from             TIMESTAMP     DEFAULT NOW()              NOT NULL,
-    date_to               TIMESTAMP,
-    module_code           VARCHAR(128)                             NOT NULL,
-    name                  VARCHAR(256)                             NOT NULL,
-    description           VARCHAR(2048) DEFAULT ''::VARCHAR        NOT NULL,
-    code                  VARCHAR(128)                             NOT NULL,
-    is_system             BOOLEAN       DEFAULT FALSE,
-    process_type_code     VARCHAR(128),
-    external_id           VARCHAR(128) UNIQUE,
-    author_employee_id    BIGINT                                   NOT NULL,
-    update_employee_id    BIGINT                                   NOT NULL,
-    update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP  NOT NULL,
-    is_editable_if_system BOOLEAN       DEFAULT FALSE              NOT NULL,
-    unit_code             VARCHAR(128)  DEFAULT 'default'::VARCHAR NOT NULL,
-    CONSTRAINT component_module_code_fk FOREIGN KEY (module_code) REFERENCES module (code),
-    CONSTRAINT component_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code)
-);
-COMMENT ON TABLE component IS 'Компоненты';
-COMMENT ON COLUMN component.id IS 'Уникальный идентификационный номер части бизнес-процесса.';
-COMMENT ON COLUMN component.date_from IS 'Дата и время создания.';
-COMMENT ON COLUMN component.date_to IS 'Дата и время удаления.';
-COMMENT ON COLUMN component.module_code IS 'Идентификатор бизнес-процесса';
-COMMENT ON COLUMN component.name IS 'Наименование части бизнес-процесса.';
-COMMENT ON COLUMN component.description IS 'Описание части бизнес-процесса.';
-COMMENT ON COLUMN component.code IS 'Уникальный код компонента';
-COMMENT ON COLUMN component.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
-COMMENT ON COLUMN component.external_id IS 'Уникальный идентификатор внешней системы';
-COMMENT ON COLUMN component.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
-COMMENT ON COLUMN component.update_employee_id IS 'Идентификатор пользователя, обновившего запись';
-COMMENT ON COLUMN component.update_date IS 'Дата обновления записи';
-COMMENT ON COLUMN component.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
-COMMENT ON COLUMN component.unit_code IS 'Код юнита';
-CREATE INDEX component_module_code_idx ON component (module_code);
-CREATE INDEX component_process_type_code_idx ON component (process_type_code);
 
 --component_field
 CREATE TABLE component_field
@@ -462,8 +464,8 @@ CREATE TABLE component_field
     update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT component_field_component_id_fk FOREIGN KEY (component_id) REFERENCES component (id),
-    CONSTRAINT component_field_field_type_code_fk FOREIGN KEY (field_type_code) REFERENCES field_type (code)
+    CONSTRAINT component_field_component_id_fkey FOREIGN KEY (component_id) REFERENCES component (id),
+    CONSTRAINT component_field_field_type_code_fkey FOREIGN KEY (field_type_code) REFERENCES field_type (code)
 );
 COMMENT ON TABLE component_field IS 'Поля компонентов';
 COMMENT ON COLUMN component_field.id IS 'Уникальный идентификационный номер';
@@ -481,7 +483,7 @@ COMMENT ON COLUMN component_field.update_employee_id IS 'Идентификат�
 COMMENT ON COLUMN component_field.update_date IS 'Дата обновления записи';
 COMMENT ON COLUMN component_field.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN component_field.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
-CREATE UNIQUE INDEX component_field_component_id_code_uq ON component_field (component_id, code) WHERE (date_to IS NULL);
+CREATE UNIQUE INDEX component_field_component_id_code_key ON component_field (component_id, code) WHERE (date_to IS NULL);
 CREATE INDEX component_field_component_id_idx ON component_field (component_id);
 CREATE INDEX component_field_field_type_code_idx ON component_field (field_type_code);
 
@@ -511,10 +513,10 @@ CREATE TABLE task_type_field
     update_date           TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_system_type        BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_field_task_type_id_fk FOREIGN KEY (task_type_id) REFERENCES task_type (id),
-    CONSTRAINT task_type_field_group_id_fk FOREIGN KEY (group_id) REFERENCES task_type_field_group (id),
-    CONSTRAINT task_type_field_field_type_code_fk FOREIGN KEY (field_type_code) REFERENCES field_type (code),
-    CONSTRAINT task_type_field_component_field_id_fk FOREIGN KEY (component_field_id) REFERENCES component_field (id)
+    CONSTRAINT task_type_field_task_type_id_fkey FOREIGN KEY (task_type_id) REFERENCES task_type (id),
+    CONSTRAINT task_type_field_group_id_fkey FOREIGN KEY (group_id) REFERENCES task_type_field_group (id),
+    CONSTRAINT task_type_field_field_type_code_fkey FOREIGN KEY (field_type_code) REFERENCES field_type (code),
+    CONSTRAINT task_type_field_component_field_id_fkey FOREIGN KEY (component_field_id) REFERENCES component_field (id)
 );
 COMMENT ON TABLE task_type_field IS 'Типы полей бизнес-объектов';
 COMMENT ON COLUMN task_type_field.id IS 'Уникальный идентификационный номер типа поля таска';
@@ -557,8 +559,8 @@ CREATE TABLE task_field
     external_id        VARCHAR(128) UNIQUE,
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT task_field_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id),
-    CONSTRAINT task_field_task_type_field_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_field_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id),
+    CONSTRAINT task_field_task_type_field_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE task_field IS '{"tegs":["Таски"], description:"данная таблица хранит информацию о полях объектов в системе"}';
 COMMENT ON COLUMN task_field.id IS 'Уникальный идентификационный номер поля таска';
@@ -592,8 +594,8 @@ CREATE TABLE component_field_inheritance
     component_field_id_to   BIGINT                              NOT NULL,
     is_system               BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system   BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT component_field_inheritance_component_field_id_from_fk FOREIGN KEY (component_field_id_from) REFERENCES component_field (id),
-    CONSTRAINT component_field_inheritance_component_field_id_to_fk FOREIGN KEY (component_field_id_to) REFERENCES component_field (id)
+    CONSTRAINT component_field_inheritance_component_field_id_from_fkey FOREIGN KEY (component_field_id_from) REFERENCES component_field (id),
+    CONSTRAINT component_field_inheritance_component_field_id_to_fkey FOREIGN KEY (component_field_id_to) REFERENCES component_field (id)
 );
 COMMENT ON TABLE component_field_inheritance IS 'Наследование полей компонентов';
 COMMENT ON COLUMN component_field_inheritance.id IS 'Уникальный идентификатор записи';
@@ -654,9 +656,9 @@ CREATE TABLE condition
     value                 VARCHAR(512)                        NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT condition_group_id_fk FOREIGN KEY (group_id) REFERENCES condition_group (id),
-    CONSTRAINT condition_kind_code_fk FOREIGN KEY (kind_code) REFERENCES condition_kind (code),
-    CONSTRAINT condition_comparison_sign_code_fk FOREIGN KEY (comparison_sign_code) REFERENCES comparison_sign (code)
+    CONSTRAINT condition_group_id_fkey FOREIGN KEY (group_id) REFERENCES condition_group (id),
+    CONSTRAINT condition_kind_code_fkey FOREIGN KEY (kind_code) REFERENCES condition_kind (code),
+    CONSTRAINT condition_comparison_sign_code_fkey FOREIGN KEY (comparison_sign_code) REFERENCES comparison_sign (code)
 );
 COMMENT ON TABLE condition IS 'Проверки на условия';
 COMMENT ON COLUMN condition.id IS 'Уникальный идентификационный номер условия.';
@@ -711,7 +713,7 @@ CREATE TABLE type_calculation
     service_endpoint_uri VARCHAR(512)                        NOT NULL,
     date_from            TIMESTAMP DEFAULT NOW()             NOT NULL,
     date_to              TIMESTAMP,
-    CONSTRAINT type_calculation_type_service_id_fk FOREIGN KEY (type_service_id) REFERENCES type_service (id)
+    CONSTRAINT type_calculation_type_service_id_fkey FOREIGN KEY (type_service_id) REFERENCES type_service (id)
 );
 CREATE INDEX type_calculation_type_service_id_idx ON type_calculation (type_service_id);
 
@@ -724,8 +726,8 @@ CREATE TABLE condition_calculation_configuration
     parameter_name      VARCHAR(256)                        NOT NULL,
     date_from           TIMESTAMP DEFAULT NOW()             NOT NULL,
     date_to             TIMESTAMP,
-    CONSTRAINT role_calculation_configuration_role_id_fk FOREIGN KEY (condition_id) REFERENCES condition (id),
-    CONSTRAINT role_calculation_configuration_type_calculation_id_fk FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id)
+    CONSTRAINT role_calculation_configuration_role_id_fkey FOREIGN KEY (condition_id) REFERENCES condition (id),
+    CONSTRAINT role_calculation_configuration_type_calculation_id_fkey FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id)
 );
 CREATE INDEX condition_calculation_configuration_condition_id_idx ON condition_calculation_configuration (condition_id);
 CREATE INDEX condition_calculation_configuration_type_calc_id_idx ON condition_calculation_configuration (type_calculation_id);
@@ -758,9 +760,9 @@ CREATE TABLE condition_modifier
     value                 VARCHAR(512)                        NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT condition_modifier_comparison_sign_code_fk FOREIGN KEY (comparison_sign_code) REFERENCES comparison_sign (code),
-    CONSTRAINT condition_modifier_condition_id_fk FOREIGN KEY (condition_id) REFERENCES condition (id),
-    CONSTRAINT condition_modifier_kind_code_fk FOREIGN KEY (kind_code) REFERENCES condition_modifier_kind (code)
+    CONSTRAINT condition_modifier_comparison_sign_code_fkey FOREIGN KEY (comparison_sign_code) REFERENCES comparison_sign (code),
+    CONSTRAINT condition_modifier_condition_id_fkey FOREIGN KEY (condition_id) REFERENCES condition (id),
+    CONSTRAINT condition_modifier_kind_code_fkey FOREIGN KEY (kind_code) REFERENCES condition_modifier_kind (code)
 );
 COMMENT ON TABLE condition_modifier IS 'Модификаторы проверок на условия';
 COMMENT ON COLUMN condition_modifier.id IS 'Уникальный идентификационный номер';
@@ -784,9 +786,9 @@ CREATE TABLE condition_modifier_kind_condition_kind
     condition_kind_code          VARCHAR(128)                        NOT NULL,
     is_system                    BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system        BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT idx_condition_modifier_kind_condition_kind_uq UNIQUE (condition_modifier_kind_code, condition_kind_code),
-    CONSTRAINT condition_modifier_kind_condition_kind_ckc_fk FOREIGN KEY (condition_kind_code) REFERENCES condition_kind (code),
-    CONSTRAINT condition_modifier_kind_condition_kind_cmkc_fk FOREIGN KEY (condition_modifier_kind_code) REFERENCES condition_modifier_kind (code)
+    CONSTRAINT idx_condition_modifier_kind_condition_kind_key UNIQUE (condition_modifier_kind_code, condition_kind_code),
+    CONSTRAINT condition_modifier_kind_condition_kind_ckc_fkey FOREIGN KEY (condition_kind_code) REFERENCES condition_kind (code),
+    CONSTRAINT condition_modifier_kind_condition_kind_cmkc_fkey FOREIGN KEY (condition_modifier_kind_code) REFERENCES condition_modifier_kind (code)
 );
 COMMENT ON TABLE condition_modifier_kind_condition_kind IS 'Связь модификаторов и типов услови';
 COMMENT ON COLUMN condition_modifier_kind_condition_kind.id IS 'Уникальный идентификатор записи';
@@ -806,7 +808,7 @@ CREATE TABLE custom_dictionary_table
     is_system             BOOLEAN       DEFAULT FALSE              NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE              NOT NULL,
     unit_code             VARCHAR(128)  DEFAULT 'default'::VARCHAR NOT NULL,
-    CONSTRAINT custom_dictionary_table_name_unit_code_uq UNIQUE (name, unit_code)
+    CONSTRAINT custom_dictionary_table_name_unit_code_key UNIQUE (name, unit_code)
 
 );
 COMMENT ON TABLE custom_dictionary_table IS 'Данная таблица содержит каталог кастомных справочников';
@@ -828,9 +830,9 @@ CREATE TABLE custom_dictionary_table_column
     basic_data_type_code  VARCHAR(128)                        NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT custom_dictionary_table_column_table_id_index_uq UNIQUE (table_id, index),
-    CONSTRAINT custom_dictionary_table_column_basic_data_type_code_fk FOREIGN KEY (basic_data_type_code) REFERENCES basic_data_type (code),
-    CONSTRAINT custom_dictionary_table_column_table_id_fk FOREIGN KEY (table_id) REFERENCES custom_dictionary_table (id)
+    CONSTRAINT custom_dictionary_table_column_table_id_index_key UNIQUE (table_id, index),
+    CONSTRAINT custom_dictionary_table_column_basic_data_type_code_fkey FOREIGN KEY (basic_data_type_code) REFERENCES basic_data_type (code),
+    CONSTRAINT custom_dictionary_table_column_table_id_fkey FOREIGN KEY (table_id) REFERENCES custom_dictionary_table (id)
 );
 COMMENT ON TABLE custom_dictionary_table_column IS 'Данная таблица содержит перечень столбцов для кастомных справочников';
 COMMENT ON COLUMN custom_dictionary_table_column.id IS 'Уникальный идентификационный номер';
@@ -853,8 +855,8 @@ CREATE TABLE custom_dictionary_table_column_row
     value                 VARCHAR(512),
     is_system             BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT custom_dictionary_table_column_row_column_id_index_uq UNIQUE (column_id, index),
-    CONSTRAINT custom_dictionary_table_column_row_column_id_fk FOREIGN KEY (column_id) REFERENCES custom_dictionary_table_column (id)
+    CONSTRAINT custom_dictionary_table_column_row_column_id_index_key UNIQUE (column_id, index),
+    CONSTRAINT custom_dictionary_table_column_row_column_id_fkey FOREIGN KEY (column_id) REFERENCES custom_dictionary_table_column (id)
 );
 COMMENT ON TABLE custom_dictionary_table_column_row IS 'Данная таблица содержит значения в строках столбца кастомных справочников';
 COMMENT ON COLUMN custom_dictionary_table_column_row.id IS 'Уникальный идентификационный номер';
@@ -883,7 +885,7 @@ CREATE TABLE cycle
     member_group_id               BIGINT,
     unit_code                     VARCHAR(128) DEFAULT 'default'::VARCHAR NOT NULL,
     is_constant                   BOOLEAN      DEFAULT FALSE              NOT NULL,
-    CONSTRAINT cycle_member_root_task_task_type_id_fk FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id)
+    CONSTRAINT cycle_member_root_task_task_type_id_fkey FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id)
 );
 COMMENT ON COLUMN cycle.unit_code IS 'Код юнита';
 COMMENT ON COLUMN cycle.is_constant IS 'Признак, указывающий является ли цикл постоянным';
@@ -895,8 +897,8 @@ CREATE TABLE cycle_task
     cycle_id BIGINT        NOT NULL,
     task_id  BIGINT UNIQUE NOT NULL,
     CONSTRAINT cycle_task_ps PRIMARY KEY (cycle_id, task_id),
-    CONSTRAINT cycle_task_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id),
-    CONSTRAINT cycle_task_cycle_id_fk FOREIGN KEY (cycle_id) REFERENCES cycle (id)
+    CONSTRAINT cycle_task_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id),
+    CONSTRAINT cycle_task_cycle_id_fkey FOREIGN KEY (cycle_id) REFERENCES cycle (id)
 );
 CREATE INDEX cycle_task_cycle_id_idx ON cycle_task (cycle_id);
 
@@ -915,7 +917,7 @@ CREATE TABLE duration_label
     update_date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system             BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT duration_label_duration_id_fk FOREIGN KEY (duration_id) REFERENCES duration (id)
+    CONSTRAINT duration_label_duration_id_fkey FOREIGN KEY (duration_id) REFERENCES duration (id)
 );
 COMMENT ON COLUMN duration_label.external_id IS 'Уникальный идентификатор внешней системы';
 COMMENT ON COLUMN duration_label.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
@@ -968,8 +970,8 @@ CREATE TABLE evaluation_scale
     scale_id              BIGINT                              NOT NULL,
     is_system             BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT evaluation_scale_formula_id_fk FOREIGN KEY (formula_id) REFERENCES formula (id),
-    CONSTRAINT evaluation_scale_scale_id_fk FOREIGN KEY (scale_id) REFERENCES scale (id)
+    CONSTRAINT evaluation_scale_formula_id_fkey FOREIGN KEY (formula_id) REFERENCES formula (id),
+    CONSTRAINT evaluation_scale_scale_id_fkey FOREIGN KEY (scale_id) REFERENCES scale (id)
 );
 COMMENT ON TABLE evaluation_scale IS 'Связь шкалы оценки с диапазонами значений';
 COMMENT ON COLUMN evaluation_scale.id IS 'Уникальный идентификационный номер';
@@ -995,8 +997,8 @@ CREATE TABLE formula_trigger
     task_type_field_slave      BIGINT                              NOT NULL,
     index                      integer                             NOT NULL,
     is_automatic_recalculation BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT formula_trigger_task_type_field_master_fk FOREIGN KEY (task_type_field_master) REFERENCES task_type_field (id),
-    CONSTRAINT formula_trigger_task_type_field_slave_fk FOREIGN KEY (task_type_field_slave) REFERENCES task_type_field (id)
+    CONSTRAINT formula_trigger_task_type_field_master_fkey FOREIGN KEY (task_type_field_master) REFERENCES task_type_field (id),
+    CONSTRAINT formula_trigger_task_type_field_slave_fkey FOREIGN KEY (task_type_field_slave) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE formula_trigger IS 'Информация о триггерах для вычисления значения поля';
 COMMENT ON COLUMN formula_trigger.id IS 'Уникальный идентификационный номер';
@@ -1022,7 +1024,7 @@ CREATE TABLE integral_evaluation_formula_variable
     code              VARCHAR(128) PRIMARY KEY NOT NULL,
     description       VARCHAR(2048),
     process_type_code VARCHAR(128),
-    CONSTRAINT integral_evaluation_formula_variable_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code)
+    CONSTRAINT integral_evaluation_formula_variable_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code)
 );
 CREATE INDEX integral_evaluation_formula_variable_process_type_code_idx ON integral_evaluation_formula_variable (process_type_code);
 
@@ -1050,7 +1052,7 @@ CREATE TABLE member_group
     author_employee_id   BIGINT,
     update_employee_id   BIGINT,
     unit_code            VARCHAR(128) DEFAULT NULL::VARCHAR     NOT NULL,
-    CONSTRAINT member_group_member_group_type_id_fk FOREIGN KEY (member_group_type_id) REFERENCES member_group_type (id)
+    CONSTRAINT member_group_member_group_type_id_fkey FOREIGN KEY (member_group_type_id) REFERENCES member_group_type (id)
 );
 COMMENT ON TABLE member_group IS 'Данная таблица содержит каталог групп участников процесса';
 COMMENT ON COLUMN member_group.id IS 'Уникальный идентификационный номер';
@@ -1092,8 +1094,8 @@ CREATE TABLE member
     update_date        TIMESTAMP,
     author_employee_id BIGINT,
     update_employee_id BIGINT,
-    CONSTRAINT member_member_group_id_fk FOREIGN KEY (member_group_id) REFERENCES member_group (id),
-    CONSTRAINT member_member_type_code_fk FOREIGN KEY (member_type_code) REFERENCES member_type (code)
+    CONSTRAINT member_member_group_id_fkey FOREIGN KEY (member_group_id) REFERENCES member_group (id),
+    CONSTRAINT member_member_type_code_fkey FOREIGN KEY (member_type_code) REFERENCES member_type (code)
 );
 COMMENT ON TABLE member IS 'Данная таблица содержит каталог участников процесса';
 COMMENT ON COLUMN member.id IS 'Уникальный идентификационный номер';
@@ -1124,9 +1126,9 @@ CREATE TABLE process_template
     description                   VARCHAR(2048) DEFAULT ''::VARCHAR   NOT NULL,
     integral_evaluation_formula   VARCHAR(256),
     unit_code                     VARCHAR(128)                        NOT NULL,
-    CONSTRAINT process_template_member_root_task_task_type_id_fk FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id),
-    CONSTRAINT process_template_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code),
-    CONSTRAINT process_template_duration_id_fk FOREIGN KEY (duration_id) REFERENCES duration (id)
+    CONSTRAINT process_template_member_root_task_task_type_id_fkey FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id),
+    CONSTRAINT process_template_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code),
+    CONSTRAINT process_template_duration_id_fkey FOREIGN KEY (duration_id) REFERENCES duration (id)
 );
 COMMENT ON COLUMN process_template.unit_code IS 'Код юнита';
 CREATE INDEX process_template_process_type_code_idx ON process_template (process_type_code);
@@ -1156,12 +1158,12 @@ CREATE TABLE process
     member_root_task_task_type_id BIGINT,
     description                   VARCHAR(2048) DEFAULT ''::VARCHAR   NOT NULL,
     is_constant                   BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT process_type_code_fk FOREIGN KEY (type_code) REFERENCES process_type (code),
-    CONSTRAINT process_template_template_id_fk FOREIGN KEY (template_id) REFERENCES process_template (id),
-    CONSTRAINT process_cycle_id_fk FOREIGN KEY (cycle_id) REFERENCES cycle (id),
-    CONSTRAINT process_member_root_task_task_type_id_fk FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id),
-    CONSTRAINT process_duration_id_fk FOREIGN KEY (duration_id) REFERENCES duration (id),
-    CONSTRAINT process_member_group_id_fk FOREIGN KEY (member_group_id) REFERENCES member_group (id)
+    CONSTRAINT process_type_code_fkey FOREIGN KEY (type_code) REFERENCES process_type (code),
+    CONSTRAINT process_template_template_id_fkey FOREIGN KEY (template_id) REFERENCES process_template (id),
+    CONSTRAINT process_cycle_id_fkey FOREIGN KEY (cycle_id) REFERENCES cycle (id),
+    CONSTRAINT process_member_root_task_task_type_id_fkey FOREIGN KEY (member_root_task_task_type_id) REFERENCES task_type (id),
+    CONSTRAINT process_duration_id_fkey FOREIGN KEY (duration_id) REFERENCES duration (id),
+    CONSTRAINT process_member_group_id_fkey FOREIGN KEY (member_group_id) REFERENCES member_group (id)
 );
 COMMENT ON TABLE process IS 'Данная таблица содержит список процессов.';
 COMMENT ON COLUMN process.id IS 'Уникальный идентификационный номер.';
@@ -1193,8 +1195,8 @@ CREATE TABLE process_member_root_component
     date_to            TIMESTAMP,
     process_id         BIGINT                              NOT NULL,
     child_component_id BIGINT                              NOT NULL,
-    CONSTRAINT process_member_root_component_child_component_id_fk FOREIGN KEY (child_component_id) REFERENCES component (id),
-    CONSTRAINT process_member_root_component_process_id_fk FOREIGN KEY (process_id) REFERENCES process (id)
+    CONSTRAINT process_member_root_component_child_component_id_fkey FOREIGN KEY (child_component_id) REFERENCES component (id),
+    CONSTRAINT process_member_root_component_process_id_fkey FOREIGN KEY (process_id) REFERENCES process (id)
 );
 CREATE INDEX process_member_root_component_process_id_idx ON process_member_root_component (process_id);
 CREATE INDEX process_member_root_component_child_component_id_idx ON process_member_root_component (child_component_id);
@@ -1236,9 +1238,9 @@ CREATE TABLE process_role
     employee_id BIGINT NOT NULL,
     process_id  BIGINT NOT NULL,
     role_id     BIGINT NOT NULL,
-    CONSTRAINT process_role_pk PRIMARY KEY (employee_id, process_id, role_id),
-    CONSTRAINT process_role_process_id_fk FOREIGN KEY (process_id) REFERENCES process (id),
-    CONSTRAINT process_role_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id)
+    CONSTRAINT process_role_pkey PRIMARY KEY (employee_id, process_id, role_id),
+    CONSTRAINT process_role_process_id_fkey FOREIGN KEY (process_id) REFERENCES process (id),
+    CONSTRAINT process_role_role_id_fkey FOREIGN KEY (role_id) REFERENCES role (id)
 );
 CREATE INDEX process_role_process_id_idx ON process_role (process_id);
 CREATE INDEX process_role_role_id_idx ON process_role (role_id);
@@ -1289,10 +1291,10 @@ CREATE TABLE process_stage
     group_id           BIGINT,
     member_group_id    BIGINT,
     stage_type_code    VARCHAR(128) DEFAULT NULL::VARCHAR,
-    CONSTRAINT process_stage_group_id_fk FOREIGN KEY (group_id) REFERENCES process_stage_group (id),
-    CONSTRAINT process_stage_member_group_id_fk FOREIGN KEY (member_group_id) REFERENCES member_group (id),
-    CONSTRAINT process_stage_process_id_fk FOREIGN KEY (process_id) REFERENCES process (id),
-    CONSTRAINT process_stage_stage_type_code_fk FOREIGN KEY (stage_type_code) REFERENCES stage_type (code)
+    CONSTRAINT process_stage_group_id_fkey FOREIGN KEY (group_id) REFERENCES process_stage_group (id),
+    CONSTRAINT process_stage_member_group_id_fkey FOREIGN KEY (member_group_id) REFERENCES member_group (id),
+    CONSTRAINT process_stage_process_id_fkey FOREIGN KEY (process_id) REFERENCES process (id),
+    CONSTRAINT process_stage_stage_type_code_fkey FOREIGN KEY (stage_type_code) REFERENCES stage_type (code)
 );
 COMMENT ON TABLE process_stage IS 'Данная таблица содержит список этапов, соответствующих процессу.';
 COMMENT ON COLUMN process_stage.id IS 'Уникальный идентификационный номер.';
@@ -1318,9 +1320,9 @@ CREATE TABLE process_stage_task
 (
     process_stage_id BIGINT NOT NULL,
     task_id          BIGINT NOT NULL,
-    CONSTRAINT process_stage_task_pk PRIMARY KEY (process_stage_id, task_id),
-    CONSTRAINT process_stage_task_process_stage_id_fk FOREIGN KEY (process_stage_id) REFERENCES process_stage (id),
-    CONSTRAINT process_stage_task_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id)
+    CONSTRAINT process_stage_task_pkey PRIMARY KEY (process_stage_id, task_id),
+    CONSTRAINT process_stage_task_process_stage_id_fkey FOREIGN KEY (process_stage_id) REFERENCES process_stage (id),
+    CONSTRAINT process_stage_task_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id)
 );
 COMMENT ON TABLE process_stage_task IS 'Данная таблица содержит связь между этапом процесса и таском';
 COMMENT ON COLUMN process_stage_task.process_stage_id IS 'Уникальный идентификационный номер этапа процесса';
@@ -1332,9 +1334,9 @@ CREATE TABLE process_task
 (
     process_id BIGINT NOT NULL,
     task_id    BIGINT NOT NULL,
-    CONSTRAINT process_task_pk PRIMARY KEY (process_id, task_id),
-    CONSTRAINT process_task_process_id_fk FOREIGN KEY (process_id) REFERENCES process (id),
-    CONSTRAINT process_task_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id)
+    CONSTRAINT process_task_pkey PRIMARY KEY (process_id, task_id),
+    CONSTRAINT process_task_process_id_fkey FOREIGN KEY (process_id) REFERENCES process (id),
+    CONSTRAINT process_task_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id)
 );
 COMMENT ON TABLE process_task IS 'Данная таблица содержит привязку рутовых тасков к процессам.';
 COMMENT ON COLUMN process_task.process_id IS 'Ссылка на идентификационный номер таблицы process, процесса привязанного к рутовой карточке';
@@ -1350,8 +1352,8 @@ CREATE TABLE process_template_event
     date_to             TIMESTAMP,
     process_template_id BIGINT                              NOT NULL,
     event_task_type_id  BIGINT                              NOT NULL,
-    CONSTRAINT process_template_event_event_task_type_id_fk FOREIGN KEY (event_task_type_id) REFERENCES task_type (id),
-    CONSTRAINT process_template_event_process_template_id_fk FOREIGN KEY (process_template_id) REFERENCES process_template (id)
+    CONSTRAINT process_template_event_event_task_type_id_fkey FOREIGN KEY (event_task_type_id) REFERENCES task_type (id),
+    CONSTRAINT process_template_event_process_template_id_fkey FOREIGN KEY (process_template_id) REFERENCES process_template (id)
 );
 CREATE INDEX process_template_event_process_template_id_idx ON process_template_event (process_template_id);
 CREATE INDEX process_template_event_event_task_type_id_idx ON process_template_event (event_task_type_id);
@@ -1364,8 +1366,8 @@ CREATE TABLE process_template_member_root_component
     date_to             TIMESTAMP,
     process_template_id BIGINT                              NOT NULL,
     child_component_id  BIGINT                              NOT NULL,
-    CONSTRAINT process_template_member_root_component_cc_id_fk FOREIGN KEY (child_component_id) REFERENCES component (id),
-    CONSTRAINT process_template_member_root_component_pt_id_fk FOREIGN KEY (process_template_id) REFERENCES process_template (id)
+    CONSTRAINT process_template_member_root_component_cc_id_fkey FOREIGN KEY (child_component_id) REFERENCES component (id),
+    CONSTRAINT process_template_member_root_component_pt_id_fkey FOREIGN KEY (process_template_id) REFERENCES process_template (id)
 );
 CREATE INDEX process_template_member_root_component_pt_id_idx ON process_template_member_root_component (process_template_id);
 CREATE INDEX process_template_member_root_component_cc_id_idx ON process_template_member_root_component (child_component_id);
@@ -1379,9 +1381,9 @@ CREATE TABLE process_type_stage_type
     index                 BIGINT                              NOT NULL,
     is_system             BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT process_type_stage_type_process_type_code_index_uq UNIQUE (process_type_code, index),
-    CONSTRAINT process_type_stage_type_process_type_code_fk FOREIGN KEY (process_type_code) REFERENCES process_type (code),
-    CONSTRAINT process_type_stage_type_stage_type_code_fk FOREIGN KEY (stage_type_code) REFERENCES stage_type (code)
+    CONSTRAINT process_type_stage_type_process_type_code_index_key UNIQUE (process_type_code, index),
+    CONSTRAINT process_type_stage_type_process_type_code_fkey FOREIGN KEY (process_type_code) REFERENCES process_type (code),
+    CONSTRAINT process_type_stage_type_stage_type_code_fkey FOREIGN KEY (stage_type_code) REFERENCES stage_type (code)
 );
 COMMENT ON TABLE process_type_stage_type IS 'В этой таблице хранятся шаблонные значения этапов процесса, которые подставляются как значения по умолчанию при создании процесса.';
 COMMENT ON COLUMN process_type_stage_type.id IS 'Уникальный идентификационный номер';
@@ -1408,8 +1410,8 @@ CREATE TABLE process_type_status_group_status
     is_system                    BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system        BOOLEAN   DEFAULT FALSE             NOT NULL,
     index                        integer,
-    CONSTRAINT process_type_status_group_status_ptsg_id_fk FOREIGN KEY (process_type_status_group_id) REFERENCES process_type_status_group (id),
-    CONSTRAINT process_type_status_group_status_status_id_fk FOREIGN KEY (status_id) REFERENCES status (id)
+    CONSTRAINT process_type_status_group_status_ptsg_id_fkey FOREIGN KEY (process_type_status_group_id) REFERENCES process_type_status_group (id),
+    CONSTRAINT process_type_status_group_status_status_id_fkey FOREIGN KEY (status_id) REFERENCES status (id)
 );
 COMMENT ON COLUMN process_type_status_group_status.external_id IS 'Уникальный идентификатор внешней системы';
 COMMENT ON COLUMN process_type_status_group_status.author_employee_id IS 'Идентификатор пользователя, создавшего запись';
@@ -1429,8 +1431,8 @@ CREATE TABLE role_calculation_configuration
     parameter_name      VARCHAR(256)                        NOT NULL,
     date_from           TIMESTAMP DEFAULT NOW()             NOT NULL,
     date_to             TIMESTAMP,
-    CONSTRAINT role_calculation_configuration_type_calculation_id_fk FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id),
-    CONSTRAINT role_calculation_configuration_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id)
+    CONSTRAINT role_calculation_configuration_type_calculation_id_fkey FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id),
+    CONSTRAINT role_calculation_configuration_role_id_fkey FOREIGN KEY (role_id) REFERENCES role (id)
 );
 CREATE INDEX role_calculation_configuration_role_id_idx ON role_calculation_configuration (role_id);
 CREATE INDEX role_calculation_configuration_type_calculation_id_idx ON role_calculation_configuration (type_calculation_id);
@@ -1456,8 +1458,8 @@ CREATE TABLE task_type_role
     update_date               TIMESTAMP     DEFAULT CURRENT_TIMESTAMP NOT NULL,
     is_system                 BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_editable_if_system     BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_role_role_id_fk FOREIGN KEY (role_id) REFERENCES role (id),
-    CONSTRAINT task_type_role_task_type_id_fk FOREIGN KEY (task_type_id) REFERENCES task_type (id)
+    CONSTRAINT task_type_role_role_id_fkey FOREIGN KEY (role_id) REFERENCES role (id),
+    CONSTRAINT task_type_role_task_type_id_fkey FOREIGN KEY (task_type_id) REFERENCES task_type (id)
 );
 COMMENT ON TABLE task_type_role IS 'Типовые роли бизнес-объектов';
 COMMENT ON COLUMN task_type_role.id IS 'Уникальный идентификатор записи';
@@ -1480,7 +1482,7 @@ COMMENT ON COLUMN task_type_role.is_system IS 'Признак указывающ
 COMMENT ON COLUMN task_type_role.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
 CREATE INDEX task_type_role_role_id_idx ON task_type_role (role_id);
 CREATE INDEX task_type_role_task_type_id_idx ON task_type_role (task_type_id);
-CREATE UNIQUE INDEX task_type_role_uq ON task_type_role (task_type_id, index) WHERE (date_to IS NULL);
+CREATE UNIQUE INDEX task_type_role_key ON task_type_role (task_type_id, index) WHERE (date_to IS NULL);
 
 --role_priority
 CREATE TABLE role_priority
@@ -1491,8 +1493,8 @@ CREATE TABLE role_priority
     index                 BIGINT  DEFAULT 1                   NOT NULL,
     is_system             BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT role_priority_code_task_type_role_id_index_uq UNIQUE (code, task_type_role_id, index),
-    CONSTRAINT role_priority_task_type_role_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
+    CONSTRAINT role_priority_code_task_type_role_id_index_key UNIQUE (code, task_type_role_id, index),
+    CONSTRAINT role_priority_task_type_role_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
 );
 COMMENT ON TABLE role_priority IS 'Приоритет ролей';
 COMMENT ON COLUMN role_priority.id IS 'Уникальный идентификатор записи';
@@ -1519,9 +1521,9 @@ CREATE TABLE status_change_rule
     date_to               TIMESTAMP,
     is_system             BOOLEAN      DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN      DEFAULT FALSE             NOT NULL,
-    CONSTRAINT status_change_rule_status_id_from_fk FOREIGN KEY (status_id_from) REFERENCES status (id),
-    CONSTRAINT status_change_rule_status_id_to_fk FOREIGN KEY (status_id_to) REFERENCES status (id),
-    CONSTRAINT status_change_rule_task_type_role_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
+    CONSTRAINT status_change_rule_status_id_from_fkey FOREIGN KEY (status_id_from) REFERENCES status (id),
+    CONSTRAINT status_change_rule_status_id_to_fkey FOREIGN KEY (status_id_to) REFERENCES status (id),
+    CONSTRAINT status_change_rule_task_type_role_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
 );
 COMMENT ON TABLE status_change_rule IS 'Правила смены статусов';
 COMMENT ON COLUMN status_change_rule.id IS 'Уникальный идентификационный номер.';
@@ -1535,7 +1537,7 @@ COMMENT ON COLUMN status_change_rule.date_from IS 'Системная дата �
 COMMENT ON COLUMN status_change_rule.date_to IS 'Системная дата о закрытии записи';
 COMMENT ON COLUMN status_change_rule.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN status_change_rule.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
-CREATE UNIQUE INDEX status_change_rule_uq ON status_change_rule (task_type_role_id, status_id_from, status_id_to) WHERE date_to IS NULL;
+CREATE UNIQUE INDEX status_change_rule_key ON status_change_rule (task_type_role_id, status_id_from, status_id_to) WHERE date_to IS NULL;
 CREATE INDEX status_change_rule_task_type_role_id_idx ON status_change_rule (task_type_role_id);
 CREATE INDEX status_change_rule_status_id_from_idx ON status_change_rule (status_id_from);
 CREATE INDEX status_change_rule_status_id_to_idx ON status_change_rule (status_id_to);
@@ -1584,9 +1586,9 @@ CREATE TABLE status_change_rule_cascade
     is_editable_if_system         BOOLEAN   DEFAULT FALSE             NOT NULL,
     external_id                   VARCHAR(128) UNIQUE,
     is_initial_task_id_from       BOOLEAN   DEFAULT TRUE              NOT NULL,
-    CONSTRAINT status_change_rule_casca_status_change_rule_id_cascad_fk FOREIGN KEY (status_change_rule_id_cascade) REFERENCES status_change_rule (id),
-    CONSTRAINT status_change_rule_casca_status_change_rule_id_initia_fk FOREIGN KEY (status_change_rule_id_initial) REFERENCES status_change_rule (id),
-    CONSTRAINT status_change_rule_cascade_task_link_type_code_fk FOREIGN KEY (task_link_type_code) REFERENCES task_link_type (code)
+    CONSTRAINT status_change_rule_casca_status_change_rule_id_cascad_fkey FOREIGN KEY (status_change_rule_id_cascade) REFERENCES status_change_rule (id),
+    CONSTRAINT status_change_rule_casca_status_change_rule_id_initia_fkey FOREIGN KEY (status_change_rule_id_initial) REFERENCES status_change_rule (id),
+    CONSTRAINT status_change_rule_cascade_task_link_type_code_fkey FOREIGN KEY (task_link_type_code) REFERENCES task_link_type (code)
 );
 COMMENT ON TABLE status_change_rule_cascade IS 'Таблица для каскадного обновления статусов';
 COMMENT ON COLUMN status_change_rule_cascade.id IS 'Уникальный идентификационный номер связи.';
@@ -1621,8 +1623,8 @@ CREATE TABLE status_change_rule_condition_group
     index                 BIGINT        DEFAULT 0                 NOT NULL,
     is_system             BOOLEAN       DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN       DEFAULT FALSE             NOT NULL,
-    CONSTRAINT status_change_rule_condition_group_cg_id_fk FOREIGN KEY (condition_group_id) REFERENCES condition_group (id),
-    CONSTRAINT status_change_rule_condition_group_scr_id_fk FOREIGN KEY (status_change_rule_id) REFERENCES status_change_rule (id)
+    CONSTRAINT status_change_rule_condition_group_cg_id_fkey FOREIGN KEY (condition_group_id) REFERENCES condition_group (id),
+    CONSTRAINT status_change_rule_condition_group_scr_id_fkey FOREIGN KEY (status_change_rule_id) REFERENCES status_change_rule (id)
 );
 COMMENT ON COLUMN status_change_rule_condition_group.index IS 'Порядковый номер группы. По отображению и по порядку следованию проверок.';
 COMMENT ON COLUMN status_change_rule_condition_group.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
@@ -1639,8 +1641,8 @@ CREATE TABLE status_change_rule_field_update
     status_change_rule_id BIGINT                              NOT NULL,
     task_type_field_id    BIGINT                              NOT NULL,
     value                 VARCHAR(1024)                       NOT NULL,
-    CONSTRAINT status_change_rule_field_update_scr_id_fk FOREIGN KEY (status_change_rule_id) REFERENCES status_change_rule (id),
-    CONSTRAINT status_change_rule_field_update_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT status_change_rule_field_update_scr_id_fkey FOREIGN KEY (status_change_rule_id) REFERENCES status_change_rule (id),
+    CONSTRAINT status_change_rule_field_update_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE status_change_rule_field_update IS 'Правила создания task_field при переводе статуса task';
 COMMENT ON COLUMN status_change_rule_field_update.id IS 'Синтетический ID';
@@ -1668,9 +1670,9 @@ CREATE TABLE task_history
     date_to            TIMESTAMP,
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT task_history_status_id_fk FOREIGN KEY (status_id) REFERENCES status (id),
-    CONSTRAINT task_history_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id),
-    CONSTRAINT task_history_task_type_role_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
+    CONSTRAINT task_history_status_id_fkey FOREIGN KEY (status_id) REFERENCES status (id),
+    CONSTRAINT task_history_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id),
+    CONSTRAINT task_history_task_type_role_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
 );
 COMMENT ON TABLE task_history IS 'Данная таблица содержит каталог истории статусных переходов тасков.';
 COMMENT ON COLUMN task_history.id IS 'Уникальный идентификационный номер.';
@@ -1688,7 +1690,7 @@ COMMENT ON COLUMN task_history.update_employee_id IS 'Идентификатор
 COMMENT ON COLUMN task_history.update_date IS 'Дата обновления записи';
 CREATE INDEX task_history_status_id_idx ON task_history (status_id);
 CREATE INDEX task_history_task_id_idx ON task_history (task_id);
-CREATE INDEX task_history_task_id_idx ON task_history (parent_id);
+CREATE INDEX task_history_parent_id_idx ON task_history (parent_id);
 CREATE INDEX task_history_task_type_role_id_idx_idx ON task_history (task_type_role_id);
 
 --task_link
@@ -1704,9 +1706,9 @@ CREATE TABLE task_link
     author_employee_id BIGINT                              NOT NULL,
     update_employee_id BIGINT                              NOT NULL,
     update_date        TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT task_link_task_id_from_fk FOREIGN KEY (task_id_from) REFERENCES task (id),
-    CONSTRAINT task_link_task_id_to_fk FOREIGN KEY (task_id_to) REFERENCES task (id),
-    CONSTRAINT task_link_task_link_type_id_fk FOREIGN KEY (task_link_type_id) REFERENCES task_link_type (id)
+    CONSTRAINT task_link_task_id_from_fkey FOREIGN KEY (task_id_from) REFERENCES task (id),
+    CONSTRAINT task_link_task_id_to_fkey FOREIGN KEY (task_id_to) REFERENCES task (id),
+    CONSTRAINT task_link_task_link_type_id_fkey FOREIGN KEY (task_link_type_id) REFERENCES task_link_type (id)
 );
 COMMENT ON TABLE task_link IS 'Данная таблица содержит связи тасков через тип связи.';
 COMMENT ON COLUMN task_link.id IS 'Уникальный идентификационный номер связи.';
@@ -1732,8 +1734,8 @@ CREATE TABLE task_role_assignment
     employee_id       BIGINT                              NOT NULL,
     task_type_role_id BIGINT                              NOT NULL,
     task_id           BIGINT                              NOT NULL,
-    CONSTRAINT task_role_assignment_task_id_fk FOREIGN KEY (task_id) REFERENCES task (id),
-    CONSTRAINT task_role_assignment_task_type_role_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
+    CONSTRAINT task_role_assignment_task_id_fkey FOREIGN KEY (task_id) REFERENCES task (id),
+    CONSTRAINT task_role_assignment_task_type_role_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
 );
 COMMENT ON TABLE task_role_assignment IS 'Данная таблица для фиксирования назначений ролей сотрудников для конкретных тасков.';
 COMMENT ON COLUMN task_role_assignment.id IS 'Уникальный идентификационный номер.';
@@ -1761,9 +1763,9 @@ CREATE TABLE type_dictionary_entity
     is_editable_if_system           BOOLEAN       DEFAULT FALSE              NOT NULL,
     ignore_value_field              BOOLEAN       DEFAULT FALSE              NOT NULL,
     unit_code                       VARCHAR(128)  DEFAULT 'default'::VARCHAR NOT NULL,
-    CONSTRAINT type_dictionary_entity_key_basic_data_type_code_fk FOREIGN KEY (key_basic_data_type_code) REFERENCES basic_data_type (code),
-    CONSTRAINT type_dictionary_entity_type_service_id_fk FOREIGN KEY (type_service_id) REFERENCES type_service (id),
-    CONSTRAINT type_dictionary_entity_value_basic_data_type_code_fk FOREIGN KEY (value_basic_data_type_code) REFERENCES basic_data_type (code)
+    CONSTRAINT type_dictionary_entity_key_basic_data_type_code_fkey FOREIGN KEY (key_basic_data_type_code) REFERENCES basic_data_type (code),
+    CONSTRAINT type_dictionary_entity_type_service_id_fkey FOREIGN KEY (type_service_id) REFERENCES type_service (id),
+    CONSTRAINT type_dictionary_entity_value_basic_data_type_code_fkey FOREIGN KEY (value_basic_data_type_code) REFERENCES basic_data_type (code)
 );
 COMMENT ON TABLE type_dictionary_entity IS 'Каталог справочников';
 COMMENT ON COLUMN type_dictionary_entity.id IS 'Уникальный идентификационный номер';
@@ -1798,10 +1800,10 @@ CREATE TABLE task_type_field_assignment_configuration
     is_editable_if_system     BOOLEAN DEFAULT FALSE NOT NULL,
     sort_field_name           VARCHAR(256),
     sort_order                VARCHAR(16),
-    CONSTRAINT task_type_field_assignment_configuration_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
-    CONSTRAINT task_type_field_assignment_configuration_ttr_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id),
-    CONSTRAINT task_type_field_assignment_configuration_de_id_list_fk FOREIGN KEY (dictionary_entity_id_list) REFERENCES type_dictionary_entity (id),
-    CONSTRAINT task_type_field_assignment_configuration_de_id_info_fk FOREIGN KEY (dictionary_entity_id_info) REFERENCES type_dictionary_entity (id)
+    CONSTRAINT task_type_field_assignment_configuration_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
+    CONSTRAINT task_type_field_assignment_configuration_ttr_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id),
+    CONSTRAINT task_type_field_assignment_configuration_de_id_list_fkey FOREIGN KEY (dictionary_entity_id_list) REFERENCES type_dictionary_entity (id),
+    CONSTRAINT task_type_field_assignment_configuration_de_id_info_fkey FOREIGN KEY (dictionary_entity_id_info) REFERENCES type_dictionary_entity (id)
 );
 COMMENT ON COLUMN task_type_field_assignment_configuration.sort_field_name IS 'Наименование поля справочника для сортировки';
 COMMENT ON COLUMN task_type_field_assignment_configuration.sort_order IS 'Порядок сортировки';
@@ -1827,9 +1829,9 @@ CREATE TABLE task_type_field_calculation_configuration
     type_parameter_value_type_code VARCHAR(128)                        NOT NULL,
     date_from                      TIMESTAMP DEFAULT NOW()             NOT NULL,
     date_to                        TIMESTAMP,
-    CONSTRAINT task_type_field_calculation_configuration_dfp_code_fk FOREIGN KEY (type_parameter_value_type_code) REFERENCES type_parameter_value_type (code),
-    CONSTRAINT task_type_field_calculation_configuration_tc_id_fk FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id),
-    CONSTRAINT task_type_field_calculation_configuration_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_type_field_calculation_configuration_dfp_code_fkey FOREIGN KEY (type_parameter_value_type_code) REFERENCES type_parameter_value_type (code),
+    CONSTRAINT task_type_field_calculation_configuration_tc_id_fkey FOREIGN KEY (type_calculation_id) REFERENCES type_calculation (id),
+    CONSTRAINT task_type_field_calculation_configuration_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 CREATE INDEX task_type_field_calculation_configuration_tpvt_code_idx ON task_type_field_calculation_configuration (type_parameter_value_type_code);
 CREATE INDEX task_type_field_calculation_configuration_ttf_id_idx ON task_type_field_calculation_configuration (task_type_field_id);
@@ -1861,9 +1863,9 @@ CREATE TABLE task_type_field_date_configuration
     date_display_kind_code  VARCHAR(128)                                                  NOT NULL,
     date_behavior_kind_code VARCHAR(128)                                                  NOT NULL,
     basic_date_format       VARCHAR(64) DEFAULT 'yyyy-MM-dd''T''HH:mm:ss.SSSXXX'::VARCHAR NOT NULL,
-    CONSTRAINT task_type_field_date_configuration_dbk_code_fk FOREIGN KEY (date_behavior_kind_code) REFERENCES type_date_behavior_kind (code),
-    CONSTRAINT task_type_field_date_config_date_display_kind_code_fk FOREIGN KEY (date_display_kind_code) REFERENCES type_date_display_kind (code),
-    CONSTRAINT task_type_field_date_configuration_task_type_field_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_type_field_date_configuration_dbk_code_fkey FOREIGN KEY (date_behavior_kind_code) REFERENCES type_date_behavior_kind (code),
+    CONSTRAINT task_type_field_date_config_date_display_kind_code_fkey FOREIGN KEY (date_display_kind_code) REFERENCES type_date_display_kind (code),
+    CONSTRAINT task_type_field_date_configuration_task_type_field_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 CREATE INDEX task_type_field_date_config_date_behavior_kind_code_idx ON task_type_field_date_configuration (date_behavior_kind_code);
 CREATE INDEX task_type_field_date_config_date_display_kind_code_idx ON task_type_field_date_configuration (date_display_kind_code);
@@ -1897,8 +1899,8 @@ CREATE TABLE task_type_field_dictionary_column
     date_to                        TIMESTAMP,
     is_system                      BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system          BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_field_dictionary_column_dfp_code_fk FOREIGN KEY (dictionary_field_position_code) REFERENCES type_dictionary_field_position (code),
-    CONSTRAINT task_type_field_dictionary_column_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_type_field_dictionary_column_dfp_code_fkey FOREIGN KEY (dictionary_field_position_code) REFERENCES type_dictionary_field_position (code),
+    CONSTRAINT task_type_field_dictionary_column_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE task_type_field_dictionary_column IS 'Данная таблица содержит информацию о столбцах данных кастомных справочников.';
 COMMENT ON COLUMN task_type_field_dictionary_column.id IS 'Уникальный идентификационный номер';
@@ -1927,9 +1929,9 @@ CREATE TABLE task_type_field_dictionary_configuration
     is_editable_if_system     BOOLEAN DEFAULT FALSE NOT NULL,
     sort_field_name           VARCHAR(256),
     sort_order                VARCHAR(16),
-    CONSTRAINT task_type_field_dictionary_configuration_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
-    CONSTRAINT task_type_field_dictionary_configuration_de_id_info_fk FOREIGN KEY (dictionary_entity_id_info) REFERENCES type_dictionary_entity (id),
-    CONSTRAINT task_type_field_dictionary_configuration_de_id_list_fk FOREIGN KEY (dictionary_entity_id_list) REFERENCES type_dictionary_entity (id)
+    CONSTRAINT task_type_field_dictionary_configuration_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
+    CONSTRAINT task_type_field_dictionary_configuration_de_id_info_fkey FOREIGN KEY (dictionary_entity_id_info) REFERENCES type_dictionary_entity (id),
+    CONSTRAINT task_type_field_dictionary_configuration_de_id_list_fkey FOREIGN KEY (dictionary_entity_id_list) REFERENCES type_dictionary_entity (id)
 );
 COMMENT ON TABLE task_type_field_dictionary_configuration IS 'Конфигурация справочников и полей бизнес-объектов';
 COMMENT ON COLUMN task_type_field_dictionary_configuration.task_type_field_id IS 'Уникальный идентификационный номер типа поля';
@@ -1957,9 +1959,9 @@ CREATE TABLE task_type_field_dictionary_list_parameter
     query_parameter_value_task_type_id       BIGINT,
     is_system                                BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system                    BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_field_dictionary_list_parameter_qpttf_ttf_id_fk FOREIGN KEY (query_parameter_value_task_type_field_id) REFERENCES task_type_field (id),
-    CONSTRAINT task_type_field_dictionary_list_parameter_ttfdp_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field_dictionary_configuration (task_type_field_id),
-    CONSTRAINT ttf_dictionary_list_parameter_task_type_id_fk FOREIGN KEY (query_parameter_value_task_type_id) REFERENCES task_type (id)
+    CONSTRAINT task_type_field_dictionary_list_parameter_qpttf_ttf_id_fkey FOREIGN KEY (query_parameter_value_task_type_field_id) REFERENCES task_type_field (id),
+    CONSTRAINT task_type_field_dictionary_list_parameter_ttfdp_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field_dictionary_configuration (task_type_field_id),
+    CONSTRAINT ttf_dictionary_list_parameter_task_type_id_fkey FOREIGN KEY (query_parameter_value_task_type_id) REFERENCES task_type (id)
 );
 COMMENT ON TABLE task_type_field_dictionary_list_parameter IS 'Связь справочников и полей';
 COMMENT ON COLUMN task_type_field_dictionary_list_parameter.id IS 'Уникальный идентификационный номер';
@@ -2004,8 +2006,8 @@ CREATE TABLE task_type_field_float_configuration
     date_to                         TIMESTAMP,
     is_system                       BOOLEAN        DEFAULT FALSE             NOT NULL,
     is_editable_if_system           BOOLEAN        DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_field_float_configuration_ttf_float_type_code_fk FOREIGN KEY (task_type_field_float_type_code) REFERENCES task_type_field_float_type (code),
-    CONSTRAINT task_type_field_float_configuration_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_type_field_float_configuration_ttf_float_type_code_fkey FOREIGN KEY (task_type_field_float_type_code) REFERENCES task_type_field_float_type (code),
+    CONSTRAINT task_type_field_float_configuration_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE task_type_field_float_configuration IS 'Настройка полей с дробным значением';
 COMMENT ON COLUMN task_type_field_float_configuration.id IS 'Уникальный идентификатор записи';
@@ -2040,8 +2042,8 @@ CREATE TABLE task_type_field_integer_configuration
     value_min                         integer,
     value_max                         integer,
     is_unsigned                       BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_field_integer_configuration_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
-    CONSTRAINT task_type_field_integer_configuration_ttrit_code_fk FOREIGN KEY (task_type_field_integer_type_code) REFERENCES task_type_field_integer_type (code) ON UPDATE CASCADE ON DELETE CASCADE
+    CONSTRAINT task_type_field_integer_configuration_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
+    CONSTRAINT task_type_field_integer_configuration_ttrit_code_fkey FOREIGN KEY (task_type_field_integer_type_code) REFERENCES task_type_field_integer_type (code) ON UPDATE CASCADE ON DELETE CASCADE
 );
 CREATE INDEX task_type_field_integer_configuration_ttf_id_idx ON task_type_field_integer_configuration (task_type_field_id);
 CREATE INDEX task_type_field_integer_configuration_ttrit_code_idx ON task_type_field_integer_configuration (task_type_field_integer_type_code);
@@ -2068,8 +2070,8 @@ CREATE TABLE task_type_field_string_configuration
     task_type_field_string_type_code VARCHAR(128)                        NOT NULL,
     min_length                       integer,
     max_length                       integer,
-    CONSTRAINT task_type_field_string_c_task_type_field_string_type_fk FOREIGN KEY (task_type_field_string_type_code) REFERENCES task_type_field_string_type (code),
-    CONSTRAINT task_type_field_string_configurati_task_type_field_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
+    CONSTRAINT task_type_field_string_c_task_type_field_string_type_fkey FOREIGN KEY (task_type_field_string_type_code) REFERENCES task_type_field_string_type (code),
+    CONSTRAINT task_type_field_string_configurati_task_type_field_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id)
 );
 COMMENT ON TABLE task_type_field_string_configuration IS 'Настройка полей со строковым значением';
 COMMENT ON COLUMN task_type_field_string_configuration.id IS 'Уникальный идентификатор записи';
@@ -2090,8 +2092,8 @@ CREATE TABLE task_type_parent_permission
     task_type_id_child    BIGINT                              NOT NULL,
     is_system             BOOLEAN DEFAULT FALSE               NOT NULL,
     is_editable_if_system BOOLEAN DEFAULT FALSE               NOT NULL,
-    CONSTRAINT task_type_parent_permission_task_type_id_child_fk FOREIGN KEY (task_type_id_child) REFERENCES task_type (id),
-    CONSTRAINT task_type_parent_permission_task_type_id_parent_fk FOREIGN KEY (task_type_id_parent) REFERENCES task_type (id)
+    CONSTRAINT task_type_parent_permission_task_type_id_child_fkey FOREIGN KEY (task_type_id_child) REFERENCES task_type (id),
+    CONSTRAINT task_type_parent_permission_task_type_id_parent_fkey FOREIGN KEY (task_type_id_parent) REFERENCES task_type (id)
 );
 COMMENT ON TABLE task_type_parent_permission IS 'Связь типов бизнес-объектов';
 COMMENT ON COLUMN task_type_parent_permission.id IS 'Уникальный идентификатор записи';
@@ -2117,10 +2119,10 @@ CREATE TABLE task_type_role_permission
     is_system                  BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_editable_if_system      BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_deletable               BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT task_type_role_permission_status_id_fk FOREIGN KEY (status_id) REFERENCES status (id),
-    CONSTRAINT task_type_role_permission_target_parent_status_id_fk FOREIGN KEY (target_parent_status_id) REFERENCES status (id),
-    CONSTRAINT task_type_role_permission_target_parent_task_type_id_fk FOREIGN KEY (target_parent_task_type_id) REFERENCES task_type (id),
-    CONSTRAINT task_type_role_permission_task_type_role_id_fk FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
+    CONSTRAINT task_type_role_permission_status_id_fkey FOREIGN KEY (status_id) REFERENCES status (id),
+    CONSTRAINT task_type_role_permission_target_parent_status_id_fkey FOREIGN KEY (target_parent_status_id) REFERENCES status (id),
+    CONSTRAINT task_type_role_permission_target_parent_task_type_id_fkey FOREIGN KEY (target_parent_task_type_id) REFERENCES task_type (id),
+    CONSTRAINT task_type_role_permission_task_type_role_id_fkey FOREIGN KEY (task_type_role_id) REFERENCES task_type_role (id)
 );
 COMMENT ON TABLE task_type_role_permission IS 'Разрешение на редактирование и чтение бизнес-объектов';
 COMMENT ON COLUMN task_type_role_permission.id IS 'Уникальный идентификационный номер';
@@ -2131,7 +2133,7 @@ COMMENT ON COLUMN task_type_role_permission.status_id IS 'Уникальный �
 COMMENT ON COLUMN task_type_role_permission.comment IS 'Комментарии';
 COMMENT ON COLUMN task_type_role_permission.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN task_type_role_permission.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
-CREATE UNIQUE INDEX idx_ttrp_role_status_parent_type_parent_status_uq ON task_type_role_permission (task_type_role_id,
+CREATE UNIQUE INDEX idx_ttrp_role_status_parent_type_parent_status_key ON task_type_role_permission (task_type_role_id,
                                                                                                     status_id,
                                                                                                     target_parent_task_type_id,
                                                                                                     target_parent_status_id) NULLS NOT DISTINCT;
@@ -2151,8 +2153,8 @@ CREATE TABLE task_type_role_permission_field_restriction
     comment                      VARCHAR(1024) DEFAULT NULL::VARCHAR,
     is_system                    BOOLEAN       DEFAULT FALSE         NOT NULL,
     is_editable_if_system        BOOLEAN       DEFAULT FALSE         NOT NULL,
-    CONSTRAINT task_type_role_permission_field_restriction_ttf_id_fk FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
-    CONSTRAINT task_type_role_permission_field_restriction_ttrp_id_fk FOREIGN KEY (task_type_role_permission_id) REFERENCES task_type_role_permission (id)
+    CONSTRAINT task_type_role_permission_field_restriction_ttf_id_fkey FOREIGN KEY (task_type_field_id) REFERENCES task_type_field (id),
+    CONSTRAINT task_type_role_permission_field_restriction_ttrp_id_fkey FOREIGN KEY (task_type_role_permission_id) REFERENCES task_type_role_permission (id)
 );
 COMMENT ON TABLE task_type_role_permission_field_restriction IS 'Запрет на редактирование и чтение полей';
 COMMENT ON COLUMN task_type_role_permission_field_restriction.id IS 'Уникальный идентификационный номер';
@@ -2178,10 +2180,10 @@ CREATE TABLE task_type_status_dependency
     status_id_slave       BIGINT                              NOT NULL,
     is_system             BOOLEAN   DEFAULT FALSE             NOT NULL,
     is_editable_if_system BOOLEAN   DEFAULT FALSE             NOT NULL,
-    CONSTRAINT task_type_status_dependency_status_id_master_fk FOREIGN KEY (status_id_master) REFERENCES status (id),
-    CONSTRAINT task_type_status_dependency_status_id_slave_fk FOREIGN KEY (status_id_slave) REFERENCES status (id),
-    CONSTRAINT task_type_status_dependency_task_type_id_master_fk FOREIGN KEY (task_type_id_master) REFERENCES task_type (id),
-    CONSTRAINT task_type_status_dependency_task_type_id_slave_fk FOREIGN KEY (task_type_id_slave) REFERENCES task_type (id)
+    CONSTRAINT task_type_status_dependency_status_id_master_fkey FOREIGN KEY (status_id_master) REFERENCES status (id),
+    CONSTRAINT task_type_status_dependency_status_id_slave_fkey FOREIGN KEY (status_id_slave) REFERENCES status (id),
+    CONSTRAINT task_type_status_dependency_task_type_id_master_fkey FOREIGN KEY (task_type_id_master) REFERENCES task_type (id),
+    CONSTRAINT task_type_status_dependency_task_type_id_slave_fkey FOREIGN KEY (task_type_id_slave) REFERENCES task_type (id)
 );
 COMMENT ON COLUMN task_type_status_dependency.is_system IS 'Признак указывающий на основание создания блока (true - блок поставляется вместе с системой, false - создан на проекте)';
 COMMENT ON COLUMN task_type_status_dependency.is_editable_if_system IS 'Признак изменяемости системной записи (true - запись системная и изменяемая, иначе - false)';
