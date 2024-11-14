@@ -5,7 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 /**
  * Базовый класс CRUD-service для справочников.

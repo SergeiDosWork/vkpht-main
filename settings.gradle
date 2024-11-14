@@ -6,4 +6,5 @@ include 'common'
 include 'modules:platform'
 include 'modules:orgstructure'
 include 'modules:tasksetting'
+include 'modules:notification'
 

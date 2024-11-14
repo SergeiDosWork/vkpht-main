@@ -1,6 +1,6 @@
 package me.goodt.vkpht.common.dictionary.core.service;
 
-import me.goodt.vkpht.common.dictionary.core.entity.AbstractEntity;
+import me.goodt.vkpht.common.domain.entity.AbstractEntity;
 
 @FunctionalInterface
 public interface Updater<T extends AbstractEntity<?>> {
